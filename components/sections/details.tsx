@@ -304,15 +304,17 @@ function DressCodePaletteSwatch({
   )
 }
 
-function DressCodePaletteDisplay() {
+const dressCodePalettePanelStyle = {
+  borderColor: "color-mix(in srgb, var(--color-motif-deep) 10%, transparent)",
+  backgroundColor: "#FDF8F2",
+  color: "#3D3429",
+} as const
+
+function DressCodePaletteHeader() {
   return (
     <div
       className="border-t px-3 py-5 sm:px-4 sm:py-6 md:px-5 md:py-7"
-      style={{
-        borderColor: "color-mix(in srgb, var(--color-motif-deep) 10%, transparent)",
-        backgroundColor: "#FDF8F2",
-        color: "#3D3429",
-      }}
+      style={dressCodePalettePanelStyle}
     >
       <div className="mx-auto max-w-3xl text-center">
         <h5
@@ -324,7 +326,7 @@ function DressCodePaletteDisplay() {
           className={`${aboveTheBeyond.className} mt-1 text-lg leading-none sm:mt-1.5 sm:text-xl md:text-2xl`}
           style={{ color: "var(--color-motif-accent)" }}
         >
-          Long Gown
+          Long Gown and Barong Tagalog
         </p>
 
         <div className="mx-auto mt-3 flex max-w-xs items-center justify-center gap-2 sm:mt-4 sm:max-w-sm md:max-w-md">
@@ -342,9 +344,18 @@ function DressCodePaletteDisplay() {
           Please refer to the exact colors below for dress code.
         </p>
       </div>
+    </div>
+  )
+}
 
+function DressCodePaletteSwatches() {
+  return (
+    <div
+      className="-mx-4 w-[calc(100%+2rem)] px-3 sm:-mx-5 sm:w-[calc(100%+2.5rem)] sm:px-4 md:-mx-6 md:w-[calc(100%+3rem)] md:px-5"
+      style={dressCodePalettePanelStyle}
+    >
       <div
-        className="mx-auto mt-4 flex max-w-4xl border border-white sm:mt-5 md:mt-6"
+        className="flex w-full border border-white"
         role="img"
         aria-label="Dress code color palette: Purple Orchid, Golden Cypress, Sangria Sunset, Lemon Drop, Golden Poppy, Nantucket Breeze"
       >
@@ -1065,13 +1076,14 @@ export function Details() {
             image={attireGuide.sponsors.image}
             imageAspect={attireGuide.sponsors.imageAspect}
             alt="Guests attire guide"
-            belowImage={<DressCodePaletteDisplay />}
+            belowImage={<DressCodePaletteHeader />}
           >
             <div className="grid grid-cols-1 gap-5 sm:gap-6">
               <AttirePaletteGroup
                 label="Ladies"
                 description={attireGuide.sponsors.ladies.description}
               />
+              <DressCodePaletteSwatches />
               <AttirePaletteGroup
                 label="Gentlemen"
                 description={attireGuide.sponsors.gentlemen.description}
