@@ -211,13 +211,16 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
         >
           <span className="loading-screen__venue-label">VENUE</span>
           <span className="loading-screen__venue-sep" aria-hidden="true" />
-          <span className="loading-screen__venue-value">
-            {venueLines.map((line) => (
-              <span key={line} className="block">
+          <div className="loading-screen__venue-values">
+            {venueLines[0] ? (
+              <span className="loading-screen__venue-value">{venueLines[0]}</span>
+            ) : null}
+            {venueLines.slice(1).map((line) => (
+              <span key={line} className="loading-screen__venue-detail">
                 {line}
               </span>
             ))}
-          </span>
+          </div>
         </motion.div>
 
         <div

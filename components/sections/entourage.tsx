@@ -182,7 +182,7 @@ function mapStaticEntourage(): EntourageMember[] {
     "Father": "Parents of the Bride",
     "Mother": "Parents of the Bride",
     "Brother": "Parents of the Groom",
-    "Flower Girl": "Flower Girls",
+    "Flower Girl": "Flower Ladies",
     "Little Bride": "Little Bride",
     "Little Groom": "Little Groom",
     "Ring Bearer": "Ring Bearer",
@@ -230,8 +230,19 @@ const ROLE_CATEGORY_ORDER = [
   "Ring Bearer",
   "Bible Bearer",
   "Coin Bearer",
-  "Flower Girls",
+  "Flower Ladies",
 ]
+
+const SINGLE_COLUMN_SECTIONS = new Set([
+  "Best Man",
+  "Maid of Honor",
+  "Ring Bearer",
+  "Coin Bearer",
+  "Bible Bearer",
+  "Flower Ladies",
+  "Flower Girls",
+  "Presider",
+])
 
 const HONOR_ATTENDANT_BLOCK_CATEGORIES = [
   "Man of Honor",
@@ -257,6 +268,12 @@ function normalizeRoleCategory(category: string): string {
   if (alias) return alias
   if (normalized.toLowerCase() === "peer sponsors") {
     return "Peer Sponsors"
+  }
+  if (
+    normalized.toLowerCase() === "flower ladies" ||
+    normalized.toLowerCase() === "flower girls"
+  ) {
+    return "Flower Ladies"
   }
   return normalized
 }
@@ -1019,6 +1036,33 @@ export function Entourage() {
                   return null
                 }
 
+                // Flower Ladies — always a single centered column
+                if (category === "Flower Ladies") {
+                  if (members.length === 0) return null
+
+                  return (
+                    <div key="FlowerLadies">
+                      {categoryIndex > 0 && (
+                        <div className="flex justify-center py-2 sm:py-2.5 md:py-3 mb-2 sm:mb-2.5 md:mb-3">
+                          <div className="w-full max-w-md h-px" style={dividerLineStyle} />
+                        </div>
+                      )}
+                      <div className="mb-2 sm:mb-2.5 md:mb-3">
+                        <SectionTitle>Flower Ladies</SectionTitle>
+                        <div className="max-w-sm mx-auto flex flex-col items-center gap-1 sm:gap-1.5 md:gap-2">
+                          {members.map((member, idx) => (
+                            <NameItem
+                              key={`flower-lady-${idx}-${member.name}`}
+                              member={member}
+                              align="center"
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
+
                 // Special handling for Bridesmaids and Groomsmen - combine into single two-column layout
                 if (category === "Bridesmaids" || category === "Groomsmen") {
                   // Get both bridal party groups
@@ -1127,15 +1171,6 @@ export function Entourage() {
                     )}
                     <TwoColumnLayout singleTitle={category} centerContent={true}>
                       {(() => {
-                        const SINGLE_COLUMN_SECTIONS = new Set([
-                          "Best Man",
-                          "Maid of Honor",
-                          "Ring Bearer",
-                          "Coin Bearer",
-                          "Bible Bearer",
-                          "Flower Girls",
-                          "Presider",
-                        ])
                         // Special rule: paired sponsor roles with exactly 2 names should meet at center
                         const PAIRED_SECTIONS = new Set(["Candle Sponsors", "Cord Sponsors", "Veil Sponsors"])
                         if (PAIRED_SECTIONS.has(category) && members.length === 2) {
@@ -1200,7 +1235,7 @@ export function Entourage() {
                     </div>
                     <TwoColumnLayout singleTitle={category} centerContent={true}>
                       {(() => {
-                        if (members.length <= 2) {
+                        if (SINGLE_COLUMN_SECTIONS.has(category) || members.length <= 2) {
                           return (
                             <div className="col-span-full">
                               <div className="max-w-sm mx-auto flex flex-col items-center gap-1 sm:gap-1.5 md:gap-2">

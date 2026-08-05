@@ -646,16 +646,25 @@ export function Hero() {
           </div>
 
           {/* Venue */}
-          <p
-            className={`${cinzel.className} text-xs sm:text-sm md:text-base lg:text-lg uppercase tracking-[0.22em] sm:tracking-[0.26em] md:tracking-[0.3em] text-motif-cream font-medium text-center`}
-            style={{ textShadow: "0 2px 18px rgba(0,0,0,0.9)" }}
-          >
-            {venueLines.map((line) => (
-              <span key={line} className="block">
+          <div className="flex flex-col items-center gap-0.5 sm:gap-1 text-center">
+            {venueLines[0] ? (
+              <p
+                className={`${cinzel.className} text-xs sm:text-sm md:text-base lg:text-lg uppercase tracking-[0.22em] sm:tracking-[0.26em] md:tracking-[0.3em] text-motif-cream font-medium`}
+                style={{ textShadow: "0 2px 18px rgba(0,0,0,0.9)" }}
+              >
+                {venueLines[0]}
+              </p>
+            ) : null}
+            {venueLines.slice(1).map((line) => (
+              <p
+                key={line}
+                className="font-goudy-italic text-sm sm:text-base md:text-lg italic normal-case tracking-normal text-motif-cream/95 font-normal"
+                style={{ textShadow: "0 2px 14px rgba(0,0,0,0.85)" }}
+              >
                 {line}
-              </span>
+              </p>
             ))}
-          </p>
+          </div>
 
           <div className="w-full pt-1 sm:pt-2">
             <HeroDivider />

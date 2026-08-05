@@ -206,6 +206,27 @@
   max-width: 17rem;
 }
 
+.loading-screen__venue-values {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 100%;
+}
+
+.loading-screen__venue-detail {
+  font-family: "SortsMillGoudy", Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: clamp(0.62rem, 2.05vw, 0.76rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  line-height: 1.4;
+  color: var(--loading-accent);
+  opacity: 0.9;
+  max-width: 17rem;
+}
+
 .loading-screen__status-slot {
   position: relative;
   width: 100%;
