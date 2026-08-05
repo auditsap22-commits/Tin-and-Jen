@@ -113,8 +113,8 @@ export function CoupleVideo() {
   const playerRef = useRef<any>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const { pauseMusic, resumeMusic } = useAudio()
-  //https://youtu.be/ccYrtVkITsE
-  const videoId = "ccYrtVkITsE"
+  //https://youtu.be/nhzVs-HhId4
+  const videoId = "nhzVs-HhId4"
 
   useEffect(() => {
     if (!window.YT) {
@@ -216,7 +216,7 @@ export function CoupleVideo() {
         <div className="pointer-events-none absolute left-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/top-left-decos.png"
+            src="/decoration/deco/left-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -224,7 +224,7 @@ export function CoupleVideo() {
         <div className="pointer-events-none absolute right-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/top-right-decos.png"
+            src="/decoration/deco/right-top-corner.png"
             alt=""
             className="block h-auto w-auto max-w-[220px] sm:max-w-[160px] md:max-w-[220px] lg:max-w-[260px]"
           />
@@ -299,7 +299,7 @@ export function CoupleVideo() {
                       onClick={handleThumbnailClick}
                     >
                       <Image
-                        src="/desktop-background/couples (28).webp"
+                        src="/desktop-background/couples (32).webp"
                         alt="Video thumbnail"
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"

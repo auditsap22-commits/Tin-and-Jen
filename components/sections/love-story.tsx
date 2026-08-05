@@ -121,7 +121,7 @@ export function LoveStory() {
   theme="light"
   layout="image-left"
   isFirst={true}
-  title="Two Strangers, One Unexpected Journey"
+  // title="Two Strangers, One Unexpected Journey"
   imageSrc="/mobile-background/couples (1).webp"
   text={
     <>
