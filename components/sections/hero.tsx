@@ -6,6 +6,7 @@ import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { parseWeddingDate } from "@/lib/wedding-date"
+import { splitVenueLines } from "@/lib/utils"
 import Image from "next/image"
 
 const desktopBackgroundSrcs: readonly string[] = [
@@ -190,6 +191,10 @@ export function Hero() {
     siteConfig.ceremony.day ?? parsedDate.dayOfWeek
   ).slice(0, 3).toUpperCase()
   const ceremonyTime = siteConfig.ceremony.time ?? siteConfig.wedding.time
+  const venueLines = useMemo(
+    () => splitVenueLines(siteConfig.wedding.venue),
+    [siteConfig.wedding.venue],
+  )
 
   return (
     <section
@@ -645,7 +650,11 @@ export function Hero() {
             className={`${cinzel.className} text-xs sm:text-sm md:text-base lg:text-lg uppercase tracking-[0.22em] sm:tracking-[0.26em] md:tracking-[0.3em] text-motif-cream font-medium text-center`}
             style={{ textShadow: "0 2px 18px rgba(0,0,0,0.9)" }}
           >
-            {siteConfig.wedding.venue}
+            {venueLines.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
           </p>
 
           <div className="w-full pt-1 sm:pt-2">

@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { useSiteConfig } from '@/hooks/use-site-config';
 import { parseWeddingDate } from '@/lib/wedding-date';
+import { splitVenueLines } from '@/lib/utils';
 import { InviteParticles } from '@/components/loader/InviteParticles';
 import './loading-screen.css';
 
@@ -50,6 +51,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
 
   const coupleNames = `${siteConfig.couple.groomNickname} & ${siteConfig.couple.brideNickname}`;
   const venue = siteConfig.ceremony.location ?? siteConfig.wedding.venue;
+  const venueLines = useMemo(() => splitVenueLines(venue), [venue]);
 
   const weddingDateGhost = useMemo(() => {
     const parsed = parseWeddingDate(siteConfig.ceremony.date ?? siteConfig.wedding.date);
@@ -209,7 +211,13 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
         >
           <span className="loading-screen__venue-label">VENUE</span>
           <span className="loading-screen__venue-sep" aria-hidden="true" />
-          <span className="loading-screen__venue-value">{venue}</span>
+          <span className="loading-screen__venue-value">
+            {venueLines.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
+          </span>
         </motion.div>
 
         <div

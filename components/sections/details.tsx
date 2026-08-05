@@ -474,6 +474,19 @@ function ReminderCard({
   )
 }
 
+function highlightAttirePhrase(text: string, phrase: string): ReactNode {
+  const index = text.indexOf(phrase)
+  if (index === -1) return text
+
+  return (
+    <>
+      {text.slice(0, index)}
+      <strong className="font-bold underline">{phrase}</strong>
+      {text.slice(index + phrase.length)}
+    </>
+  )
+}
+
 function AttirePaletteGroup({
   label,
   colors,
@@ -481,7 +494,7 @@ function AttirePaletteGroup({
 }: {
   label: string
   colors?: readonly string[]
-  description: string
+  description: ReactNode
 }) {
   return (
     <div className="space-y-2 sm:space-y-2.5">
@@ -1081,12 +1094,18 @@ export function Details() {
             <div className="grid grid-cols-1 gap-5 sm:gap-6">
               <AttirePaletteGroup
                 label="Ladies"
-                description={attireGuide.sponsors.ladies.description}
+                description={highlightAttirePhrase(
+                  attireGuide.sponsors.ladies.description,
+                  "Elegant floor-length formal gowns",
+                )}
               />
               <DressCodePaletteSwatches />
               <AttirePaletteGroup
                 label="Gentlemen"
-                description={attireGuide.sponsors.gentlemen.description}
+                description={highlightAttirePhrase(
+                  attireGuide.sponsors.gentlemen.description,
+                  "Cream Barong Tagalog",
+                )}
               />
             </div>
           </AttireCard>
