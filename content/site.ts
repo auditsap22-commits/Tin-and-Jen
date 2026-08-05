@@ -27,7 +27,7 @@ export const siteConfig = {
   wedding: {
     date: "October 11, 2026",
     time: "4:00 PM",
-    venue: "Greenleaf Hotel Gensan",
+    venue: "Greenleaf Hotel Gensan - Pandan Hall A",
     tagline: "are getting married!!!!!",
     theme: "Our wedding palette is inspired by timeless elegance and warmth.Motif Colors: Champagne Gold, Soft Beige, Warm Soft Brown",
     motif: "#BBCED5, #B9C3A8, #F3D8C5, #D1C4D4, #ECD8BA, #F4E8D8, #E1DCCF",
@@ -72,7 +72,7 @@ export const siteConfig = {
     // }
   },
   ceremony: {
-    location: "Greenleaf Hotel Gensan",
+    location: "Greenleaf Hotel Gensan - Pandan Hall A",
     venue: "San Miguel St, General Santos City, Philippines, 9500",
     map: "https://maps.app.goo.gl/NjhHEUzecnRHSgsH8",
     date: "October 11, 2026",
@@ -83,7 +83,7 @@ export const siteConfig = {
     image: ["/Details/ceremony.webp", "/Details/ceremony2.webp","/Details/ceremony3.webp"],
   },
   reception: {
-    location: "The Manila Hotel - Centennial Hall A",
+    location: "Greenleaf Hotel Gensan - Pandan Hall A",
     venue: "1 Rizal Park, Ermita, Manila, 0913 Metro Manila",
     map: "https://maps.app.goo.gl/E9dDgP9CVbsiu7AN9",
     date: "October 11, 2026",
