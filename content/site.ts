@@ -26,7 +26,7 @@ export const siteConfig = {
   },
   wedding: {
     date: "October 11, 2026",
-    time: "4:00 PM",
+    time: "3:30 PM",
     venue: "Greenleaf Hotel Gensan - Pandan Hall A",
     tagline: "are getting married!!!!!",
     theme: "Our wedding palette is inspired by timeless elegance and warmth.Motif Colors: Champagne Gold, Soft Beige, Warm Soft Brown",
@@ -77,7 +77,7 @@ export const siteConfig = {
     map: "https://maps.app.goo.gl/NjhHEUzecnRHSgsH8",
     date: "October 11, 2026",
     day: "Friday",
-    time: "4:00 PM",
+    time: "3:30 PM",
     entourageTime: "3:00 PM",
     guestsTime: "3:30 PM",
     image: ["/Details/ceremony.webp", "/Details/ceremony2.webp","/Details/ceremony3.webp"],
@@ -88,7 +88,7 @@ export const siteConfig = {
     map: "https://maps.app.goo.gl/E9dDgP9CVbsiu7AN9",
     date: "October 11, 2026",
     day: "Saturday",
-    time: "4:00 PM",
+    time: "3:30 PM",
     image: ["/Details/reception.webp", "/Details/reception4.png","/Details/reception3.png"],
   },
   dressCode: {
@@ -166,7 +166,7 @@ Now, as they prepare to say yes before God and the people they love most, Cather
   playlist: {
     title: "A Playlist from our hearts",
     subtitle: "Songs that have been part of our journey together",
-    playlistName: "June and Jonas Wedding",
+    playlistName: "Gilbert and Kameel Wedding",
     embedUrl:
     //https://open.spotify.com/embed/playlist/7ArRR3Wuvez1Yjbqge4pyF?utm_source=generator&si=364420158fc548a3
       "https://open.spotify.com/embed/playlist/7ArRR3Wuvez1Yjbqge4pyF?utm_source=generator&theme=0&si=364420158fc548a3",

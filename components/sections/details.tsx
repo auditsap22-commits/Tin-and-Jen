@@ -737,12 +737,12 @@ function EventVenueCard({
                 >
                   Arrival: {arrivalTime}
                 </p>
-                <p
+                {/* <p
                   className={`${cinzel.className} text-sm sm:text-base md:text-lg lg:text-xl font-semibold tracking-[0.1em] uppercase`}
                   style={{ color: detailText.heading }}
                 >
                   Wedding Starts: {time}
-                </p>
+                </p> */}
               </div>
             ) : (
               <p

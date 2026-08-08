@@ -1335,14 +1335,20 @@
 .env-invite-enter-btn {
   position: absolute;
   left: 50%;
-  bottom: calc(clamp(3.25rem, 8dvh, 4.25rem) + env(safe-area-inset-bottom, 0px));
+  bottom: calc(clamp(2.5rem, 6.5dvh, 3.5rem) + env(safe-area-inset-bottom, 0px));
   z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
-  padding: 0.88rem 2.1rem;
+  padding: 0.55rem 1.85rem;
+  min-height: 2.75rem;
   font-family: "Cinzel", serif;
   font-size: 0.58rem;
+  line-height: 1.15;
   letter-spacing: 0.24em;
   text-transform: uppercase;
+  white-space: nowrap;
   color: var(--env-ivory);
   background: var(--color-welcome-green);
   border: 1px solid color-mix(in srgb, var(--env-gold) 38%, transparent);
@@ -1398,7 +1404,7 @@
 @media (max-width: 390px), (max-height: 700px) {
   .env-invite-screen {
     --env-chrome: clamp(3.5rem, 9dvh, 5rem);
-    --env-cta-chrome: clamp(6rem, 14dvh, 8rem);
+    --env-cta-chrome: clamp(9rem, 22dvh, 10.5rem);
     --env-scene-shift: clamp(0.45rem, 1.75dvh, 1rem);
   }
 
@@ -1439,6 +1445,7 @@
 
   .env-invite-reveal-copy {
     padding: 0 0.75rem;
+    bottom: calc(clamp(4.75rem, 11dvh, 6.25rem) + env(safe-area-inset-bottom, 0px));
   }
 
   .env-invite-reveal-copy h2 {
@@ -1457,18 +1464,40 @@
   }
 
   .env-invite-enter-btn {
-    padding: 0.72rem 1.45rem;
+    bottom: calc(clamp(1rem, 3dvh, 1.65rem) + env(safe-area-inset-bottom, 0px));
+    padding: 0.5rem 1.25rem;
+    min-height: 2.75rem;
     font-size: max(0.5rem, 2.35vw);
     letter-spacing: 0.18em;
   }
 }
 
-/* Very short viewports */
+/* Very short viewports — iPhone SE 1st gen, compact phones */
 @media (max-width: 320px), (max-height: 580px) {
   .env-invite-screen {
     --env-chrome: clamp(2.5rem, 7dvh, 3.75rem);
-    --env-cta-chrome: clamp(5.5rem, 13dvh, 7.5rem);
+    --env-cta-chrome: clamp(8.25rem, 21dvh, 9.75rem);
     --env-scene-shift: clamp(0.1rem, 1.5dvh, 0.85rem);
+  }
+
+  .env-invite-reveal-copy {
+    bottom: calc(clamp(4.25rem, 10.5dvh, 5.5rem) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .env-invite-reveal-copy h2 {
+    line-height: 1.55;
+  }
+
+  .env-invite-reveal-copy .script {
+    margin-top: 0.35rem;
+  }
+
+  .env-invite-enter-btn {
+    bottom: calc(clamp(0.75rem, 2.5dvh, 1.25rem) + env(safe-area-inset-bottom, 0px));
+    padding: 0.45rem 1.05rem;
+    min-height: 2.625rem;
+    font-size: max(0.48rem, 2.2vw);
+    letter-spacing: 0.16em;
   }
 }
 
