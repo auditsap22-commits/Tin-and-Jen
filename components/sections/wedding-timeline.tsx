@@ -7,7 +7,7 @@ import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
 import { motion } from "motion/react"
 import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
-import { CloudinaryImage } from "@/components/ui/cloudinary-image"
+import Image from "next/image"
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -382,7 +382,7 @@ function IconMark({
 }) {
   if (imageSrc) {
     return (
-      <CloudinaryImage
+      <Image
         src={imageSrc}
         alt=""
         width={96}

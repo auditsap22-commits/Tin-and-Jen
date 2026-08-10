@@ -26,7 +26,7 @@ export const siteConfig = {
   },
   wedding: {
     date: "October 11, 2026",
-    time: "3:30 PM",
+    time: "4:00 PM",
     venue: "Greenleaf Hotel Gensan - Pandan Hall A",
     tagline: "are getting married!!!!!",
     theme: "Our wedding palette is inspired by timeless elegance and warmth.Motif Colors: Champagne Gold, Soft Beige, Warm Soft Brown",
@@ -77,7 +77,7 @@ export const siteConfig = {
     map: "https://maps.app.goo.gl/NjhHEUzecnRHSgsH8",
     date: "October 11, 2026",
     day: "Friday",
-    time: "3:30 PM",
+    time: "4:00 PM",
     entourageTime: "3:00 PM",
     guestsTime: "3:30 PM",
     image: ["/Details/ceremony.webp", "/Details/ceremony2.webp","/Details/ceremony3.webp"],

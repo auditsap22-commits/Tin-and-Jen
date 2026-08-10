@@ -155,7 +155,6 @@ export function Footer() {
   const year = new Date().getFullYear()
   const ceremonyDate = siteConfig.ceremony.date
   const ceremonyTime = siteConfig.ceremony.time
-  const receptionTime = siteConfig.reception.time
   const ceremonyVenue = siteConfig.wedding.venue
   const receptionVenue = siteConfig.reception.location
   const ceremonyAddress = siteConfig.wedding.venue
@@ -388,7 +387,7 @@ export function Footer() {
                     <DetailRow label="Address" value={siteConfig.ceremony.venue} />
                   )}
                   <DetailRow label="Assembly Time" value={siteConfig.ceremony.guestsTime} />
-                  <DetailRow label="Wedding Starts:" value={receptionTime} />
+                  <DetailRow label="Wedding Starts:" value={ceremonyTime} />
                 </div>
               </FooterCard>
 

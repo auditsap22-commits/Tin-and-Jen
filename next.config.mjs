@@ -14,14 +14,18 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "res.cloudinary.com",
+        hostname: "drive.google.com",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
       },
       {
         protocol: "https",
         hostname: "**",
       },
     ],
-    // Images are optimized by Cloudinary (f_auto, q_auto) via cloudinaryLoader
+    // Next.js built-in image optimization (Sharp on Vercel) for /public assets
     unoptimized: false,
   },
   experimental: {
