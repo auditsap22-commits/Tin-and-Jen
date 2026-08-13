@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { siteConfig } from "@/content/site"
 import { ClientLayout } from "@/components/client-layout"
+import { anastasiaScript } from "@/lib/fonts"
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gilbert-and-kameel.weddinginvitationrsvp.com/"
 const canonicalUrl = siteUrl.replace(/\/$/, "")
@@ -195,6 +196,20 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Style+Script&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet" />
+        <link
+          rel="preload"
+          href="/fonts/AnastasiaScript.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/AnastasiaScript Regular.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
         <link rel="preload" as="image" href={mobileHero} media="(max-width: 767px)" />
         <link rel="preload" as="image" href={desktopHero} media="(min-width: 768px)" />
         <link rel="preload" as="image" href="/Details/ceremony.png" />
@@ -202,7 +217,7 @@ export default function RootLayout({
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body
-        className={`${inter.variable} ${greatVibes.variable} ${imperialScript.variable} ${cinzel.variable} ${brittany.variable} ${playlistScript.variable} font-inter antialiased text-foreground`}
+        className={`${inter.variable} ${greatVibes.variable} ${imperialScript.variable} ${cinzel.variable} ${brittany.variable} ${playlistScript.variable} ${anastasiaScript.variable} font-inter antialiased text-foreground`}
       >
         <ClientLayout>
           {children}

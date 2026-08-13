@@ -50,6 +50,15 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: "CoupleAnastasia";
+  src:
+    url("/fonts/AnastasiaScript.ttf") format("truetype"),
+    url("/fonts/AnastasiaScript Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -140,25 +149,26 @@
   /* ─── Motif palette — edit here, affects every component ─── */
 /* ==========================================
    MOTIF COLORS
-   Theme: Botanical Cream + Olive + Dusty Rose + Orchid + Gold
+   Theme: Nested Arch — Forest + Sage + Mustard + Cream
+   (aligned with LoadingScreen palette)
 ========================================== */
 
 /* Background */
---color-motif-cream:   #F9F4E8; /* Parchment cream */
+--color-motif-cream:   #F7F3E9; /* Arch cream */
 
 /* Primary Highlight */
---color-motif-yellow:  #C5A059; /* Champagne gold */
+--color-motif-yellow:  #EEC853; /* Mustard gold */
 
 /* Secondary */
---color-motif-soft:    #FDFBF5; /* Soft ivory sections */
---color-motif-accent:  #C67283; /* Dusty rose */
+--color-motif-soft:    #FAF7EF; /* Soft cream sections */
+--color-motif-accent:  #949981; /* Sage green */
 
 /* Primary Brand */
---color-motif-deep:    #7D7D46; /* Olive green */
---color-motif-medium:  #8B5DA3; /* Orchid purple */
+--color-motif-deep:    #5D6F47; /* Forest olive */
+--color-motif-medium:  #949981; /* Sage */
 
 /* Neutral */
---color-motif-silver:  #F5F1E6; /* Warm alternate backgrounds */
+--color-motif-silver:  #F5F1E6; /* Warm parchment alternate */
 
 /* ==========================================
    WELCOME SECTION
@@ -168,22 +178,23 @@
 --color-welcome-bg-soft:   color-mix(in srgb, var(--color-motif-cream) 25%, white);
 
 /* Paragraphs */
---color-welcome-text:      #4A453E;
---color-welcome-text-soft: #7A756C;
+--color-welcome-text:      #3A3128; /* Ink */
+--color-welcome-text-soft: color-mix(in srgb, #3A3128 68%, white);
 
 /* Small Headings */
---color-welcome-heading:   #7D7D46;
+--color-welcome-heading:   #5D6F47; /* Forest */
 
 /* Script Font */
---color-welcome-script:    #C67283;
+--color-welcome-script:    #EEC853; /* Mustard */
 
 /* Main Hero Heading */
---color-welcome-navy:      #988C38;
+--color-welcome-navy:      #5D6F47; /* Forest */
 
 /* Buttons / Decorative Lines / Icons */
---color-welcome-green:     #E76A32;
+--color-welcome-green:     #5D6F47; /* Forest */
   /* ─────────────────────────────────────────────────────────── */
   --font-imperial-script: "Imperial Script", cursive;
+  --font-anastasia-script: "CoupleAnastasia";
   --font-beautiful-malera: "Beautiful Malera", cursive;
   --font-the-seasons: "The Seasons", serif;
   --font-above-beyond: "Above the Beyond", cursive;
@@ -243,6 +254,30 @@ html {
 /* Imperial Script font utility class */
 .imperial-script-regular {
   font-family: var(--font-imperial-script), cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Couple-name lockup — public/Details/coupleName.png filled with forest green. */
+.couple-name-lockup {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1672 / 940;
+  background-color: #5c6e46;
+  -webkit-mask-image: url("/Details/coupleName.png");
+  mask-image: url("/Details/coupleName.png");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* Couple names only — Anastasia Script (public/fonts/AnastasiaScript.ttf). */
+.couple-anastasia,
+.anastasia-script {
+  font-family: "CoupleAnastasia" !important;
   font-weight: 400;
   font-style: normal;
 }

@@ -121,12 +121,12 @@ export function LoveStory() {
   theme="light"
   layout="image-left"
   isFirst={true}
-  // title="Two Strangers, One Unexpected Journey"
-  imageSrc="/mobile-background/couples (1).webp"
+  // title="Two Hearts, One Beginning"
+  imageSrc="/mobile-background/couple (4).webp"
   text={
     <>
       <p className="mb-4">
-      In 2018, what started as two strangers meeting turned into a beautiful journey neither of them expected.
+      Every love story has a beginning, and theirs started the day Paul and Ana's paths first crossed.
       </p>
     </>
   }
@@ -135,12 +135,12 @@ export function LoveStory() {
 <StorySection
   theme="dark"
   layout="image-right"
-  imageSrc="/mobile-background/couples (2).webp"
-  // title="Endless Teasing, Growing Friendship"
+  imageSrc="/mobile-background/couple (2).webp"
+  // title="From Conversations to Connection"
   text={
     <>
       <p className="mb-4">
-      From playful conversations and Gilbert's endless teasing of Kameel, a friendship slowly grew into something deeper.
+      What began as simple conversations slowly turned into something neither of them expected — a friendship built on laughter and understanding.
       </p>
     </>
   }
@@ -149,12 +149,12 @@ export function LoveStory() {
 <StorySection
   theme="light"
   layout="image-left"
-  imageSrc="/mobile-background/couples (3).webp"
-  // title="A Love That Grew Stronger"
+  imageSrc="/mobile-background/couple (21).webp"
+  // title="A Bond That Kept Growing"
   text={
     <>
       <p>
-      Behind the jokes and little arguments was a love that continued to grow stronger every day.
+      With every shared moment, big or small, their bond only grew deeper, until they knew this was something worth holding on to.
       </p>
     </>
   }
@@ -163,12 +163,12 @@ export function LoveStory() {
 <StorySection
   theme="dark"
   layout="image-right"
-  imageSrc="/mobile-background/couples (4).webp"
-  // title="The Season of Distance"
+  imageSrc="/mobile-background/couple (22).webp"
+  // title="Through Every Season"
   text={
     <>
       <p>
-      Then in 2024, came the season of distance. As they began their long-distance relationship, they learned that love is not measured by the miles between them, but by the choice to keep choosing each other.
+      Like every couple, Paul and Ana faced their own seasons of challenge and change — and through it all, they chose each other, again and again.
       </p>
     </>
   }
@@ -177,12 +177,12 @@ export function LoveStory() {
 <StorySection
   theme="light"
   layout="image-left"
-  imageSrc="/mobile-background/couples (5).webp"
-  // title="Calls, Prayers, and Patience"
+  imageSrc="/mobile-background/couple (23).webp"
+  // title="Faith, Patience, and Love"
   text={
     <>
       <p>
-      Through countless calls, prayers, patience, and waiting, they proved that love can overcome any distance.
+      With faith, patience, and unwavering love, they proved that the right love is always worth the wait.
       </p>
     </>
   }
@@ -191,12 +191,12 @@ export function LoveStory() {
 <StorySection
   theme="dark"
   layout="image-right"
-  imageSrc="/mobile-background/couples (6).webp"
-  // title="The Question, in Taiwan"
+  imageSrc="/mobile-background/couple (9).webp"
+  // title="The Question"
   text={
     <>
       <p className="mb-4">
-      In 2025, in Taiwan, Gilbert asked Kameel the most important question of their lives.
+      Then came the moment Paul had been waiting for — the moment to ask Ana the most important question of his life.
       </p>
     </>
   }
@@ -205,12 +205,12 @@ export function LoveStory() {
 <StorySection
   theme="light"
   layout="image-left"
-  imageSrc="/mobile-background/couples (7).webp"
+  imageSrc="/mobile-background/couple (15).webp"
   // title="A Heart Full of Love, and a Yes"
   text={
     <>
       <p className="mb-4">
-      And with a heart full of love, Kameel said yes.
+      And with a heart full of love, Ana said yes.
       </p>
     </>
   }
@@ -219,12 +219,12 @@ export function LoveStory() {
 <StorySection
   theme="dark"
   layout="image-right"
-  imageSrc="/mobile-background/couples (8).webp"
+  imageSrc="/mobile-background/couple (10).webp"
   // title="Surrounded by Those Who Matter Most"
   text={
     <>
       <p className="mb-4">
-      Now in 2026, surrounded by the people who mean the most to them, they begin their forever.
+      Now, surrounded by the people who mean the most to them, Paul and Ana are ready to begin their forever.
       </p>
     </>
   }
@@ -233,12 +233,12 @@ export function LoveStory() {
 <StorySection
   theme="light"
   layout="image-left"
-  imageSrc="/mobile-background/couples (9).webp"
+  imageSrc="/mobile-background/couple (11).webp"
   // title="From Strangers to Best Friends"
   text={
     <>
       <p className="mb-4">
-      From strangers, to best friends, to forever partners.
+      From strangers, to best friends, to partners for life.
       </p>
     </>
   }
@@ -247,12 +247,12 @@ export function LoveStory() {
 <StorySection
   theme="dark"
   layout="image-right"
-  imageSrc="/mobile-background/couples (10).webp"
+  imageSrc="/mobile-background/couple (12).webp"
   // title="Their Greatest Adventure Begins"
   text={
     <>
       <p className="mb-4">
-      Their greatest adventure begins — a lifetime of love, chosen again and again, no matter the distance.
+      Their greatest adventure is just beginning — a lifetime of love, chosen again and again, every single day.
       </p>
     </>
   }
@@ -262,15 +262,15 @@ export function LoveStory() {
   theme="light"
   layout="image-left"
   isLast={true}
-  imageSrc="/mobile-background/couples (11).webp"
+  imageSrc="/mobile-background/couple (17).webp"
   // title="Habangbuhay"
   text={
     <>
       <p className="mb-4">
-      From two strangers meeting in 2018, through years of teasing, laughter, distance, and prayer, to a yes in Taiwan — Gilbert and Kameel are ready to say "I do."
+      From a chance beginning, through years of growth, patience, and love, to a heartfelt yes — Paul and Ana are ready to say "I do."
       </p>
       <p>
-      Join us as we begin forever.
+      Join us on November 6, 2026, as we begin forever.
       </p>
     </>
   }

@@ -5,11 +5,11 @@ import {
 
 export const siteConfig = {
   couple: {
-    bride: "Jesie Kameel E. Erojo", //Noenyl Bryle M. Gonzaga
-    brideNickname: "Kameel", //Ltryl
-    groom: "Gilbert Kiling Pinongcos II", //Ltryl B. Benitez
-    groomNickname: "Gilbert",
-    monogram:"/monogram/monogram.png" ,//Ltryl
+    bride: "Ana Margarita Benigno", //Noenyl Bryle M. Gonzaga
+    brideNickname: "Ana", //Ltryl
+    groom: "Marion Paul Serrano", //Ltryl B. Benitez
+    groomNickname: "Paul",
+    monogram:"/monogram/new-monogram.png" ,//Ltryl
     backgroundMusic:"/background_music/Mike Mains & The Branches - I Love You Always Forever (Lyric Video).mp3"
   },
   googleAPI:{
@@ -25,9 +25,9 @@ export const siteConfig = {
     googleShare: "https://docs.google.com/spreadsheets/d/1qFMmYURdS98lp_Ngwg43l1P3K7ce4AwrQDn1f3_KpJk/edit?usp=sharing", 
   },
   wedding: {
-    date: "October 11, 2026",
-    time: "4:00 PM",
-    venue: "Greenleaf Hotel Gensan - Pandan Hall A",
+    date: "November 6, 2026",
+    time: "9:00 AM",
+    venue: "St. Benedict Parish",
     tagline: "are getting married!!!!!",
     theme: "Our wedding palette is inspired by timeless elegance and warmth.Motif Colors: Champagne Gold, Soft Beige, Warm Soft Brown",
     motif: "#BBCED5, #B9C3A8, #F3D8C5, #D1C4D4, #ECD8BA, #F4E8D8, #E1DCCF",
@@ -40,9 +40,9 @@ export const siteConfig = {
   },
   details: {
     rsvp: {
-      deadline: "August 30, 2026",
-      coordinator: "Gilbert / Kameel",
-      phone: "+63 967 697 8754",
+      deadline: "October 30, 2026",
+      coordinator: "Ana / Paul",
+      phone: "to be announced",
     },
   },
   contact: {
@@ -72,24 +72,24 @@ export const siteConfig = {
     // }
   },
   ceremony: {
-    location: "Greenleaf Hotel Gensan - Pandan Hall A",
-    venue: "San Miguel St, General Santos City, Philippines, 9500",
-    map: "https://maps.app.goo.gl/NjhHEUzecnRHSgsH8",
-    date: "October 11, 2026",
+    location: "St. Benedict Parish",
+    venue: "Ayala Westgrove Heights, South Blvd, Silang, 4118 Cavite, Philippines",
+    map: "https://maps.app.goo.gl/yRMLmsfaZwjEWzy36",
+    date: "November 6, 2026",
     day: "Friday",
-    time: "4:00 PM",
-    entourageTime: "3:00 PM",
-    guestsTime: "3:30 PM",
-    image: ["/Details/ceremony.webp", "/Details/ceremony2.webp","/Details/ceremony3.webp"],
+    time: "9:00 AM",
+    entourageTime: "8:00 AM",
+    guestsTime: "8:30 PM",
+    image: ["/Details/ceremony.png", "/Details/ceremony2.png","/Details/ceremony3.png"],
   },
   reception: {
-    location: "Greenleaf Hotel Gensan - Pandan Hall A",
-    venue: "1 Rizal Park, Ermita, Manila, 0913 Metro Manila",
-    map: "https://maps.app.goo.gl/E9dDgP9CVbsiu7AN9",
-    date: "October 11, 2026",
-    day: "Saturday",
-    time: "3:30 PM",
-    image: ["/Details/reception.webp", "/Details/reception4.png","/Details/reception3.png"],
+    location: "Jardin de Milagros Events Place",
+    venue: "Purok 1, 9981 Santa Rosa. Tagaytay Rd, Silang, 4118 Cavite, Philippines",
+    map: "https://maps.app.goo.gl/EbRsPP7DbNo2bJ1k8",
+    date: "November 6, 2026",
+    day: "Friday",
+    time: "12:00 PM",
+    image: ["/Details/reception.png", "/Details/reception2.png","/Details/reception3.png"],
   },
   dressCode: {
     theme: "STRICTLY FORMAL",
@@ -166,7 +166,7 @@ Now, as they prepare to say yes before God and the people they love most, Cather
   playlist: {
     title: "A Playlist from our hearts",
     subtitle: "Songs that have been part of our journey together",
-    playlistName: "Gilbert and Kameel Wedding",
+    playlistName: "Paul and Ana Wedding",
     embedUrl:
     //https://open.spotify.com/embed/playlist/7ArRR3Wuvez1Yjbqge4pyF?utm_source=generator&si=364420158fc548a3
       "https://open.spotify.com/embed/playlist/7ArRR3Wuvez1Yjbqge4pyF?utm_source=generator&theme=0&si=364420158fc548a3",
@@ -176,7 +176,7 @@ Now, as they prepare to say yes before God and the people they love most, Cather
     googleDriveLink:
       "https://drive.google.com/drive/folders/1DjjumaJ3e26-9NHtLkT8dADEXibc2Rsd?usp=sharing",
     albumQR: "/QR/AlbumQR.png",
-    hashtag: ["#KAMEELfoundherforeBERT"],
+    hashtag: ["#PaulandAnaWedding"],
     instructions: "Please scan this QR Code and upload the photos and videos you have taken during our wedding reception. We are delighted to see your snaps too!",
   },
   accommodation: {

@@ -105,17 +105,17 @@ function GalleryTitle() {
 }
 
 const galleryItems = [
-  { image: "/mobile-background/couples (10).webp", text: " " },
-  { image: "/mobile-background/couples (11).webp", text: " " },
-  { image: "/mobile-background/couples (12).webp", text: " " },
-  { image: "/mobile-background/couples (13).webp", text: " " },
-  { image: "/mobile-background/couples (14).webp", text: " " },
-  { image: "/mobile-background/couples (15).webp", text: " " },
-  { image: "/mobile-background/couples (16).webp", text: " " },
-  { image: "/mobile-background/couples (17).webp", text: " " },
-  { image: "/mobile-background/couples (18).webp", text: " " },
-  { image: "/mobile-background/couples (19).webp", text: " " },
-  { image: "/mobile-background/couples (20).webp", text: " " },
+  { image: "/mobile-background/couple (10).webp", text: " " },
+  { image: "/mobile-background/couple (11).webp", text: " " },
+  { image: "/mobile-background/couple (12).webp", text: " " },
+  { image: "/mobile-background/couple (13).webp", text: " " },
+  { image: "/mobile-background/couple (14).webp", text: " " },
+  { image: "/mobile-background/couple (15).webp", text: " " },
+  { image: "/mobile-background/couple (16).webp", text: " " },
+  { image: "/mobile-background/couple (17).webp", text: " " },
+  { image: "/mobile-background/couple (18).webp", text: " " },
+  { image: "/mobile-background/couple (19).webp", text: " " },
+  { image: "/mobile-background/couple (20).webp", text: " " },
 
 ]
 

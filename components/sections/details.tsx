@@ -851,10 +851,10 @@ function EventVenueCard({
 // Colors sourced from globals.css @theme inline — edit there to update everywhere
 
 const COUPLE_IMAGES = [
-  "/envelope/box (1).jpg",
-  "/envelope/box (5).jpg",
-  "/envelope/box (6).jpg",
-  "/envelope/box (4).jpg",
+  "/envelope/box (1).JPG",
+  "/envelope/box (2).JPG",
+  "/envelope/box (3).JPG",
+  "/envelope/box (4).JPG",
 ]
 
 export function Details() {
@@ -1033,7 +1033,7 @@ export function Details() {
           onOpenMaps={openInMaps}
         />
 
-        {/* <EventVenueCard
+        <EventVenueCard
           badge="Reception"
           images={receptionImages}
           activeImageIndex={currentReceptionImageIndex}
@@ -1051,7 +1051,7 @@ export function Details() {
           copiedItems={copiedItems}
           onCopy={copyToClipboard}
           onOpenMaps={openInMaps}
-        /> */}
+        />
        
       </div>
 
