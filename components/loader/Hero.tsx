@@ -101,6 +101,7 @@ export const Hero: React.FC<HeroProps> = ({
   const groomName = siteConfig.couple.groomNickname;
   const brideName = siteConfig.couple.brideNickname;
   const coupleNames = `${groomName} & ${brideName}`;
+  const monogramSrc = siteConfig.couple.monogram;
 
   const letterDateNumeric = useMemo(() => {
     const parsed = parseWeddingDate(siteConfig.ceremony.date ?? siteConfig.wedding.date);
@@ -778,6 +779,9 @@ export const Hero: React.FC<HeroProps> = ({
                       />
                       <feBlend in="SourceGraphic" in2="shadow" mode="normal" />
                     </filter>
+                    <clipPath id={`${sealId}-mono`}>
+                      <circle cx="60" cy="59.5" r="24" />
+                    </clipPath>
                   </defs>
 
                   {/* Poured-wax outer blob — scalloped irregular rim */}
@@ -913,25 +917,17 @@ export const Hero: React.FC<HeroProps> = ({
                     <ellipse cx="86.8" cy="66.2" rx="1.25" ry="2" transform="rotate(42 86.8 66.2)" />
                   </g>
 
-                  {/* GK monogram */}
-                  <g className="env-invite-seal-mono">
-                    <text
-                      className="env-invite-seal-letter env-invite-seal-letter-g"
-                      x="50"
-                      y="64"
-                      textAnchor="middle"
-                    >
-                      G
-                    </text>
-                    <text
-                      className="env-invite-seal-letter env-invite-seal-letter-k"
-                      x="71"
-                      y="71"
-                      textAnchor="middle"
-                    >
-                      K
-                    </text>
-                  </g>
+                  {/* Couple monogram from site config */}
+                  <image
+                    href={monogramSrc}
+                    x="36.5"
+                    y="36"
+                    width="47"
+                    height="47"
+                    preserveAspectRatio="xMidYMid meet"
+                    clipPath={`url(#${sealId}-mono)`}
+                    className="env-invite-seal-mono-img"
+                  />
                 </svg>
               </motion.button>
             </div>

@@ -89,7 +89,7 @@ export const siteConfig = {
     date: "November 6, 2026",
     day: "Friday",
     time: "12:00 PM",
-    image: ["/Details/reception.png", "/Details/reception2.png","/Details/reception3.png"],
+    image: ["/Details/reception.png", "/Details/reception1.png","/Details/reception3.png"],
   },
   dressCode: {
     theme: "STRICTLY FORMAL",

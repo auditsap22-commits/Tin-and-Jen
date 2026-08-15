@@ -1167,6 +1167,11 @@
   overflow: visible;
 }
 
+.env-invite-seal-mono-img {
+  pointer-events: none;
+  filter: brightness(0) invert(1);
+}
+
 .env-invite-seal-letter {
   fill: #2a3228;
   font-family: "Cormorant Garamond", "Crimson Text", "Times New Roman", serif;
