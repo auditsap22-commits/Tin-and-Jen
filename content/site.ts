@@ -13,16 +13,16 @@ export const siteConfig = {
     backgroundMusic:"/background_music/Mike Mains & The Branches - I Love You Always Forever (Lyric Video).mp3"
   },
   googleAPI:{
-    messageForm: "https://docs.google.com/forms/d/e/1FAIpQLSfnzqIGp1BR_ILvjTa4XLmzB9J7KdZ_WuX7s2rmEqNUJdm7KA/formResponse",   //done
-    message: "https://script.google.com/macros/s/AKfycbwK186d2jD_4NlHjQVg3o3o0A2dIuKnxRzJ1UMztoTKChpn2-OyHaT4PDWrbjRXVvdu3Q/exec",  //done
-    guestList: "https://script.google.com/macros/s/AKfycbykVUHnIeQkwhCa9mUoJ0-A9EdDC-2UyQPZw4tvD5kJy76RpHmDHzq2pksLJEUjW9fwMw/exec",  //done
-    guestRequest: "https://script.google.com/macros/s/AKfycbx406fkIvqLkbh3CwuhamZAarn_hR8RHXXBNLWvgtFoN58drr8whTUbtNWt9-GQh3T0ig/exec",   //done
-    entourage: "https://script.google.com/macros/s/AKfycbxJvLVUXm6BU86TflWK3V3hzzQAvZmBjMxGJ3pitGqJVoOrr8_-gKGly7Gn9oaKF_BwWQ/exec",  //done
-    sponsors: "https://script.google.com/macros/s/AKfycbxEVdRjUr_oGThiamflZXQ-rK6Hmq71zVMcESUJ--383Kb-yqHp1vaTY71tVZM-Yo2TPQ/exec",  //done 
+    messageForm: "https://docs.google.com/forms/d/e/1FAIpQLSdKkO4fsBXegi8lri4F0wR9tahjz3XvmkiOeaYogtKE4rFvOA/formResponse",   //done
+    message: "https://script.google.com/macros/s/AKfycbzV64hOYoC6ldCagtU6shw7OVYsyU-tKwZCDx5Cxm0Ms_AlNx1eQUUP35I5bIT_gx7j/exec",  //done
+    guestList: "https://script.google.com/macros/s/AKfycbwdzDK7zzMF_e_Zp8mefJ6OgTUnYM0nyCkte5jxmkiU_C2fAi-GM_hzgR3SF40DsN5F/exec",  //done
+    guestRequest: "https://script.google.com/macros/s/AKfycbxswedD8ytGA-FrJee3WcmUFj83oZw9b3sJt6TfHw-IMhzVQvWQv_y_-mbQoI8uxLrg/exec",   //done
+    entourage: "https://script.google.com/macros/s/AKfycbyeTZKoveZ4oK6MWlD9HRrkVRd_0fd10_WcHPz3pEcMKj836zfh2BB6gAWtnddns5BO/exec",  //done
+    sponsors: "https://script.google.com/macros/s/AKfycbwA7u4bbtmWdYuS-VKNL3vrZdiCnf0s3anp5LS7AgKdWygCvjX_rdqbtKxcUBHpgQP1/exec",  //done 
     proposalResponses: "https://script.google.com/macros/s/AKfycbwIUDKMoMIHVwbmr6KbgmBtlGRpMGj1Z9maeHSEwsFaXNi0dAH8WYhqbtiAfg_p5D4lgw/exec", // uses entourage script with action: proposal
-    weddingDetails: "https://script.google.com/macros/s/AKfycbz-wYIIdMsGf38BGfRRLlxbg8mfuRQgyQES7BUvEgnYfMVUSkxVaDxr0EdFuoBj2XhH9w/exec",   //done
+    weddingDetails: "https://script.google.com/macros/s/AKfycbx7sz1e2uoVjfrSOGuHXwHSbM7Fa4b6_vyMFnBXaZogdw1QzfxIvqrLbQPvoJIsxl7_/exec",   //done
 ////google share 
-    googleShare: "https://docs.google.com/spreadsheets/d/1qFMmYURdS98lp_Ngwg43l1P3K7ce4AwrQDn1f3_KpJk/edit?usp=sharing", 
+    googleShare: "https://docs.google.com/spreadsheets/d/1J7mR98rWgWTUuyznyH2KFltoE2U5n4JrAcf-cVXbqsQ/edit?usp=sharing", 
   },
   wedding: {
     date: "November 6, 2026",
@@ -79,7 +79,7 @@ export const siteConfig = {
     day: "Friday",
     time: "9:00 AM",
     entourageTime: "8:00 AM",
-    guestsTime: "8:30 PM",
+    guestsTime: "8:30 AM",
     image: ["/Details/ceremony.png", "/Details/ceremony2.png","/Details/ceremony3.png"],
   },
   reception: {
@@ -168,21 +168,21 @@ Now, as they prepare to say yes before God and the people they love most, Cather
     subtitle: "Songs that have been part of our journey together",
     playlistName: "Paul and Ana Wedding",
     embedUrl:
-    //https://open.spotify.com/embed/playlist/7ArRR3Wuvez1Yjbqge4pyF?utm_source=generator&si=364420158fc548a3
-      "https://open.spotify.com/embed/playlist/7ArRR3Wuvez1Yjbqge4pyF?utm_source=generator&theme=0&si=364420158fc548a3",
-    spotifyUrl: "https://open.spotify.com/playlist/7ArRR3Wuvez1Yjbqge4pyF",
+    //https://open.spotify.com/embed/playlist/6BMbQvAs9Uj24XgPCK7UjQ?utm_source=generator&si=cd41335ebebb4708
+      "https://open.spotify.com/embed/playlist/6BMbQvAs9Uj24XgPCK7UjQ?utm_source=generator&theme=0&si=cd41335ebebb4708",
+    spotifyUrl: "https://open.spotify.com/playlist/6BMbQvAs9Uj24XgPCK7UjQ",
   },
   snapShare: {
     googleDriveLink:
-      "https://drive.google.com/drive/folders/1DjjumaJ3e26-9NHtLkT8dADEXibc2Rsd?usp=sharing",
+      "https://drive.google.com/drive/folders/1BE5gjldtokJI4ba5narJmLgzIkXhfrA_?usp=sharing",
     albumQR: "/QR/AlbumQR.png",
     hashtag: ["#PaulandAnaWedding"],
     instructions: "Please scan this QR Code and upload the photos and videos you have taken during our wedding reception. We are delighted to see your snaps too!",
   },
   accommodation: {
     coordinator: {
-      name: "Gilbert / Kameel",
-      phone: "+63 967 697 8754",
+      name: "Paul / Ana",
+      phone: "to be announced",
     },
     hotels: [
       {
@@ -228,86 +228,3 @@ Now, as they prepare to say yes before God and the people they love most, Cather
     ],
   },
 }
-
-export const entourage = [
-  // Best Man & Maid/Matron of Honor
-  { role: "Best Man", name: "Red Casallo" },
-  { role: "Matron of Honor", name: "Imeeliza Timpug" },
-
-  // Parents of the Bride
-  { role: "Father", name: "Jaime Balajadia (Uncle)", group: "kate-family" },
-  { role: "Mother", name: "Eloida Ricohermoso", group: "kate-family" },
-
-  // Parents of the Groom
-  { role: "Brother", name: "Perry Ticbaen (Brother)", group: "christian-family" },
-  { role: "Mother", name: "Felicitas Ticbaen", group: "christian-family" },
-
-  // Bridesmaids
-  { role: "Bridesmaid", name: "Thea Lynn Dela Cruz" },
-  { role: "Bridesmaid", name: "Keara Zane A Cariño" },
-  { role: "Bridesmaid", name: "Fidnah Gracia Padallan" },
-  { role: "Bridesmaid", name: "Lorna Ladisla" },
-  { role: "Bridesmaid", name: "Carla Vanessa Tabilin" },
-  { role: "Bridesmaid", name: "Romela Tolentino" },
-  { role: "Bridesmaid", name: "Emmalyn Lipio" },
-  { role: "Bridesmaid", name: "Carmen Pascual" },
-  { role: "Bridesmaid", name: "Ciddie Manota" },
-
-  // Groomsmen
-  { role: "Groomsman", name: "Noah Alcaria" },
-  { role: "Groomsman", name: "Jervin Garcia" },
-  { role: "Groomsman", name: "Myric Mateo" },
-  { role: "Groomsman", name: "Caughvan Faustino" },
-  { role: "Groomsman", name: "Jayson Torquiano" },
-  { role: "Groomsman", name: "Jendah Egino" },
-  { role: "Groomsman", name: "Vincent Saguinsin" },
-  { role: "Groomsman", name: "Frederick Manota" },
-  { role: "Groomsman", name: "Emerson Sulit" },
-
-  // Secondary Sponsors
-  // Candle Sponsors
-  { role: "Bridesmaid", name: "Romela Tolentino", group: "candle" },
-  // Cord Sponsors
-  { role: "Bridesmaid", name: "Emmalyn Lipio", group: "cord" },
-
-  // Flower Girls and Little Bride
-  { role: "Flower Girl", name: "Kirsten Elija Leyson" },
-  { role: "Flower Girl", name: "Blake Juan" },
-  { role: "Flower Girl", name: "Reign Arastel Rivera" },
-  { role: "Little Bride", name: "Paige Yael Ticbaen" },
-
-  // Ring / Coin Bearers
-  { role: "Ring Bearer", name: "Khaleb Dwayne M. Beltran" },
-  { role: "Coin Bearer", name: "Lucas Rhaiden Beltran" },
-  { role: "Ring Bearer", name: "Dean James Ticbaen" },
-]
-
-export const principalSponsors = [
-  // Paired from provided Male and Female Sponsors (order-based)
-  { name: "Mr. Jony Balao", spouse: "Mrs. Conception Balao" },
-  { name: "Mr. Cresencio Francisco", spouse: "Dr. Editha Francisco" },
-  { name: "Mr. Aurelio Sab-it", spouse: "Mrs. Ester Sab-it" },
-  { name: "Mr. Pio McLiing", spouse: "Mrs. Edna Boloma" },
-  { name: "Mr. Fabian Dupiano", spouse: "Mrs. Mary Christine Dupiano" },
-  { name: "Mr. Roberto Dosdos", spouse: "Mrs. Angelica Dosdos" },
-  { name: "Mr. George Sacla", spouse: "Mrs. Minda De Bolt Sacla" },
-  { name: "Mr. Elmo Casallo", spouse: "Mrs. Nora Casallo" },
-  { name: "Engr. Jimmy Atayoc Sr", spouse: "Mrs. Mercedes Atayoc" },
-  { name: "Mr. Tomas Moyongan", spouse: "Mrs. Betty Moyongan" },
-  { name: "Mr. Roger Balantin", spouse: "Mrs. Delia Balantin" },
-  { name: "Honorable Mayor Roderick Awingan", spouse: "Mrs. ____ Awingan" },
-  { name: "Engr Roy Kepes", spouse: "Vice Gove MaryRose Kepes Fongwan" },
-  { name: "Mr. Bobos Nestor Fongwan", spouse: "Mrs. Marga Sison" },
-  { name: "Mr. Junvic Suguinsin", spouse: "Mrs. Lavenia Inson" },
-  { name: "Mr. Salino Dosdos Jr", spouse: "Mrs. Gina Guiang" },
-  { name: "Mr. Pampilo Balajadia", spouse: "Mrs. Angelica Balajadia" },
-  { name: "Mr. Alan M. Serduar", spouse: "Mrs. Oliva Serduar" },
-  { name: "Mr. Miguel Franco", spouse: "Mrs. Angela Balajadia" },
-  // Remaining Female Sponsors without paired male
-  { name: "Mrs. Carina C. Watanabe", spouse: "" },
-  { name: "Mrs. Cecile Palilio", spouse: "" },
-  { name: "Mrs. Nida Saguinsin", spouse: "" },
-  { name: "Mrs. Araceli Pitogo", spouse: "" },
-  { name: "Mrs. Alda Unidad", spouse: "" },
-  { name: "Mrs. Reine Bernadeth Bolanos", spouse: "" },
-]

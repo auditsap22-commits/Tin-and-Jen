@@ -3,7 +3,6 @@
 import React from "react"
 import { useState, useEffect, useMemo, useRef } from "react"
 import localFont from "next/font/local"
-import { entourage as staticEntourage, principalSponsors as staticSponsors } from "@/content/site"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
 import { Cinzel } from "next/font/google"
@@ -26,33 +25,61 @@ const aboveTheBeyond = localFont({
 })
 
 const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] xl:max-w-[380px]"
+  "block h-auto w-auto max-w-[88px] sm:max-w-[108px] md:max-w-[124px] lg:max-w-[140px]"
 
-const cardStyle = {
-  background: "var(--color-welcome-bg)",
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-  borderWidth: "1px",
-  borderStyle: "solid",
-  boxShadow:
-    "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
+const C = {
+  forest: "#5d6f47",
+  sage: "#949981",
+  mustard: "#eec853",
+  butter: "#f4dd97",
+  cream: "#f7f3e9",
 } as const
 
-const ambientGlowStyle = {
-  background:
-    "linear-gradient(135deg, color-mix(in srgb, var(--color-motif-deep) 18%, transparent) 0%, color-mix(in srgb, var(--color-welcome-green) 12%, transparent) 48%, color-mix(in srgb, var(--color-motif-deep) 10%, transparent) 100%)",
+const creamWash = `
+  radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.butter} 35%, transparent) 0%, transparent 55%),
+  radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${C.sage} 16%, transparent) 0%, transparent 58%),
+  radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${C.mustard} 14%, transparent) 0%, transparent 55%),
+  linear-gradient(180deg, ${C.cream} 0%, #faf7ef 48%, ${C.cream} 100%)
+`
+
+const palette = {
+  body: "#F8F5EC",
+  heading: "#FFFFFF",
+  label: "rgba(248, 245, 236, 0.82)",
+  accent: "#f4dd97",
 } as const
 
-const dividerLineStyle = {
+const headerDividerLineStyle = {
   background:
     "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent), transparent)",
 } as const
 
-const palette = {
-  body: "var(--color-welcome-text)",
-  heading: "var(--color-welcome-navy)",
-  label: "var(--color-welcome-heading)",
-  accent: "var(--color-welcome-green)",
+const dividerLineStyle = {
+  background:
+    "linear-gradient(to right, transparent, rgba(255, 255, 255, 0.45), transparent)",
 } as const
+
+function CoupleRingsMark() {
+  return (
+    <div className="-mt-3 mb-4 flex justify-center sm:-mt-4 sm:mb-5 md:-mt-5 md:mb-6">
+      <div
+        className="h-[4.5rem] w-[4.5rem] sm:h-[5.25rem] sm:w-[5.25rem] md:h-24 md:w-24"
+        style={{
+          backgroundColor: "#FFFFFF",
+          maskImage: "url(/decoration/deco/ring.png)",
+          WebkitMaskImage: "url(/decoration/deco/ring.png)",
+          maskSize: "contain",
+          WebkitMaskSize: "contain",
+          maskRepeat: "no-repeat",
+          WebkitMaskRepeat: "no-repeat",
+          maskPosition: "center",
+          WebkitMaskPosition: "center",
+        }}
+        aria-hidden
+      />
+    </div>
+  )
+}
 
 const nameStyle: React.CSSProperties = {
   fontSize: "clamp(0.75rem, min(2.55vw, 9cqi), 1.125rem)",
@@ -172,42 +199,6 @@ const ct = {
   bodyLg: sectionType.subheader,
 } as const
 
-function mapStaticEntourage(): EntourageMember[] {
-  const roleToCategory: Record<string, string> = {
-    "Best Man": "Best Man",
-    "Matron of Honor": "Matron of Honor",
-    "Maid of Honor": "Maid of Honor",
-    "Bridesmaid": "Bridesmaids",
-    "Groomsman": "Groomsmen",
-    "Father": "Parents of the Bride",
-    "Mother": "Parents of the Bride",
-    "Brother": "Parents of the Groom",
-    "Flower Girl": "Flower Ladies",
-    "Little Bride": "Little Bride",
-    "Little Groom": "Little Groom",
-    "Ring Bearer": "Ring Bearer",
-    "Coin Bearer": "Coin Bearer",
-    "Bible Bearer": "Bible Bearer",
-  }
-  return staticEntourage.map(({ role, name, group }) => {
-    let category = roleToCategory[role] ?? (role.endsWith("s") ? role : role + "s")
-    if (group === "kate-family") category = "Parents of the Bride"
-    if (group === "christian-family") category = "Parents of the Groom"
-    if (group === "candle") category = "Candle Sponsors"
-    if (group === "cord") category = "Cord Sponsors"
-    return { name, roleTitle: role, roleCategory: category, email: "" }
-  })
-}
-
-function mapStaticSponsors(): PrincipalSponsor[] {
-  return staticSponsors
-    .filter((s) => s.name || s.spouse)
-    .map(({ name, spouse }) => ({
-      malePrincipalSponsor: name || "",
-      femalePrincipalSponsor: spouse || "",
-    }))
-}
-
 const ROLE_CATEGORY_ORDER = [
   "OFFICIATING MINISTER",
   "The Couple",
@@ -294,15 +285,16 @@ export function Entourage() {
       const response = await fetch("/api/entourage", { cache: "no-store" })
       if (!response.ok) throw new Error("Failed to fetch entourage")
       const data: unknown = await response.json()
-      const list =
-        Array.isArray(data) && data.length > 0
-          ? data.map((row) => entourageMemberFromApi(row as Record<string, unknown>))
-          : mapStaticEntourage()
-      setEntourage(list)
+      if (!Array.isArray(data)) throw new Error("Failed to fetch entourage")
+      setEntourage(
+        data
+          .map((row) => entourageMemberFromApi(row as Record<string, unknown>))
+          .filter((member) => member.name.trim())
+      )
     } catch (err: unknown) {
       console.error("Failed to load entourage:", err)
-      setEntourage(mapStaticEntourage())
-      setError(null)
+      setEntourage([])
+      setError("Unable to load entourage")
     } finally {
       setIsLoading(false)
     }
@@ -313,14 +305,16 @@ export function Entourage() {
       const res = await fetch("/api/principal-sponsor", { cache: "no-store" })
       if (!res.ok) throw new Error("Failed to load principal sponsors")
       const data: unknown = await res.json()
-      const list =
-        Array.isArray(data) && data.length > 0
-          ? data.map((row) => principalSponsorFromApi(row as Record<string, unknown>)).filter((s) => s.malePrincipalSponsor || s.femalePrincipalSponsor)
-          : mapStaticSponsors()
-      setSponsors(list)
+      setSponsors(
+        Array.isArray(data)
+          ? data
+              .map((row) => principalSponsorFromApi(row as Record<string, unknown>))
+              .filter((s) => s.malePrincipalSponsor.trim() || s.femalePrincipalSponsor.trim())
+          : []
+      )
     } catch (e: unknown) {
       console.error("Failed to load sponsors:", e)
-      setSponsors(mapStaticSponsors())
+      setSponsors([])
     }
   }
 
@@ -498,7 +492,7 @@ export function Entourage() {
   return (
     <div
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full`}
-      style={{ background: "var(--color-welcome-bg)" }}
+      style={{ background: creamWash }}
     >
       <section
         ref={sectionRef}
@@ -509,7 +503,7 @@ export function Entourage() {
         <div className="pointer-events-none absolute left-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/left-top-corner.png"
+            src="/decoration/left-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -517,7 +511,7 @@ export function Entourage() {
         <div className="pointer-events-none absolute right-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/right-top-corner.png"
+            src="/decoration/right-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -525,7 +519,7 @@ export function Entourage() {
         <div className="pointer-events-none absolute bottom-0 left-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/left-bottom-corner.png"
+            src="/decoration/left-bottom-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -533,7 +527,7 @@ export function Entourage() {
         <div className="pointer-events-none absolute bottom-0 right-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/right-bottom-corner.png"
+            src="/decoration/right-bottom-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -560,46 +554,31 @@ export function Entourage() {
         <div className="flex items-center justify-center pt-3 sm:pt-4">
           <span
             className="h-px w-16 sm:w-24 md:w-32"
-            style={dividerLineStyle}
+            style={headerDividerLineStyle}
           />
         </div>
       </div>
 
-      {/* Central Card Container */}
+      {/* Arch container */}
       <div
-        className={`relative z-20 max-w-5xl mx-auto px-4 sm:px-6 md:px-8 pb-2 sm:pb-3 @container/entourage-card transition-all duration-1000 delay-300 ${
+        className={`relative z-20 mx-auto max-w-3xl px-4 pb-2 sm:max-w-4xl sm:px-6 md:px-8 @container/entourage-card transition-all duration-1000 delay-300 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
         <div className="relative">
           <div
-            className="pointer-events-none absolute -inset-1 rounded-2xl opacity-50 blur-2xl sm:-inset-2"
-            style={ambientGlowStyle}
-            aria-hidden
-          />
-          <div
-            className="relative z-20 overflow-hidden rounded-xl border backdrop-blur-xl transition-all duration-500 sm:rounded-2xl sm:backdrop-blur-2xl"
-            style={cardStyle}
+            className="relative z-20 overflow-hidden rounded-t-full"
+            style={{
+              backgroundColor: C.forest,
+              boxShadow: `0 18px 48px color-mix(in srgb, ${C.forest} 28%, transparent)`,
+            }}
           >
             <div
-              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/40 via-white/10 to-transparent"
-              aria-hidden
-            />
-            <div
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to top, color-mix(in srgb, var(--color-motif-deep) 8%, transparent), transparent 45%)",
-              }}
-              aria-hidden
-            />
-            <div
-              className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-white/35 sm:rounded-2xl"
+              className="pointer-events-none absolute inset-3 z-30 rounded-t-full border border-white sm:inset-4 md:inset-5"
               aria-hidden
             />
 
-            {/* Card content */}
-            <div className="relative p-5 sm:p-6 md:p-8 lg:p-10 z-20">
+            <div className="relative z-20 px-5 pb-10 pt-[22%] sm:px-8 sm:pb-12 md:px-12 md:pb-14 lg:px-14">
             {isLoading ? (
               <div className="flex items-center justify-center py-24 sm:py-28 md:py-32">
                 <span className={`font-goudy-italic ${ct.body}`} style={{ color: palette.body }}>
@@ -629,6 +608,7 @@ export function Entourage() {
               </div>
             ) : (
             <>
+              {(grouped["The Couple"]?.length ?? 0) === 0 ? <CoupleRingsMark /> : null}
               {ROLE_CATEGORY_ORDER.map((category, categoryIndex) => {
                 const members = grouped[category] || []
                 const bridalPartyHasMembers =
@@ -654,11 +634,7 @@ export function Entourage() {
                   
                   return (
                     <div key={category}>
-                      {categoryIndex > 0 && (
-                        <div className="flex justify-center py-2 sm:py-2.5 md:py-3 mb-2 sm:mb-2.5 md:mb-3">
-                          <div className="w-full max-w-md h-px" style={dividerLineStyle} />
-                        </div>
-                      )}
+                      <CoupleRingsMark />
                       <TwoColumnLayout singleTitle="The Couple" centerContent={true}>
                         <div className="px-0.5 sm:px-1 md:px-1.5 min-w-0 overflow-hidden">
                           {groom && <NameItem member={groom} align="right" />}

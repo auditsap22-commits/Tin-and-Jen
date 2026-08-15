@@ -22,10 +22,10 @@ const C = {
 } as const
 
 const DECO = {
-  tl: "/decoration/deco/left-top-corner.png",
-  tr: "/decoration/deco/right-top-corner.png",
-  bl: "/decoration/deco/left-bottom-corner.png",
-  br: "/decoration/deco/right-bottom-corner.png",
+  tl: "/decoration/left-top-corner.png",
+  tr: "/decoration/right-top-corner.png",
+  bl: "/decoration/left-bottom-corner.png",
+  br: "/decoration/right-bottom-corner.png",
 } as const
 
 const entryEase = [0.22, 1, 0.36, 1] as const
@@ -117,7 +117,7 @@ export function Hero() {
           width={320}
           height={320}
           priority
-          className="absolute left-0 top-0 h-auto w-[min(42vw,220px)] opacity-90 sm:w-[240px] md:w-[280px]"
+          className="absolute left-0 top-0 h-auto w-[min(22vw,88px)] opacity-90 sm:w-[108px] md:w-[124px]"
         />
         <Image
           src={DECO.tr}
@@ -125,21 +125,21 @@ export function Hero() {
           width={320}
           height={320}
           priority
-          className="absolute right-0 top-0 h-auto w-[min(42vw,220px)] opacity-90 sm:w-[240px] md:w-[280px]"
+          className="absolute right-0 top-0 h-auto w-[min(22vw,88px)] opacity-90 sm:w-[108px] md:w-[124px]"
         />
         <Image
           src={DECO.bl}
           alt=""
           width={360}
           height={360}
-          className="absolute bottom-0 left-0 h-auto w-[min(55vw,280px)] opacity-95 sm:w-[320px] md:w-[380px]"
+          className="absolute bottom-0 left-0 h-auto w-[min(28vw,112px)] opacity-95 sm:w-[136px] md:w-[160px]"
         />
         <Image
           src={DECO.br}
           alt=""
           width={360}
           height={360}
-          className="absolute bottom-0 right-0 h-auto w-[min(55vw,280px)] opacity-95 sm:w-[320px] md:w-[380px]"
+          className="absolute bottom-0 right-0 h-auto w-[min(28vw,112px)] opacity-95 sm:w-[136px] md:w-[160px]"
         />
       </div>
 

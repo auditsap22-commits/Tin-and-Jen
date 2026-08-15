@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 
 type ImageItem = {
@@ -13,25 +13,18 @@ type ImageItem = {
 
 export default function MasonryGallery({ images }: { images: ImageItem[] }) {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null)
-  const [loaded, setLoaded] = useState<Record<string, boolean>>({})
   const topRef = useRef<HTMLDivElement | null>(null)
-  
-
-  // Keep images in sequence (no shuffling)
-  const filtered = useMemo(() => {
-    return images
-  }, [images])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (lightboxIdx == null) return
       if (e.key === "Escape") setLightboxIdx(null)
-      if (e.key === "ArrowRight") setLightboxIdx((idx) => (idx == null ? null : (idx + 1) % filtered.length))
-      if (e.key === "ArrowLeft") setLightboxIdx((idx) => (idx == null ? null : (idx - 1 + filtered.length) % filtered.length))
+      if (e.key === "ArrowRight") setLightboxIdx((idx) => (idx == null ? null : (idx + 1) % images.length))
+      if (e.key === "ArrowLeft") setLightboxIdx((idx) => (idx == null ? null : (idx - 1 + images.length) % images.length))
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [filtered.length, lightboxIdx])
+  }, [images.length, lightboxIdx])
 
   const getCardAspect = (image: ImageItem) => {
     if (image.orientation === "portrait" || image.category === "mobile") {
@@ -45,16 +38,16 @@ export default function MasonryGallery({ images }: { images: ImageItem[] }) {
       {/* Header (buttons removed per request) */}
       <div className="mb-6 flex justify-end">
         <div className="text-[#606C60]/90 text-sm font-sans">
-          {filtered.length} photos
+          {images.length} photos
         </div>
       </div>
 
       {/* Masonry grid */}
-      {filtered.length === 0 ? (
+      {images.length === 0 ? (
         <div className="text-center text-[#606C60]/80 font-sans">No images to display.</div>
       ) : (
         <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4">
-          {filtered.map((img, idx) => (
+          {images.map((img, idx) => (
           <button
             key={img.src}
             type="button"
@@ -63,9 +56,6 @@ export default function MasonryGallery({ images }: { images: ImageItem[] }) {
             aria-label="Open image"
           >
             <div className="relative w-full overflow-hidden rounded-xl border border-[#606C60]/40 bg-white/5 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#606C60]/60">
-              {!loaded[img.src] && (
-                <div className={`${getCardAspect(img)} w-full animate-pulse bg-gradient-to-br from-[#606C60]/30 via-[#E1D5C7]/25 to-[#606C60]/30`} />
-              )}
               <div className={`relative w-full ${getCardAspect(img)}`}>
                 <Image
                   src={img.src}
@@ -73,12 +63,8 @@ export default function MasonryGallery({ images }: { images: ImageItem[] }) {
                   fill
                   unoptimized
                   sizes="(max-width: 640px) 50vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className={`rounded-xl transition-transform duration-300 group-hover:scale-[1.02] object-cover object-top ${
-                    loaded[img.src] ? "opacity-100" : "opacity-0"
-                  }`}
+                  className="rounded-xl object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
                   loading="lazy"
-                  onLoad={() => setLoaded((l) => ({ ...l, [img.src]: true }))}
-                  onError={() => setLoaded((l) => ({ ...l, [img.src]: true }))}
                 />
               </div>
               <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-[#606C60]/40 via-transparent to-transparent z-10" />
@@ -89,7 +75,7 @@ export default function MasonryGallery({ images }: { images: ImageItem[] }) {
       )}
 
       {/* Lightbox */}
-      {lightboxIdx != null && filtered[lightboxIdx] && (
+      {lightboxIdx != null && images[lightboxIdx] && (
         <div
           className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setLightboxIdx(null)}
@@ -97,16 +83,16 @@ export default function MasonryGallery({ images }: { images: ImageItem[] }) {
           <div className="relative max-w-6xl w-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
             <button
               className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 text-[#E1D5C7] bg-[#606C60]/80 hover:bg-[#606C60] border border-[#606C60]/50 hover:border-[#606C60] rounded-full px-4 py-2.5 transition-all duration-200 shadow-lg hover:scale-110"
-              onClick={() => setLightboxIdx((i) => (i == null ? null : (i - 1 + filtered.length) % filtered.length))}
+              onClick={() => setLightboxIdx((i) => (i == null ? null : (i - 1 + images.length) % images.length))}
             >
               ‹
             </button>
             <div className="relative max-h-[80vh] w-auto">
               <Image
-                src={filtered[lightboxIdx].src}
+                src={images[lightboxIdx].src}
                 alt=""
-                width={filtered[lightboxIdx].width}
-                height={filtered[lightboxIdx].height}
+                width={images[lightboxIdx].width}
+                height={images[lightboxIdx].height}
                 unoptimized
                 className="max-h-[80vh] w-auto rounded-xl shadow-2xl border border-[#606C60]/30 object-contain"
                 priority
@@ -114,7 +100,7 @@ export default function MasonryGallery({ images }: { images: ImageItem[] }) {
             </div>
             <button
               className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 text-[#E1D5C7] bg-[#606C60]/80 hover:bg-[#606C60] border border-[#606C60]/50 hover:border-[#606C60] rounded-full px-4 py-2.5 transition-all duration-200 shadow-lg hover:scale-110"
-              onClick={() => setLightboxIdx((i) => (i == null ? null : (i + 1) % filtered.length))}
+              onClick={() => setLightboxIdx((i) => (i == null ? null : (i + 1) % images.length))}
             >
               ›
             </button>

@@ -7,7 +7,6 @@ import { Instagram, Twitter, Facebook, Music2 } from "lucide-react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { sectionType } from "@/lib/section-typography"
 import { Cinzel } from "next/font/google"
-import Image from "next/image"
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -27,7 +26,7 @@ const aboveTheBeyond = localFont({
 })
 
 const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[120px] sm:max-w-[180px] md:max-w-[260px] lg:max-w-[320px] xl:max-w-[380px]"
+  "block h-auto w-auto max-w-[88px] sm:max-w-[108px] md:max-w-[124px] lg:max-w-[140px]"
 
 const palette = {
   body: "var(--color-welcome-text)",
@@ -230,7 +229,7 @@ export function Footer() {
         <div className="pointer-events-none absolute left-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/left-top-corner.png"
+            src="/decoration/left-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -238,7 +237,7 @@ export function Footer() {
         <div className="pointer-events-none absolute right-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/right-top-corner.png"
+            src="/decoration/right-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -246,7 +245,7 @@ export function Footer() {
         <div className="pointer-events-none absolute bottom-0 left-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/left-bottom-corner.png"
+            src="/decoration/left-bottom-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -254,7 +253,7 @@ export function Footer() {
         <div className="pointer-events-none absolute bottom-0 right-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/right-bottom-corner.png"
+            src="/decoration/right-bottom-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -268,16 +267,22 @@ export function Footer() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex flex-col items-center"
           >
-            <div className="relative w-44 h-44 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72">
-              <Image
-                src={siteConfig.couple.monogram}
-                alt={`${coupleDisplayName} monogram`}
-                fill
-                className="object-contain"
-                priority={false}
-                sizes="(max-width: 640px) 176px, (max-width: 1024px) 256px, 288px"
-              />
-            </div>
+            <div
+              className="relative w-44 h-44 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72"
+              role="img"
+              aria-label={`${coupleDisplayName} monogram`}
+              style={{
+                backgroundColor: "var(--color-welcome-green)",
+                WebkitMaskImage: `url(${siteConfig.couple.monogram})`,
+                maskImage: `url(${siteConfig.couple.monogram})`,
+                WebkitMaskSize: "contain",
+                maskSize: "contain",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+                WebkitMaskPosition: "center",
+                maskPosition: "center",
+              }}
+            />
           </motion.div>
 
           <div className="mt-4 max-w-md text-center sm:mt-5 md:mt-6">

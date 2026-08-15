@@ -23,7 +23,7 @@ const aboveTheBeyond = localFont({
 })
 
 const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[120px] sm:max-w-[180px] md:max-w-[260px] lg:max-w-[320px] xl:max-w-[380px]"
+  "block h-auto w-auto max-w-[72px] sm:max-w-[96px] md:max-w-[120px] lg:max-w-[140px] xl:max-w-[160px]"
 
 export const dynamic = "force-static"
 
@@ -105,20 +105,27 @@ function GalleryTitle() {
   )
 }
 
+function toGalleryItems(
+  srcs: string[],
+  category: "desktop" | "mobile",
+) {
+  const isMobile = category === "mobile"
+  return srcs.map((src) => ({
+    src,
+    category,
+    width: isMobile ? 900 : 1600,
+    height: isMobile ? 1200 : 900,
+    orientation: (isMobile ? "portrait" : "landscape") as "portrait" | "landscape",
+  }))
+}
+
 export default async function GalleryPage() {
   const siteConfig = await getSiteConfig()
-  const allImages = await fetchGalleryImages()
-  const images = allImages.map((src) => ({
-    src,
-    category: src.includes("/desktop-background/")
-      ? ("desktop" as const)
-      : ("mobile" as const),
-    width: 1200,
-    height: 900,
-    orientation: src.includes("/mobile-background/")
-      ? ("portrait" as const)
-      : ("landscape" as const),
-  }))
+  const { desktop, mobile } = await fetchGalleryImages()
+  const images = [
+    ...toGalleryItems(desktop, "desktop"),
+    ...toGalleryItems(mobile, "mobile"),
+  ]
 
   return (
     <main
@@ -128,7 +135,7 @@ export default async function GalleryPage() {
       <div className="pointer-events-none absolute left-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/deco/left-top-corner.png"
+          src="/decoration/left-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -136,7 +143,7 @@ export default async function GalleryPage() {
       <div className="pointer-events-none absolute right-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/deco/right-top-corner.png"
+          src="/decoration/right-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -144,7 +151,7 @@ export default async function GalleryPage() {
       <div className="pointer-events-none absolute bottom-0 left-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/deco/left-bottom-corner.png"
+          src="/decoration/left-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -152,7 +159,7 @@ export default async function GalleryPage() {
       <div className="pointer-events-none absolute bottom-0 right-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/deco/right-bottom-corner.png"
+          src="/decoration/right-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -198,7 +205,16 @@ export default async function GalleryPage() {
           </div>
         </div>
 
-        {images.length > 0 && <MasonryGallery images={images} />}
+        {images.length > 0 ? (
+          <MasonryGallery images={images} />
+        ) : (
+          <p
+            className="text-center font-sans text-sm"
+            style={{ color: "var(--color-welcome-text)" }}
+          >
+            No images to display.
+          </p>
+        )}
       </section>
     </main>
   )

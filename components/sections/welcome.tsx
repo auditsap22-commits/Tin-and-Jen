@@ -11,6 +11,15 @@ const cinzel = Cinzel({
   weight: ["400", "600", "700"],
 })
 
+const C = {
+  forest: "#5d6f47",
+  sage: "#949981",
+  mustard: "#eec853",
+  butter: "#f4dd97",
+  cream: "#f7f3e9",
+  ink: "#3a3128",
+} as const
+
 const theSeasons = localFont({
   src: "../../Font/Fontspring-DEMO-theseasons-reg.otf",
   display: "swap",
@@ -143,10 +152,15 @@ export function Welcome() {
           transition={{ duration: 0.65, ease: [0.22, 0.61, 0.36, 1] }}
           className="relative min-w-0 overflow-visible rounded-lg border px-4 pt-6 pb-10 @container/welcome sm:rounded-xl sm:px-7 sm:pt-7 sm:pb-12 md:rounded-2xl md:px-8 md:pt-8 md:pb-14"
           style={{
-            background: "var(--color-welcome-bg)",
-            borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
+            background: `
+              radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.butter} 35%, transparent) 0%, transparent 55%),
+              radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${C.sage} 16%, transparent) 0%, transparent 58%),
+              radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${C.mustard} 14%, transparent) 0%, transparent 55%),
+              linear-gradient(180deg, ${C.cream} 0%, #faf7ef 48%, ${C.cream} 100%)
+            `,
+            borderColor: `color-mix(in srgb, ${C.forest} 14%, transparent)`,
             boxShadow:
-              "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
+              `0 8px 28px color-mix(in srgb, ${C.forest} 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)`,
           }}
         >
           <div className="wedding-frame-inner hidden min-[400px]:block" aria-hidden />
@@ -172,13 +186,7 @@ export function Welcome() {
           {/* Content */}
           <div className="relative mx-4 space-y-5 text-center sm:mx-6 sm:space-y-6 md:mx-7 md:space-y-7">
             {/* Scripture */}
-            <figure
-              className="rounded-md border px-4 py-3.5 sm:rounded-lg sm:px-5 sm:py-4"
-              style={{
-                background: "var(--color-welcome-bg-soft)",
-                borderColor: "color-mix(in srgb, var(--color-motif-deep) 10%, transparent)",
-              }}
-            >
+            <figure className="px-1 py-1 sm:px-2">
               <blockquote>
                 <p
                   className={`font-goudy-italic ${sectionType.textSnug}`}
@@ -223,13 +231,7 @@ export function Welcome() {
               {/* <OrnamentalDivider compact /> */}
 
               {/* Hashtag */}
-              <aside
-                className="rounded-md border px-4 py-3.5 sm:rounded-lg sm:px-5 sm:py-4"
-                style={{
-                  background: "var(--color-welcome-bg-soft)",
-                  borderColor: "color-mix(in srgb, var(--color-motif-deep) 10%, transparent)",
-                }}
-              >
+              <aside className="px-1 py-1 sm:px-2">
                 <div className="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:justify-center sm:gap-2.5">
                   <p
                     className={`${cinzel.className} ${sectionType.label} shrink-0 font-semibold uppercase tracking-[0.18em] sm:tracking-[0.22em]`}

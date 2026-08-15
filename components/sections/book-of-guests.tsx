@@ -25,7 +25,22 @@ const aboveTheBeyond = localFont({
 })
 
 const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[120px] sm:max-w-[180px] md:max-w-[260px] lg:max-w-[320px] xl:max-w-[380px]"
+  "block h-auto w-auto max-w-[88px] sm:max-w-[108px] md:max-w-[124px] lg:max-w-[140px]"
+
+const C = {
+  forest: "#5d6f47",
+  sage: "#949981",
+  mustard: "#eec853",
+  butter: "#f4dd97",
+  cream: "#f7f3e9",
+} as const
+
+const creamWash = `
+  radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.butter} 35%, transparent) 0%, transparent 55%),
+  radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${C.sage} 16%, transparent) 0%, transparent 58%),
+  radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${C.mustard} 14%, transparent) 0%, transparent 55%),
+  linear-gradient(180deg, ${C.cream} 0%, #faf7ef 48%, ${C.cream} 100%)
+`
 
 const palette = {
   body: "var(--color-welcome-text)",
@@ -322,13 +337,13 @@ export function BookOfGuests() {
     <div
       id="guests"
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative isolate z-10 overflow-hidden pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14`}
-      style={{ background: "var(--color-welcome-bg)" }}
+      style={{ background: creamWash }}
     >
       {/* Corner decorations */}
       <div className="pointer-events-none absolute left-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/deco/left-top-corner.png"
+          src="/decoration/left-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -336,7 +351,7 @@ export function BookOfGuests() {
       <div className="pointer-events-none absolute right-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/deco/right-top-corner.png"
+          src="/decoration/right-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -344,7 +359,7 @@ export function BookOfGuests() {
       <div className="pointer-events-none absolute bottom-0 left-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/deco/left-bottom-corner.png"
+          src="/decoration/left-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -352,7 +367,7 @@ export function BookOfGuests() {
       <div className="pointer-events-none absolute bottom-0 right-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/deco/right-bottom-corner.png"
+          src="/decoration/right-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />

@@ -70,10 +70,10 @@ const INNER = { x: 72, y: 72, w: 216, h: 568, r: 108 } as const;
 const BAND_FILLS = [C.forest, C.sage, C.mustard, C.butter] as const;
 
 const DECO = {
-  tl: '/decoration/deco/left-top-corner.png',
-  tr: '/decoration/deco/right-top-corner.png',
-  bl: '/decoration/deco/left-bottom-corner.png',
-  br: '/decoration/deco/right-bottom-corner.png',
+  tl: '/decoration/left-top-corner.png',
+  tr: '/decoration/right-top-corner.png',
+  bl: '/decoration/left-bottom-corner.png',
+  br: '/decoration/right-bottom-corner.png',
 } as const;
 
 function archPath(x: number, y: number, w: number, h: number, r: number) {

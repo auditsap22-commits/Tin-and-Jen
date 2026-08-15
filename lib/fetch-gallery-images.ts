@@ -30,9 +30,15 @@ function readImagesFromPublicDir(relativeDir: string): string[] {
     .map((file) => `/${relativeDir}/${file}`)
 }
 
+export type GalleryFolderImages = {
+  desktop: string[]
+  mobile: string[]
+}
+
 /** Gallery list from public/desktop-background and public/mobile-background. */
-export async function fetchGalleryImages(): Promise<string[]> {
-  const desktop = readImagesFromPublicDir("desktop-background")
-  const mobile = readImagesFromPublicDir("mobile-background")
-  return [...desktop, ...mobile].map(encodePublicImagePath)
+export async function fetchGalleryImages(): Promise<GalleryFolderImages> {
+  return {
+    desktop: readImagesFromPublicDir("desktop-background").map(encodePublicImagePath),
+    mobile: readImagesFromPublicDir("mobile-background").map(encodePublicImagePath),
+  }
 }

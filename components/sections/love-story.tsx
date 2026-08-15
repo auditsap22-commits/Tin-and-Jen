@@ -18,7 +18,7 @@ const aboveTheBeyond = localFont({
 })
 
 const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[120px] sm:max-w-[160px] md:max-w-[220px] lg:max-w-[260px]"
+  "block h-auto w-auto max-w-[88px] sm:max-w-[108px] md:max-w-[124px] lg:max-w-[140px]"
 
 function OrnamentalDivider() {
   return (
@@ -87,7 +87,7 @@ export function LoveStory() {
         <div className="pointer-events-none  absolute right-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/right-top-corner.png"
+            src="/decoration/right-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -95,7 +95,7 @@ export function LoveStory() {
         <div className="pointer-events-none absolute left-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/left-top-corner.png"
+            src="/decoration/left-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -282,7 +282,7 @@ export function LoveStory() {
         <div className="pointer-events-none absolute bottom-0 left-0 z-20">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/left-bottom-corner.png"
+            src="/decoration/left-bottom-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -290,7 +290,7 @@ export function LoveStory() {
         <div className="pointer-events-none absolute bottom-0 right-0 z-20">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/right-bottom-corner.png"
+            src="/decoration/right-bottom-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />

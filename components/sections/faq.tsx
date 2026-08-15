@@ -26,13 +26,35 @@ const aboveTheBeyond = localFont({
 })
 
 const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] xl:max-w-[380px]"
+  "block h-auto w-auto max-w-[88px] sm:max-w-[108px] md:max-w-[124px] lg:max-w-[140px]"
+
+const C = {
+  forest: "#5d6f47",
+  sage: "#949981",
+  mustard: "#eec853",
+  butter: "#f4dd97",
+  cream: "#f7f3e9",
+} as const
+
+const creamWash = `
+  radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.butter} 35%, transparent) 0%, transparent 55%),
+  radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${C.sage} 16%, transparent) 0%, transparent 58%),
+  radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${C.mustard} 14%, transparent) 0%, transparent 55%),
+  linear-gradient(180deg, ${C.cream} 0%, #faf7ef 48%, ${C.cream} 100%)
+`
 
 const palette = {
   body: "var(--color-welcome-text)",
   heading: "var(--color-welcome-navy)",
   label: "var(--color-welcome-heading)",
   accent: "var(--color-welcome-green)",
+} as const
+
+const faqPalette = {
+  body: "#F8F5EC",
+  heading: "#FFFFFF",
+  label: "rgba(248, 245, 236, 0.82)",
+  accent: "#f4dd97",
 } as const
 
 const dividerLineStyle = {
@@ -51,12 +73,11 @@ const linkClass =
   "underline font-semibold transition-colors hover:opacity-80"
 
 const cardStyle = {
-  background: "var(--color-welcome-bg)",
+  background: C.forest,
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-  boxShadow:
-    "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
+  borderColor: "rgba(255, 255, 255, 0.28)",
+  boxShadow: `0 18px 48px color-mix(in srgb, ${C.forest} 28%, transparent)`,
 } as const
 
 interface FAQItem {
@@ -116,21 +137,56 @@ function FaqTitle() {
 }
 
 function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
-  const guestArrival = siteConfig.ceremony.guestsTime ?? "30–45 minutes before the ceremony"
-  const dressTheme = siteConfig.dressCode.theme
+  const guestArrival = siteConfig.ceremony.guestsTime ?? "8:30 AM"
+  const rsvpPhone = siteConfig.details.rsvp.phone.trim()
+  const showRsvpPhone =
+    rsvpPhone.length > 0 && !/to be announced/i.test(rsvpPhone)
 
   return [
     {
       question: "When is the wedding?",
-      answer: `Our wedding will be held on ${siteConfig.ceremony.date} (${siteConfig.ceremony.day}).`,
+      answer: `Our wedding will be held on ${siteConfig.ceremony.date}, ${siteConfig.ceremony.day}. The ceremony begins at ${siteConfig.ceremony.time}, and the reception follows at ${siteConfig.reception.time}.`,
     },
     {
       question: "What time should I arrive for the ceremony?",
-      answer: `Please arrive at ${guestArrival}. The ceremony will begin promptly at ${siteConfig.ceremony.time}.`,
+      answer: `Please arrive by ${guestArrival} so you have time to find your seat and settle in. The ceremony will begin promptly at ${siteConfig.ceremony.time}. Entourage members are requested to assemble at ${siteConfig.ceremony.entourageTime}.`,
     },
     {
       question: "Where will the ceremony take place?",
-      answer: `Our ceremony will be held at ${siteConfig.ceremony.location}, located at ${siteConfig.ceremony.venue}.`,
+      answer: (
+        <>
+          Our ceremony will be held at {siteConfig.ceremony.location}, {siteConfig.ceremony.venue}.{" "}
+          <a
+            href={siteConfig.ceremony.map}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={linkClass}
+            style={{ color: faqPalette.accent }}
+          >
+            Open in Google Maps
+          </a>
+          .
+        </>
+      ),
+    },
+    {
+      question: "Where will the reception be held?",
+      answer: (
+        <>
+          The reception will be at {siteConfig.reception.location}, {siteConfig.reception.venue},
+          beginning at {siteConfig.reception.time}.{" "}
+          <a
+            href={siteConfig.reception.map}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={linkClass}
+            style={{ color: faqPalette.accent }}
+          >
+            Open in Google Maps
+          </a>
+          .
+        </>
+      ),
     },
     {
       question: "How do I RSVP?",
@@ -140,7 +196,7 @@ function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
           <a
             href="#guest-list"
             className={linkClass}
-            style={{ color: palette.accent }}
+            style={{ color: faqPalette.accent }}
             onClick={(e) => {
               e.preventDefault()
               document.getElementById("guest-list")?.scrollIntoView({ behavior: "smooth" })
@@ -151,9 +207,9 @@ function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
           on this invitation: search for your name and confirm your attendance.
           {"\n\n"}
           Please respond by {siteConfig.details.rsvp.deadline.replace(/\.\s*$/, "")}.
-          {"\n\n"}
-          If you have questions, please contact {siteConfig.details.rsvp.coordinator} at{" "}
-          {siteConfig.details.rsvp.phone}.
+          {showRsvpPhone
+            ? `\n\nIf you have questions, please contact ${siteConfig.details.rsvp.coordinator} at ${rsvpPhone}.`
+            : `\n\nIf you have questions, please contact ${siteConfig.details.rsvp.coordinator}.`}
         </>
       ),
     },
@@ -175,7 +231,7 @@ function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
     {
       question: "Can I bring my child to the event?",
       answer:
-        'As much as we each adore your little ones, we cannot include children at our ceremony and reception, other than those that are part of the entourage, due to constraints on our venue\'s capacity. We are looking forward to celebrating a Parents\' "Night Out" with you!',
+        "We kindly request that our wedding be an adults-only celebration, other than the children who are part of the entourage. We hope this allows everyone to relax and fully enjoy the day with us.",
     },
     {
       question:
@@ -191,26 +247,27 @@ function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
     {
       question: "Is there parking available?",
       answer:
-        "Yes, parking is available at the venue, and parking attendants, along with our coordinators, will assist you on the day.",
+        "Yes, parking is available at both the ceremony and reception venues. Please arrive a little early so you have time to park comfortably.",
     },
     {
       question: "What is the dress code?",
-      answer: `${dressTheme}. ${siteConfig.dressCode.note} You can find outfit inspiration and palette details in the Event Details section above.`,
+      answer:
+        "Please follow the attire guide in Event Details. Guests may wear a midi or cocktail dress, or a collared shirt with cream trousers, in Fern Green, Sage, Cosmic Latte, Jasmine, or Saffron. Kindly avoid white, black, and casual clothes or shoes.",
     },
     {
-      question: "Unplugged Ceremony",
+      question: "Will the ceremony be unplugged?",
       answer:
-        "EYES UP, PHONES DOWN, HEARTS OPEN.\n\nThe greatest gift you can give us during our ceremony is your presence. We respectfully request that guests refrain from taking photos or videos during the ceremony so our official photographers can capture every moment without distraction. We promise to share the beautiful photos with you afterward!\n\nOur professional photographers will be capturing every beautiful memory, and we promise to share the photos with everyone afterwards.",
+        "Yes. The greatest gift you can give us during our ceremony is your presence. Guests may take a few photos, but we kindly ask that it be kept minimal so our official photographers can capture every moment. We promise to share the photos with you afterward.",
     },
     {
       question: "Can I take photos or videos during the reception?",
       answer:
-        "Yes! While our I DO's will be unplugged, our reception will not be. As a couple who loves photos and memories, we would love for you to capture the fun moments throughout the evening. We prepared this celebration wholeheartedly and we want everyone to enjoy it fully.",
+        "Yes. While our ceremony will be mostly unplugged, we would love for you to capture the joy throughout the reception. We prepared this celebration wholeheartedly and we want everyone to enjoy it fully.",
     },
     {
       question: "When is the appropriate time to leave?",
       answer:
-        "It took us some time to plan for a heartfelt wedding that everyone would hopefully enjoy. We humbly request that you celebrate with us until the program ends. Let's laugh, take pictures, sing, and have fun!",
+        "It took us some time to plan a heartfelt wedding that everyone would hopefully enjoy. We humbly request that you celebrate with us until the program ends. Let's laugh, take pictures, and have fun!",
     },
     {
       question: "What if I have dietary restrictions or allergies?",
@@ -219,7 +276,8 @@ function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
     },
     {
       question: "How can I help the couple have a great time during their wedding?",
-      answer: `• Pray with us for favorable weather and the continuous blessings of our Lord as we enter this new chapter of our lives as husband and wife.\n\n• RSVP as soon as your schedule is cleared.\n\n• Dress appropriately and follow our ${dressTheme} dress code.\n\n• Be on time.\n\n• Follow the seating arrangement in the reception.\n\n• Stay until the end of the program.\n\n• Join the activities and enjoy!`,
+      answer:
+        "• Pray with us for favorable weather and the continuous blessings of our Lord as we enter this new chapter of our lives as husband and wife.\n\n• RSVP as soon as your schedule is cleared.\n\n• Dress according to the attire guide and color palette.\n\n• Arrive on time.\n\n• Follow the seating arrangement at the reception.\n\n• Stay until the end of the program.\n\n• Join the activities and enjoy!",
     },
   ]
 }
@@ -229,7 +287,7 @@ function FaqAnswer({ answer }: { answer: string | ReactNode }) {
     return (
       <div
         className={`font-goudy-italic ${ct.body} whitespace-pre-line`}
-        style={{ color: palette.body }}
+        style={{ color: faqPalette.body }}
       >
         {answer}
       </div>
@@ -239,7 +297,7 @@ function FaqAnswer({ answer }: { answer: string | ReactNode }) {
   return (
     <p
       className={`font-goudy-italic ${ct.body} whitespace-pre-line`}
-      style={{ color: palette.body }}
+      style={{ color: faqPalette.body }}
     >
       {answer}
     </p>
@@ -259,13 +317,13 @@ export function FAQ() {
     <section
       id="faq"
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative z-10 isolate overflow-hidden pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14`}
-      style={{ background: "var(--color-welcome-bg)" }}
+      style={{ background: creamWash }}
     >
       {/* Corner decorations */}
       <div className="pointer-events-none absolute left-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/deco/left-top-corner.png"
+          src="/decoration/left-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -273,7 +331,7 @@ export function FAQ() {
       <div className="pointer-events-none absolute right-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/deco/right-top-corner.png"
+          src="/decoration/right-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -281,7 +339,7 @@ export function FAQ() {
       <div className="pointer-events-none absolute bottom-0 left-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/deco/left-bottom-corner.png"
+          src="/decoration/left-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -289,7 +347,7 @@ export function FAQ() {
       <div className="pointer-events-none absolute bottom-0 right-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/deco/right-bottom-corner.png"
+          src="/decoration/right-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -321,7 +379,7 @@ export function FAQ() {
           style={cardStyle}
         >
           <div
-            className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-white/35 via-white/8 to-transparent"
+            className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-white/10 via-transparent to-transparent"
             aria-hidden
           />
 
@@ -335,31 +393,33 @@ export function FAQ() {
                   className="relative z-20 rounded-xl border transition-all duration-300"
                   style={{
                     borderColor: isOpen
-                      ? "color-mix(in srgb, var(--color-welcome-green) 35%, transparent)"
-                      : "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-                    backgroundColor: "var(--color-welcome-bg-soft)",
+                      ? "rgba(255, 255, 255, 0.42)"
+                      : "rgba(255, 255, 255, 0.16)",
+                    backgroundColor: isOpen
+                      ? "rgba(255, 255, 255, 0.12)"
+                      : "rgba(255, 255, 255, 0.06)",
                     boxShadow: isOpen
-                      ? "0 4px 16px color-mix(in srgb, var(--color-motif-deep) 8%, transparent)"
+                      ? "0 4px 16px rgba(0, 0, 0, 0.12)"
                       : "none",
                   }}
                 >
                   <button
                     onClick={() => toggleItem(index)}
                     className="group flex w-full items-center justify-between px-3 py-2.5 text-left outline-none transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:px-4 sm:py-3 md:px-5"
-                    style={{ outlineColor: palette.accent }}
+                    style={{ outlineColor: faqPalette.accent }}
                     aria-expanded={isOpen}
                     aria-controls={contentId}
                   >
                     <span
                       className={`${cinzel.className} ${ct.question} pr-3 font-semibold leading-snug transition-colors duration-200`}
-                      style={{ color: isOpen ? palette.accent : palette.heading }}
+                      style={{ color: isOpen ? faqPalette.accent : faqPalette.heading }}
                     >
                       {item.question}
                     </span>
                     <ChevronDown
                       size={18}
                       className={`h-4 w-4 flex-shrink-0 transition-transform duration-300 sm:h-5 sm:w-5 ${isOpen ? "rotate-180" : ""}`}
-                      style={{ color: isOpen ? palette.accent : palette.label }}
+                      style={{ color: isOpen ? faqPalette.accent : faqPalette.label }}
                       aria-hidden
                     />
                   </button>
@@ -375,8 +435,7 @@ export function FAQ() {
                       <div
                         className="border-t px-3 pb-3 pt-0 sm:px-4 sm:pb-4 md:px-5"
                         style={{
-                          borderColor:
-                            "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
+                          borderColor: "rgba(255, 255, 255, 0.18)",
                         }}
                       >
                         <FaqAnswer answer={item.answer} />

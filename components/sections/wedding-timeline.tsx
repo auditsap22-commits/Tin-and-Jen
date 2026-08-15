@@ -109,74 +109,59 @@ function TimelineTitle() {
 }
 
 function buildTimelineEvents(siteConfig: SiteConfig): TimelineEvent[] {
+  const ceremonyVenue = siteConfig.ceremony.location
   const receptionVenue = siteConfig.reception.location
 
   return [
-    // {
-    //   time: "2:30 PM",
-    //   title: "Arrival",
-    //   location: siteConfig.ceremony.location,
-    //   icon: GuestsIcon,
-    //   imageSrc: "/weddingtimeline/assemble.png",
-    // },
     {
-      time: "3:30 PM",
-      title: "Assembly  ",
-      location: siteConfig.ceremony.location,
+      time: siteConfig.ceremony.guestsTime,
+      title: "Assembly",
+      location: ceremonyVenue,
       icon: GuestsIcon,
       imageSrc: "/weddingtimeline/arrivalimage.png",
     },
     {
-      time: "4:00 PM",
-      title: "Processional ",
-      location: siteConfig.ceremony.location,
+      time: siteConfig.ceremony.time,
+      title: "Processional",
+      location: ceremonyVenue,
       icon: RingsIcon,
       imageSrc: "/weddingtimeline/WeddingCeremony.png",
-    }, 
+    },
     {
-      time: "5:00 PM",
+      time: "10:00 AM",
       title: "Photos",
-      location: siteConfig.ceremony.location,
+      location: ceremonyVenue,
       icon: RingsIcon,
       imageSrc: "/weddingtimeline/PhotoSession.png",
     },
-
     {
-      time: "5:30 PM",
+      time: "11:00 AM",
       title: "Cocktail Hour",
-      location: siteConfig.ceremony.location,
+      location: receptionVenue,
       icon: CocktailIcon,
       imageSrc: "/weddingtimeline/CockTailHour.png",
     },
-
     {
-      time: "6:00 PM",
+      time: siteConfig.reception.time,
       title: "Reception",
-      location: siteConfig.ceremony.location,
+      location: receptionVenue,
       icon: DinnerIcon,
       imageSrc: "/weddingtimeline/reception welcom.png",
     },
-    // {
-    //   time: "7:00 PM",
-    //   title: "Reception Program",
-    //   location: siteConfig.reception.location,
-    //   icon: FireworksIcon,
-    //   imageSrc: "/weddingtimeline/dance.png",
-    // },
     {
-      time: "7:00 PM",
+      time: "1:00 PM",
       title: "Dinner",
-      location: siteConfig.ceremony.location,
+      location: receptionVenue,
       icon: DinnerIcon,
       imageSrc: "/weddingtimeline/DinnerService.png",
     },
-     {
-      time: "8:30 PM",
-       title: "End of Program",
-     location: siteConfig.ceremony.location,
-     icon: DanceIcon,
-     imageSrc: "/weddingtimeline/SendOff.png",
-  },
+    {
+      time: "2:30 PM",
+      title: "End of Program",
+      location: receptionVenue,
+      icon: DanceIcon,
+      imageSrc: "/weddingtimeline/SendOff.png",
+    },
   ]
 }
 

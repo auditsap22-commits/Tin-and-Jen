@@ -38,7 +38,7 @@ const aboveTheBeyond = localFont({
 })
 
 const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] xl:max-w-[380px]"
+  "block h-auto w-auto max-w-[88px] sm:max-w-[108px] md:max-w-[124px] lg:max-w-[140px]"
 
 const detailText = {
   body: "var(--color-welcome-text)",
@@ -145,161 +145,115 @@ const ct = {
 } as const
 
 const attireGuide = {
-  sponsors: {
-    image: "/Details/entourage.png",
-imageAspect: "500/400",
-
-ladies: {
-  colors: [
-    "#9A52A6", // Orchid Purple
-    "#DF6B90", // Warm Rose Pink
-    "#F8C353", // Marigold Yellow
-    "#E76A32", // Tangerine Orange
-    "#ABC3DB", // Soft Sky Blue
-    "#988C38", // Olive Gold
-  ] as const,
-
-  description:
-    "Elegant floor-length formal gowns in a vibrant True Spring palette. Dresses may vary in style while maintaining a sophisticated and coordinated formal look.",
-},
-
-gentlemen: {
-  colors: [
-    "#F6F1E7", // Cream Barong
-    "#000000", // Black Trousers
-    "#1E1E1E", // Black Formal Shoes
-  ] as const,
-
-  description:
-    "Traditional long-sleeved Cream Barong Tagalog paired with tailored black trousers and polished black formal shoes for a timeless and elegant Filipino formal ensemble.",
-},
-  },
   entourage: {
-    image: "/Details/guest (2).png",
-    imageAspect: "500/400",
-    
+    image: "/Details/entourage-new.png",
+    imageAspect: "3/2",
     ladies: {
       colors: [
-        "#F8F3E8", // Champagne
-        "#F7E6C4", // Warm Beige
-        "#F8DFAE", // Soft Apricot
-        "#ABC3DB", // Soft Sky Blue (optional accent)
+        "#587042",
+        "#A9B494",
+        "#FAF7E6",
+        "#F8DE8C",
+        "#F6C531",
       ] as const,
-    
       description:
-        "Any style of elegant formal or semi-formal long gown in warm neutrals such as Champagne, Warm Beige, Soft Apricot, or Soft Sky Blue. Floral prints and subtle textures are welcome while keeping the overall look refined and sophisticated.",
+        "Please wear an elegant floor-length gown in Fern Green, Sage, Cosmic Latte, Jasmine, or Saffron. Silhouettes may vary, as long as the look remains formal and coordinated.",
     },
-    
     gentlemen: {
-      colors: [
-        "#000000", // Black Suit
-        "#FFFFFF", // White Dress Shirt
-        "#988C38", // Olive Gold Tie
-        "#DF6B90", // Warm Rose Tie (optional)
-      ] as const,
-    
+      colors: ["#FAF7E6", "#000000"] as const,
       description:
-        "Black or charcoal suit with a white long-sleeved dress shirt, paired with an Olive Gold or Warm Rose Pink necktie or bow tie and black formal shoes.",
+        "Gentlemen are requested to wear a long-sleeved Cream Barong Tagalog, paired with tailored black trousers and polished black formal shoes.",
     },
   },
   guests: {
-    image: "/Details/guestattire.png",
-    imageAspect: "500/400",
+    image: "/Details/guest.png",
+    imageAspect: "3/2",
     ladies: {
       colors: [
-        "#F6D6DE", // Blush Pink
-        "#EEC3CF", // Soft Rose
-        "#DFA8B8", // Dusty Pink
-        "#CD857D", // Light Blush
+        "#587042",
+        "#A9B494",
+        "#FAF7E6",
+        "#F8DE8C",
+        "#F6C531",
       ] as const,
       description:
-        "Any style of elegant formal dress or long gown in shades of blush pink. Pants, trousers, and jumpsuits are not permitted.",
+        "Ladies may wear a midi or cocktail dress in any color from our palette. We welcome a range of elegant styles, so long as they stay within the guide.",
     },
-    
     gentlemen: {
       colors: [
-        "#000000", // Black Coat & Pants
-        "#FFFFFF", // White Long Sleeve
+        "#587042",
+        "#A9B494",
+        "#FAF7E6",
+        "#F8DE8C",
+        "#F6C531",
       ] as const,
       description:
-        "Black suit coat, white long-sleeve dress shirt, black necktie, black dress pants, and black leather shoes. Only black suits and black pants are permitted.",
-    },
-  },
-  guests2: {
-    image: "/Details/guest (5).png",
-    imageAspect: "677/369",
-    ladies: {
-      colors: ["#C3878C", "#ECB4BC", "#EBA7B3", "#E8B3A7"] as const,
-      description: "Burgundy, Maroon, Dark Brown",
-    },
-    gentlemen: {
-      colors: ["#C3878C", "#ECB4BC", "#EBA7B3", "#E8B3A7"] as const,
-      description: "Burgundy, Maroon, Dark Brown",
+        "Gentlemen may wear a collared shirt in Fern Green, Sage, Cosmic Latte, Jasmine, or Saffron, paired with cream trousers and brown leather loafers.",
     },
   },
 } as const
 
 const dressCodePalette = [
   {
-    name: "PURPLE ORCHID",
-    pantone: "18-3531 TCX",
-    hex: "#9B4CB5",
-    rgb: "(155, 76, 181)",
+    name: "FERN GREEN",
+    pantone: "18-0525 TCX",
+    hex: "#587042",
+    rgb: "(88, 112, 66)",
   },
   {
-    name: "GOLDEN CYPRESS",
-    pantone: "18-0537 TCX",
-    hex: "#8A8D3B",
-    rgb: "(138, 141, 59)",
+    name: "SAGE",
+    pantone: "15-6310 TCX",
+    hex: "#A9B494",
+    rgb: "(169, 180, 148)",
   },
   {
-    name: "SANGRIA SUNSET",
-    pantone: "17-2233 TCX",
-    hex: "#E06C9A",
-    rgb: "(224, 108, 154)",
+    name: "COSMIC LATTE",
+    pantone: "11-0105 TCX",
+    hex: "#FAF7E6",
+    rgb: "(250, 247, 230)",
   },
   {
-    name: "LEMON DROP",
-    pantone: "13-0757 TCX",
-    hex: "#F2C94C",
-    rgb: "(242, 201, 76)",
+    name: "JASMINE",
+    pantone: "12-0738 TCX",
+    hex: "#F8DE8C",
+    rgb: "(248, 222, 140)",
   },
   {
-    name: "GOLDEN POPPY",
-    pantone: "16-1462 TCX",
-    hex: "#E9703A",
-    rgb: "(233, 112, 58)",
-  },
-  {
-    name: "NANTUCKET BREEZE",
-    pantone: "14-4005 TCX",
-    hex: "#A9C6DF",
-    rgb: "(169, 198, 223)",
+    name: "SAFFRON",
+    pantone: "14-0848 TCX",
+    hex: "#F6C531",
+    rgb: "(246, 197, 49)",
   },
 ] as const
 
 function DressCodePaletteSwatch({
   name,
-  pantone,
   hex,
-  rgb,
   isLast = false,
 }: (typeof dressCodePalette)[number] & { isLast?: boolean }) {
+  const n = Number.parseInt(hex.slice(1), 16)
+  const r = (n >> 16) & 255
+  const g = (n >> 8) & 255
+  const b = n & 255
+  const isLight = 0.299 * r + 0.587 * g + 0.114 * b > 165
+
   return (
     <div
       className={`flex min-w-0 flex-1 flex-col ${isLast ? "" : "border-r border-white"}`}
     >
       <div
-        className="relative flex min-h-[88px] w-full items-center justify-center sm:min-h-[108px] md:min-h-[128px] lg:min-h-[148px]"
+        className="relative flex min-h-[132px] w-full items-center justify-center sm:min-h-[168px] md:min-h-[200px] lg:min-h-[232px]"
         style={{ backgroundColor: hex }}
       >
         <span
-          className="text-[6px] font-semibold uppercase tracking-[0.08em] text-white sm:text-[7px] md:text-[8px] lg:text-[9px]"
+          className={`text-[6px] font-semibold uppercase tracking-[0.08em] sm:text-[7px] md:text-[8px] lg:text-[9px] ${
+            isLight ? "text-[#3D3429]" : "text-white"
+          }`}
           style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}
         >
           {name}
         </span>
-      </div>    
+      </div>
     </div>
   )
 }
@@ -313,7 +267,7 @@ const dressCodePalettePanelStyle = {
 function DressCodePaletteHeader() {
   return (
     <div
-      className="border-t px-3 py-5 sm:px-4 sm:py-6 md:px-5 md:py-7"
+      className="px-3 py-5 sm:px-4 sm:py-6 md:px-5 md:py-7"
       style={dressCodePalettePanelStyle}
     >
       <div className="mx-auto max-w-3xl text-center">
@@ -326,7 +280,7 @@ function DressCodePaletteHeader() {
           className={`${aboveTheBeyond.className} mt-1 text-lg leading-none sm:mt-1.5 sm:text-xl md:text-2xl`}
           style={{ color: "var(--color-motif-accent)" }}
         >
-          Long Gown and Barong Tagalog
+          Entourage and Guests
         </p>
 
         <div className="mx-auto mt-3 flex max-w-xs items-center justify-center gap-2 sm:mt-4 sm:max-w-sm md:max-w-md">
@@ -334,16 +288,25 @@ function DressCodePaletteHeader() {
           <Heart className="h-2.5 w-2.5 shrink-0 fill-[#3D3429]/40 text-[#3D3429]/40 sm:h-3 sm:w-3" aria-hidden />
           <span className="h-px flex-1 bg-[#3D3429]/30" />
         </div>
-
-        <p
-          className={`${cinzel.className} mt-3 text-[10px] font-bold uppercase tracking-[0.12em] sm:mt-4 sm:text-xs md:text-sm`}
-        >
-          Color Guide
-        </p>
-        <p className="font-goudy-italic mt-1.5 text-[10px] italic leading-relaxed sm:mt-2 sm:text-xs md:text-sm">
-          Please refer to the exact colors below for dress code.
-        </p>
       </div>
+    </div>
+  )
+}
+
+function DressCodePaletteCaption() {
+  return (
+    <div
+      className="px-3 py-5 text-center sm:px-4 sm:py-6 md:px-5 md:py-7"
+      style={dressCodePalettePanelStyle}
+    >
+      <p
+        className={`${cinzel.className} text-[10px] font-bold uppercase tracking-[0.12em] sm:text-xs md:text-sm`}
+      >
+        Color Guide
+      </p>
+      <p className="font-goudy-italic mt-1.5 text-[10px] italic leading-relaxed sm:mt-2 sm:text-xs md:text-sm">
+        Please refer to the exact colors above for dress code.
+      </p>
     </div>
   )
 }
@@ -351,22 +314,17 @@ function DressCodePaletteHeader() {
 function DressCodePaletteSwatches() {
   return (
     <div
-      className="-mx-4 w-[calc(100%+2rem)] px-3 sm:-mx-5 sm:w-[calc(100%+2.5rem)] sm:px-4 md:-mx-6 md:w-[calc(100%+3rem)] md:px-5"
-      style={dressCodePalettePanelStyle}
+      className="flex w-full border-t border-white"
+      role="img"
+      aria-label="Dress code color palette: Fern Green, Sage, Cosmic Latte, Jasmine, Saffron"
     >
-      <div
-        className="flex w-full border border-white"
-        role="img"
-        aria-label="Dress code color palette: Purple Orchid, Golden Cypress, Sangria Sunset, Lemon Drop, Golden Poppy, Nantucket Breeze"
-      >
-        {dressCodePalette.map((color, index) => (
-          <DressCodePaletteSwatch
-            key={color.hex}
-            {...color}
-            isLast={index === dressCodePalette.length - 1}
-          />
-        ))}
-      </div>
+      {dressCodePalette.map((color, index) => (
+        <DressCodePaletteSwatch
+          key={color.hex}
+          {...color}
+          isLast={index === dressCodePalette.length - 1}
+        />
+      ))}
     </div>
   )
 }
@@ -402,32 +360,34 @@ function CoupleImagesCarousel({
   rotationOffset: number
 }) {
   return (
-    <div className="mb-4 flex justify-center gap-2 sm:mb-5 sm:gap-2.5">
+    <div className="mb-4 flex w-full max-w-[min(100%,16.5rem)] justify-center gap-2.5 sm:mb-5 sm:max-w-[19rem] sm:gap-3">
       {coupleImages.map((image, index) => {
         const isActive = index === currentImageIndex
-        const baseRotation = index === 0 ? -5 : index === 1 ? 5 : index === 2 ? -3 : 3
+        const baseRotation = index === 0 ? -4 : index === 1 ? 4 : index === 2 ? -2 : 3
         const currentRotation = isActive
-          ? baseRotation + Math.sin((rotationOffset * Math.PI) / 180) * 2
+          ? baseRotation + Math.sin((rotationOffset * Math.PI) / 180) * 1.5
           : baseRotation
-        const scale = isActive ? "scale(1.1)" : "scale(1)"
-        const itemClass = `relative h-14 w-14 overflow-hidden rounded-lg border-2 shadow-md transition-all duration-700 ease-in-out sm:h-16 sm:w-16 ${isActive ? "z-10 scale-110" : "scale-100 opacity-70"}`
-        const imgClass = `object-cover transition-opacity duration-500 ${isActive ? "opacity-100" : "opacity-70"}`
 
         return (
           <div
             key={image}
-            className={itemClass}
+            className={`relative h-9 w-9 shrink-0 overflow-hidden rounded-md border sm:h-11 sm:w-11 md:h-12 md:w-12 ${
+              isActive ? "z-10" : "opacity-80"
+            }`}
             style={{
-              transform: `rotate(${currentRotation}deg) ${scale}`,
-              borderColor: "color-mix(in srgb, var(--color-motif-deep) 20%, transparent)",
+              transform: `rotate(${currentRotation}deg) scale(${isActive ? 1.38 : 1})`,
+              transition:
+                "transform 900ms cubic-bezier(0.22, 1, 0.36, 1), opacity 500ms ease",
+              borderColor: "rgba(255, 255, 255, 0.55)",
             }}
           >
             <Image
               src={image}
               alt={`Wedding couple ${index + 1}`}
               fill
-              className={imgClass}
-              sizes="(max-width: 640px) 56px, 64px"
+              className="object-cover object-center"
+              sizes="48px"
+              style={{ opacity: isActive ? 1 : 0.78 }}
             />
           </div>
         )
@@ -448,10 +408,13 @@ function ReminderCard({
   const panelStyle =
     variant === "accent"
       ? {
-          borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-          backgroundColor: "color-mix(in srgb, var(--color-welcome-bg-soft) 85%, var(--color-motif-cream))",
+          borderColor: "rgba(255, 255, 255, 0.36)",
+          backgroundColor: "rgba(255, 255, 255, 0.12)",
         }
-      : softPanelStyle
+      : {
+          borderColor: "rgba(255, 255, 255, 0.16)",
+          backgroundColor: "rgba(255, 255, 255, 0.06)",
+        }
 
   return (
     <div
@@ -460,13 +423,13 @@ function ReminderCard({
     >
       <h4
         className={`${cinzel.className} ${ct.reminderHead} mb-2 font-semibold uppercase tracking-[0.08em] sm:mb-2.5`}
-        style={{ color: detailText.heading }}
+        style={{ color: "#FFFFFF" }}
       >
         {title}
       </h4>
       <div
         className={`font-goudy-italic ${ct.reminderBody} leading-relaxed`}
-        style={{ color: detailText.body }}
+        style={{ color: "#F8F5EC" }}
       >
         {children}
       </div>
@@ -952,7 +915,7 @@ export function Details() {
         <div className="pointer-events-none absolute left-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/left-top-corner.png"
+            src="/decoration/left-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -960,7 +923,7 @@ export function Details() {
         <div className="pointer-events-none absolute right-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/right-top-corner.png"
+            src="/decoration/right-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -968,7 +931,7 @@ export function Details() {
         <div className="pointer-events-none absolute bottom-0 left-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/left-bottom-corner.png"
+            src="/decoration/left-bottom-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -976,7 +939,7 @@ export function Details() {
         <div className="pointer-events-none absolute bottom-0 right-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/deco/right-bottom-corner.png"
+            src="/decoration/right-bottom-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -1081,75 +1044,66 @@ export function Details() {
           </p>
         </div>
 
-        {/* Attire cards — Bridal Party, Principal Sponsors & Guests */}
+        {/* Attire cards — Entourage & Guests */}
         <div className="mb-6 grid grid-cols-1 items-start gap-6 sm:mb-8 sm:gap-8 md:mb-10">
-          <div className="mx-auto w-full max-w-5xl">
-          <AttireCard
-            title="Guests"
-            image={attireGuide.sponsors.image}
-            imageAspect={attireGuide.sponsors.imageAspect}
-            alt="Guests attire guide"
-            belowImage={<DressCodePaletteHeader />}
-          >
-            <div className="grid grid-cols-1 gap-5 sm:gap-6">
-              <AttirePaletteGroup
-                label="Ladies"
-                description={highlightAttirePhrase(
-                  attireGuide.sponsors.ladies.description,
-                  "Elegant floor-length formal gowns",
-                )}
-              />
+          <div className="mx-auto w-full max-w-5xl space-y-6 sm:space-y-8">
+            <AttireCard
+              title="Entourage"
+              image={attireGuide.entourage.image}
+              imageAspect={attireGuide.entourage.imageAspect}
+              alt="Entourage attire guide"
+            >
+              <div className="grid grid-cols-1 gap-5 sm:gap-6">
+                <AttirePaletteGroup
+                  label="Ladies"
+                  description={highlightAttirePhrase(
+                    attireGuide.entourage.ladies.description,
+                    "floor-length gown",
+                  )}
+                />
+                <AttirePaletteGroup
+                  label="Gentlemen"
+                  description={highlightAttirePhrase(
+                    attireGuide.entourage.gentlemen.description,
+                    "Cream Barong Tagalog",
+                  )}
+                />
+              </div>
+            </AttireCard>
+
+            <AttireCard
+              title="Guests"
+              image={attireGuide.guests.image}
+              imageAspect={attireGuide.guests.imageAspect}
+              alt="Guests attire guide"
+            >
+              <div className="grid grid-cols-1 gap-5 sm:gap-6">
+                <AttirePaletteGroup
+                  label="Ladies"
+                  description={highlightAttirePhrase(
+                    attireGuide.guests.ladies.description,
+                    "midi or cocktail dress",
+                  )}
+                />
+                <AttirePaletteGroup
+                  label="Gentlemen"
+                  description={highlightAttirePhrase(
+                    attireGuide.guests.gentlemen.description,
+                    "collared shirt",
+                  )}
+                />
+              </div>
+            </AttireCard>
+
+            <div
+              className="overflow-hidden rounded-xl border sm:rounded-2xl"
+              style={cardStyle}
+            >
+              <DressCodePaletteHeader />
               <DressCodePaletteSwatches />
-              <AttirePaletteGroup
-                label="Gentlemen"
-                description={highlightAttirePhrase(
-                  attireGuide.sponsors.gentlemen.description,
-                  "Cream Barong Tagalog",
-                )}
-              />
+              <DressCodePaletteCaption />
             </div>
-          </AttireCard>
           </div>
-
-          {/* <AttireCard
-            title="Guests"
-            image={attireGuide.entourage.image}
-            imageAspect={attireGuide.entourage.imageAspect}
-            alt="Guests attire guide"
-          >
-            <div className="grid grid-cols-1 gap-5 sm:gap-6">
-              <AttirePaletteGroup
-                label="Ladies"
-                colors={attireGuide.entourage.ladies.colors}
-                description={attireGuide.entourage.ladies.description}
-              />
-              <AttirePaletteGroup
-                label="Gentlemen"
-                colors={attireGuide.entourage.gentlemen.colors}
-                description={attireGuide.entourage.gentlemen.description}
-              />
-            </div>
-          </AttireCard> */}
-
-          {/* <AttireCard
-            title="Guests"
-            image={attireGuide.guests.image}
-            imageAspect={attireGuide.guests.imageAspect}
-            alt="Guests attire guide"
-          >
-            <div className="grid grid-cols-1 gap-5 sm:gap-6">
-              <AttirePaletteGroup
-                label="Ladies"
-                colors={attireGuide.guests.ladies.colors}
-                description={attireGuide.guests.ladies.description}
-              />
-              <AttirePaletteGroup
-                label="Gentlemen"
-                colors={attireGuide.guests.gentlemen.colors}
-                description={attireGuide.guests.gentlemen.description}
-              />
-            </div>
-          </AttireCard> */}
         </div>
 
         {/* <div
@@ -1173,12 +1127,19 @@ export function Details() {
         </div> */}
 
         {/* Gentle Reminders */}
-        <div className="relative mx-auto mt-6 max-w-4xl px-3 sm:mt-8 sm:px-5">
+        <div className="relative mx-auto mt-6 max-w-3xl px-3 sm:mt-8 sm:max-w-4xl sm:px-5">
           <div
-            className="relative overflow-hidden rounded-xl border sm:rounded-2xl"
-            style={cardStyle}
+            className="relative overflow-hidden rounded-t-full"
+            style={{
+              backgroundColor: "#5d6f47",
+              boxShadow: "0 18px 48px color-mix(in srgb, #5d6f47 28%, transparent)",
+            }}
           >
-            <div className="relative z-10 px-4 py-5 text-center sm:px-6 sm:py-6">
+            <div
+              className="pointer-events-none absolute inset-3 z-30 rounded-t-full border border-white sm:inset-4 md:inset-5"
+              aria-hidden
+            />
+            <div className="relative z-20 flex flex-col items-center px-5 pb-10 pt-[26%] text-center sm:px-8 sm:pb-12 md:px-12 md:pb-14 lg:px-14">
               <CoupleImagesCarousel
                 coupleImages={COUPLE_IMAGES}
                 currentImageIndex={currentImageIndex}
@@ -1187,13 +1148,13 @@ export function Details() {
 
               <h3
                 className={`${cinzel.className} ${ct.sectionTitle} font-semibold tracking-[0.14em]`}
-                style={{ color: "var(--color-welcome-navy)" }}
+                style={{ color: "#FFFFFF" }}
               >
                 Gentle Reminders
               </h3>
               <p
                 className={`font-goudy-italic ${ct.body} mx-auto mt-2 max-w-lg leading-relaxed`}
-                style={{ color: detailText.body }}
+                style={{ color: "#F8F5EC" }}
               >
                 A few thoughtful notes to help everyone enjoy our celebration.
               </p>
@@ -1222,7 +1183,7 @@ export function Details() {
                       Kindly follow our suggested attire and color palette above to match our wedding
                       theme.
                     </p>
-                    <ColorPalette colors={attireGuide.sponsors.ladies.colors} />
+                    <ColorPalette colors={attireGuide.guests.ladies.colors} />
                     <p>Strictly no casual clothes, shoes, or white-colored attire.</p>
                   </div>
                 </ReminderCard>

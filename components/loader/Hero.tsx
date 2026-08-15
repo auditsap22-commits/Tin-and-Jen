@@ -35,7 +35,7 @@ const POLAROID_PHOTOS = [
 ];
 
 const CORNER_DECO_CLASS =
-  'block h-auto w-auto max-w-[200px] sm:max-w-[245px] md:max-w-[280px] opacity-75';
+  'block h-auto w-auto max-w-[128px] sm:max-w-[156px] md:max-w-[180px] opacity-75';
 
 const photoInteractEase: Transition = { duration: 0.38, ease: [0.22, 1, 0.36, 1] };
 const focusLiftEase: Transition = { duration: 1.15, ease: [0.22, 1, 0.36, 1] };
@@ -490,19 +490,19 @@ export const Hero: React.FC<HeroProps> = ({
 
       <div className="env-invite-corner env-invite-corner--tl pointer-events-none" aria-hidden="true">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/decoration/deco/left-top-corner.png" alt="" className={CORNER_DECO_CLASS} />
+        <img src="/decoration/left-top-corner.png" alt="" className={CORNER_DECO_CLASS} />
       </div>
       <div className="env-invite-corner env-invite-corner--tr pointer-events-none" aria-hidden="true">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/decoration/deco/right-top-corner.png" alt="" className={CORNER_DECO_CLASS} />
+        <img src="/decoration/right-top-corner.png" alt="" className={CORNER_DECO_CLASS} />
       </div>
       <div className="env-invite-corner env-invite-corner--bl pointer-events-none" aria-hidden="true">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/decoration/deco/left-bottom-corner.png" alt="" className={CORNER_DECO_CLASS} />
+        <img src="/decoration/left-bottom-corner.png" alt="" className={CORNER_DECO_CLASS} />
       </div>
       <div className="env-invite-corner env-invite-corner--br pointer-events-none" aria-hidden="true">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/decoration/deco/right-bottom-corner.png" alt="" className={CORNER_DECO_CLASS} />
+        <img src="/decoration/right-bottom-corner.png" alt="" className={CORNER_DECO_CLASS} />
       </div>
 
       <div className="env-invite-ghost-date pointer-events-none select-none" aria-hidden="true">
