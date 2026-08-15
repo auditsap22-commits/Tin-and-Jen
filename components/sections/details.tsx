@@ -378,7 +378,7 @@ function CoupleImagesCarousel({
               transform: `rotate(${currentRotation}deg) scale(${isActive ? 1.38 : 1})`,
               transition:
                 "transform 900ms cubic-bezier(0.22, 1, 0.36, 1), opacity 500ms ease",
-              borderColor: "rgba(255, 255, 255, 0.55)",
+              borderColor: "color-mix(in srgb, var(--color-motif-deep) 18%, transparent)",
             }}
           >
             <Image
@@ -399,37 +399,21 @@ function CoupleImagesCarousel({
 function ReminderCard({
   title,
   children,
-  variant = "soft",
 }: {
   title: string
   children: ReactNode
-  variant?: "soft" | "accent"
 }) {
-  const panelStyle =
-    variant === "accent"
-      ? {
-          borderColor: "rgba(255, 255, 255, 0.36)",
-          backgroundColor: "rgba(255, 255, 255, 0.12)",
-        }
-      : {
-          borderColor: "rgba(255, 255, 255, 0.16)",
-          backgroundColor: "rgba(255, 255, 255, 0.06)",
-        }
-
   return (
-    <div
-      className="rounded-xl border p-4 shadow-sm sm:rounded-2xl sm:p-5"
-      style={panelStyle}
-    >
+    <div className="px-1 py-3.5 sm:py-4">
       <h4
         className={`${cinzel.className} ${ct.reminderHead} mb-2 font-semibold uppercase tracking-[0.08em] sm:mb-2.5`}
-        style={{ color: "#FFFFFF" }}
+        style={{ color: "var(--color-welcome-navy)" }}
       >
         {title}
       </h4>
       <div
         className={`font-goudy-italic ${ct.reminderBody} leading-relaxed`}
-        style={{ color: "#F8F5EC" }}
+        style={{ color: "var(--color-welcome-text)" }}
       >
         {children}
       </div>
@@ -1128,72 +1112,65 @@ export function Details() {
 
         {/* Gentle Reminders */}
         <div className="relative mx-auto mt-6 max-w-3xl px-3 sm:mt-8 sm:max-w-4xl sm:px-5">
-          <div
-            className="relative overflow-hidden rounded-t-full"
-            style={{
-              backgroundColor: "#5d6f47",
-              boxShadow: "0 18px 48px color-mix(in srgb, #5d6f47 28%, transparent)",
-            }}
-          >
-            <div
-              className="pointer-events-none absolute inset-3 z-30 rounded-t-full border border-white sm:inset-4 md:inset-5"
-              aria-hidden
+          <div className="relative z-20 flex flex-col items-center px-5 pb-8 pt-6 text-center sm:px-8 sm:pb-10 sm:pt-8 md:px-12">
+            <CoupleImagesCarousel
+              coupleImages={COUPLE_IMAGES}
+              currentImageIndex={currentImageIndex}
+              rotationOffset={rotationOffset}
             />
-            <div className="relative z-20 flex flex-col items-center px-5 pb-10 pt-[26%] text-center sm:px-8 sm:pb-12 md:px-12 md:pb-14 lg:px-14">
-              <CoupleImagesCarousel
-                coupleImages={COUPLE_IMAGES}
-                currentImageIndex={currentImageIndex}
-                rotationOffset={rotationOffset}
-              />
 
-              <h3
-                className={`${cinzel.className} ${ct.sectionTitle} font-semibold tracking-[0.14em]`}
-                style={{ color: "#FFFFFF" }}
-              >
-                Gentle Reminders
-              </h3>
-              <p
-                className={`font-goudy-italic ${ct.body} mx-auto mt-2 max-w-lg leading-relaxed`}
-                style={{ color: "#F8F5EC" }}
-              >
-                A few thoughtful notes to help everyone enjoy our celebration.
-              </p>
+            <h3
+              className={`${cinzel.className} ${ct.sectionTitle} font-semibold tracking-[0.14em]`}
+              style={{ color: "var(--color-welcome-navy)" }}
+            >
+              Gentle Reminders
+            </h3>
+            <p
+              className={`font-goudy-italic ${ct.body} mx-auto mt-2 max-w-lg leading-relaxed`}
+              style={{ color: "var(--color-welcome-text)" }}
+            >
+              A few thoughtful notes to help everyone enjoy our celebration.
+            </p>
 
-              <div className="mx-auto mt-4 max-w-2xl space-y-3 sm:mt-5 sm:space-y-4">
-                <ReminderCard title="Adults-Only Celebration" variant="accent">
-                  <p>
-                    We kindly request that our wedding be an adults-only occasion. We hope this allows
-                    everyone to relax and fully enjoy the celebration with us.
-                  </p>
-                </ReminderCard>
-
-                <ReminderCard title="Unplugged Ceremony">
-                  <p>
-                    We&apos;re having a mostly unplugged ceremony. Guests may take photos, but we kindly
-                    ask that it be kept minimal. Please avoid blocking or crowding our official
-                    photographers so they can capture the special moments. We&apos;d love for everyone
-                    to stay present and share the moment with us. Don&apos;t worry—professional photos
-                    will be shared with you after the event. Thank you for your understanding.
-                  </p>
-                </ReminderCard>
-
-                <ReminderCard title="Strictly Formal" variant="accent">
-                  <div className="space-y-2.5">
-                    <p>
-                      Kindly follow our suggested attire and color palette above to match our wedding
-                      theme.
-                    </p>
-                    <ColorPalette colors={attireGuide.guests.ladies.colors} />
-                    <p>Strictly no casual clothes, shoes, or white-colored attire.</p>
-                  </div>
-                </ReminderCard>
-
-                <ReminderCard title="Arrival">
+            <div
+              className="mx-auto mt-2 w-full max-w-2xl divide-y sm:mt-3"
+              style={{
+                borderColor: "color-mix(in srgb, var(--color-motif-deep) 12%, transparent)",
+              }}
+            >
+              <ReminderCard title="Adults-Only Celebration">
                 <p>
-  To ensure everything runs smoothly, please arrive at {siteConfig.ceremony.guestsTime}. This will give you enough time to find your seat, settle in comfortably, and fully enjoy the beautiful ceremony before it begins at {siteConfig.ceremony.time}. We truly appreciate your punctuality and look forward to celebrating this special moment with you.
-</p>
-                </ReminderCard>
-              </div>
+                  We kindly request that our wedding be an adults-only occasion. We hope this allows
+                  everyone to relax and fully enjoy the celebration with us.
+                </p>
+              </ReminderCard>
+
+              <ReminderCard title="Unplugged Ceremony">
+                <p>
+                  We&apos;re having a mostly unplugged ceremony. Guests may take photos, but we kindly
+                  ask that it be kept minimal. Please avoid blocking or crowding our official
+                  photographers so they can capture the special moments. We&apos;d love for everyone
+                  to stay present and share the moment with us. Don&apos;t worry—professional photos
+                  will be shared with you after the event. Thank you for your understanding.
+                </p>
+              </ReminderCard>
+
+              <ReminderCard title="Strictly Formal">
+                <div className="space-y-2.5">
+                  <p>
+                    Kindly follow our suggested attire and color palette above to match our wedding
+                    theme.
+                  </p>
+                  <ColorPalette colors={attireGuide.guests.ladies.colors} />
+                  <p>Strictly no casual clothes, shoes, or white-colored attire.</p>
+                </div>
+              </ReminderCard>
+
+              <ReminderCard title="Arrival">
+                <p>
+                  To ensure everything runs smoothly, please arrive at {siteConfig.ceremony.guestsTime}. This will give you enough time to find your seat, settle in comfortably, and fully enjoy the beautiful ceremony before it begins at {siteConfig.ceremony.time}. We truly appreciate your punctuality and look forward to celebrating this special moment with you.
+                </p>
+              </ReminderCard>
             </div>
           </div>
         </div>
