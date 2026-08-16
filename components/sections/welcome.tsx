@@ -19,6 +19,8 @@ const C = {
   paper: "#f7f3e9",
 } as const
 
+const goldLine = `color-mix(in srgb, ${C.gold} 55%, transparent)`
+
 const WEDDING_BRAND = [
   "God wrote our story.",
   "He guided our journey.",
@@ -53,18 +55,18 @@ function OrnamentalDivider({ compact = false }: { compact?: boolean }) {
       <span
         className={`h-px ${compact ? "w-6 sm:w-10" : "w-8 sm:w-12"}`}
         style={{
-          background: `linear-gradient(to right, transparent, ${C.gold})`,
+          background: `linear-gradient(to right, transparent, ${goldLine}, transparent)`,
         }}
       />
       <span
         className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1"
-        style={{ background: C.gold }}
+        style={{ backgroundColor: goldLine }}
         aria-hidden
       />
       <span
         className={`h-px ${compact ? "w-6 sm:w-10" : "w-8 sm:w-12"}`}
         style={{
-          background: `linear-gradient(to left, transparent, ${C.gold})`,
+          background: `linear-gradient(to left, transparent, ${goldLine}, transparent)`,
         }}
       />
     </div>
@@ -124,7 +126,7 @@ function LayeredWelcomeTitle() {
         className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] md:tracking-[0.14em]`}
         style={{
           fontSize: "var(--welcome-size)",
-          color: C.navy,
+          color: C.goldBright,
         }}
       >
         Welcome
@@ -135,7 +137,7 @@ function LayeredWelcomeTitle() {
         className={`${aboveTheBeyond.className} relative z-10 mx-auto block w-fit max-w-full px-1 leading-[0.88] sm:leading-[0.9]`}
         style={{
           fontSize: "var(--script-size)",
-          color: C.gold,
+          color: C.goldSoft,
         }}
       >
         to our love story
@@ -154,8 +156,8 @@ function WeddingBrand() {
         className={`${theSeasons.className} pointer-events-none absolute -top-1 left-0 leading-none select-none sm:-top-2`}
         style={{
           fontSize: "3.25rem",
-          color: C.gold,
-          opacity: 0.55,
+          color: C.goldBright,
+          opacity: 0.7,
         }}
       >
         “
@@ -165,8 +167,8 @@ function WeddingBrand() {
         className={`${theSeasons.className} pointer-events-none absolute -bottom-4 right-0 leading-none select-none sm:-bottom-5`}
         style={{
           fontSize: "3.25rem",
-          color: C.gold,
-          opacity: 0.55,
+          color: C.goldBright,
+          opacity: 0.7,
         }}
       >
         ”
@@ -186,7 +188,7 @@ function WeddingBrand() {
           <p
             key={line}
             className={`${cinzel.className} text-[0.72rem] font-medium uppercase tracking-[0.22em] sm:text-[0.78rem] sm:tracking-[0.26em]`}
-            style={{ color: C.navy }}
+            style={{ color: C.gold }}
           >
             {line}
           </p>
@@ -195,7 +197,7 @@ function WeddingBrand() {
 
       <p
         className={`${cinzel.className} mt-3 text-[0.82rem] font-semibold uppercase tracking-[0.28em] sm:mt-3.5 sm:text-[0.9rem] sm:tracking-[0.32em]`}
-        style={{ color: C.gold }}
+        style={{ color: C.goldBright }}
       >
         Two become one.
       </p>
@@ -221,20 +223,24 @@ export function Welcome() {
           transition={{ duration: 0.65, ease: [0.22, 0.61, 0.36, 1] }}
           className="relative min-w-0 overflow-visible rounded-lg border px-4 pt-6 pb-10 @container/welcome sm:rounded-xl sm:px-7 sm:pt-7 sm:pb-12 md:rounded-2xl md:px-8 md:pt-8 md:pb-14"
           style={{
-            background: `
-              radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.goldSoft} 22%, transparent) 0%, transparent 55%),
-              linear-gradient(180deg, ${C.paper} 0%, #faf7ef 48%, ${C.paper} 100%)
-            `,
-            borderColor: `color-mix(in srgb, ${C.gold} 28%, transparent)`,
-            boxShadow:
-              `0 8px 28px color-mix(in srgb, ${C.navy} 12%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)`,
+            background: `linear-gradient(180deg, color-mix(in srgb, ${C.goldSoft} 28%, ${C.paper}) 0%, ${C.paper} 48%, color-mix(in srgb, ${C.gold} 10%, ${C.paper}) 100%)`,
+            borderColor: goldLine,
+            boxShadow: `0 12px 36px color-mix(in srgb, ${C.navy} 28%, transparent), inset 0 1px 0 color-mix(in srgb, ${C.goldSoft} 55%, transparent)`,
           }}
         >
           <div
             className="wedding-frame-inner hidden min-[400px]:block"
             aria-hidden
             style={{
-              borderColor: `color-mix(in srgb, ${C.navy} 22%, transparent)`,
+              borderColor: goldLine,
+            }}
+          />
+
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-[inherit]"
+            style={{
+              background: `linear-gradient(135deg, color-mix(in srgb, ${C.goldSoft} 22%, transparent) 0%, transparent 48%)`,
             }}
           />
 
@@ -246,7 +252,7 @@ export function Welcome() {
             }}
           />
 
-          <header className="relative overflow-visible space-y-3 px-1 pt-4 pb-6 sm:space-y-3.5 sm:px-2 sm:pt-5 sm:pb-7 md:space-y-4 md:pt-6 md:pb-8">
+          <header className="relative z-10 overflow-visible space-y-3 px-1 pt-4 pb-6 sm:space-y-3.5 sm:px-2 sm:pt-5 sm:pb-7 md:space-y-4 md:pt-6 md:pb-8">
             <CoupleLabel groom={groomName} bride={brideName} />
             <LayeredWelcomeTitle />
             <div className="pt-2 sm:pt-2.5">
@@ -254,7 +260,7 @@ export function Welcome() {
             </div>
           </header>
 
-          <div className="relative mx-4 space-y-5 text-center sm:mx-6 sm:space-y-6 md:mx-7 md:space-y-7">
+          <div className="relative z-10 mx-4 space-y-5 text-center sm:mx-6 sm:space-y-6 md:mx-7 md:space-y-7">
             <WeddingBrand />
 
             <OrnamentalDivider compact />
@@ -270,7 +276,7 @@ export function Welcome() {
                 <figcaption className="mt-2 sm:mt-2.5">
                   <cite
                     className={`${cinzel.className} ${sectionType.label} not-italic uppercase tracking-[0.2em] sm:tracking-[0.24em]`}
-                    style={{ color: C.gold }}
+                    style={{ color: C.goldBright }}
                   >
                     Isaiah 60:22
                   </cite>
@@ -322,7 +328,7 @@ export function Welcome() {
               <footer className="space-y-2 px-1 pt-4 pb-2 sm:space-y-2.5 sm:px-2 sm:pt-5 sm:pb-3 md:pt-6 md:pb-4">
                 <p
                   className={`${aboveTheBeyond.className} ${sectionType.script}`}
-                  style={{ color: C.gold }}
+                  style={{ color: C.goldSoft }}
                 >
                   With all our love,
                 </p>

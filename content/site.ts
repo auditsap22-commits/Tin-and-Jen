@@ -10,7 +10,7 @@ export const siteConfig = {
     groom: "Marion Paul Serrano", //Ltryl B. Benitez
     groomNickname: "JEN",
     monogram:"/monogram/the-monogram.png" ,//Ltryl
-    backgroundMusic:"/background_music/Mike Mains & The Branches - I Love You Always Forever (Lyric Video).mp3"
+    backgroundMusic:"/background_music/Palagi - Tj Monterde  Violin Cover.mp3"
   },
   googleAPI:{
     messageForm: "https://docs.google.com/forms/d/e/1FAIpQLSdKkO4fsBXegi8lri4F0wR9tahjz3XvmkiOeaYogtKE4rFvOA/formResponse",   //done
@@ -209,7 +209,7 @@ Now, as they prepare to say yes before God and the people they love most, Cather
     title: "A Playlist from our hearts",
     subtitle: "Songs that have been part of our journey together",
     playlistName: "Jen and Tin Wedding",
-    spotifyTitle: "Paul and Ana",
+    spotifyTitle: "Jen and Tin Wedding",
     curator: "Lance",
     coverUrl:
       "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da846306cebfbcee35881606468d",
