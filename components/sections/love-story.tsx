@@ -121,13 +121,13 @@ export function LoveStory() {
         layout="image-left"
         isFirst={true}
         title="How We Met"
-        imageSrc="/mobile-background/couple (4).webp"
+        imageSrc="/mobile-background/couple (1).jpeg"
         text={
           <>
             <p
               className={`${cinzel.className} mb-3 text-[0.62rem] font-semibold uppercase tracking-[0.28em] sm:mb-4 sm:text-[0.7rem]`}
             >
-              Chapter 1
+           
             </p>
             <p className="mb-4">Every love story begins differently.</p>
             <p className="mb-4">Some start with a grand moment. Some with a single conversation.</p>
@@ -144,7 +144,7 @@ export function LoveStory() {
       <StorySection
         theme="dark"
         layout="image-right"
-        imageSrc="/mobile-background/couple (2).webp"
+        imageSrc="/mobile-background/couple (1).jpg"
         text={
           <>
             <p className="mb-4">
@@ -163,7 +163,7 @@ export function LoveStory() {
       <StorySection
         theme="light"
         layout="image-left"
-        imageSrc="/mobile-background/couple (21).webp"
+        imageSrc="/mobile-background/couple (2).jpeg"
         text={
           <>
             <p className="mb-4">Life went on.</p>
@@ -179,7 +179,7 @@ export function LoveStory() {
       <StorySection
         theme="dark"
         layout="image-right"
-        imageSrc="/mobile-background/couple (22).webp"
+        imageSrc="/mobile-background/couple (2).jpg"
         text={
           <>
             <p className="mb-4">Then came the day everything began to change.</p>
@@ -199,7 +199,7 @@ export function LoveStory() {
       <StorySection
         theme="light"
         layout="image-left"
-        imageSrc="/mobile-background/couple (23).webp"
+        imageSrc="/mobile-background/couple (3).jpeg"
         text={
           <>
             <p className="mb-4">That short trip became our very first real conversation.</p>
@@ -212,7 +212,7 @@ export function LoveStory() {
       <StorySection
         theme="dark"
         layout="image-right"
-        imageSrc="/mobile-background/couple (9).webp"
+        imageSrc="/mobile-background/couple (3).jpg"
         text={
           <>
             <p className="mb-4 italic">&ldquo;Ingat sa pag-uwi. 😊&rdquo;</p>
@@ -226,7 +226,7 @@ export function LoveStory() {
         theme="light"
         layout="image-left"
         isLast={true}
-        imageSrc="/mobile-background/couple (15).webp"
+        imageSrc="/mobile-background/couple (4).jpg"
         text={
           <>
             <p className="mb-4">Looking back now, I smile whenever I remember that message.</p>

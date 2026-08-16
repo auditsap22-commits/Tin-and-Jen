@@ -101,7 +101,7 @@ export default function MessageWallDisplay({ messages, loading }: MessageWallDis
           className={`font-goudy-italic mx-auto mb-5 max-w-md sm:mb-6 ${sectionType.textRelaxed}`}
           style={{ color: C.goldSoft }}
         >
-          Be the first to leave a note for the happy couple.
+          Be the first to leave a short note for J & C.
         </p>
         <div className="flex justify-center">
           <span

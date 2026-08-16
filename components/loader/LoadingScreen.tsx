@@ -395,14 +395,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
             ) : null}
           </motion.div>
 
-          <motion.p
-            className="loading-screen__script"
-            initial={reduceMotion ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, ease: entryEase, delay: textDelay + 0.46 }}
-          >
-            reception to follow
-          </motion.p>
+          
 
           <div className="loading-screen__footer">
             <motion.div

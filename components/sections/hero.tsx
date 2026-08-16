@@ -255,13 +255,7 @@ export function Hero() {
             ) : null}
           </motion.div>
 
-          <motion.p
-            className="mt-6 font-goudy-italic text-[0.92rem] italic sm:mt-7 sm:text-[1rem]"
-            style={{ color: C.goldSoft }}
-            {...fadeUp(0.46)}
-          >
-            Dinner and dancing to follow
-          </motion.p>
+        
 
           <motion.a
             href="#guest-list"

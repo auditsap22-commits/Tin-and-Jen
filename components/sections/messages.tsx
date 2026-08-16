@@ -113,7 +113,7 @@ function MessagesTitle() {
           color: C.goldBright,
         }}
       >
-        Love Notes and Prayers
+        Messages for JC
       </span>
       <span
         aria-hidden
@@ -123,17 +123,15 @@ function MessagesTitle() {
           color: C.goldSoft,
         }}
       >
-        Share your love with us
+        Love notes & prayers
       </span>
-      <span className="sr-only">Share your love with us</span>
+      <span className="sr-only">Love notes and prayers</span>
     </h2>
   )
 }
 
 function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
   const siteConfig = useSiteConfig()
-  const { brideNickname, groomNickname } = siteConfig.couple
-  const coupleDisplayName = `${groomNickname} & ${brideNickname}`
 
   const formRef = useRef<HTMLFormElement>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -247,7 +245,7 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
               Share Your Love
             </h3>
             <p className={`font-goudy-italic ${sectionType.text}`} style={{ color: palette.body }}>
-              Leave a note for {coupleDisplayName} to read and keep.
+              Leave a short note for J & C.
             </p>
           </div>
 
@@ -310,7 +308,7 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
                 }}
                 onFocus={() => setFocusedField("message")}
                 onBlur={() => setFocusedField(null)}
-                placeholder={`Write your wishes, prayer, or kind words for ${coupleDisplayName}...`}
+                placeholder="Write your wishes, prayer, or kind words for J & C..."
                 className={`message-form-textarea ${inputClass("message")} min-h-[90px] resize-none placeholder:leading-relaxed sm:min-h-[110px] md:min-h-[130px]`}
                 style={{
                   color: palette.body,
@@ -356,10 +354,6 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
 }
 
 export function Messages() {
-  const siteConfig = useSiteConfig()
-  const { brideNickname, groomNickname } = siteConfig.couple
-  const coupleDisplayName = `${groomNickname} & ${brideNickname}`
-
   const [messages, setMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState(false)
 
@@ -408,7 +402,7 @@ export function Messages() {
             className={`font-goudy-italic mx-auto mt-4 max-w-2xl px-2 sm:mt-5 md:mt-6 ${sectionType.textRelaxed}`}
             style={{ color: C.goldSoft }}
           >
-            Share a short note, wish, or prayer for {coupleDisplayName}. Every message becomes part of our story
+            Leave a short note for J & C. Every wish and prayer becomes part of their story forever.
           </p>
           <div className="flex items-center justify-center pt-3 sm:pt-4">
             <span className="h-px w-16 sm:w-24 md:w-32" style={{ background: goldLine }} />

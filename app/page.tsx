@@ -19,6 +19,7 @@ import { FAQ } from "@/components/sections/faq"
 import { GuestInformation } from "@/components/sections/guest-information"
 import { Footer } from "@/components/sections/footer"
 import { LoveStory } from "@/components/sections/love-story"
+import { ProposalVideo } from "@/components/sections/proposal-video"
 import { WeddingPlaylist } from "@/components/sections/wedding-playlist"
 import { Hero as InvitationHero } from "@/components/loader/Hero"
 import { LoadingScreen } from "@/components/loader/LoadingScreen"
@@ -218,8 +219,9 @@ export default function Home() {
                 transition={cinematicEntry ? undefined : { duration: 0.01 }}
               >
               <Welcome />
-               {/* <CoupleVideo />  */}
+               <CoupleVideo /> 
               <LoveStory />
+              <ProposalVideo />
               <Countdown />
               <Gallery />
               <VideoMessage />

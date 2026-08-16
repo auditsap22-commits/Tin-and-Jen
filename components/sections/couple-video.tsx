@@ -3,11 +3,17 @@
 import { useState, useEffect, useRef } from "react"
 import { motion } from "motion/react"
 import { Play } from "lucide-react"
-import { useAudio } from "@/contexts/audio-context"
-import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
+import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
 import Image from "next/image"
 import React from "react"
+import { useAudio } from "@/contexts/audio-context"
+import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+})
 
 const theSeasons = localFont({
   src: "../../Font/Fontspring-DEMO-theseasons-reg.otf",
@@ -21,25 +27,15 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
-const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[120px] sm:max-w-[160px] md:max-w-[220px] lg:max-w-[260px]"
+const NAVY = "#04103B"
+const GOLD = "#AB832E"
 
-const palette = {
-  body: "var(--color-welcome-text)",
-  heading: "var(--color-welcome-navy)",
-  accent: "var(--color-welcome-green)",
+const DECO = {
+  top: "/decoration/deco/top-center-decoration.png",
+  bl: "/decoration/deco/left-bottom-small.png",
+  br: "/decoration/deco/right-bottom-small.png",
 } as const
 
-const cardStyle = {
-  background: "var(--color-welcome-bg)",
-  borderWidth: "1px",
-  borderStyle: "solid" as const,
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-  boxShadow:
-    "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
-}
-
-// YouTube Player API types
 declare global {
   interface Window {
     YT: any
@@ -53,16 +49,18 @@ function OrnamentalDivider() {
       <span
         className="h-px w-6 sm:w-10"
         style={{
-          background:
-            "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent))",
+          background: `linear-gradient(to right, transparent, ${GOLD})`,
         }}
       />
-      <span className="h-0.5 w-0.5 rounded-full bg-motif-deep/45 sm:h-1 sm:w-1" aria-hidden />
+      <span
+        className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1"
+        style={{ backgroundColor: GOLD }}
+        aria-hidden
+      />
       <span
         className="h-px w-6 sm:w-10"
         style={{
-          background:
-            "linear-gradient(to left, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent))",
+          background: `linear-gradient(to left, transparent, ${GOLD})`,
         }}
       />
     </div>
@@ -81,22 +79,20 @@ function CoupleVideoTitle() {
       }
     >
       <span
-        className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] md:tracking-[0.14em]`}
+        className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] md:tracking-[0.14em] pb-1 sm:pb-1.5`}
         style={{
           fontSize: "var(--title-size)",
-          color: palette.heading,
+          color: GOLD,
         }}
       >
         A Glimpse of Our Love
       </span>
       <span
         aria-hidden
-        className={`${aboveTheBeyond.className} relative z-10 mx-auto mt-1.5 block w-fit max-w-full px-1 leading-[0.88] sm:mt-2 sm:leading-[0.9] md:mt-2.5`}
+        className={`${aboveTheBeyond.className} mx-auto mt-2 block w-fit max-w-full px-1 leading-[0.88] sm:mt-2.5 sm:leading-[0.9] md:mt-3`}
         style={{
           fontSize: "var(--script-size)",
-          color: palette.accent,
-          textShadow:
-            "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 95%, white), 0 0 10px color-mix(in srgb, var(--color-welcome-bg) 65%, white)",
+          color: GOLD,
         }}
       >
         Our Journey Together
@@ -111,8 +107,7 @@ export function CoupleVideo() {
   const playerRef = useRef<any>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const { pauseMusic, resumeMusic } = useAudio()
-  //https://youtu.be/nhzVs-HhId4
-  const videoId = "nhzVs-HhId4"
+  const videoId = "tAiq38PpHleza7As"
 
   useEffect(() => {
     if (!window.YT) {
@@ -171,246 +166,156 @@ export function CoupleVideo() {
   }
 
   return (
-    <>
-      <style jsx global>{`
-        .youtube-embed-wrapper iframe {
-          pointer-events: auto;
-        }
+    <section
+      id="couple-video"
+      className={`${theSeasons.variable} ${aboveTheBeyond.variable} hero-invite relative overflow-hidden`}
+      style={{
+        background: NAVY,
+        paddingTop: "calc(var(--hero-deco-top) * 0.3 + 2.75rem)",
+        paddingBottom: "calc(var(--hero-deco-sprig) * 1.2 + 3rem)",
+        paddingLeft: "max(1.15rem, calc(var(--hero-frame-inset) + 0.7rem))",
+        paddingRight: "max(1.15rem, calc(var(--hero-frame-inset) + 0.7rem))",
+      }}
+    >
+      <div className="hero-invite-frame" aria-hidden="true">
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--top-left" />
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--top-right" />
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--left" />
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--right" />
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--bottom" />
+      </div>
 
-        .youtube-mask-container {
-          position: relative;
-        }
+      <div className="hero-invite-deco hero-invite-deco--top" aria-hidden="true">
+        <Image
+          src={DECO.top}
+          alt=""
+          width={2078}
+          height={598}
+          sizes="(max-width: 768px) 90vw, 480px"
+        />
+      </div>
+      <div className="hero-invite-deco hero-invite-deco--bl" aria-hidden="true">
+        <Image src={DECO.bl} alt="" width={851} height={1472} sizes="200px" />
+      </div>
+      <div className="hero-invite-deco hero-invite-deco--br" aria-hidden="true">
+        <Image src={DECO.br} alt="" width={851} height={1472} sizes="200px" />
+      </div>
 
-        .youtube-mask-container::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 60px;
-          background: transparent;
-          z-index: 1;
-          pointer-events: none;
-        }
-
-        .youtube-mask-container::after {
-          content: "";
-          position: absolute;
-          top: 8px;
-          right: 8px;
-          width: 100px;
-          height: 50px;
-          background: transparent;
-          z-index: 1;
-          pointer-events: none;
-        }
-      `}</style>
-
-      <section
-        id="couple-video"
-        className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative overflow-hidden px-4 pb-10 pt-8 sm:pb-12 sm:pt-10 md:pb-16 md:pt-12`}
-        style={{ background: "var(--color-welcome-bg)" }}
-      >
-        <div className="pointer-events-none absolute left-0 top-0 z-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/decoration/deco/left-top-corner.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-          />
-        </div>
-        <div className="pointer-events-none absolute right-0 top-0 z-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/decoration/deco/right-top-corner.png"
-            alt=""
-            className="block h-auto w-auto max-w-[220px] sm:max-w-[160px] md:max-w-[220px] lg:max-w-[260px]"
-          />
-        </div>
-        <div className="pointer-events-none absolute bottom-0 left-0 z-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          {/* <img
-            src="/decoration/decorations/botto-left-corner.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-          /> */}
-        </div>
-        <div className="pointer-events-none absolute bottom-0 right-0 z-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          {/* <img
-            src="/decoration/decorations/botto-right-corner.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-          /> */}
-        </div>
-
-        <div className="relative z-20 mx-auto max-w-5xl @container/couple-video">
-          {/* Header */}
-          <div className="text-center">
-            <div className="mx-auto mb-5 sm:mb-6 md:mb-7">
-              <OrnamentalDivider />
-            </div>
-            <div className="mx-auto mt-2 sm:mt-3 md:mt-4">
-              <CoupleVideoTitle />
-            </div>
-            <p
-              className={`font-goudy-italic mx-auto mt-4 max-w-xl sm:mt-5 md:mt-6 ${sectionType.textSnug}`}
-              style={{ color: palette.body }}
-            >
-              Watch the journey that brought our hearts together
-            </p>
+      <div className="relative z-20 mx-auto w-full max-w-4xl @container/couple-video md:max-w-5xl">
+        <div className="mx-auto max-w-2xl text-center">
+          <div className="mb-4 sm:mb-5">
+            <OrnamentalDivider />
           </div>
-
-          {/* Video Container */}
-          <div className="mt-6 sm:mt-8 md:mt-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="relative group"
-            >
-              <div
-                className="relative overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl transition-shadow duration-500 group-hover:shadow-[0_12px_36px_color-mix(in_srgb,var(--color-motif-deep)_10%,transparent)]"
-                style={cardStyle}
-              >
-                <div
-                  className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-white/35 via-white/8 to-transparent"
-                  aria-hidden
-                />
-
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-5 top-0 z-10 h-px sm:inset-x-8"
-                  style={{
-                    background:
-                      "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
-                  }}
-                />
-
-                <div className="relative" style={{ paddingBottom: "56.25%" }}>
-                  {!hasClicked && (
-                    <motion.div
-                      initial={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="absolute inset-0 z-20 cursor-pointer overflow-hidden rounded-[inherit]"
-                      onClick={handleThumbnailClick}
-                    >
-                      <Image
-                        src="/desktop-background/couples (32).webp"
-                        alt="Video thumbnail"
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                        priority
-                      />
-
-                      <div
-                        className="absolute inset-0 transition-opacity duration-300 group-hover:opacity-80"
-                        style={{
-                          background:
-                            "linear-gradient(to top, color-mix(in srgb, var(--color-welcome-navy) 25%, transparent), transparent 50%)",
-                        }}
-                      />
-
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <motion.div
-                          whileHover={{ scale: 1.08 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="relative"
-                        >
-                          <div
-                            className="absolute inset-0 scale-150 rounded-full blur-2xl transition-all duration-300 group-hover:scale-[1.7]"
-                            style={{
-                              backgroundColor:
-                                "color-mix(in srgb, var(--color-welcome-green) 45%, transparent)",
-                            }}
-                          />
-
-                          <div
-                            className="relative flex h-16 w-16 items-center justify-center rounded-full shadow-md transition-all duration-300 sm:h-20 sm:w-20 md:h-24 md:w-24"
-                            style={{
-                              backgroundColor: "var(--color-welcome-green)",
-                              border:
-                                "1px solid color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)",
-                              boxShadow:
-                                "0 8px 24px color-mix(in srgb, var(--color-motif-deep) 15%, transparent)",
-                            }}
-                          >
-                            <Play
-                              className="ml-1 h-8 w-8 fill-current sm:h-10 sm:w-10 md:h-12 md:w-12"
-                              style={{ color: "var(--color-welcome-bg)" }}
-                            />
-                          </div>
-                        </motion.div>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {hasClicked && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="youtube-embed-wrapper absolute inset-0"
-                    >
-                      <div className="youtube-mask-container relative h-full w-full overflow-hidden">
-                        <iframe
-                          ref={iframeRef}
-                          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&cc_load_policy=0&fs=1&playsinline=1&enablejsapi=1&origin=${typeof window !== "undefined" ? window.location.origin : ""}`}
-                          className="absolute inset-0 h-full w-full"
-                          style={{ border: 0 }}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowFullScreen
-                          title="Wedding Video"
-                        />
-
-                        <div
-                          className="pointer-events-none absolute left-0 right-0 top-0 z-10 h-16"
-                          style={{
-                            background:
-                              "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 100%)",
-                          }}
-                        />
-
-                        <div
-                          className="pointer-events-none absolute right-2 top-2 z-10 h-12 w-24 bg-black/60 blur-xl"
-                          style={{ mixBlendMode: "multiply" }}
-                        />
-
-                        <div
-                          className="pointer-events-none absolute inset-0 z-[5]"
-                          style={{
-                            background:
-                              "radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.02) 100%)",
-                          }}
-                        />
-                      </div>
-                    </motion.div>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="mt-6 text-center sm:mt-8 md:mt-10"
-            >
-              <div className="mx-auto mb-4 sm:mb-5">
-                <OrnamentalDivider />
-              </div>
-              <p
-                className={`font-goudy-italic mx-auto max-w-lg px-4 ${sectionType.textSnug}`}
-                style={{ color: palette.heading }}
-              >
-                A glimpse into the moments that made our hearts one
-              </p>
-            </motion.div>
-          </div>
+          <p
+            className={`${cinzel.className} mb-2 text-[0.62rem] font-semibold uppercase tracking-[0.28em] sm:mb-2.5 sm:text-[0.7rem]`}
+            style={{ color: GOLD }}
+          >
+            Our Story
+          </p>
+          <CoupleVideoTitle />
+          <p
+            className={`font-goudy-italic mx-auto mt-3 max-w-lg sm:mt-4 ${sectionType.textSnug}`}
+            style={{ color: GOLD }}
+          >
+            Watch the journey that brought our hearts together
+          </p>
         </div>
-      </section>
-    </>
+
+        <div className="mx-auto mt-8 w-full max-w-3xl sm:mt-10 md:mt-12 md:max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="relative"
+          >
+            <div
+              className="relative overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl"
+              style={{
+                background: NAVY,
+                border: `1px solid ${GOLD}`,
+              }}
+            >
+              <div className="relative aspect-video w-full">
+                {!hasClicked && (
+                  <button
+                    type="button"
+                    onClick={handleThumbnailClick}
+                    className="group absolute inset-0 z-20 flex cursor-pointer items-center justify-center overflow-hidden"
+                    aria-label="Play couple video"
+                  >
+                    <Image
+                      src="/Details/video.jpg"
+                      alt="Video thumbnail"
+                      fill
+                      className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+                      sizes="(max-width: 768px) 100vw, 64rem"
+                      priority
+                    />
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: `linear-gradient(to top, color-mix(in srgb, ${NAVY} 35%, transparent), transparent 55%)`,
+                      }}
+                    />
+                    <motion.div
+                      whileHover={{ scale: 1.06 }}
+                      whileTap={{ scale: 0.96 }}
+                      className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full sm:h-20 sm:w-20 md:h-24 md:w-24"
+                      style={{
+                        backgroundColor: GOLD,
+                        border: `1px solid ${GOLD}`,
+                      }}
+                    >
+                      <Play
+                        className="ml-1 h-8 w-8 fill-current sm:h-10 sm:w-10 md:h-12 md:w-12"
+                        style={{ color: NAVY }}
+                      />
+                    </motion.div>
+                  </button>
+                )}
+
+                {hasClicked && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute inset-0"
+                  >
+                    <iframe
+                      ref={iframeRef}
+                      src={`https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&cc_load_policy=0&fs=1&playsinline=1&enablejsapi=1&origin=${typeof window !== "undefined" ? window.location.origin : ""}`}
+                      className="absolute inset-0 h-full w-full"
+                      style={{ border: 0 }}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      title="Wedding Video"
+                    />
+                  </motion.div>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="mx-auto mt-8 max-w-lg text-center sm:mt-10 md:mt-12"
+        >
+          <div className="mb-3 sm:mb-3.5">
+            <OrnamentalDivider />
+          </div>
+          <p
+            className={`font-goudy-italic mx-auto px-2 ${sectionType.textSnug}`}
+            style={{ color: GOLD }}
+          >
+            A glimpse into the moments that made our hearts one
+          </p>
+        </motion.div>
+      </div>
+    </section>
   )
 }

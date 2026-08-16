@@ -72,24 +72,24 @@ export const siteConfig = {
     // }
   },
   ceremony: {
-    location: "TBD",
-    venue: "TBD",
-    map: "TBD",
+    location: "RAI Atrium Suites",
+    venue: "Canciller Ave, Cauayan City, Isabela",
+    map: "https://maps.app.goo.gl/9GSNbKBFjNg28Wjj6",
     date: "November 28, 2026",
-    day: "Friday",
-    time: "TBD",
-    entourageTime: "TBD",
-    guestsTime: "TBD",
-    image: ["/Details/ceremony.png", "/Details/ceremony2.png","/Details/ceremony3.png"],
+    day: "Saturday",
+    time: "3:00 PM",
+    entourageTime: "2:00 PM",
+    guestsTime: "2:30 PM",
+    image: ["/Details/reception.png", "/Details/reception2.png","/Details/reception3.png"],
   },
   reception: {
-    location: "TBD",
-    venue: "TBD",
-    map: "TBD",
+    location: "RAI Atrium Suites",
+    venue: "Canciller Ave, Cauayan City, Isabela",
+    map: "https://maps.app.goo.gl/9GSNbKBFjNg28Wjj6",
     date: "November 28, 2026",
-    day: "Friday",
-    time: "TBD",
-    image: ["/Details/reception.png", "/Details/reception1.png","/Details/reception3.png"],
+    day: "Saturday",
+    time: "6:00 PM",
+    image: ["/Details/reception.png", "/Details/reception2.png","/Details/reception3.png"],
   },
   dressCode: {
     theme: "STRICTLY FORMAL",
@@ -214,9 +214,9 @@ Now, as they prepare to say yes before God and the people they love most, Cather
     coverUrl:
       "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da846306cebfbcee35881606468d",
     embedUrl:
-    //https://open.spotify.com/embed/playlist/6BMbQvAs9Uj24XgPCK7UjQ?utm_source=generator&si=cd41335ebebb4708
-      "https://open.spotify.com/embed/playlist/6BMbQvAs9Uj24XgPCK7UjQ?utm_source=generator&theme=0&si=cd41335ebebb4708",
-    spotifyUrl: "https://open.spotify.com/playlist/6BMbQvAs9Uj24XgPCK7UjQ",
+    //https://open.spotify.com/embed/playlist/58WOfUVSty9PSetlcVNRsr?utm_source=generator&si=0668eb4188c6446d
+      "https://open.spotify.com/embed/playlist/58WOfUVSty9PSetlcVNRsr?utm_source=generator&theme=0&si=0668eb4188c6446d",
+    spotifyUrl: "https://open.spotify.com/playlist/58WOfUVSty9PSetlcVNRsr",
     tracks: [
       {
         title: "Ikaw At Ako",

@@ -8,6 +8,7 @@ import localFont from "next/font/local"
 import { Loader2, Music2 } from "lucide-react"
 import { layeredSectionTitleSize } from "@/lib/section-typography"
 import { MobilePlaylistPlayer } from "@/components/sections/mobile-playlist-player"
+import type { SpotifyPlaylistData } from "@/lib/spotify-playlist"
 
 const LIST_EMBED_HEIGHT = 380
 const LARGE_EMBED_HEIGHT = 452
@@ -247,6 +248,7 @@ export function WeddingPlaylist() {
   } = siteConfig.playlist
   const spotifyUri = getSpotifyUri(spotifyUrl)
   const embedSrc = getSpotifyEmbedUrl(spotifyUrl, embedUrl)
+  const playlistSourceUrl = embedUrl || spotifyUrl
   const hostRef = useRef<HTMLDivElement>(null)
   const controllerRef = useRef<SpotifyEmbedController | null>(null)
   const playbackStateRef = useRef<"playing" | "paused">("paused")
@@ -255,6 +257,9 @@ export function WeddingPlaylist() {
   const [isReady, setIsReady] = useState(false)
   const [useFallbackIframe, setUseFallbackIframe] = useState(false)
   const [isDesktop, setIsDesktop] = useState(false)
+  const [livePlaylist, setLivePlaylist] = useState<SpotifyPlaylistData | null>(
+    null
+  )
 
   useEffect(() => {
     const media = window.matchMedia("(min-width: 768px)")
@@ -266,6 +271,31 @@ export function WeddingPlaylist() {
     media.addEventListener("change", sync)
     return () => media.removeEventListener("change", sync)
   }, [])
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    async function loadLivePlaylist() {
+      try {
+        const response = await fetch(
+          `/api/spotify-playlist?url=${encodeURIComponent(playlistSourceUrl)}`,
+          { signal: controller.signal }
+        )
+        if (!response.ok) return
+        const data = (await response.json()) as SpotifyPlaylistData
+        if (data?.title || data?.tracks?.length) {
+          setLivePlaylist(data)
+        }
+      } catch {
+        // Keep the hardcoded fallbacks in site.ts if Spotify is unreachable.
+      }
+    }
+
+    setLivePlaylist(null)
+    loadLivePlaylist()
+
+    return () => controller.abort()
+  }, [playlistSourceUrl])
 
   useEffect(() => {
     const host = hostRef.current
@@ -475,11 +505,13 @@ export function WeddingPlaylist() {
 
             <div className="md:hidden">
               <MobilePlaylistPlayer
-                title={spotifyTitle}
-                curator={curator}
-                coverUrl={coverUrl}
+                title={livePlaylist?.title || spotifyTitle}
+                curator={livePlaylist?.curator || curator}
+                coverUrl={livePlaylist?.coverUrl || coverUrl}
                 spotifyUrl={spotifyUrl}
-                tracks={tracks}
+                tracks={
+                  livePlaylist?.tracks?.length ? livePlaylist.tracks : tracks
+                }
               />
             </div>
 

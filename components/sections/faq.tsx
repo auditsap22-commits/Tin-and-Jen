@@ -145,38 +145,21 @@ function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
   return [
     {
       question: "When is the wedding?",
-      answer: `Our wedding will be held on ${siteConfig.ceremony.date}, ${siteConfig.ceremony.day}. The ceremony begins at ${siteConfig.ceremony.time}, and the reception follows at ${siteConfig.reception.time}.`,
+      answer: `Our wedding will be held on ${siteConfig.ceremony.date}, ${siteConfig.ceremony.day}, at ${siteConfig.ceremony.location}. The ceremony begins at ${siteConfig.ceremony.time}, and the reception follows at ${siteConfig.reception.time} at the same venue.`,
     },
     {
-      question: "What time should I arrive for the ceremony?",
+      question: "What time should I arrive?",
       answer: `Please arrive by ${guestArrival} so you have time to find your seat and settle in. The ceremony will begin promptly at ${siteConfig.ceremony.time}. Entourage members are requested to assemble at ${siteConfig.ceremony.entourageTime}.`,
     },
     {
-      question: "Where will the ceremony take place?",
+      question: "Where will the ceremony and reception take place?",
       answer: (
         <>
-          Our ceremony will be held at {siteConfig.ceremony.location}, {siteConfig.ceremony.venue}.{" "}
+          Both the ceremony and reception will be held at {siteConfig.ceremony.location},{" "}
+          {siteConfig.ceremony.venue}. The ceremony begins at {siteConfig.ceremony.time}, and the
+          reception follows at {siteConfig.reception.time}.{" "}
           <a
             href={siteConfig.ceremony.map}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={linkClass}
-            style={{ color: faqPalette.accent }}
-          >
-            Open in Google Maps
-          </a>
-          .
-        </>
-      ),
-    },
-    {
-      question: "Where will the reception be held?",
-      answer: (
-        <>
-          The reception will be at {siteConfig.reception.location}, {siteConfig.reception.venue},
-          beginning at {siteConfig.reception.time}.{" "}
-          <a
-            href={siteConfig.reception.map}
             target="_blank"
             rel="noopener noreferrer"
             className={linkClass}
@@ -247,7 +230,7 @@ function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
     {
       question: "Is there parking available?",
       answer:
-        "Yes, parking is available at both the ceremony and reception venues. Please arrive a little early so you have time to park comfortably.",
+        "Yes, parking is available at the venue. Please arrive a little early so you have time to park comfortably.",
     },
     {
       question: "What is the dress code?",

@@ -99,13 +99,6 @@ const LONGEST_FOOTER_QUOTE = FOOTER_QUOTES.reduce((longest, quote) =>
   quote.length > longest.length ? quote : longest
 )
 
-const toTitleCase = (str: string) =>
-  str
-    .toLowerCase()
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ")
-
 function FooterCoupleNames({ groom, bride }: { groom: string; bride: string }) {
   return (
     <h2
@@ -177,10 +170,9 @@ export function Footer() {
   const year = new Date().getFullYear()
   const ceremonyDate = siteConfig.ceremony.date
   const ceremonyTime = siteConfig.ceremony.time
-  const ceremonyVenue = siteConfig.wedding.venue
-  const receptionVenue = siteConfig.reception.location
-  const ceremonyAddress = siteConfig.wedding.venue
-  const receptionAddress = siteConfig.reception.venue
+  const receptionTime = siteConfig.reception.time
+  const venueName = siteConfig.ceremony.location
+  const venueAddress = siteConfig.ceremony.venue
 
   const groomName = siteConfig.couple.groomNickname || siteConfig.couple.groom
   const brideName = siteConfig.couple.brideNickname || siteConfig.couple.bride
@@ -384,24 +376,8 @@ export function Footer() {
               </FooterCard>
             </motion.div>
 
-            {/* Event details — ceremony and reception always separate */}
+            {/* Event details — ceremony and reception share one venue */}
             <motion.div className="space-y-4 sm:space-y-5 min-w-0" variants={fadeInUp}>
-              {/* <FooterCard>
-                <h4
-                  className={`${cinzel.className} ${ct.cardTitle} font-semibold mb-3`}
-                  style={{ color: palette.heading }}
-                >
-                  Ceremony 
-                </h4>
-                <div className="space-y-3">
-                  <DetailRow label="Venue" value={toTitleCase(ceremonyVenue)} />
-                  {ceremonyAddress && ceremonyAddress !== ceremonyVenue && (
-                    <DetailRow label="Address" value={toTitleCase(ceremonyAddress)} />
-                  )}
-                  <DetailRow label="Time" value={ceremonyTime} />
-                </div>
-              </FooterCard> */}
-
               <FooterCard>
                 <h4
                   className={`${cinzel.className} ${ct.cardTitle} font-semibold mb-3`}
@@ -410,12 +386,13 @@ export function Footer() {
                   Ceremony & Reception
                 </h4>
                 <div className="space-y-3">
-                  <DetailRow label="Venue" value={siteConfig.ceremony.location} />
-                  {receptionAddress && receptionAddress !== receptionVenue && (
-                    <DetailRow label="Address" value={siteConfig.ceremony.venue} />
+                  <DetailRow label="Venue" value={venueName} />
+                  {venueAddress && venueAddress !== venueName && (
+                    <DetailRow label="Address" value={venueAddress} />
                   )}
                   <DetailRow label="Assembly Time" value={siteConfig.ceremony.guestsTime} />
-                  <DetailRow label="Wedding Starts:" value={ceremonyTime} />
+                  <DetailRow label="Ceremony" value={ceremonyTime} />
+                  <DetailRow label="Reception" value={receptionTime} />
                 </div>
               </FooterCard>
 

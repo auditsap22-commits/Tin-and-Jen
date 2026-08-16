@@ -26,11 +26,7 @@ const lightSectionBg = PAPER_FACE
 
 export { lightSectionBg, storyInk }
 
-const darkSectionBg = `
-  radial-gradient(820px 460px at 50% 0%, color-mix(in srgb, ${storyInk.gold} 22%, transparent) 0%, transparent 58%),
-  radial-gradient(560px 380px at 12% 100%, color-mix(in srgb, ${storyInk.champagne} 12%, transparent) 0%, transparent 55%),
-  linear-gradient(180deg, ${storyInk.midnight} 0%, ${storyInk.navy} 100%)
-`
+const darkSectionBg = storyInk.midnight
 
 interface StorySectionProps {
   imageSrc: string
@@ -71,9 +67,8 @@ export const StorySection: React.FC<StorySectionProps> = ({
 
   const imageFrameStyle = isDark
     ? {
-        background: `color-mix(in srgb, ${storyInk.champagne} 18%, ${storyInk.midnight})`,
-        boxShadow: `0 10px 28px color-mix(in srgb, ${storyInk.gold} 32%, transparent)`,
-        border: `1px solid color-mix(in srgb, ${storyInk.gold} 48%, transparent)`,
+        background: storyInk.midnight,
+        border: `1px solid ${storyInk.gold}`,
       }
     : {
         background: storyInk.lift,
@@ -126,12 +121,6 @@ export const StorySection: React.FC<StorySectionProps> = ({
                     quality={90}
                     priority={false}
                   />
-                  {isDark && (
-                    <div
-                      className="pointer-events-none absolute inset-0 z-10 mix-blend-multiply"
-                      style={{ backgroundColor: "color-mix(in srgb, #04103B 18%, transparent)" }}
-                    />
-                  )}
                 </div>
               </div>
             </div>
@@ -139,14 +128,14 @@ export const StorySection: React.FC<StorySectionProps> = ({
 
           <div
             className="w-[55%] @container/story md:w-5/12"
-            style={{ color: isDark ? storyInk.champagne : storyInk.navy }}
+            style={{ color: isDark ? storyInk.gold : storyInk.navy }}
           >
             {title && (
               <h2
                 className={`${theSeasons.className} mb-3 uppercase leading-tight tracking-[0.08em] transition-all delay-500 duration-1000 sm:mb-4 sm:tracking-[0.1em] md:mb-6 md:tracking-[0.12em] ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} `}
                 style={{
                   fontSize: storyChapterTitleSize,
-                  color: isDark ? storyInk.champagne : storyInk.navy,
+                  color: isDark ? storyInk.gold : storyInk.navy,
                 }}
               >
                 {title}

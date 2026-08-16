@@ -214,195 +214,118 @@ const motifSwatches = [
   reminderInk.champagne,
 ] as const
 
-const attireGuide = {
-  entourage: {
-    image: "/Details/entourage.png",
-    imageAspect: "3/2",
-    ladies: {
-      colors: motifSwatches,
-      description:
-        "Ladies are requested to wear a floor-length gown in Midnight Navy or Slate Navy. Antique Gold and Champagne from our palette may also be worn.",
-    },
-    gentlemen: {
-      colors: [reminderInk.champagne, reminderInk.deep] as const,
-      description:
-        "Gentlemen are requested to wear a long-sleeved Champagne or Cream Barong Tagalog, paired with tailored navy trousers and polished navy or black formal shoes.",
-    },
-  },
-  guests: {
-    image: "/Details/guest.png",
-    imageAspect: "3/2",
-    ladies: {
-      colors: motifSwatches,
-      description:
-        "Ladies may wear a midi or cocktail dress in any color from our palette. We welcome a range of elegant styles, so long as they stay within the guide.",
-    },
-    gentlemen: {
-      colors: motifSwatches,
-      description:
-        "Gentlemen may wear a collared shirt in Midnight Navy, Slate Navy, Antique Gold, or Champagne, paired with cream trousers and brown or navy leather loafers.",
-    },
-  },
-} as const
-
-const dressCodePalette = [
+const attireGuides = [
   {
-    name: "MIDNIGHT NAVY",
-    pantone: "19-4052 TCX",
-    hex: reminderInk.deep,
-    rgb: "(4, 16, 59)",
+    id: "ninong",
+    title: "Ninong",
+    images: [
+      "/Details/ninong/ninong (1).jpg",
+      "/Details/ninong/ninong (2).jpg",
+    ],
+    groups: [
+      {
+        label: "Gentlemen",
+        description:
+          "Ninongs are requested to wear a long-sleeved Champagne or Cream Barong Tagalog, or a crisp white dress shirt, paired with tailored navy trousers and polished brown or black formal shoes.",
+        highlight: "Champagne or Cream Barong Tagalog",
+      },
+    ],
   },
   {
-    name: "DEEP NAVY",
-    pantone: "19-4010 TCX",
-    hex: reminderInk.navy,
-    rgb: "(25, 32, 48)",
+    id: "ninang",
+    title: "Ninang",
+    images: [
+      "/Details/ninang/ninang (1).jpg",
+      "/Details/ninang/ninang (2).jpg",
+      "/Details/ninang/ninang (3).jpg",
+      "/Details/ninang/ninang (4).jpg",
+    ],
+    groups: [
+      {
+        label: "Ladies",
+        description:
+          "Ninangs are requested to wear a floor-length gown in Midnight Navy or Slate Navy. Antique Gold and Champagne from our palette may also be worn.",
+        highlight: "floor-length gown",
+      },
+    ],
   },
   {
-    name: "SLATE NAVY",
-    pantone: "19-3920 TCX",
-    hex: reminderInk.slate,
-    rgb: "(54, 64, 97)",
+    id: "groomsmen",
+    title: "Groomsmen",
+    images: [
+      "/Details/groomsmen/groomsmen.jpg",
+      "/Details/groomsmen/groomsmen.png",
+    ],
+    groups: [
+      {
+        label: "Gentlemen",
+        description:
+          "Groomsmen are requested to wear a long-sleeved white dress shirt with a navy waistcoat and necktie, tailored navy trousers, and polished black formal shoes. A Champagne or Cream Barong Tagalog is also welcome.",
+        highlight: "navy waistcoat",
+      },
+    ],
   },
   {
-    name: "ANTIQUE GOLD",
-    pantone: "18-0830 TCX",
-    hex: reminderInk.gold,
-    rgb: "(171, 131, 46)",
+    id: "bridesmaid",
+    title: "Bridesmaid",
+    images: [
+      "/Details/bridesmaid/bridesmaid.jpg",
+      "/Details/bridesmaid/bridesmaid.png",
+    ],
+    groups: [
+      {
+        label: "Ladies",
+        description:
+          "Bridesmaids are requested to wear a floor-length gown in Midnight Navy or Slate Navy. Antique Gold and Champagne from our palette may also be worn.",
+        highlight: "floor-length gown",
+      },
+    ],
   },
   {
-    name: "CHAMPAGNE",
-    pantone: "14-1036 TCX",
-    hex: reminderInk.champagne,
-    rgb: "(221, 186, 122)",
+    id: "guest",
+    title: "Guest",
+    images: [
+      "/Details/guest/guest (1).jpg",
+      "/Details/guest/guest (2).jpg",
+      "/Details/guest/guest (3).jpg",
+      "/Details/guest/guest (4).jpg",
+      "/Details/guest/guest (5).jpg",
+      "/Details/guest/guest (6).jpg",
+      "/Details/guest/guest (7).jpg",
+      "/Details/guest/guest (8).jpg",
+    ],
+    groups: [
+      {
+        label: "Ladies",
+        description:
+          "Ladies may wear a midi or cocktail dress in any color from our palette. We welcome a range of elegant styles, so long as they stay within the guide.",
+        highlight: "midi or cocktail dress",
+      },
+      {
+        label: "Gentlemen",
+        description:
+          "Gentlemen may wear a collared shirt in Midnight Navy, Slate Navy, Antique Gold, or Champagne, paired with cream trousers and brown or navy leather loafers.",
+        highlight: "collared shirt",
+      },
+    ],
+  },
+  {
+    id: "entourage",
+    title: "Entourage",
+    images: [
+      "/Details/kidsentourage/kids (1).png",
+      "/Details/kidsentourage/kids (2).png",
+    ],
+    groups: [
+      {
+        label: "Little Ones",
+        description:
+          "Children in the entourage are requested to wear formal attire in Midnight Navy, with Antique Gold or Champagne accents, in a style comfortable for the ceremony.",
+        highlight: "formal attire in Midnight Navy",
+      },
+    ],
   },
 ] as const
-
-function DressCodePaletteSwatch({
-  name,
-  hex,
-  isLast = false,
-}: (typeof dressCodePalette)[number] & { isLast?: boolean }) {
-  const n = Number.parseInt(hex.slice(1), 16)
-  const r = (n >> 16) & 255
-  const g = (n >> 8) & 255
-  const b = n & 255
-  const isLight = 0.299 * r + 0.587 * g + 0.114 * b > 125
-
-  return (
-    <div
-      className="flex min-w-0 flex-1 flex-col"
-      style={{
-        borderRight: isLast ? undefined : `1px solid color-mix(in srgb, ${reminderInk.gold} 55%, transparent)`,
-      }}
-    >
-      <div
-        className="relative flex min-h-[132px] w-full items-center justify-center sm:min-h-[168px] md:min-h-[200px] lg:min-h-[232px]"
-        style={{ backgroundColor: hex }}
-      >
-        <span
-          className="text-[6px] font-semibold uppercase tracking-[0.08em] sm:text-[7px] md:text-[8px] lg:text-[9px]"
-          style={{
-            writingMode: "vertical-rl",
-            textOrientation: "mixed",
-            color: isLight ? reminderInk.deep : reminderInk.champagne,
-          }}
-        >
-          {name}
-        </span>
-      </div>
-    </div>
-  )
-}
-
-const dressCodePalettePanelStyle = {
-  backgroundColor: reminderInk.deep,
-  color: reminderInk.champagne,
-} as const
-
-function DressCodePaletteHeader() {
-  return (
-    <div
-      className="px-3 py-5 sm:px-4 sm:py-6 md:px-5 md:py-7"
-      style={dressCodePalettePanelStyle}
-    >
-      <div className="mx-auto max-w-3xl text-center">
-        <h5
-          className={`${cinzel.className} text-sm font-semibold uppercase tracking-[0.14em] sm:text-base md:text-lg lg:text-xl`}
-          style={{ color: reminderInk.champagne }}
-        >
-          Dress Code Palette
-        </h5>
-        <p
-          className={`${aboveTheBeyond.className} mt-1 text-lg leading-none sm:mt-1.5 sm:text-xl md:text-2xl`}
-          style={{ color: reminderInk.gold }}
-        >
-          Entourage and Guests
-        </p>
-
-        <div className="mx-auto mt-3 flex max-w-xs items-center justify-center gap-2 sm:mt-4 sm:max-w-sm md:max-w-md">
-          <span
-            className="h-px flex-1"
-            style={{ backgroundColor: `color-mix(in srgb, ${reminderInk.gold} 55%, transparent)` }}
-          />
-          <Heart
-            className="h-2.5 w-2.5 shrink-0 sm:h-3 sm:w-3"
-            style={{ color: reminderInk.gold, fill: reminderInk.gold }}
-            aria-hidden
-          />
-          <span
-            className="h-px flex-1"
-            style={{ backgroundColor: `color-mix(in srgb, ${reminderInk.gold} 55%, transparent)` }}
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function DressCodePaletteCaption() {
-  return (
-    <div
-      className="px-3 py-5 text-center sm:px-4 sm:py-6 md:px-5 md:py-7"
-      style={dressCodePalettePanelStyle}
-    >
-      <p
-        className={`${cinzel.className} text-[10px] font-bold uppercase tracking-[0.12em] sm:text-xs md:text-sm`}
-        style={{ color: reminderInk.gold }}
-      >
-        Color Guide
-      </p>
-      <p
-        className="font-goudy-italic mt-1.5 text-[10px] italic leading-relaxed sm:mt-2 sm:text-xs md:text-sm"
-        style={{ color: reminderInk.champagne }}
-      >
-        Please refer to the exact colors above for dress code.
-      </p>
-    </div>
-  )
-}
-
-function DressCodePaletteSwatches() {
-  return (
-    <div
-      className="flex w-full"
-      role="img"
-      aria-label="Dress code color palette: Midnight Navy, Deep Navy, Slate Navy, Antique Gold, Champagne"
-      style={{
-        borderTop: `1px solid color-mix(in srgb, ${reminderInk.gold} 55%, transparent)`,
-        borderBottom: `1px solid color-mix(in srgb, ${reminderInk.gold} 55%, transparent)`,
-      }}
-    >
-      {dressCodePalette.map((color, index) => (
-        <DressCodePaletteSwatch
-          key={color.hex}
-          {...color}
-          isLast={index === dressCodePalette.length - 1}
-        />
-      ))}
-    </div>
-  )
-}
 
 function ColorPalette({
   colors,
@@ -555,22 +478,77 @@ function AttirePaletteGroup({
   )
 }
 
+function AttireSlideshow({
+  images,
+  alt,
+  delayMs = 0,
+}: {
+  images: readonly string[]
+  alt: string
+  delayMs?: number
+}) {
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  useEffect(() => {
+    if (images.length <= 1) return
+    let intervalId: ReturnType<typeof setInterval> | undefined
+    const startId = setTimeout(() => {
+      intervalId = setInterval(() => {
+        setActiveIndex((prev) => (prev + 1) % images.length)
+      }, 4500)
+    }, delayMs)
+    return () => {
+      clearTimeout(startId)
+      if (intervalId) clearInterval(intervalId)
+    }
+  }, [images.length, delayMs])
+
+  return (
+    <div className="relative flex w-full shrink-0 items-center justify-center overflow-hidden bg-[#FAF7F2]">
+      <div className="relative w-full" style={{ aspectRatio: "3/4" }}>
+        {images.map((src, index) => {
+          const isActive = index === activeIndex
+          return (
+            <div
+              key={src}
+              className={`absolute inset-0 transition-[opacity,transform] duration-[1600ms] ease-[cubic-bezier(0.45,0.05,0.55,0.95)] ${
+                isActive
+                  ? "z-10 scale-100 opacity-100"
+                  : "pointer-events-none z-0 scale-[1.06] opacity-0"
+              }`}
+            >
+              <Image
+                src={encodeURI(src)}
+                alt={alt}
+                fill
+                className={`object-cover object-center transition-transform duration-[9000ms] ease-out ${
+                  isActive ? "scale-[1.04] group-hover:scale-[1.08]" : "scale-100"
+                }`}
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
+                priority={index === 0}
+              />
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 function AttireCard({
   title,
-  image,
+  images,
   alt,
-  imageAspect,
+  delayMs = 0,
   children,
   belowImage,
-  imageClassName = "object-contain object-center w-full h-full",
 }: {
   title: string
-  image: string
+  images: readonly string[]
   alt: string
-  imageAspect: string
+  delayMs?: number
   children: ReactNode
   belowImage?: ReactNode
-  imageClassName?: string
 }) {
   return (
     <div className="relative group h-full">
@@ -597,17 +575,7 @@ function AttireCard({
           </h4>
         </div>
 
-        <div className="relative flex w-full shrink-0 items-center justify-center overflow-hidden bg-[#FAF7F2]">
-          <div className="relative w-full" style={{ aspectRatio: imageAspect }}>
-            <Image
-              src={image}
-              alt={alt}
-              fill
-              className={`${imageClassName} transition-transform duration-700 group-hover:scale-[1.01]`}
-              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 1024px"
-            />
-          </div>
-        </div>
+        <AttireSlideshow images={images} alt={alt} delayMs={delayMs} />
 
         {belowImage}
 
@@ -777,12 +745,12 @@ function EventVenueCard({
                 >
                   Arrival: {arrivalTime}
                 </p>
-                {/* <p
+                <p
                   className={`${cinzel.className} text-sm sm:text-base md:text-lg lg:text-xl font-semibold tracking-[0.1em] uppercase`}
                   style={{ color: detailText.heading }}
                 >
-                  Wedding Starts: {time}
-                </p> */}
+                  Ceremony: {time}
+                </p>
               </div>
             ) : (
               <p
@@ -1003,7 +971,7 @@ export function Details() {
       {/* Venue and Event Information */}
       <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 md:px-8 mb-8 sm:mb-10 md:mb-12 space-y-6 sm:space-y-10 md:space-y-14">
         <EventVenueCard
-          badge="Ceremony"
+          badge="Ceremony & Reception"
           images={ceremonyImages}
           activeImageIndex={currentCeremonyImageIndex}
           locationName={ceremonyVenueName}
@@ -1022,7 +990,7 @@ export function Details() {
           onOpenMaps={openInMaps}
         />
 
-        <EventVenueCard
+        {/* <EventVenueCard
           badge="Reception"
           images={receptionImages}
           activeImageIndex={currentReceptionImageIndex}
@@ -1040,7 +1008,7 @@ export function Details() {
           copiedItems={copiedItems}
           onCopy={copyToClipboard}
           onOpenMaps={openInMaps}
-        />
+        /> */}
        
       </div>
 
@@ -1070,107 +1038,28 @@ export function Details() {
           </p>
         </div>
 
-        {/* Attire cards — Entourage & Guests */}
-        <div className="mb-6 grid grid-cols-1 items-start gap-6 sm:mb-8 sm:gap-8 md:mb-10">
-          <div className="mx-auto w-full max-w-5xl space-y-6 sm:space-y-8">
+        {/* Attire cards */}
+        <div className="mb-6 grid grid-cols-1 items-stretch gap-6 sm:mb-8 sm:gap-8 md:mb-10 md:grid-cols-2">
+          {attireGuides.map((guide, index) => (
             <AttireCard
-              title="Entourage"
-              image={attireGuide.entourage.image}
-              imageAspect={attireGuide.entourage.imageAspect}
-              alt="Entourage attire guide"
+              key={guide.id}
+              title={guide.title}
+              images={guide.images}
+              alt={`${guide.title} attire guide`}
+              delayMs={index * 650}
             >
               <div className="grid grid-cols-1 gap-5 sm:gap-6">
-                <AttirePaletteGroup
-                  label="Ladies"
-                  colors={attireGuide.entourage.ladies.colors}
-                  description={highlightAttirePhrase(
-                    attireGuide.entourage.ladies.description,
-                    "floor-length gown",
-                  )}
-                />
-                <AttirePaletteGroup
-                  label="Gentlemen"
-                  colors={attireGuide.entourage.gentlemen.colors}
-                  description={highlightAttirePhrase(
-                    attireGuide.entourage.gentlemen.description,
-                    "Champagne or Cream Barong Tagalog",
-                  )}
-                />
+                {guide.groups.map((group) => (
+                  <AttirePaletteGroup
+                    key={group.label}
+                    label={group.label}
+                    description={highlightAttirePhrase(group.description, group.highlight)}
+                  />
+                ))}
               </div>
             </AttireCard>
-
-            <AttireCard
-              title="Guests"
-              image={attireGuide.guests.image}
-              imageAspect={attireGuide.guests.imageAspect}
-              alt="Guests attire guide"
-            >
-              <div className="grid grid-cols-1 gap-5 sm:gap-6">
-                <AttirePaletteGroup
-                  label="Ladies"
-                  colors={attireGuide.guests.ladies.colors}
-                  description={highlightAttirePhrase(
-                    attireGuide.guests.ladies.description,
-                    "midi or cocktail dress",
-                  )}
-                />
-                <AttirePaletteGroup
-                  label="Gentlemen"
-                  colors={attireGuide.guests.gentlemen.colors}
-                  description={highlightAttirePhrase(
-                    attireGuide.guests.gentlemen.description,
-                    "collared shirt",
-                  )}
-                />
-              </div>
-            </AttireCard>
-
-            <div
-              className="relative overflow-hidden"
-              style={{
-                backgroundColor: reminderInk.deep,
-                boxShadow: `0 18px 48px color-mix(in srgb, ${reminderInk.deep} 28%, transparent)`,
-              }}
-            >
-              <div
-                className="pointer-events-none absolute inset-[0.55rem] z-10 sm:inset-3"
-                aria-hidden
-                style={{
-                  boxShadow: `
-                    inset 0 0 0 1px ${reminderInk.gold},
-                    inset 0 0 0 4px ${reminderInk.deep},
-                    inset 0 0 0 5px ${reminderInk.champagne}
-                  `,
-                }}
-              />
-              <div className="relative z-[11]">
-                <DressCodePaletteHeader />
-                <DressCodePaletteSwatches />
-                <DressCodePaletteCaption />
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
-
-        {/* <div
-          className="mb-8 sm:mb-10 md:mb-12 p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border shadow-sm"
-          style={cardStyle}
-        >
-          <p className={`${cinzel.className} ${ct.label} uppercase tracking-[0.18em] text-center mb-3 sm:mb-4 font-semibold`} style={{ color: detailText.label }}>
-            Note to Sponsors, Entourage & Guests
-          </p>
-          <ul className="space-y-2 sm:space-y-3 max-w-2xl mx-auto">
-            <li className="flex gap-3 items-start">
-              <span
-                className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                style={{ backgroundColor: "var(--color-welcome-green)" }}
-              />
-              <p className={`font-goudy-italic ${ct.body} leading-relaxed`} style={{ color: detailText.body }}>
-                Please wear comfortable footwear fit for outdoor reception.
-              </p>
-            </li>
-          </ul>
-        </div> */}
 
         {/* Gentle Reminders */}
         <div className="relative z-20 mx-auto mt-6 w-full max-w-3xl px-3 pb-2 sm:mt-8 sm:max-w-4xl sm:px-6 md:px-8 lg:max-w-5xl">
@@ -1261,7 +1150,7 @@ export function Details() {
                     Kindly follow our suggested attire and color palette above to match our
                     wedding theme. Strictly no casual clothes, shoes, or white-colored attire.
                   </ReminderTone>
-                  <ColorPalette colors={attireGuide.guests.ladies.colors} frame="gold" />
+                  <ColorPalette colors={motifSwatches} frame="gold" />
                 </ReminderCard>
 
                 <div
