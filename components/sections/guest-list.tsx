@@ -40,43 +40,55 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
-const OUTSIDE_TEXT = "#FFFFFF"
-const OUTSIDE_TEXT_MUTED = "rgba(255, 255, 255, 0.88)"
-const OUTSIDE_TITLE_SHADOW = "0 2px 6px rgba(0,0,0,0.28), 0 0 18px rgba(0,0,0,0.12)"
+const C = {
+  navy: "#04103B",
+  gold: "#c5a059",
+  goldBright: "#d4af37",
+  goldSoft: "#e6d3a3",
+  paper: "#f7f3e9",
+} as const
+
+const goldLine = `color-mix(in srgb, ${C.gold} 55%, transparent)`
 
 const palette = {
-  body: "var(--color-welcome-text)",
-  heading: "var(--color-welcome-navy)",
-  label: "var(--color-welcome-heading)",
-  accent: "var(--color-welcome-green)",
+  body: C.navy,
+  heading: C.gold,
+  label: "#364061",
+  accent: C.gold,
 } as const
 
 const modalCardStyle = {
-  background: "var(--color-welcome-bg)",
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
+  background: `linear-gradient(180deg, color-mix(in srgb, ${C.goldSoft} 28%, ${C.paper}) 0%, ${C.paper} 48%, color-mix(in srgb, ${C.gold} 10%, ${C.paper}) 100%)`,
+  borderColor: goldLine,
   borderWidth: "1px",
   borderStyle: "solid" as const,
-  boxShadow:
-    "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
+  boxShadow: `0 12px 36px color-mix(in srgb, ${C.navy} 28%, transparent), inset 0 1px 0 color-mix(in srgb, ${C.goldSoft} 55%, transparent)`,
 } as const
 
 const innerSurfaceStyle = {
-  background: "var(--color-welcome-bg-soft)",
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 10%, transparent)",
+  background: `color-mix(in srgb, ${C.goldSoft} 18%, ${C.paper})`,
+  borderColor: goldLine,
 } as const
 
-const modalInputClass = `w-full rounded-lg border bg-white px-2.5 py-1.5 font-goudy-italic ${sectionType.text} transition-all duration-300 focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-welcome-green)_25%,transparent)] sm:px-3 sm:py-2`
+const modalInputClass = `w-full rounded-lg border px-2.5 py-1.5 font-goudy-italic ${sectionType.text} transition-all duration-300 focus:ring-2 sm:px-3 sm:py-2`
 
 const modalInputStyle = {
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-  color: palette.heading,
+  borderColor: goldLine,
+  color: C.navy,
+  backgroundColor: C.paper,
 } as const
 
 const modalLabelClass = `font-goudy-italic mb-1.5 flex flex-wrap items-center gap-1.5 ${sectionType.text} font-semibold sm:mb-2 sm:gap-2`
 
 const dividerLineStyle = {
-  background:
-    "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent), transparent)",
+  background: `linear-gradient(to right, transparent, ${goldLine}, transparent)`,
+} as const
+
+const buttonStyle = {
+  backgroundColor: C.gold,
+  borderColor: `color-mix(in srgb, ${C.goldBright} 70%, transparent)`,
+  color: C.navy,
+  boxShadow: `0 10px 24px color-mix(in srgb, ${C.gold} 35%, transparent)`,
 } as const
 
 interface ApiGuest {
@@ -461,9 +473,9 @@ export function GuestList() {
       <div className="relative z-10 mx-auto mb-4 max-w-5xl px-2 text-center @container/guest-list sm:mb-6 sm:px-3 md:mb-8 md:px-4 lg:mb-10">
         {/* Ornamental divider */}
         <div className="mx-auto mb-5 flex items-center justify-center gap-1.5 sm:mb-6 md:mb-7">
-          <span className="h-px w-6 sm:w-10" style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.55), transparent)" }} />
-          <span className="h-0.5 w-0.5 rounded-full bg-white/50 sm:h-1 sm:w-1" aria-hidden />
-          <span className="h-px w-6 sm:w-10" style={{ background: "linear-gradient(to left, transparent, rgba(255,255,255,0.55), transparent)" }} />
+          <span className="h-px w-6 sm:w-10" style={{ background: `linear-gradient(to right, transparent, ${goldLine}, transparent)` }} />
+          <span className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1" style={{ backgroundColor: goldLine }} aria-hidden />
+          <span className="h-px w-6 sm:w-10" style={{ background: `linear-gradient(to left, transparent, ${goldLine}, transparent)` }} />
         </div>
 
         {/* Title block */}
@@ -478,7 +490,7 @@ export function GuestList() {
         >
           <span
             className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] md:tracking-[0.14em] pb-1 sm:pb-1.5`}
-            style={{ fontSize: "var(--title-size)", color: OUTSIDE_TEXT, textShadow: OUTSIDE_TITLE_SHADOW }}
+            style={{ fontSize: "var(--title-size)", color: C.goldBright }}
           >
             RSVP
           </span>
@@ -487,8 +499,7 @@ export function GuestList() {
             className={`${aboveTheBeyond.className} mx-auto block w-fit max-w-full px-1 leading-[0.88] sm:leading-[0.9] mt-2 sm:mt-2.5 md:mt-3`}
             style={{
               fontSize: "var(--script-size)",
-              color: OUTSIDE_TEXT_MUTED,
-              textShadow: OUTSIDE_TITLE_SHADOW,
+              color: C.goldSoft,
             }}
           >
             Confirm your attendance
@@ -497,14 +508,14 @@ export function GuestList() {
 
         {/* Subtitle block */}
         <div className="mx-auto mt-5 max-w-xl space-y-2 px-2 sm:mt-6 sm:space-y-3">
-          <p className={`font-goudy-italic ${sectionType.textRelaxed}`} style={{ color: OUTSIDE_TEXT_MUTED }}>
+          <p className={`font-goudy-italic ${sectionType.textRelaxed}`} style={{ color: C.goldSoft }}>
             To help us plan a beautiful and intimate celebration, we kindly ask that you confirm your
             attendance. Please search for your name below to confirm your presence at our special day.
           </p>
-          <p className={`font-goudy-italic ${sectionType.textRelaxed}`} style={{ color: OUTSIDE_TEXT_MUTED }}>
+          <p className={`font-goudy-italic ${sectionType.textRelaxed}`} style={{ color: C.goldSoft }}>
             If we do not receive your response by the deadline, we will assume you are unable to attend.
           </p>
-          <p className={`${cinzel.className} ${sectionType.text} font-semibold tracking-wide`} style={{ color: OUTSIDE_TEXT }}>
+          <p className={`${cinzel.className} ${sectionType.text} font-semibold tracking-wide`} style={{ color: C.goldBright }}>
             RSVP Deadline: {siteConfig.details.rsvp.deadline}
           </p>
           {/* <p className={`${cinzel.className} ${sectionType.text} font-semibold tracking-wide`} style={{ color: OUTSIDE_TEXT }}>
@@ -514,7 +525,7 @@ export function GuestList() {
 
         {/* Divider below header */}
         <div className="mt-4 flex items-center justify-center sm:mt-5">
-          <span className="h-px w-16 sm:w-24 md:w-32 bg-white/50" />
+          <span className="h-px w-16 sm:w-24 md:w-32" style={{ background: goldLine }} />
         </div>
       </div>
 
@@ -523,48 +534,54 @@ export function GuestList() {
         {/* Card with elegant border */}
         <div
           className="relative overflow-visible rounded-lg border backdrop-blur-xl sm:rounded-xl md:rounded-2xl"
-          style={{
-            background: "var(--color-welcome-bg)",
-            borderColor: "color-mix(in srgb, var(--color-motif-deep) 18%, transparent)",
-            boxShadow: "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
-          }}
+          style={modalCardStyle}
         >
           {/* Card content */}
           <div className="relative p-2.5 sm:p-4 md:p-5 lg:p-6 overflow-visible">
             <div className="relative z-10 space-y-3 sm:space-y-4 overflow-visible">
               <div className="flex items-center gap-2 sm:gap-3">
-                <div className="bg-motif-deep p-1.5 sm:p-2 rounded-lg shadow-md">
-                  <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 text-white" />
+                <div
+                  className="rounded-lg p-1.5 shadow-md sm:p-2"
+                  style={{ backgroundColor: C.gold }}
+                >
+                  <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" style={{ color: C.navy }} />
                 </div>
                 <div>
-                  <label className={`block ${sectionType.text} font-semibold font-sans mb-0.5 sm:mb-1`} style={{ color: "var(--color-welcome-navy)" }}>
+                  <label className={`mb-0.5 block font-sans font-semibold sm:mb-1 ${sectionType.text}`} style={{ color: palette.heading }}>
                     Find Your Name
                   </label>
-                  <p className={`${sectionType.label} font-sans`} style={{ color: "var(--color-welcome-text)" }}>
+                  <p className={`font-sans ${sectionType.label}`} style={{ color: palette.body }}>
                     Type as you search to see instant results
                   </p>
                 </div>
               </div>
               <div ref={searchRef} className="relative z-[100]">
                 <div className="relative">
-                  <Search className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-motif-deep/70 pointer-events-none transition-colors duration-200" />
+                  <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 sm:left-3 sm:h-4 sm:w-4" style={{ color: C.gold }} />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Type your name..."
-                    className="w-full pl-8 sm:pl-10 pr-2.5 sm:pr-3 py-2 sm:py-2.5 md:py-3 border-2 border-motif-deep/60 focus:border-motif-deep rounded-lg text-xs sm:text-sm font-sans text-motif-deep placeholder:text-motif-medium/70 transition-all duration-300 hover:border-motif-deep/70 focus:ring-2 focus:ring-motif-deep/20 bg-white shadow-sm focus:shadow-md"
+                    className="w-full rounded-lg border-2 py-2 pl-8 pr-2.5 font-sans text-xs shadow-sm transition-all duration-300 focus:shadow-md sm:py-2.5 sm:pl-10 sm:pr-3 sm:text-sm md:py-3"
+                    style={{
+                      borderColor: goldLine,
+                      color: C.navy,
+                      backgroundColor: C.paper,
+                    }}
                   />
                 </div>
                 {/* Autocomplete dropdown */}
                 {isSearching && filteredGuests.length > 0 && (
                   <div 
-                    className="absolute z-[9999] w-full mt-1 sm:mt-1.5 md:mt-2 bg-white/95 backdrop-blur-lg border border-motif-deep/70 rounded-lg sm:rounded-xl shadow-xl overflow-hidden" 
-                    style={{ 
-                      position: 'absolute', 
-                      top: '100%',
+                    className="absolute z-[9999] mt-1 w-full overflow-hidden rounded-lg border shadow-xl backdrop-blur-lg sm:mt-1.5 sm:rounded-xl md:mt-2"
+                    style={{
+                      position: "absolute",
+                      top: "100%",
                       left: 0,
-                      right: 0
+                      right: 0,
+                      backgroundColor: `color-mix(in srgb, ${C.paper} 95%, white)`,
+                      borderColor: goldLine,
                     }}
                   >
                     {filteredGuests.map((guest, index) => (
@@ -573,24 +590,34 @@ export function GuestList() {
                         type="button"
                         onMouseDown={(e) => e.preventDefault()}
                         onClick={() => handleSearchSelect(guest)}
-                        className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 text-left hover:bg-motif-cream/40 active:bg-motif-deep/40 transition-all duration-200 flex items-center gap-2 sm:gap-3 border-b border-motif-deep/40 last:border-b-0 group"
+                        className="group flex w-full items-center gap-2 border-b px-2.5 py-2 text-left transition-all duration-200 last:border-b-0 sm:gap-3 sm:px-3 sm:py-2.5"
+                        style={{ borderColor: goldLine }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = `color-mix(in srgb, ${C.goldSoft} 28%, ${C.paper})`
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent"
+                        }}
                       >
                         <div className="relative flex-shrink-0">
-                          <div className="bg-motif-deep p-1 sm:p-1.5 rounded-full shadow-sm group-hover:shadow-md transition-all duration-300">
-                            <User className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white" />
+                          <div
+                            className="rounded-full p-1 shadow-sm transition-all duration-300 group-hover:shadow-md sm:p-1.5"
+                            style={{ backgroundColor: C.gold }}
+                          >
+                            <User className="h-3 w-3 sm:h-3.5 sm:w-3.5" style={{ color: C.navy }} />
                           </div>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="font-semibold text-xs sm:text-sm text-motif-deep group-hover:text-motif-deep transition-colors duration-200 truncate">
+                        <div className="min-w-0 flex-1">
+                          <div className="truncate text-xs font-semibold sm:text-sm" style={{ color: C.navy }}>
                             {guest.Name}
                           </div>
                           {guest.Email && guest.Email !== "Pending" && (
-                            <div className={`${sectionType.label} text-motif-medium/80 truncate mt-0.5`}>
+                            <div className={`${sectionType.label} mt-0.5 truncate`} style={{ color: palette.label }}>
                               {guest.Email}
                             </div>
                           )}
                         </div>
-                        <div className="text-motif-medium/70 group-hover:text-motif-deep group-hover:translate-x-1 transition-all duration-200 flex-shrink-0">
+                        <div className="flex-shrink-0 transition-all duration-200 group-hover:translate-x-1" style={{ color: C.gold }}>
                           <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
@@ -601,22 +628,27 @@ export function GuestList() {
                 )}
                 {searchQuery && filteredGuests.length === 0 && (
                   <div 
-                    className="absolute z-[9999] w-full mt-1.5 sm:mt-2 bg-white/95 backdrop-blur-lg border-2 border-motif-deep/80 rounded-lg shadow-xl overflow-hidden" 
-                    style={{ 
-                      position: 'absolute', 
-                      top: '100%',
+                    className="absolute z-[9999] mt-1.5 w-full overflow-hidden rounded-lg border-2 shadow-xl backdrop-blur-lg sm:mt-2"
+                    style={{
+                      position: "absolute",
+                      top: "100%",
                       left: 0,
-                      right: 0
+                      right: 0,
+                      backgroundColor: `color-mix(in srgb, ${C.paper} 95%, white)`,
+                      borderColor: goldLine,
                     }}
                   >
                     <div className="p-2.5 sm:p-3 md:p-4">
                       <div className="flex items-start gap-2 sm:gap-3 mb-2 sm:mb-3">
-                        <div className="bg-motif-deep p-1.5 sm:p-2 rounded-lg flex-shrink-0 shadow-sm">
-                          <UserPlus className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+                        <div
+                          className="flex-shrink-0 rounded-lg p-1.5 shadow-sm sm:p-2"
+                          style={{ backgroundColor: C.gold }}
+                        >
+                          <UserPlus className="h-3 w-3 sm:h-4 sm:w-4" style={{ color: C.navy }} />
                         </div>
                         <div className="flex-1">
-                          <h4 className="font-semibold text-xs sm:text-sm text-motif-deep mb-1">Not finding your name?</h4>
-                          <p className={`${sectionType.label} text-motif-deep leading-relaxed`}>
+                          <h4 className="mb-1 text-xs font-semibold sm:text-sm" style={{ color: palette.heading }}>Not finding your name?</h4>
+                          <p className={`${sectionType.label} leading-relaxed`} style={{ color: palette.body }}>
                             We'd love to have you with us! Send a request to join the celebration.
                           </p>
                         </div>
@@ -626,7 +658,8 @@ export function GuestList() {
                           setRequestFormData({ ...requestFormData, Name: searchQuery })
                           setShowRequestModal(true)
                         }}
-                        className={`w-full !bg-motif-deep hover:!bg-motif-deep/90 text-white py-2 sm:py-2.5 rounded-lg ${sectionType.text} font-semibold shadow-md transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center`}
+                        className={`flex w-full items-center justify-center rounded-lg py-2 ${sectionType.text} font-semibold shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] sm:py-2.5`}
+                        style={buttonStyle}
                       >
                         <UserPlus className="h-3 w-3 mr-1.5 sm:mr-2 inline" />
                         Request to Join
@@ -655,8 +688,7 @@ export function GuestList() {
               aria-hidden
               className="pointer-events-none absolute inset-x-5 top-0 h-px sm:inset-x-8"
               style={{
-                background:
-                  "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
+                background: `linear-gradient(to right, transparent, ${C.gold}, transparent)`,
               }}
             />
 
@@ -733,7 +765,7 @@ export function GuestList() {
                       className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-full sm:mb-4 sm:h-14 sm:w-14 md:h-16 md:w-16"
                       style={{ backgroundColor: palette.accent }}
                     >
-                      <CheckCircle className="h-6 w-6 text-white sm:h-7 sm:w-7 md:h-8 md:w-8" />
+                      <CheckCircle className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" style={{ color: C.navy }} />
                     </div>
                     <h4
                       className={`${theSeasons.className} mb-2 uppercase tracking-[0.12em] sm:text-lg md:text-xl ${sectionType.subheader}`}
@@ -801,11 +833,7 @@ export function GuestList() {
                     <button
                       onClick={handleCloseModal}
                       className={`${cinzel.className} mt-4 rounded-sm border px-6 py-2.5 ${sectionType.label} font-semibold uppercase tracking-[0.2em] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:mt-5 sm:px-8 sm:py-3 md:mt-6`}
-                      style={{
-                        backgroundColor: palette.accent,
-                        borderColor: "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)",
-                        color: "var(--color-welcome-bg)",
-                      }}
+                      style={buttonStyle}
                     >
                       Close
                     </button>
@@ -833,16 +861,18 @@ export function GuestList() {
                           className={`relative rounded-lg border-2 p-2 transition-all duration-300 sm:p-2.5 md:p-3 lg:p-4 ${
                             formData.RSVP === "Yes"
                               ? "scale-[1.02] shadow-md"
-                              : "bg-white hover:shadow-sm"
+                              : "hover:shadow-sm"
                           }`}
                           style={
                             formData.RSVP === "Yes"
                               ? {
                                   borderColor: palette.accent,
-                                  backgroundColor:
-                                    "color-mix(in srgb, var(--color-welcome-green) 10%, white)",
+                                  backgroundColor: `color-mix(in srgb, ${C.gold} 12%, ${C.paper})`,
                                 }
-                              : { borderColor: innerSurfaceStyle.borderColor }
+                              : {
+                                  borderColor: innerSurfaceStyle.borderColor,
+                                  backgroundColor: C.paper,
+                                }
                           }
                         >
                           <div className="flex items-center justify-center gap-1.5 sm:gap-2">
@@ -850,7 +880,7 @@ export function GuestList() {
                               className="h-4 w-4 flex-shrink-0 sm:h-5 sm:w-5"
                               style={{
                                 color:
-                                  formData.RSVP === "Yes" ? palette.accent : "var(--color-welcome-text-soft)",
+                                  formData.RSVP === "Yes" ? palette.accent : palette.label,
                               }}
                             />
                             <span
@@ -867,14 +897,23 @@ export function GuestList() {
                           className={`relative rounded-lg border-2 p-2 transition-all duration-300 sm:p-2.5 md:p-3 lg:p-4 ${
                             formData.RSVP === "No"
                               ? "scale-[1.02] border-red-500 bg-red-50 shadow-md"
-                              : "border-[color-mix(in_srgb,var(--color-motif-deep)_10%,transparent)] bg-white hover:shadow-sm"
+                              : "hover:shadow-sm"
                           }`}
+                          style={
+                            formData.RSVP === "No"
+                              ? undefined
+                              : {
+                                  borderColor: innerSurfaceStyle.borderColor,
+                                  backgroundColor: C.paper,
+                                }
+                          }
                         >
                           <div className="flex items-center justify-center gap-1.5 sm:gap-2">
                             <XCircle
                               className={`h-4 w-4 flex-shrink-0 sm:h-5 sm:w-5 ${
-                                formData.RSVP === "No" ? "text-red-600" : "text-[color-mix(in_srgb,var(--color-welcome-text)_45%,transparent)]"
+                                formData.RSVP === "No" ? "text-red-600" : ""
                               }`}
+                              style={formData.RSVP === "No" ? undefined : { color: palette.label }}
                             />
                             <span
                               className={`font-goudy-italic text-xs font-semibold sm:text-sm ${
@@ -1032,11 +1071,7 @@ export function GuestList() {
                         type="submit"
                         disabled={isLoading}
                         className={`${cinzel.className} flex w-full items-center justify-center gap-1.5 rounded-sm border py-2.5 ${sectionType.label} font-semibold uppercase tracking-[0.2em] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md disabled:opacity-70 sm:gap-2 sm:py-3`}
-                        style={{
-                          backgroundColor: palette.accent,
-                          borderColor: "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)",
-                          color: "var(--color-welcome-bg)",
-                        }}
+                        style={buttonStyle}
                       >
                         {isLoading ? (
                           <>
@@ -1080,8 +1115,7 @@ export function GuestList() {
                   aria-hidden
                   className="h-[3px] w-full"
                   style={{
-                    background:
-                      "linear-gradient(to right, transparent, var(--color-welcome-green), transparent)",
+                    background: `linear-gradient(to right, transparent, ${C.gold}, transparent)`,
                   }}
                 />
                 <div className="px-6 pb-6 pt-6 text-center">
@@ -1090,14 +1124,14 @@ export function GuestList() {
                       className="absolute h-14 w-14 animate-ping rounded-full"
                       style={{
                         animationDuration: "2.5s",
-                        backgroundColor: "color-mix(in srgb, var(--color-welcome-green) 20%, transparent)",
+                        backgroundColor: `color-mix(in srgb, ${C.gold} 20%, transparent)`,
                       }}
                     />
                     <div
                       className="relative flex h-12 w-12 items-center justify-center rounded-full shadow-md"
                       style={{ backgroundColor: palette.accent }}
                     >
-                      <CheckCircle className="h-6 w-6 text-white" strokeWidth={2} />
+                      <CheckCircle className="h-6 w-6" strokeWidth={2} style={{ color: C.navy }} />
                     </div>
                   </div>
 
@@ -1148,11 +1182,7 @@ export function GuestList() {
                       }, 100)
                     }}
                     className={`${cinzel.className} mb-3 inline-flex w-full items-center justify-center gap-2 rounded-sm border py-3 ${sectionType.label} font-semibold uppercase tracking-[0.2em] shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]`}
-                    style={{
-                      backgroundColor: palette.accent,
-                      borderColor: "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)",
-                      color: "var(--color-welcome-bg)",
-                    }}
+                    style={buttonStyle}
                   >
                     <MessageSquare className="h-3 w-3 flex-shrink-0" />
                     Leave a Message
@@ -1192,8 +1222,7 @@ export function GuestList() {
                 aria-hidden
                 className="pointer-events-none absolute inset-x-5 top-0 h-px sm:inset-x-8"
                 style={{
-                  background:
-                    "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
+                  background: `linear-gradient(to right, transparent, ${C.gold}, transparent)`,
                 }}
               />
 
@@ -1360,11 +1389,7 @@ export function GuestList() {
                       type="submit"
                       disabled={isLoading}
                       className={`${cinzel.className} flex w-full items-center justify-center gap-1.5 rounded-sm border py-2.5 ${sectionType.label} font-semibold uppercase tracking-[0.2em] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md disabled:opacity-70 sm:gap-2 sm:py-3`}
-                      style={{
-                        backgroundColor: palette.accent,
-                        borderColor: "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)",
-                        color: "var(--color-welcome-bg)",
-                      }}
+                      style={buttonStyle}
                     >
                       {isLoading ? (
                         <>
@@ -1384,41 +1409,47 @@ export function GuestList() {
 
               {/* Enhanced Success Overlay */}
               {requestSuccess && (
-                <div className="absolute inset-0 bg-motif-soft/98 backdrop-blur-md flex items-center justify-center z-50 animate-in fade-in duration-300 p-2 sm:p-3 md:p-4">
-                  <div className="text-center p-3 sm:p-4 md:p-5 lg:p-6 max-w-sm mx-auto">
-                    {/* Enhanced Icon Circle */}
-                    <div className="relative inline-flex items-center justify-center mb-3 sm:mb-4">
-                      {/* Animated rings */}
-                      <div className="absolute inset-0 rounded-full border-2 border-motif-deep/20 animate-ping" />
-                      <div className="absolute inset-0 rounded-full border-2 border-motif-deep/30" />
-                      {/* Icon container */}
-                      <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-white rounded-full flex items-center justify-center shadow-xl">
-                        <CheckCircle className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 lg:h-10 lg:w-10 text-white" strokeWidth={2.5} />
+                <div
+                  className="absolute inset-0 z-50 flex items-center justify-center p-2 backdrop-blur-md animate-in fade-in duration-300 sm:p-3 md:p-4"
+                  style={{ backgroundColor: `color-mix(in srgb, ${C.paper} 98%, white)` }}
+                >
+                  <div className="mx-auto max-w-sm p-3 text-center sm:p-4 md:p-5 lg:p-6">
+                    <div className="relative mb-3 inline-flex items-center justify-center sm:mb-4">
+                      <div
+                        className="absolute inset-0 animate-ping rounded-full border-2"
+                        style={{ borderColor: `color-mix(in srgb, ${C.gold} 30%, transparent)` }}
+                      />
+                      <div
+                        className="absolute inset-0 rounded-full border-2"
+                        style={{ borderColor: `color-mix(in srgb, ${C.gold} 40%, transparent)` }}
+                      />
+                      <div
+                        className="relative flex h-12 w-12 items-center justify-center rounded-full shadow-xl sm:h-14 sm:w-14 md:h-16 md:w-16 lg:h-20 lg:w-20"
+                        style={{ backgroundColor: C.gold }}
+                      >
+                        <CheckCircle className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 lg:h-10 lg:w-10" strokeWidth={2.5} style={{ color: C.navy }} />
                       </div>
                     </div>
                     
-                    {/* Title */}
-                    <h4 className={`mb-2 font-serif font-bold text-motif-deep sm:mb-3 ${sectionType.subheader}`}>
+                    <h4 className={`mb-2 font-serif font-bold sm:mb-3 ${sectionType.subheader}`} style={{ color: palette.heading }}>
                       Request Sent!
                     </h4>
                     
-                    {/* Message */}
-                    <div className="space-y-1 sm:space-y-1.5 mb-2 sm:mb-3">
-                      <p className={`text-motif-deep/95 font-medium ${sectionType.text}`}>
+                    <div className="mb-2 space-y-1 sm:mb-3 sm:space-y-1.5">
+                      <p className={`font-medium ${sectionType.text}`} style={{ color: palette.body }}>
                         We've received your request
                       </p>
-                      <p className={`text-motif-deep/85 ${sectionType.label}`}>
+                      <p className={sectionType.label} style={{ color: palette.label }}>
                         We'll review it and get back to you soon
                       </p>
                     </div>
                     
-                    {/* Subtle closing indicator */}
-                    <div className="flex items-center justify-center gap-1 sm:gap-1.5 mt-2 sm:mt-3">
-                      <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-motif-deep/60 rounded-full animate-pulse" />
-                      <p className={`text-motif-deep/70 ${sectionType.label}`}>
+                    <div className="mt-2 flex items-center justify-center gap-1 sm:mt-3 sm:gap-1.5">
+                      <div className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1" style={{ backgroundColor: C.gold }} />
+                      <p className={sectionType.label} style={{ color: palette.label }}>
                         This will close automatically
                       </p>
-                      <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-motif-deep/60 rounded-full animate-pulse" />
+                      <div className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1" style={{ backgroundColor: C.gold }} />
                     </div>
                   </div>
                 </div>

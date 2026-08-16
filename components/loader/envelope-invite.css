@@ -1,42 +1,55 @@
-/* ── Design tokens ── */
+/* ── Design tokens — aligned with LoadingScreen navy + gold ── */
 .env-invite-screen {
-  /* Envelope — mustard gold (aligned with LoadingScreen) */
-  --env-envelope: #EEC853;
-  --env-base: #EEC853;
-  --env-highlight: color-mix(in srgb, #EEC853 72%, white);
-  --env-shadow: color-mix(in srgb, #EEC853 62%, #8a6a18);
-  --env-fold: color-mix(in srgb, #EEC853 55%, #a87818);
+  --env-navy: #05192d;
+  --env-navy-deep: #001326;
+  --env-navy-lift: #0a2744;
+  --env-gold: #c5a059;
+  --env-gold-bright: #d4af37;
+  --env-gold-soft: #e6d3a3;
+  --env-gold-dim: color-mix(in srgb, #c5a059 58%, transparent);
 
-  /* UI + surfaces — from globals / loading palette */
-  --env-ui-brand: var(--color-motif-deep);
-  --env-ui-accent: var(--color-motif-accent);
-  --env-text: var(--color-welcome-text);
-  --env-text-soft: var(--color-welcome-text-soft);
-  --env-wax: #9BA996;
-  --env-seal-light: color-mix(in srgb, #9BA996 72%, white);
-  --env-seal-gold: #9BA996;
-  --env-seal-mid: color-mix(in srgb, #9BA996 82%, #5d6f47);
-  --env-seal-deep: color-mix(in srgb, #9BA996 68%, #4a5a3e);
-  --env-seal-shadow: color-mix(in srgb, #9BA996 48%, #2f3a24);
+  --env-envelope: #c5a059;
+  --env-base: #c5a059;
+  --env-highlight: color-mix(in srgb, #d4af37 62%, white);
+  --env-shadow: color-mix(in srgb, #c5a059 62%, #6b4e1a);
+  --env-fold: color-mix(in srgb, #c5a059 55%, #8a6a18);
+
+  --env-ui-brand: var(--env-gold-soft);
+  --env-ui-accent: var(--env-gold-bright);
+  --env-text: #192030;
+  --env-text-soft: color-mix(in srgb, #192030 68%, white);
+  --env-wax: #c5a059;
+  --env-seal-light: #e6d3a3;
+  --env-seal-gold: #d4af37;
+  --env-seal-mid: #c5a059;
+  --env-seal-deep: #8a6a18;
+  --env-seal-shadow: #6b4e1a;
   --env-paper: var(--color-motif-cream);
-  --env-gold: #EEC853;
-  --env-ivory: #5C6F47;
+  --env-ivory: var(--env-navy-deep);
   --env-border: color-mix(in srgb, var(--env-envelope) 32%, transparent);
-  --env-border-soft: color-mix(in srgb, var(--env-ui-accent) 28%, transparent);
+  --env-border-soft: color-mix(in srgb, var(--env-gold) 28%, transparent);
+
+  --env-frame-inset: clamp(0.85rem, 3.4vw, 1.45rem);
+  --env-frame-double: 5px;
+  --env-deco-top: clamp(16.5rem, 86vw, 24rem);
+  --env-deco-sprig: clamp(5.75rem, 30vw, 10rem);
+  --env-gap-top: calc(var(--env-deco-top) * 0.5);
+  --env-gap-bottom-x: calc(var(--env-deco-sprig) * 0.88);
+  --env-gap-bottom-y: calc(var(--env-deco-sprig) * 1.22);
 
   /*
     Physical stack (always):
     Closed: seal > flap > front skin > contents > back
-    Open:   pocket flaps > contents > open flap > back
+    Open:   pocket > letter > interior > open flap > back
   */
   --z-back: 1;
   --z-flap-open: 1;
-  --z-body-open: 8;
-  --z-contents: 5;
-  --z-pocket: 8;
-  --z-letter: 14;
-  --z-photos: 18;
-  --z-front-closed: 16;
+  --z-interior: 2;
+  --z-contents: 4;
+  --z-letter: 5;
+  --z-pocket: 12;
+  --z-front-closed: 14;
+  --z-body-open: 10;
   --z-flap-closed: 20;
   --z-seal: 30;
 
@@ -50,12 +63,9 @@
   --env-available-h: calc(100dvh - var(--env-chrome));
   --env-width: min(310px, 78vw, calc(var(--env-available-h) * 0.64));
   --env-ratio: 1.5;
-  --env-seal-size: clamp(70px, calc(var(--env-width) * 0.24), 88px);
-  --env-letter-w: min(230px, calc(var(--env-width) * 0.7));
-  --env-letter-h: min(292px, calc(var(--env-width) * 0.88));
-  --env-polaroid-w: min(108px, calc(var(--env-width) * 0.33));
-  --env-polaroid-h: min(108px, calc(var(--env-width) * 0.33));
-  --env-photos-band: min(300px, calc(var(--env-width) * 0.96));
+  --env-seal-size: clamp(48px, calc(var(--env-width) * 0.16), 58px);
+  --env-letter-w: calc(var(--env-width) * 0.92);
+  --env-letter-h: calc(var(--env-letter-w) * 1.06);
   --env-scene-shift: clamp(0.65rem, 2.25dvh, 1.35rem);
   --pocket-cover: 42%;
   --pocket-lip: 58%;
@@ -77,7 +87,8 @@
     max(0.75rem, env(safe-area-inset-right, 0px))
     max(clamp(0.65rem, 2.5dvh, 1.25rem), env(safe-area-inset-bottom, 0px))
     max(0.75rem, env(safe-area-inset-left, 0px));
-  background: var(--env-ivory);
+  background: var(--env-navy-deep);
+  color: var(--env-gold);
   height: 100dvh;
   max-height: 100dvh;
   overflow: hidden;
@@ -96,24 +107,21 @@
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
   background:
-    radial-gradient(
-      920px 620px at 50% 18%,
-      color-mix(in srgb, var(--env-ui-accent) 14%, transparent) 0,
-      transparent 58%
-    ),
-    radial-gradient(
-      560px 400px at 10% 86%,
-      color-mix(in srgb, var(--env-ui-brand) 6%, transparent) 0,
-      transparent 55%
-    ),
-    radial-gradient(
-      440px 320px at 92% 72%,
-      color-mix(in srgb, var(--env-gold) 10%, transparent) 0,
-      transparent 52%
-    );
+    radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--env-gold) 8%, transparent) 0%, transparent 52%),
+    linear-gradient(180deg, rgb(5 25 45 / 32%) 0%, rgb(0 19 38 / 46%) 100%);
   transition: opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.env-invite-video {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
 }
 
 .env-invite-particles {
@@ -126,45 +134,115 @@
 .env-invite-bg-glow {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   background:
     radial-gradient(
       700px 500px at 50% 44%,
-      color-mix(in srgb, var(--env-envelope) 10%, transparent) 0,
+      color-mix(in srgb, var(--env-gold) 10%, transparent) 0,
       transparent 62%
-    ),
-    radial-gradient(
-      520px 380px at 78% 82%,
-      color-mix(in srgb, var(--env-ui-accent) 10%, transparent) 0,
-      transparent 58%
     );
 }
 
-.env-invite-corner {
+.env-invite-frame {
   position: fixed;
-  z-index: 2;
-  transition: opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 3;
+  inset: var(--env-frame-inset);
+  bottom: max(var(--env-frame-inset), env(safe-area-inset-bottom, 0px));
+  pointer-events: none;
 }
 
-.env-invite-corner--tl {
-  left: 0;
+.env-invite-frame-arm {
+  position: absolute;
+  box-sizing: border-box;
+  color: var(--env-gold);
+}
+
+.env-invite-frame-arm--top-left,
+.env-invite-frame-arm--top-right {
   top: 0;
+  width: calc(50% - var(--env-gap-top) / 2);
+  height: calc(var(--env-frame-double) + 1px);
+  border-top: 1px solid var(--env-gold);
+  border-bottom: 1px solid color-mix(in srgb, var(--env-gold) 78%, transparent);
 }
 
-.env-invite-corner--tr {
-  right: 0;
-  top: 0;
-}
-
-.env-invite-corner--bl {
+.env-invite-frame-arm--top-left {
   left: 0;
-  bottom: 0;
 }
 
-.env-invite-corner--br {
+.env-invite-frame-arm--top-right {
   right: 0;
+}
+
+.env-invite-frame-arm--left,
+.env-invite-frame-arm--right {
+  top: 0;
+  width: calc(var(--env-frame-double) + 1px);
+  height: calc(100% - var(--env-gap-bottom-y));
+}
+
+.env-invite-frame-arm--left {
+  left: 0;
+  border-left: 1px solid var(--env-gold);
+  border-right: 1px solid color-mix(in srgb, var(--env-gold) 78%, transparent);
+}
+
+.env-invite-frame-arm--right {
+  right: 0;
+  border-right: 1px solid var(--env-gold);
+  border-left: 1px solid color-mix(in srgb, var(--env-gold) 78%, transparent);
+}
+
+.env-invite-frame-arm--bottom {
+  left: var(--env-gap-bottom-x);
+  right: var(--env-gap-bottom-x);
   bottom: 0;
+  height: calc(var(--env-frame-double) + 1px);
+  border-top: 1px solid color-mix(in srgb, var(--env-gold) 78%, transparent);
+  border-bottom: 1px solid var(--env-gold);
+}
+
+.env-invite-deco {
+  position: fixed;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.env-invite-deco img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  filter: drop-shadow(0 0 18px color-mix(in srgb, var(--env-gold) 18%, transparent));
+}
+
+.env-invite-deco--top {
+  top: calc(var(--env-frame-inset) - 1.85rem);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 3;
+}
+
+.env-invite-deco--top img {
+  width: var(--env-deco-top);
+}
+
+.env-invite-deco--bl,
+.env-invite-deco--br {
+  bottom: 0;
+  width: var(--env-deco-sprig);
+  z-index: 3;
+}
+
+.env-invite-deco--bl {
+  left: 0;
+}
+
+.env-invite-deco--br {
+  right: 0;
 }
 
 .env-invite-ghost-date {
@@ -231,15 +309,25 @@
 
 .env-invite-screen[data-phase="exiting"] .env-invite-particles,
 .env-invite-screen[data-phase="exiting"] .env-invite-bg-glow,
-.env-invite-screen[data-phase="exiting"] .env-invite-corner,
+.env-invite-screen[data-phase="exiting"] .env-invite-video,
+.env-invite-screen[data-phase="exiting"] .env-invite-frame,
+.env-invite-screen[data-phase="exiting"] .env-invite-deco,
 .env-invite-screen[data-phase="exiting"] .env-invite-ghost-date {
   opacity: 0;
   transition: opacity 1.75s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.env-invite-screen[data-phase="exiting"] .env-invite-contents-clip {
+  z-index: 48;
+}
+
 .env-invite-screen[data-phase="exiting"] .env-invite-letter {
   z-index: 48;
   filter: drop-shadow(0 28px 56px color-mix(in srgb, var(--env-ui-brand) 22%, transparent));
+}
+
+.env-invite-screen[data-phase="exiting"] .env-invite-pocket {
+  opacity: 0;
 }
 
 .env-invite-screen[data-phase="exiting"] .env-invite-reveal-copy,
@@ -353,7 +441,7 @@
 /* ── Stage — layout shell only; envelope scales via tokens, no clipping box ── */
 .env-invite-stage {
   position: relative;
-  z-index: 2;
+  z-index: 4;
   width: min(500px, 94vw);
   flex: 1 1 auto;
   min-height: 0;
@@ -382,7 +470,7 @@
   width: 78%;
   height: 34px;
   transform: translateX(-50%);
-  background: radial-gradient(ellipse, rgba(42, 32, 53, 0.34) 0%, transparent 72%);
+  background: radial-gradient(ellipse, rgba(0, 19, 38, 0.45) 0%, transparent 72%);
   filter: blur(14px);
   pointer-events: none;
   z-index: 0;
@@ -395,7 +483,7 @@
   width: 62%;
   height: 10px;
   transform: translateX(-50%);
-  background: radial-gradient(ellipse, rgba(42, 32, 53, 0.26) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(0, 19, 38, 0.32) 0%, transparent 70%);
   filter: blur(4px);
   pointer-events: none;
   z-index: 0;
@@ -410,22 +498,22 @@
   overflow: visible;
   transition: width 1.15s cubic-bezier(0.22, 1, 0.36, 1);
   filter:
-    drop-shadow(0 26px 42px rgba(42, 32, 53, 0.24))
-    drop-shadow(0 10px 18px rgba(42, 32, 53, 0.16));
+    drop-shadow(0 26px 42px rgba(0, 19, 38, 0.42))
+    drop-shadow(0 10px 18px rgba(0, 19, 38, 0.28));
 }
 
 .env-invite-envelope-body {
   position: absolute;
   inset: 0;
-  transform-style: preserve-3d;
+  transform-style: flat;
+  isolation: isolate;
   overflow: visible;
   z-index: 3;
 }
 
-/* When open, entire body (letter + photos + pocket) stacks above the flap */
+/* When open, the body (letter + pocket) stacks above the folded-back flap */
 .env-invite-screen[data-phase="flap-open"] .env-invite-envelope-body,
 .env-invite-screen[data-phase="rising"] .env-invite-envelope-body,
-.env-invite-screen[data-phase="photos"] .env-invite-envelope-body,
 .env-invite-screen[data-phase="revealed"] .env-invite-envelope-body,
 .env-invite-screen[data-phase="cta"] .env-invite-envelope-body {
   z-index: var(--z-body-open);
@@ -444,8 +532,8 @@
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.1) inset,
     0 -1px 0 rgba(0, 0, 0, 0.15) inset,
-    0 22px 54px rgba(42, 32, 53, 0.3),
-    0 8px 24px rgba(42, 32, 53, 0.18);
+    0 22px 54px rgba(0, 19, 38, 0.42),
+    0 8px 24px rgba(0, 19, 38, 0.24);
 }
 
 .env-invite-back::before {
@@ -484,7 +572,7 @@
   right: 6%;
   top: 10%;
   bottom: calc(var(--pocket-cover) + 2%);
-  z-index: calc(var(--z-back) + 1);
+  z-index: var(--z-interior);
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.1) 100%);
   box-shadow: inset 0 14px 28px rgba(0, 0, 0, 0.32);
   opacity: 0;
@@ -494,7 +582,6 @@
 
 /* Hide interior during flap-open — the dark well reads as a gap under the flap */
 .env-invite-screen[data-phase="rising"] .env-invite-interior,
-.env-invite-screen[data-phase="photos"] .env-invite-interior,
 .env-invite-screen[data-phase="revealed"] .env-invite-interior,
 .env-invite-screen[data-phase="cta"] .env-invite-interior {
   opacity: 1;
@@ -508,6 +595,7 @@
   top: -195%;
   bottom: 0;
   z-index: var(--z-contents);
+  isolation: isolate;
   overflow: visible;
   pointer-events: none;
   opacity: 0;
@@ -519,12 +607,11 @@
   opacity: 1;
   visibility: visible;
   transition: opacity 0s linear, visibility 0s linear, clip-path 0.55s ease;
-  /* Hide only the pocket well — letter head stays uncropped above */
+  /* Hide the pocket well while the letter slides up */
   clip-path: inset(0 -10% 15% -10%);
   -webkit-clip-path: inset(0 -10% 15% -10%);
 }
 
-.env-invite-screen[data-phase="photos"] .env-invite-contents-clip,
 .env-invite-screen[data-phase="revealed"] .env-invite-contents-clip,
 .env-invite-screen[data-phase="cta"] .env-invite-contents-clip {
   opacity: 1;
@@ -542,7 +629,7 @@
   transform: translateX(-50%);
 }
 
-/* Letter + photos share one anchor — photos clip below card bottom */
+/* Letter is anchored at the pocket floor */
 .env-invite-emerge-stack {
   position: absolute;
   left: 50%;
@@ -552,27 +639,8 @@
   overflow: visible;
 }
 
-/* Soft edge at letter base — hidden; bottom is handled on the front paper */
 .env-invite-emerge-stack::after {
   display: none;
-}
-
-.env-invite-screen[data-phase="photos"] .env-invite-emerge-stack::after,
-.env-invite-screen[data-phase="revealed"] .env-invite-emerge-stack::after,
-.env-invite-screen[data-phase="cta"] .env-invite-emerge-stack::after {
-  display: none;
-}
-
-.env-invite-photos-emerge {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: var(--env-photos-band);
-  min-height: min(160px, 38vw);
-  clip-path: inset(-900px -80px 0 -80px);
-  pointer-events: none;
-  z-index: var(--z-photos);
 }
 
 .env-invite-emerge-stack .env-invite-letter {
@@ -587,14 +655,11 @@
   will-change: transform;
 }
 
-.env-invite-photos-emerge .env-invite-polaroid {
-  bottom: 0;
-}
-
 .env-invite-letter {
   position: absolute;
   left: 50%;
   bottom: 10%;
+  box-sizing: border-box;
   width: var(--env-letter-w);
   height: var(--env-letter-h);
   margin-left: calc(var(--env-letter-w) / -2);
@@ -621,37 +686,36 @@
 
 .env-invite-letter-frame {
   position: absolute;
-  inset:
-    clamp(6px, calc(var(--env-letter-w) * 0.038), 9px)
-    clamp(6px, calc(var(--env-letter-w) * 0.038), 9px)
-    clamp(14px, calc(var(--env-letter-w) * 0.062), 20px)
-    clamp(6px, calc(var(--env-letter-w) * 0.038), 9px);
-  border: 1px solid var(--env-border-soft);
+  inset: clamp(7px, calc(var(--env-letter-w) * 0.032), 10px);
+  border: 1px solid #04103B;
   pointer-events: none;
 }
 
 .env-invite-letter-frame::after {
   content: "";
   position: absolute;
-  inset: 4px;
-  border: 1px solid color-mix(in srgb, var(--env-border-soft) 70%, transparent);
+  inset: 3px;
+  border: 1px solid color-mix(in srgb, #04103B 72%, transparent);
   pointer-events: none;
 }
 
 .env-invite-letter-inner {
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
   height: 100%;
+  min-height: 0;
+  overflow: hidden;
   padding:
+    clamp(0.7rem, calc(var(--env-letter-w) * 0.06), 1.1rem)
     clamp(0.55rem, calc(var(--env-letter-w) * 0.05), 1rem)
-    clamp(0.5rem, calc(var(--env-letter-w) * 0.042), 0.9rem)
-    clamp(0.95rem, calc(var(--env-letter-w) * 0.085), 1.35rem)
-    clamp(0.5rem, calc(var(--env-letter-w) * 0.042), 0.9rem);
+    clamp(2.65rem, calc(var(--env-letter-w) * 0.26), 3.5rem)
+    clamp(0.55rem, calc(var(--env-letter-w) * 0.05), 1rem);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.42em;
+  justify-content: flex-start;
+  gap: 0.32em;
   text-align: center;
   font-size: clamp(10px, calc(var(--env-letter-w) * 0.054), 12px);
   -webkit-font-smoothing: antialiased;
@@ -664,17 +728,17 @@
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--env-text);
-  margin: 1.05em 0 0;
+  color: #04103B;
+  margin: 0.85em 0 0;
 }
 
 .env-invite-letter-date {
   font-family: "Cinzel", serif;
-  font-size: 1.72em;
+  font-size: 1.38em;
   font-weight: 600;
   letter-spacing: 0.08em;
   font-variant-numeric: tabular-nums;
-  color: var(--env-shadow);
+  color: #04103B;
   margin: 0.08em 0 0.12em;
   white-space: nowrap;
 }
@@ -685,7 +749,7 @@
   font-style: italic;
   font-weight: 500;
   line-height: 1.2;
-  color: var(--env-ui-brand);
+  color: #04103B;
   margin: 0.06em 0;
 }
 
@@ -695,26 +759,48 @@
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: lowercase;
-  color: var(--env-text-soft);
+  color: #04103B;
   margin: 0;
 }
 
 .env-invite-letter-names {
   position: relative;
   display: block;
-  width: min(100%, calc(var(--env-letter-w) * 0.78));
-  aspect-ratio: 1672 / 940;
-  margin: 0.12em 0 1.05em;
-  flex-shrink: 0;
-  background-color: #5c6e46;
-  -webkit-mask-image: url("/Details/coupleName.png");
-  mask-image: url("/Details/coupleName.png");
+  width: min(100%, calc(var(--env-letter-w) * 0.52));
+  max-width: 100%;
+  aspect-ratio: 1536 / 1024;
+  margin: 0.08em 0 0.2em;
+  flex-shrink: 1;
+  background: #04103B;
   -webkit-mask-size: contain;
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
+}
+
+.env-invite-letter-verse-title {
+  font-family: "Cinzel", serif;
+  font-size: 0.82em;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #04103B;
+  margin: 0.15em 0 0;
+}
+
+.env-invite-letter-verse {
+  font-family: "SortsMillGoudy", Georgia, "Times New Roman", serif;
+  font-size: 0.92em;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: #04103B;
+  margin: 0.08em 0 0;
+  max-width: 16em;
+  flex-shrink: 0;
 }
 
 .env-invite-letter-name {
@@ -735,156 +821,6 @@
 
 .env-invite-letter-names-image {
   display: none;
-}
-
-.env-invite-polaroid {
-  position: absolute;
-  bottom: 10%;
-  width: var(--env-polaroid-w);
-  margin: 0;
-  padding: 9px 9px 30px;
-  border: 1px solid var(--env-border);
-  appearance: none;
-  font: inherit;
-  color: inherit;
-  text-align: inherit;
-  cursor: default;
-  -webkit-tap-highlight-color: transparent;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.55) 0%, transparent 42%),
-    linear-gradient(180deg, var(--color-motif-silver) 0%, var(--color-motif-soft) 52%, var(--color-motif-cream) 100%);
-  box-shadow:
-    0 16px 30px rgba(0, 0, 0, 0.2),
-    0 5px 12px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.72),
-    inset 0 -2px 4px color-mix(in srgb, var(--env-ui-brand) 6%, transparent);
-  transform-origin: bottom center;
-  z-index: var(--z-photos);
-  overflow: hidden;
-  transition: box-shadow 0.35s ease, filter 0.35s ease;
-}
-
-.env-invite-screen[data-phase="photos"] .env-invite-polaroid,
-.env-invite-screen[data-phase="revealed"] .env-invite-polaroid,
-.env-invite-screen[data-phase="cta"] .env-invite-polaroid {
-  cursor: pointer;
-  pointer-events: auto;
-}
-
-.env-invite-polaroid:hover:not(:disabled),
-.env-invite-polaroid.is-lifted {
-  box-shadow:
-    0 22px 38px rgba(0, 0, 0, 0.28),
-    0 10px 18px rgba(0, 0, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.78),
-    inset 0 -2px 4px color-mix(in srgb, var(--env-ui-brand) 6%, transparent);
-}
-
-.env-invite-polaroid.is-lifted {
-  filter: brightness(1.02);
-}
-
-.env-invite-polaroid:focus-visible {
-  outline: 2px solid var(--env-gold);
-  outline-offset: 3px;
-}
-
-.env-invite-polaroid:disabled {
-  cursor: default;
-  pointer-events: none;
-}
-
-.env-invite-polaroid::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0.45;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0 3px,
-      rgba(141, 134, 152, 0.025) 3px 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 4px,
-      rgba(141, 134, 152, 0.018) 4px 5px
-    );
-  pointer-events: none;
-}
-
-.env-invite-polaroid::after {
-  content: "";
-  position: absolute;
-  left: 12%;
-  right: 12%;
-  bottom: 10px;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in srgb, var(--env-ui-accent) 22%, transparent) 20%,
-    color-mix(in srgb, var(--env-ui-accent) 22%, transparent) 80%,
-    transparent
-  );
-  pointer-events: none;
-}
-
-.env-invite-polaroid-photo {
-  position: relative;
-  width: 100%;
-  height: var(--env-polaroid-h);
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  background: var(--color-motif-silver);
-  border-radius: 1px;
-  border: 1px solid color-mix(in srgb, var(--env-border) 32%, transparent);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.25),
-    inset 0 2px 8px color-mix(in srgb, var(--env-text) 8%, transparent);
-}
-
-.env-invite-polaroid-photo::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background:
-    radial-gradient(ellipse 85% 75% at 50% 42%, transparent 55%, color-mix(in srgb, var(--env-ui-brand) 12%, transparent) 100%),
-    linear-gradient(180deg, color-mix(in srgb, var(--color-motif-cream) 10%, transparent) 0%, color-mix(in srgb, var(--env-ui-brand) 7%, transparent) 100%);
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-
-.env-invite-polaroid-img {
-  filter: sepia(0.14) contrast(1.04) saturate(0.9) brightness(0.98);
-}
-
-/* Compressed toward center — equal size, layered just below letter */
-.env-invite-photos-emerge .env-invite-polaroid--left {
-  left: 8%;
-}
-
-.env-invite-photos-emerge .env-invite-polaroid--center {
-  left: 50%;
-  margin-left: calc(var(--env-polaroid-w) / -2);
-}
-
-.env-invite-photos-emerge .env-invite-polaroid--right {
-  right: 8%;
-}
-
-.env-invite-polaroid--left {
-  left: 16%;
-}
-
-.env-invite-polaroid--center {
-  left: 50%;
-  margin-left: calc(var(--env-polaroid-w) / -2);
-}
-
-.env-invite-polaroid--right {
-  right: 16%;
 }
 
 /* ── Closed front skin — full opaque cover ── */
@@ -925,7 +861,6 @@
 
 .env-invite-screen[data-phase="flap-open"] .env-invite-front-closed,
 .env-invite-screen[data-phase="rising"] .env-invite-front-closed,
-.env-invite-screen[data-phase="photos"] .env-invite-front-closed,
 .env-invite-screen[data-phase="revealed"] .env-invite-front-closed,
 .env-invite-screen[data-phase="cta"] .env-invite-front-closed {
   opacity: 0;
@@ -979,8 +914,8 @@
 }
 
 /*
-  Open pocket — LEFT + RIGHT flaps sit ON TOP of contents.
-  This is what tucks the card/photos inside the envelope.
+  Open pocket — LEFT + RIGHT flaps sit ON TOP of the letter.
+  This is what tucks the paper inside the envelope.
 */
 .env-invite-pocket {
   position: absolute;
@@ -993,7 +928,6 @@
 
 .env-invite-screen[data-phase="flap-open"] .env-invite-pocket,
 .env-invite-screen[data-phase="rising"] .env-invite-pocket,
-.env-invite-screen[data-phase="photos"] .env-invite-pocket,
 .env-invite-screen[data-phase="revealed"] .env-invite-pocket,
 .env-invite-screen[data-phase="cta"] .env-invite-pocket {
   opacity: 1;
@@ -1006,7 +940,7 @@
   inset: 0;
 }
 
-/* Pocket lip — sits BELOW photos/letter so it never cuts through them */
+/* Pocket lip — sits ABOVE the letter so the paper tucks into the envelope */
 .env-invite-pocket-front {
   clip-path: polygon(
     0 var(--pocket-lip),
@@ -1017,7 +951,9 @@
   background:
     radial-gradient(ellipse 90% 35% at 50% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 55%),
     linear-gradient(180deg, color-mix(in srgb, var(--env-highlight) 78%, white) 0%, var(--env-base) 38%, var(--env-fold) 72%, var(--env-shadow) 100%);
-  box-shadow: inset 0 10px 18px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    inset 0 10px 18px rgba(0, 0, 0, 0.1),
+    0 -8px 16px rgba(0, 19, 38, 0.22);
 }
 
 /* Left diagonal fold */
@@ -1079,7 +1015,6 @@
 
 .env-invite-screen[data-phase="flap-open"] .env-invite-flap-shadow,
 .env-invite-screen[data-phase="rising"] .env-invite-flap-shadow,
-.env-invite-screen[data-phase="photos"] .env-invite-flap-shadow,
 .env-invite-screen[data-phase="revealed"] .env-invite-flap-shadow,
 .env-invite-screen[data-phase="cta"] .env-invite-flap-shadow {
   z-index: 0;
@@ -1117,7 +1052,6 @@
 
 .env-invite-screen[data-phase="flap-open"] .env-invite-flap,
 .env-invite-screen[data-phase="rising"] .env-invite-flap,
-.env-invite-screen[data-phase="photos"] .env-invite-flap,
 .env-invite-screen[data-phase="revealed"] .env-invite-flap,
 .env-invite-screen[data-phase="cta"] .env-invite-flap {
   z-index: var(--z-flap-open);
@@ -1156,8 +1090,9 @@
   background: transparent;
   box-shadow: none;
   -webkit-tap-highlight-color: transparent;
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.38))
-    drop-shadow(0 2px 5px rgba(0, 0, 0, 0.22));
+  filter:
+    drop-shadow(0 1px 1px rgba(80, 55, 10, 0.35))
+    drop-shadow(0 5px 8px rgba(0, 0, 0, 0.28));
 }
 
 .env-invite-seal-svg {
@@ -1169,16 +1104,15 @@
 
 .env-invite-seal-mono-img {
   pointer-events: none;
-  filter: brightness(0) invert(1);
 }
 
 .env-invite-seal-letter {
-  fill: #2a3228;
+  fill: #001326;
   font-family: "Cormorant Garamond", "Crimson Text", "Times New Roman", serif;
   font-weight: 500;
   font-style: normal;
   paint-order: stroke fill;
-  stroke: rgba(42, 50, 40, 0.25);
+  stroke: rgba(0, 19, 38, 0.25);
   stroke-width: 0.35px;
   filter: drop-shadow(0 0.5px 0 rgba(255, 255, 255, 0.15));
 }
@@ -1191,28 +1125,6 @@
 .env-invite-seal-letter-k {
   font-size: 27px;
   letter-spacing: -0.03em;
-}
-
-.env-invite-screen[data-phase="idle"] .env-invite-seal-btn {
-  animation: env-seal-breathe 2.8s ease-in-out infinite;
-}
-
-@keyframes env-seal-breathe {
-  0%,
-  100% {
-    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.38))
-      drop-shadow(0 2px 5px rgba(0, 0, 0, 0.22));
-  }
-  50% {
-    filter: drop-shadow(0 12px 22px rgba(155, 169, 150, 0.35))
-      drop-shadow(0 4px 10px rgba(0, 0, 0, 0.28));
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .env-invite-screen[data-phase="idle"] .env-invite-seal-btn {
-    animation: none;
-  }
 }
 
 .env-invite-seal-btn:disabled {
@@ -1240,10 +1152,6 @@
   z-index: var(--z-seal);
 }
 
-.env-invite-screen[data-phase="seal-press"] .env-invite-seal-btn {
-  animation: none;
-}
-
 /* ── Hint ── */
 .env-invite-hint {
   position: relative;
@@ -1258,7 +1166,7 @@
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #F7F3E9;
+  color: var(--env-gold-soft);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
   transition:
     opacity 0.35s ease,
@@ -1282,7 +1190,7 @@
   letter-spacing: 0.12em;
   line-height: 1.4;
   text-transform: uppercase;
-  color: #F7F3E9;
+  color: var(--env-gold-soft);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
   pointer-events: none;
   transition:
@@ -1300,7 +1208,6 @@
 .env-invite-screen[data-phase="seal-break"] .env-invite-hint,
 .env-invite-screen[data-phase="flap-open"] .env-invite-hint,
 .env-invite-screen[data-phase="rising"] .env-invite-hint,
-.env-invite-screen[data-phase="photos"] .env-invite-hint,
 .env-invite-screen[data-phase="revealed"] .env-invite-hint,
 .env-invite-screen[data-phase="cta"] .env-invite-hint {
   opacity: 0;
@@ -1336,7 +1243,7 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   line-height: 1.75;
-  color: #F7F3E9;
+  color: var(--env-gold-soft);
   font-weight: 500;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
 }
@@ -1345,7 +1252,7 @@
   margin-top: 0.45rem;
   font-family: "SortsMillGoudy", serif;
   font-size: 0.88rem;
-  color: color-mix(in srgb, #F7F3E9 82%, transparent);
+  color: color-mix(in srgb, var(--env-gold-soft) 82%, transparent);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
 }
 
@@ -1354,7 +1261,7 @@
   margin-top: 0.45rem;
   font-style: normal;
   font-size: clamp(1.55rem, 4.4vw, 2.05rem);
-  color: #F7F3E9;
+  color: var(--env-gold-soft);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
 }
 
@@ -1375,21 +1282,21 @@
   letter-spacing: 0.24em;
   text-transform: uppercase;
   white-space: nowrap;
-  color: #3A3128;
+  color: var(--env-navy-deep);
   background: var(--env-envelope);
   border: 1px solid color-mix(in srgb, var(--env-envelope) 72%, #8a6a18);
-  box-shadow: 0 8px 22px color-mix(in srgb, var(--env-envelope) 28%, transparent);
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--env-gold) 28%, transparent);
   cursor: pointer;
   transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 
 .env-invite-enter-btn:hover {
   background: color-mix(in srgb, var(--env-envelope) 88%, #8a6a18);
-  box-shadow: 0 10px 26px color-mix(in srgb, var(--env-envelope) 36%, transparent);
+  box-shadow: 0 10px 26px color-mix(in srgb, var(--env-gold) 36%, transparent);
 }
 
 .env-invite-enter-btn:focus-visible {
-  outline: 2px solid #F7F3E9;
+  outline: 2px solid var(--env-gold-soft);
   outline-offset: 3px;
 }
 
@@ -1419,6 +1326,8 @@
   .env-invite-screen {
     --env-chrome: clamp(3.75rem, 10dvh, 5.5rem);
     --env-cta-chrome: clamp(6.5rem, 15dvh, 8.5rem);
+    --env-deco-top: clamp(16.5rem, 86vw, 24rem);
+    --env-deco-sprig: clamp(5.75rem, 30vw, 10rem);
   }
 
   .env-invite-hint {
@@ -1432,18 +1341,12 @@
     --env-chrome: clamp(3.5rem, 9dvh, 5rem);
     --env-cta-chrome: clamp(9rem, 22dvh, 10.5rem);
     --env-scene-shift: clamp(0.45rem, 1.75dvh, 1rem);
+    --env-deco-top: clamp(13.5rem, 78vw, 18rem);
+    --env-deco-sprig: clamp(4.5rem, 26vw, 6.5rem);
   }
 
   .env-invite-emerge-stack {
     bottom: 5%;
-  }
-
-  .env-invite-polaroid {
-    padding: 5px 5px 18px;
-  }
-
-  .env-invite-photos-emerge {
-    min-height: min(112px, calc(var(--env-width) * 0.28));
   }
 
   .env-invite-contents {
@@ -1498,6 +1401,14 @@
   }
 }
 
+@media (min-width: 768px) {
+  .env-invite-screen {
+    --env-frame-inset: 1.35rem;
+    --env-deco-top: min(24.5rem, 52vw);
+    --env-deco-sprig: clamp(7.75rem, 16vw, 12rem);
+  }
+}
+
 /* Very short viewports — iPhone SE 1st gen, compact phones */
 @media (max-width: 320px), (max-height: 580px) {
   .env-invite-screen {
@@ -1536,10 +1447,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .env-invite-focus {
-    transition: none;
-  }
-
-  .env-invite-polaroid {
     transition: none;
   }
 

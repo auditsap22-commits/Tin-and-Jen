@@ -27,26 +27,34 @@ const aboveTheBeyond = localFont({
 const CORNER_DECO_CLASS =
   "block h-auto w-auto max-w-[88px] sm:max-w-[108px] md:max-w-[124px] lg:max-w-[140px]"
 
-const C = {
-  forest: "#5d6f47",
-  sage: "#949981",
-  mustard: "#eec853",
-  butter: "#f4dd97",
+const reminderInk = {
+  navy: "#192030",
+  deep: "#04103B",
+  slate: "#364061",
+  gold: "#AB832E",
+  champagne: "#DDBA7A",
+} as const
+
+const paperWash = {
   cream: "#f7f3e9",
+  lift: "#faf7ef",
+  champagne: reminderInk.champagne,
+  gold: reminderInk.gold,
+  slate: reminderInk.slate,
 } as const
 
 const creamWash = `
-  radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.butter} 35%, transparent) 0%, transparent 55%),
-  radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${C.sage} 16%, transparent) 0%, transparent 58%),
-  radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${C.mustard} 14%, transparent) 0%, transparent 55%),
-  linear-gradient(180deg, ${C.cream} 0%, #faf7ef 48%, ${C.cream} 100%)
+  radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${paperWash.champagne} 35%, transparent) 0%, transparent 55%),
+  radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${paperWash.slate} 16%, transparent) 0%, transparent 58%),
+  radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${paperWash.gold} 14%, transparent) 0%, transparent 55%),
+  linear-gradient(180deg, ${paperWash.cream} 0%, ${paperWash.lift} 48%, ${paperWash.cream} 100%)
 `
 
 const palette = {
-  body: "#F8F5EC",
-  heading: "#FFFFFF",
-  label: "rgba(248, 245, 236, 0.82)",
-  accent: "#f4dd97",
+  body: reminderInk.champagne,
+  heading: reminderInk.champagne,
+  label: `color-mix(in srgb, ${reminderInk.champagne} 82%, transparent)`,
+  accent: reminderInk.gold,
 } as const
 
 const headerDividerLineStyle = {
@@ -55,19 +63,48 @@ const headerDividerLineStyle = {
 } as const
 
 const dividerLineStyle = {
-  background:
-    "linear-gradient(to right, transparent, rgba(255, 255, 255, 0.45), transparent)",
+  background: `linear-gradient(90deg, transparent, ${reminderInk.gold}, transparent)`,
 } as const
+
+const INVITATION_WORD = "/decoration/deco/invitation-word-image.png"
+
+function InvitationWordDeco({ side }: { side: "left" | "right" }) {
+  return (
+    <div
+      className={`pointer-events-none absolute top-[7%] bottom-[7%] z-[5] w-[1.7rem] sm:w-[2.55rem] md:w-[3.4rem] lg:w-[4.15rem] ${
+        side === "left"
+          ? "left-2.5 sm:left-3.5 md:left-4"
+          : "right-2.5 sm:right-3.5 md:right-4"
+      }`}
+      aria-hidden
+    >
+      <div
+        className={`h-full w-full ${side === "right" ? "-scale-x-100" : ""}`}
+        style={{
+          backgroundColor: reminderInk.champagne,
+          WebkitMaskImage: `url("${INVITATION_WORD}")`,
+          maskImage: `url("${INVITATION_WORD}")`,
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+          WebkitMaskPosition: "center",
+          maskPosition: "center",
+        }}
+      />
+    </div>
+  )
+}
 
 function CoupleRingsMark() {
   return (
-    <div className="-mt-3 mb-4 flex justify-center sm:-mt-4 sm:mb-5 md:-mt-5 md:mb-6">
+    <div className="mb-3 flex justify-center sm:mb-4 md:mb-5">
       <div
-        className="h-[4.5rem] w-[4.5rem] sm:h-[5.25rem] sm:w-[5.25rem] md:h-24 md:w-24"
+        className="h-[3.75rem] w-[2.75rem] sm:h-[4.5rem] sm:w-[3.25rem] md:h-[5.25rem] md:w-[3.75rem]"
         style={{
-          backgroundColor: "#FFFFFF",
-          maskImage: "url(/decoration/deco/ring.png)",
-          WebkitMaskImage: "url(/decoration/deco/ring.png)",
+          backgroundColor: reminderInk.champagne,
+          maskImage: 'url("/decoration/deco/ring.png")',
+          WebkitMaskImage: 'url("/decoration/deco/ring.png")',
           maskSize: "contain",
           WebkitMaskSize: "contain",
           maskRepeat: "no-repeat",
@@ -425,7 +462,7 @@ export function Entourage() {
       >
         <div
           className="absolute inset-0 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 rounded-md"
-          style={{ background: `linear-gradient(to right, transparent, color-mix(in srgb, white 28%, transparent), transparent)` }}
+          style={{ background: `linear-gradient(to right, transparent, color-mix(in srgb, ${reminderInk.champagne} 28%, transparent), transparent)` }}
         />
         <p
           className={`font-goudy-italic relative font-medium normal-case ${textAlign} transition-all duration-300 whitespace-nowrap max-w-full overflow-hidden text-ellipsis`}
@@ -503,7 +540,7 @@ export function Entourage() {
         <div className="pointer-events-none absolute left-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/left-top-corner.png"
+            src="/decoration/deco/left-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -511,7 +548,7 @@ export function Entourage() {
         <div className="pointer-events-none absolute right-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/right-top-corner.png"
+            src="/decoration/deco/right-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -519,7 +556,7 @@ export function Entourage() {
         <div className="pointer-events-none absolute bottom-0 left-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/left-bottom-corner.png"
+            src="/decoration/deco/left-bottom-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -527,7 +564,7 @@ export function Entourage() {
         <div className="pointer-events-none absolute bottom-0 right-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/right-bottom-corner.png"
+            src="/decoration/deco/right-bottom-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -559,26 +596,36 @@ export function Entourage() {
         </div>
       </div>
 
-      {/* Arch container */}
+      {/* Color container — aligned with Gentle Reminders */}
       <div
-        className={`relative z-20 mx-auto max-w-3xl px-4 pb-2 sm:max-w-4xl sm:px-6 md:px-8 @container/entourage-card transition-all duration-1000 delay-300 ${
+        className={`relative z-20 mx-auto w-full max-w-3xl px-3 pb-2 sm:max-w-4xl sm:px-6 md:px-8 lg:max-w-5xl @container/entourage-card transition-all duration-1000 delay-300 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <div className="relative">
+        <div
+          className="relative overflow-hidden"
+          style={{
+            backgroundColor: reminderInk.deep,
+            backgroundImage: `radial-gradient(90% 48% at 50% 0%, color-mix(in srgb, ${reminderInk.gold} 18%, transparent) 0%, transparent 62%)`,
+            boxShadow: `0 18px 48px color-mix(in srgb, ${reminderInk.deep} 34%, transparent)`,
+          }}
+        >
           <div
-            className="relative z-20 overflow-hidden rounded-t-full"
+            className="pointer-events-none absolute inset-[0.7rem] z-20 sm:inset-4 md:inset-[1.15rem]"
+            aria-hidden
             style={{
-              backgroundColor: C.forest,
-              boxShadow: `0 18px 48px color-mix(in srgb, ${C.forest} 28%, transparent)`,
+              boxShadow: `
+                inset 0 0 0 1px ${reminderInk.gold},
+                inset 0 0 0 5px ${reminderInk.deep},
+                inset 0 0 0 6px ${reminderInk.champagne}
+              `,
             }}
-          >
-            <div
-              className="pointer-events-none absolute inset-3 z-30 rounded-t-full border border-white sm:inset-4 md:inset-5"
-              aria-hidden
-            />
+          />
 
-            <div className="relative z-20 px-5 pb-10 pt-[22%] sm:px-8 sm:pb-12 md:px-12 md:pb-14 lg:px-14">
+          <InvitationWordDeco side="left" />
+          <InvitationWordDeco side="right" />
+
+          <div className="relative z-10 mx-auto w-full px-[3.15rem] py-11 sm:px-16 sm:py-14 md:px-[4.75rem] md:py-16">
             {isLoading ? (
               <div className="flex items-center justify-center py-24 sm:py-28 md:py-32">
                 <span className={`font-goudy-italic ${ct.body}`} style={{ color: palette.body }}>
@@ -608,7 +655,6 @@ export function Entourage() {
               </div>
             ) : (
             <>
-              {(grouped["The Couple"]?.length ?? 0) === 0 ? <CoupleRingsMark /> : null}
               {ROLE_CATEGORY_ORDER.map((category, categoryIndex) => {
                 const members = grouped[category] || []
                 const bridalPartyHasMembers =
@@ -633,7 +679,7 @@ export function Entourage() {
                   const bride = members.find(m => m.roleTitle?.toLowerCase().includes('bride'))
                   
                   return (
-                    <div key={category}>
+                    <div key={category} className="pt-1 sm:pt-2">
                       <CoupleRingsMark />
                       <TwoColumnLayout singleTitle="The Couple" centerContent={true}>
                         <div className="px-0.5 sm:px-1 md:px-1.5 min-w-0 overflow-hidden">
@@ -1251,7 +1297,6 @@ export function Entourage() {
             </>
             )}
           </div>
-        </div>
         </div>
       </div>
       </section>

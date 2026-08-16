@@ -6,10 +6,10 @@ import {
 export const siteConfig = {
   couple: {
     bride: "Ana Margarita Benigno", //Noenyl Bryle M. Gonzaga
-    brideNickname: "Ana", //Ltryl
+    brideNickname: "TIN", //Ltryl
     groom: "Marion Paul Serrano", //Ltryl B. Benitez
-    groomNickname: "Paul",
-    monogram:"/monogram/new-monogram.png" ,//Ltryl
+    groomNickname: "JEN",
+    monogram:"/monogram/the-monogram.png" ,//Ltryl
     backgroundMusic:"/background_music/Mike Mains & The Branches - I Love You Always Forever (Lyric Video).mp3"
   },
   googleAPI:{
@@ -25,12 +25,12 @@ export const siteConfig = {
     googleShare: "https://docs.google.com/spreadsheets/d/1J7mR98rWgWTUuyznyH2KFltoE2U5n4JrAcf-cVXbqsQ/edit?usp=sharing", 
   },
   wedding: {
-    date: "November 6, 2026",
-    time: "9:00 AM",
-    venue: "St. Benedict Parish",
+    date: "November 28, 2026",
+    time: "3:00 PM",
+    venue: "RAI Atrium Suites Cauayan City",
     tagline: "are getting married!!!!!",
-    theme: "Our wedding palette is inspired by timeless elegance and warmth.Motif Colors: Champagne Gold, Soft Beige, Warm Soft Brown",
-    motif: "#BBCED5, #B9C3A8, #F3D8C5, #D1C4D4, #ECD8BA, #F4E8D8, #E1DCCF",
+    theme: "Our wedding palette is inspired by timeless elegance. Motif Colors: Midnight Navy, Deep Navy, Slate Navy, Antique Gold, Champagne",
+    motif: "#04103B, #192030, #364061, #AB832E, #DDBA7A",
   },
   proposal: {
     // Use "Maid of Honor" for unmarried, "Matron of Honor" for married
@@ -40,7 +40,7 @@ export const siteConfig = {
   },
   details: {
     rsvp: {
-      deadline: "October 30, 2026",
+      deadline: "November 15, 2026",
       coordinator: "Ana / Paul",
       phone: "to be announced",
     },
@@ -72,23 +72,23 @@ export const siteConfig = {
     // }
   },
   ceremony: {
-    location: "St. Benedict Parish",
-    venue: "Ayala Westgrove Heights, South Blvd, Silang, 4118 Cavite, Philippines",
-    map: "https://maps.app.goo.gl/yRMLmsfaZwjEWzy36",
-    date: "November 6, 2026",
+    location: "TBD",
+    venue: "TBD",
+    map: "TBD",
+    date: "November 28, 2026",
     day: "Friday",
-    time: "9:00 AM",
-    entourageTime: "8:00 AM",
-    guestsTime: "8:30 AM",
+    time: "TBD",
+    entourageTime: "TBD",
+    guestsTime: "TBD",
     image: ["/Details/ceremony.png", "/Details/ceremony2.png","/Details/ceremony3.png"],
   },
   reception: {
-    location: "Jardin de Milagros Events Place",
-    venue: "Purok 1, 9981 Santa Rosa. Tagaytay Rd, Silang, 4118 Cavite, Philippines",
-    map: "https://maps.app.goo.gl/EbRsPP7DbNo2bJ1k8",
-    date: "November 6, 2026",
+    location: "TBD",
+    venue: "TBD",
+    map: "TBD",
+    date: "November 28, 2026",
     day: "Friday",
-    time: "12:00 PM",
+    time: "TBD",
     image: ["/Details/reception.png", "/Details/reception1.png","/Details/reception3.png"],
   },
   dressCode: {
@@ -99,13 +99,13 @@ export const siteConfig = {
         label: "Ninang",
         description: "Long gown in the shade of silver gray.",
         image: "/Details/Ninang.png",
-        palette: ["#D8D3CD", "#C0C0C0", "#A9A9A9", "#969090", "#8C8686"],
+        palette: ["#04103B", "#192030", "#364061", "#AB832E", "#DDBA7A"],
       },
       ninong: {
         label: "Ninong",
-        description: "Barong Tagalog and black slacks.",
+        description: "Champagne or Cream Barong Tagalog and navy slacks.",
         image: "/Details/Ninong.png",
-        palette: ["#D0A386", "#E3C5B3", "#E4DCD1"],
+        palette: ["#DDBA7A", "#04103B"],
       },
     },
     entourage: {
@@ -114,13 +114,13 @@ export const siteConfig = {
         label: "Bridesmaids",
         description: "Long gown that suits our color motif.",
         image: "/Details/bridesmaid.png",
-        palette: ["#B4A3D4", "#C8A2C8"],
+        palette: ["#04103B", "#192030", "#364061", "#AB832E", "#DDBA7A"],
       },
       groomsmen: {
         label: "Groomsmen",
-        description: "Long sleeve Barong Tagalog and black slacks.",
+        description: "Long sleeve Champagne or Cream Barong Tagalog and navy slacks.",
         image: "/Details/Groomsmen.png",
-        palette: ["#D0A386", "#E3C5B3", "#E4DCD1"],
+        palette: ["#DDBA7A", "#04103B"],
       },
     },
     guests: {
@@ -128,7 +128,7 @@ export const siteConfig = {
       label: "Guests",
       description: "Formal attire and formal dress.",
       image: "/Details/guest.png",
-      palette: ["#D9B8F5", "#A37CD2", "#E6DDD2", "#E4C5B2", "#727E40"],
+      palette: ["#04103B", "#192030", "#364061", "#AB832E", "#DDBA7A"],
     },
     paletteNote:
       "To create a cohesive and elegant celebration, we kindly encourage our guests to follow the suggested color palette above. To allow our wedding party to be easily distinguished, we respectfully ask that guests refrain from wearing white or black, as these colors are reserved for the couple and the wedding party.",
@@ -137,17 +137,59 @@ export const siteConfig = {
     note: "We kindly request our guests to dress in attire following our wedding palette.",
   },
   narratives: {
-    ourStory: `Once upon a signature…
+    ourStory: `CHAPTER 1
+How We Met
 
-Our story began with a simple signature, one that slowly turned into something magical. He was my financial advisor, and I was there to sign documents. It was July 5, 2021, and we met at the Lobby of the building. Little did we know, that ordinary day would start a story neither of us expected.
+Every love story begins differently.
+Some start with a grand moment.
+Some with a single conversation.
+Ours started quietly.
 
-I wasn't looking for anything, yet somehow, our connection grew in its own gentle, unexpected way. And then, on June 1, 2022, our story truly began—we became us. We found a love that feels like home.
+It was 2021.
+At that time, I was still healing from a heartbreak. Hindi ako naghahanap ng bagong relasyon. Sa totoo lang, mas gusto kong ayusin muna ang sarili ko at magpatuloy sa buhay.
 
-Our journey wasn't rushed, but perfectly timed. We believe that God brought us together in His own way and season.
+One day, I went to Binondo, where our YouTube partner was staying.
+That was the first time I saw Christine.
+We didn't talk.
+We weren't introduced.
+She was simply there.
 
-With hearts full of gratitude, we step into this new chapter hand in hand, trusting His plan and celebrating a love rooted in faith, patience, and grace.
+I never imagined that years later, God would write a different ending to that ordinary day.
 
-Today, we choose each other- again and again- and we can't wait to celebrate this new chapter with the people we love most.`,
+Life went on.
+For almost three years, I remained single.
+I wasn't looking for someone else.
+I believed that if God had someone prepared for me, He would bring her into my life at the right time.
+
+Then came the day everything began to change.
+Christine got baptized at our church.
+Later that day, one of our churchmates casually asked if I could accompany her to the SM terminal.
+It seemed like a small favor.
+But looking back now, I believe God was quietly opening a door.
+
+That short trip became our very first real conversation.
+Nothing extraordinary.
+Just two people talking on the way to the terminal.
+
+After she got home, I sent her a simple message.
+"Ingat sa pag-uwi."
+
+It wasn't a pickup line.
+It wasn't meant to impress her.
+It was simply genuine concern.
+
+Looking back now, I smile whenever I remember that message.
+Because I didn't know it then...
+That simple "Ingat" would become the beginning of the greatest love story God would ever write for us.
+
+Reflection
+Sometimes God doesn't begin a love story with fireworks.
+Sometimes...
+He begins it with a simple ride, a short conversation, and one sincere message.
+Because when the time is right...
+He makes everything happen.
+
+Isaiah 60:22`,
     groom: `The first time Mark saw Catherine, time seemed to slow down. It was an ordinary day that instantly became unforgettable: one smile, one hello, and suddenly his world had a new center. He didn't have the perfect words ready, but he knew he had met someone who felt like home.
 
 Early conversations turned into late-night talks, sharing dreams, favorite meals, and whispered prayers for a future together. With every small adventure—coffee runs, long drives, quiet walks—Mark found himself choosing her over and over again. He loved how she laughed freely, how she listened with her whole heart, and how her faith steadied him.
@@ -160,28 +202,82 @@ Mark's steadiness won her heart: the way he showed up, even when schedules were 
 Now, as they prepare to say yes before God and the people they love most, Catherine is grateful for the patience, humor, and hope Mark brings to every day. She knows this next chapter is just the start of the love story they get to write together.`,
   },
   colors: {
-    primary: "#87AE73",
-    secondary: "#F5F5DC",
+    primary: "#04103B",
+    secondary: "#DDBA7A",
   },
   playlist: {
     title: "A Playlist from our hearts",
     subtitle: "Songs that have been part of our journey together",
-    playlistName: "Paul and Ana Wedding",
+    playlistName: "Jen and Tin Wedding",
+    spotifyTitle: "Paul and Ana",
+    curator: "Lance",
+    coverUrl:
+      "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da846306cebfbcee35881606468d",
     embedUrl:
     //https://open.spotify.com/embed/playlist/6BMbQvAs9Uj24XgPCK7UjQ?utm_source=generator&si=cd41335ebebb4708
       "https://open.spotify.com/embed/playlist/6BMbQvAs9Uj24XgPCK7UjQ?utm_source=generator&theme=0&si=cd41335ebebb4708",
     spotifyUrl: "https://open.spotify.com/playlist/6BMbQvAs9Uj24XgPCK7UjQ",
+    tracks: [
+      {
+        title: "Ikaw At Ako",
+        artist: "TJ Monterde",
+        duration: "04:06",
+        uri: "spotify:track:5tDjVBApQnsOe57pdJ68QA",
+        previewUrl:
+          "https://p.scdn.co/mp3-preview/54cc95e7253ad30284a8448c505b5f50c0e54f95",
+      },
+      {
+        title: "Palagi - TJxKZ Version",
+        artist: "TJ Monterde, KZ Tandingan",
+        duration: "04:01",
+        uri: "spotify:track:4WgViu9gw3qYOr3iF9OuLG",
+        previewUrl:
+          "https://p.scdn.co/mp3-preview/4b67c794c7cc123c08dfe67fe2117555e9ea6a93",
+      },
+      {
+        title: "Tahanan - Wedding Version",
+        artist: "El Manu, Jessy Kang",
+        duration: "04:54",
+        uri: "spotify:track:2zxXtgZG2kd7rtbG2T2mQn",
+        previewUrl:
+          "https://p.scdn.co/mp3-preview/1b11ac5317904b08a4bca6eb37881c5e1cdae0d4",
+      },
+      {
+        title: "Beautiful In White",
+        artist: "Shane Filan",
+        duration: "03:52",
+        uri: "spotify:track:43wROOsAEK0F3Fu46Vjn7W",
+        previewUrl:
+          "https://p.scdn.co/mp3-preview/661f2bdd7bc521dd156f1834a35db9f0998ee903",
+      },
+      {
+        title: "Wedding Dress",
+        artist: "TAEYANG",
+        duration: "04:02",
+        uri: "spotify:track:2NO4CA2TFvhGeg7XMz8PmT",
+        previewUrl:
+          "https://p.scdn.co/mp3-preview/1e83067a5a7080339c0407d1581028b40ad11dd9",
+      },
+      {
+        title: "Handa Na",
+        artist: "Noah Raquel",
+        duration: "03:04",
+        uri: "spotify:track:3iF3k047ZbFs4p5GM0Q7LL",
+        previewUrl:
+          "https://p.scdn.co/mp3-preview/9a6a92c063c59ff824400988804290bd88ef2a75",
+      },
+    ],
   },
   snapShare: {
     googleDriveLink:
       "https://drive.google.com/drive/folders/1BE5gjldtokJI4ba5narJmLgzIkXhfrA_?usp=sharing",
     albumQR: "/QR/AlbumQR.png",
-    hashtag: ["#PaulandAnaWedding"],
+    hashtag: ["#JENfoundHisdesTINy"],
     instructions: "Please scan this QR Code and upload the photos and videos you have taken during our wedding reception. We are delighted to see your snaps too!",
   },
   accommodation: {
     coordinator: {
-      name: "Paul / Ana",
+      name: "Jen / Tin",
       phone: "to be announced",
     },
     hotels: [

@@ -12,13 +12,28 @@ const cinzel = Cinzel({
 })
 
 const C = {
-  forest: "#5d6f47",
-  sage: "#949981",
-  mustard: "#eec853",
-  butter: "#f4dd97",
-  cream: "#f7f3e9",
-  ink: "#3a3128",
+  navy: "#04103B",
+  gold: "#c5a059",
+  goldBright: "#d4af37",
+  goldSoft: "#e6d3a3",
+  paper: "#f7f3e9",
 } as const
+
+const WEDDING_BRAND = [
+  "God wrote our story.",
+  "He guided our journey.",
+  "He strengthened our faith.",
+  "He taught us patience.",
+  "And in His perfect time,",
+  "He brought us together.",
+] as const
+
+const WEDDING_COVENANT = [
+  "Two lives.",
+  "One covenant.",
+  "One faith.",
+  "One future.",
+] as const
 
 const theSeasons = localFont({
   src: "../../Font/Fontspring-DEMO-theseasons-reg.otf",
@@ -38,16 +53,18 @@ function OrnamentalDivider({ compact = false }: { compact?: boolean }) {
       <span
         className={`h-px ${compact ? "w-6 sm:w-10" : "w-8 sm:w-12"}`}
         style={{
-          background:
-            "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent))",
+          background: `linear-gradient(to right, transparent, ${C.gold})`,
         }}
       />
-      <span className="h-0.5 w-0.5 rounded-full bg-motif-deep/45 sm:h-1 sm:w-1" aria-hidden />
+      <span
+        className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1"
+        style={{ background: C.gold }}
+        aria-hidden
+      />
       <span
         className={`h-px ${compact ? "w-6 sm:w-10" : "w-8 sm:w-12"}`}
         style={{
-          background:
-            "linear-gradient(to left, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent))",
+          background: `linear-gradient(to left, transparent, ${C.gold})`,
         }}
       />
     </div>
@@ -56,8 +73,7 @@ function OrnamentalDivider({ compact = false }: { compact?: boolean }) {
 
 function CoupleLabel({ groom, bride }: { groom: string; bride: string }) {
   const lineStyle = {
-    background:
-      "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-welcome-navy) 35%, transparent))",
+    background: `linear-gradient(to right, transparent, color-mix(in srgb, ${C.gold} 70%, transparent))`,
   }
 
   return (
@@ -65,14 +81,14 @@ function CoupleLabel({ groom, bride }: { groom: string; bride: string }) {
       <span className="h-px w-5 sm:w-7 md:w-9" style={lineStyle} aria-hidden />
       <p
         className={`${cinzel.className} ${sectionType.label} shrink-0 py-0.5 font-semibold uppercase leading-normal tracking-[0.34em] min-[400px]:tracking-[0.38em] sm:tracking-[0.44em]`}
-        style={{ color: "var(--color-welcome-navy)" }}
+        style={{ color: C.navy }}
       >
         {groom}
         <span
           className={`${aboveTheBeyond.className} mx-1.5 inline-block normal-case tracking-normal sm:mx-2`}
           style={{
             fontSize: "1.35em",
-            color: "var(--color-welcome-green)",
+            color: C.gold,
             verticalAlign: "middle",
           }}
           aria-hidden
@@ -84,8 +100,7 @@ function CoupleLabel({ groom, bride }: { groom: string; bride: string }) {
       <span
         className="h-px w-5 sm:w-7 md:w-9"
         style={{
-          background:
-            "linear-gradient(to left, transparent, color-mix(in srgb, var(--color-welcome-navy) 35%, transparent))",
+          background: `linear-gradient(to left, transparent, color-mix(in srgb, ${C.gold} 70%, transparent))`,
         }}
         aria-hidden
       />
@@ -109,7 +124,7 @@ function LayeredWelcomeTitle() {
         className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] md:tracking-[0.14em]`}
         style={{
           fontSize: "var(--welcome-size)",
-          color: "var(--color-welcome-navy)",
+          color: C.navy,
         }}
       >
         Welcome
@@ -119,11 +134,8 @@ function LayeredWelcomeTitle() {
         aria-hidden
         className={`${aboveTheBeyond.className} relative z-10 mx-auto block w-fit max-w-full px-1 leading-[0.88] sm:leading-[0.9]`}
         style={{
-          // marginTop: "var(--script-overlap)",
           fontSize: "var(--script-size)",
-          color: "var(--color-welcome-green)",
-          textShadow:
-            "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 95%, white), 0 0 10px color-mix(in srgb, var(--color-welcome-bg) 65%, white)",
+          color: C.gold,
         }}
       >
         to our love story
@@ -131,6 +143,63 @@ function LayeredWelcomeTitle() {
 
       <span className="sr-only"> to our love story</span>
     </h2>
+  )
+}
+
+function WeddingBrand() {
+  return (
+    <blockquote className="relative mx-auto max-w-md px-6 py-2 text-center sm:px-8 sm:py-3">
+      <span
+        aria-hidden
+        className={`${theSeasons.className} pointer-events-none absolute -top-1 left-0 leading-none select-none sm:-top-2`}
+        style={{
+          fontSize: "3.25rem",
+          color: C.gold,
+          opacity: 0.55,
+        }}
+      >
+        “
+      </span>
+      <span
+        aria-hidden
+        className={`${theSeasons.className} pointer-events-none absolute -bottom-4 right-0 leading-none select-none sm:-bottom-5`}
+        style={{
+          fontSize: "3.25rem",
+          color: C.gold,
+          opacity: 0.55,
+        }}
+      >
+        ”
+      </span>
+
+      <div
+        className={`font-goudy-italic space-y-0 leading-snug ${sectionType.textSnug}`}
+        style={{ color: C.navy }}
+      >
+        {WEDDING_BRAND.map((line) => (
+          <p key={line}>{line}</p>
+        ))}
+      </div>
+
+      <div className="mt-3 space-y-0 leading-snug sm:mt-3.5">
+        {WEDDING_COVENANT.map((line) => (
+          <p
+            key={line}
+            className={`${cinzel.className} text-[0.72rem] font-medium uppercase tracking-[0.22em] sm:text-[0.78rem] sm:tracking-[0.26em]`}
+            style={{ color: C.navy }}
+          >
+            {line}
+          </p>
+        ))}
+      </div>
+
+      <p
+        className={`${cinzel.className} mt-3 text-[0.82rem] font-semibold uppercase tracking-[0.28em] sm:mt-3.5 sm:text-[0.9rem] sm:tracking-[0.32em]`}
+        style={{ color: C.gold }}
+      >
+        Two become one.
+      </p>
+    </blockquote>
   )
 }
 
@@ -153,28 +222,30 @@ export function Welcome() {
           className="relative min-w-0 overflow-visible rounded-lg border px-4 pt-6 pb-10 @container/welcome sm:rounded-xl sm:px-7 sm:pt-7 sm:pb-12 md:rounded-2xl md:px-8 md:pt-8 md:pb-14"
           style={{
             background: `
-              radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.butter} 35%, transparent) 0%, transparent 55%),
-              radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${C.sage} 16%, transparent) 0%, transparent 58%),
-              radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${C.mustard} 14%, transparent) 0%, transparent 55%),
-              linear-gradient(180deg, ${C.cream} 0%, #faf7ef 48%, ${C.cream} 100%)
+              radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.goldSoft} 22%, transparent) 0%, transparent 55%),
+              linear-gradient(180deg, ${C.paper} 0%, #faf7ef 48%, ${C.paper} 100%)
             `,
-            borderColor: `color-mix(in srgb, ${C.forest} 14%, transparent)`,
+            borderColor: `color-mix(in srgb, ${C.gold} 28%, transparent)`,
             boxShadow:
-              `0 8px 28px color-mix(in srgb, ${C.forest} 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)`,
+              `0 8px 28px color-mix(in srgb, ${C.navy} 12%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)`,
           }}
         >
-          <div className="wedding-frame-inner hidden min-[400px]:block" aria-hidden />
+          <div
+            className="wedding-frame-inner hidden min-[400px]:block"
+            aria-hidden
+            style={{
+              borderColor: `color-mix(in srgb, ${C.navy} 22%, transparent)`,
+            }}
+          />
 
           <div
             aria-hidden
             className="pointer-events-none absolute inset-x-5 top-0 h-px sm:inset-x-8"
             style={{
-              background:
-                "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
+              background: `linear-gradient(to right, transparent, ${C.gold}, transparent)`,
             }}
           />
 
-          {/* Header */}
           <header className="relative overflow-visible space-y-3 px-1 pt-4 pb-6 sm:space-y-3.5 sm:px-2 sm:pt-5 sm:pb-7 md:space-y-4 md:pt-6 md:pb-8">
             <CoupleLabel groom={groomName} bride={brideName} />
             <LayeredWelcomeTitle />
@@ -183,21 +254,23 @@ export function Welcome() {
             </div>
           </header>
 
-          {/* Content */}
           <div className="relative mx-4 space-y-5 text-center sm:mx-6 sm:space-y-6 md:mx-7 md:space-y-7">
-            {/* Scripture */}
+            <WeddingBrand />
+
+            <OrnamentalDivider compact />
+
             <figure className="px-1 py-1 sm:px-2">
               <blockquote>
                 <p
                   className={`font-goudy-italic ${sectionType.textSnug}`}
-                  style={{ color: "var(--color-welcome-text)" }}
+                  style={{ color: C.navy }}
                 >
-                  &ldquo;When the time is right, I , the Lord will make it happen.&rdquo;
+                  &ldquo;When the time is right, I, the Lord will make it happen.&rdquo;
                 </p>
                 <figcaption className="mt-2 sm:mt-2.5">
                   <cite
                     className={`${cinzel.className} ${sectionType.label} not-italic uppercase tracking-[0.2em] sm:tracking-[0.24em]`}
-                    style={{ color: "var(--color-welcome-heading)" }}
+                    style={{ color: C.gold }}
                   >
                     Isaiah 60:22
                   </cite>
@@ -205,10 +278,9 @@ export function Welcome() {
               </blockquote>
             </figure>
 
-            {/* Body */}
             <div
               className={`font-goudy-italic space-y-3 px-1 text-center sm:space-y-3.5 sm:px-2 md:space-y-4 ${sectionType.textRelaxed}`}
-              style={{ color: "var(--color-welcome-text)" }}
+              style={{ color: C.navy }}
             >
               <p>
                 Dear family and friends, we are overjoyed to begin this new chapter together and
@@ -226,46 +298,37 @@ export function Welcome() {
               </p>
             </div>
 
-            {/* Bottom */}
             <div className="space-y-5 pt-1 sm:space-y-6 sm:pt-2 md:space-y-7">
-              {/* <OrnamentalDivider compact /> */}
-
-              {/* Hashtag */}
               <aside className="px-1 py-1 sm:px-2">
                 <div className="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:justify-center sm:gap-2.5">
                   <p
                     className={`${cinzel.className} ${sectionType.label} shrink-0 font-semibold uppercase tracking-[0.18em] sm:tracking-[0.22em]`}
-                    style={{ color: "var(--color-welcome-heading)" }}
+                    style={{ color: C.gold }}
                   >
                     Share in our joy
                   </p>
-                  <span className="hidden text-motif-deep/30 sm:inline" aria-hidden>
+                  <span className="hidden sm:inline" style={{ color: `${C.gold}66` }} aria-hidden>
                     ·
                   </span>
                   <p
                     className={`font-goudy-italic ${sectionType.textSnug}`}
-                    style={{ color: "var(--color-welcome-navy)" }}
+                    style={{ color: C.navy }}
                   >
                     {siteConfig.snapShare.hashtag.join(" ")}
                   </p>
                 </div>
               </aside>
 
-              {/* Sign-off */}
               <footer className="space-y-2 px-1 pt-4 pb-2 sm:space-y-2.5 sm:px-2 sm:pt-5 sm:pb-3 md:pt-6 md:pb-4">
                 <p
                   className={`${aboveTheBeyond.className} ${sectionType.script}`}
-                  style={{
-                    color: "var(--color-welcome-green)",
-                    textShadow:
-                      "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 90%, white)",
-                  }}
+                  style={{ color: C.gold }}
                 >
                   With all our love,
                 </p>
                 <p
                   className={`${cinzel.className} ${sectionType.subheader} mb-3 font-semibold tracking-[0.12em] sm:mb-4 sm:tracking-[0.16em] md:mb-5 md:tracking-[0.18em]`}
-                  style={{ color: "var(--color-welcome-navy)" }}
+                  style={{ color: C.navy }}
                 >
                   {groomName} &amp; {brideName}
                 </p>

@@ -28,21 +28,22 @@ interface HeroProps {
   enterFromLoading?: boolean;
 }
 
-const POLAROID_PHOTOS = [
-  { src: '/envelope/box (1).JPG', side: 'left' as const },
-  { src: '/envelope/box (5).JPG', side: 'center' as const },
-  { src: '/envelope/box (4).JPG', side: 'right' as const },
-];
+const DECO = {
+  top: '/decoration/deco/top-center-decoration.png',
+  bl: '/decoration/deco/left-bottom-small.png',
+  br: '/decoration/deco/right-bottom-small.png',
+  names: '/decoration/deco/couple name.png',
+  monogram: '/decoration/deco/monogram.png',
+} as const;
 
-const CORNER_DECO_CLASS =
-  'block h-auto w-auto max-w-[128px] sm:max-w-[156px] md:max-w-[180px] opacity-75';
+const BG_VIDEO =
+  '/background_music/No Copyright Video, Background, Blue Screen, Motion Graphics, Animated Background.mp4';
 
-const photoInteractEase: Transition = { duration: 0.38, ease: [0.22, 1, 0.36, 1] };
+const GOLD_PARTICLES = ['#c5a059', '#d4af37', '#e6d3a3', '#d4af37'] as const;
+
 const focusLiftEase: Transition = { duration: 1.15, ease: [0.22, 1, 0.36, 1] };
 const revealEntryEase: Transition = { duration: 0.9, ease: [0.22, 1, 0.36, 1] };
 const buttonEntryEase: Transition = { duration: 0.95, ease: [0.16, 1, 0.3, 1] };
-
-type PhotoSide = 'left' | 'center' | 'right';
 
 type EnvelopePhase =
   | 'idle'
@@ -50,11 +51,10 @@ type EnvelopePhase =
   | 'seal-break'
   | 'flap-open'
   | 'rising'
-  | 'photos'
   | 'revealed'
   | 'cta';
 
-function getFocusLiftPhase(phase: EnvelopePhase): 'idle' | 'opening' | 'photos' | 'revealed' | 'cta' {
+function getFocusLiftPhase(phase: EnvelopePhase): 'idle' | 'opening' | 'revealed' | 'cta' {
   if (phase === 'idle') return 'idle';
   if (
     phase === 'seal-press' ||
@@ -64,12 +64,10 @@ function getFocusLiftPhase(phase: EnvelopePhase): 'idle' | 'opening' | 'photos' 
   ) {
     return 'opening';
   }
-  if (phase === 'photos') return 'photos';
   if (phase === 'revealed') return 'revealed';
   return 'cta';
 }
 
-const photoEmergenceEase: Transition = { duration: 3.2, ease: [0.08, 1, 0.2, 1] };
 const letterEmergenceEase: Transition = { duration: 2.85, ease: [0.08, 1, 0.2, 1] };
 const flapEase: Transition = { duration: 1.1, ease: [0.65, 0, 0.35, 1] };
 const envelopeEase: Transition = { duration: 0.85, ease: [0.22, 1, 0.36, 1] };
@@ -88,20 +86,17 @@ export const Hero: React.FC<HeroProps> = ({
   const reduceMotion = useReducedMotion();
   const sealId = useId().replace(/:/g, '');
   const sealWaxGrad = `env-seal-wax-${sealId}`;
-  const sealFaceGrad = `env-seal-face-${sealId}`;
-  const sealSoftFilter = `env-seal-soft-${sealId}`;
   const openedRef = useRef(false);
   const enterBtnRef = useRef<HTMLButtonElement>(null);
   const [mounted, setMounted] = useState(false);
   const [phase, setPhase] = useState<EnvelopePhase>('idle');
   const [liveMessage, setLiveMessage] = useState('');
-  const [liftedPhoto, setLiftedPhoto] = useState<PhotoSide | null>(null);
   const [isExiting, setIsExiting] = useState(false);
 
   const groomName = siteConfig.couple.groomNickname;
   const brideName = siteConfig.couple.brideNickname;
   const coupleNames = `${groomName} & ${brideName}`;
-  const monogramSrc = siteConfig.couple.monogram;
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const letterDateNumeric = useMemo(() => {
     const parsed = parseWeddingDate(siteConfig.ceremony.date ?? siteConfig.wedding.date);
@@ -149,13 +144,11 @@ export const Hero: React.FC<HeroProps> = ({
   const flapIsOpen =
     phase === 'flap-open' ||
     phase === 'rising' ||
-    phase === 'photos' ||
     phase === 'revealed' ||
     phase === 'cta';
 
   const contentsVisible =
     phase === 'rising' ||
-    phase === 'photos' ||
     phase === 'revealed' ||
     phase === 'cta';
 
@@ -163,7 +156,6 @@ export const Hero: React.FC<HeroProps> = ({
     phase === 'seal-break' ||
     phase === 'flap-open' ||
     phase === 'rising' ||
-    phase === 'photos' ||
     phase === 'revealed' ||
     phase === 'cta';
 
@@ -172,11 +164,55 @@ export const Hero: React.FC<HeroProps> = ({
   }, []);
 
   useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+
+    const playLoop = () => {
+      if (reduceMotion) return;
+      video.muted = true;
+      const playback = video.play();
+      if (playback) playback.catch(() => {});
+    };
+
+    const restart = () => {
+      if (reduceMotion) return;
+      video.currentTime = 0.001;
+      playLoop();
+    };
+
+    const keepAlive = () => {
+      if (reduceMotion || !video.duration) return;
+      if (video.currentTime >= video.duration - 0.05) {
+        restart();
+      }
+    };
+
+    if (reduceMotion) {
+      video.pause();
+      return;
+    }
+
+    playLoop();
+    video.addEventListener('ended', restart);
+    video.addEventListener('timeupdate', keepAlive);
+    video.addEventListener('stalled', playLoop);
+
+    return () => {
+      video.removeEventListener('ended', restart);
+      video.removeEventListener('timeupdate', keepAlive);
+      video.removeEventListener('stalled', playLoop);
+    };
+  }, [reduceMotion, mounted]);
+
+  useEffect(() => {
     if (!visible) {
       openedRef.current = false;
       setPhase('idle');
       setLiveMessage('');
-      setLiftedPhoto(null);
       setIsExiting(false);
     }
   }, [visible]);
@@ -202,22 +238,6 @@ export const Hero: React.FC<HeroProps> = ({
       enterBtnRef.current?.focus({ preventScroll: true });
     }
   }, [phase]);
-
-  useEffect(() => {
-    if (
-      phase === 'idle' ||
-      phase === 'seal-press' ||
-      phase === 'seal-break' ||
-      phase === 'flap-open' ||
-      phase === 'rising'
-    ) {
-      setLiftedPhoto(null);
-    }
-  }, [phase]);
-
-  const toggleLiftedPhoto = useCallback((side: PhotoSide) => {
-    setLiftedPhoto((current) => (current === side ? null : side));
-  }, []);
 
   const handleEnterInvitation = useCallback(async () => {
     if (isExiting || phase !== 'cta') return;
@@ -256,11 +276,7 @@ export const Hero: React.FC<HeroProps> = ({
 
     setLiveMessage('Invitation rising.');
     setPhase('rising');
-    await wait(3000);
-
-    setLiveMessage('Photos revealing.');
-    setPhase('photos');
-    await wait(3600);
+    await wait(2850);
 
     setPhase('revealed');
     await wait(650);
@@ -300,13 +316,13 @@ export const Hero: React.FC<HeroProps> = ({
   };
 
   /*
-    Letter emerges like the polaroids — anchored at the pocket floor,
-    slides upward through the lip. Positive y = inside; negative y = above pocket.
+    Letter is anchored at the pocket floor and slides upward through the lip.
+    Positive y = inside; negative y = above pocket.
   */
   const letterVariants: Variants = {
     hidden: { y: '6%', scale: 0.86, opacity: 1, rotate: -0.5 },
-    rising: { y: '-56%', scale: 1, opacity: 1, rotate: 0 },
-    out: { y: '-56%', scale: 1, opacity: 1, rotate: 0 },
+    rising: { y: '-12%', scale: 1, opacity: 1, rotate: 0 },
+    out: { y: '-12%', scale: 1, opacity: 1, rotate: 0 },
     exitPortal: {
       y: '-122%',
       scale: 2.75,
@@ -314,37 +330,6 @@ export const Hero: React.FC<HeroProps> = ({
       rotate: 0,
       zIndex: 48,
     },
-  };
-
-  /*
-    Photos stay anchored at the card bottom (y ≥ 0) so nothing slips below the edge.
-    They rise upward and fan out from behind the letter.
-  */
-  const photoLeftVariants: Variants = {
-    hidden: { y: '7%', x: '2%', rotate: -2, scale: 0.86, opacity: 0, zIndex: 18 },
-    emerge: { y: '-50%', x: '-8%', rotate: -6, scale: 1, opacity: 1, zIndex: 18 },
-    hover: { y: '-56%', x: '-8%', rotate: -7, scale: 1.04, opacity: 1, zIndex: 24 },
-    press: { y: '-53%', x: '-8%', rotate: -6.5, scale: 1.02, opacity: 1, zIndex: 22 },
-    lifted: { y: '-64%', x: '-8%', rotate: -7, scale: 1.06, opacity: 1, zIndex: 28 },
-    exit: { y: '-18%', x: '-108%', rotate: -24, scale: 0.68, opacity: 0, zIndex: 10 },
-  };
-
-  const photoCenterVariants: Variants = {
-    hidden: { y: '6%', x: '0%', rotate: 0, scale: 0.84, opacity: 0, zIndex: 18 },
-    emerge: { y: '-46%', x: '0%', rotate: 1, scale: 1, opacity: 1, zIndex: 19 },
-    hover: { y: '-52%', x: '0%', rotate: 1.5, scale: 1.04, opacity: 1, zIndex: 25 },
-    press: { y: '-49%', x: '0%', rotate: 1.2, scale: 1.02, opacity: 1, zIndex: 23 },
-    lifted: { y: '-60%', x: '0%', rotate: 2, scale: 1.06, opacity: 1, zIndex: 29 },
-    exit: { y: '-108%', x: '0%', rotate: 10, scale: 0.72, opacity: 0, zIndex: 10 },
-  };
-
-  const photoRightVariants: Variants = {
-    hidden: { y: '7%', x: '-2%', rotate: 2, scale: 0.86, opacity: 0, zIndex: 18 },
-    emerge: { y: '-50%', x: '8%', rotate: 6, scale: 1, opacity: 1, zIndex: 18 },
-    hover: { y: '-56%', x: '8%', rotate: 7, scale: 1.04, opacity: 1, zIndex: 24 },
-    press: { y: '-53%', x: '8%', rotate: 6.5, scale: 1.02, opacity: 1, zIndex: 22 },
-    lifted: { y: '-64%', x: '8%', rotate: 7, scale: 1.06, opacity: 1, zIndex: 28 },
-    exit: { y: '-18%', x: '108%', rotate: 24, scale: 0.68, opacity: 0, zIndex: 10 },
   };
 
   const revealCopyContainerVariants: Variants = {
@@ -396,7 +381,6 @@ export const Hero: React.FC<HeroProps> = ({
   const focusLiftVariants: Variants = {
     idle: { y: 'clamp(3.75rem, 9dvh, 5.25rem)' },
     opening: { y: 'clamp(3.75rem, 9dvh, 5.25rem)' },
-    photos: { y: 'clamp(3.75rem, 9dvh, 5.25rem)' },
     revealed: { y: 'clamp(3.75rem, 9dvh, 5.25rem)' },
     cta: { y: 'clamp(3.75rem, 9dvh, 5.25rem)' },
   };
@@ -423,17 +407,6 @@ export const Hero: React.FC<HeroProps> = ({
       : phase === 'rising'
         ? 'rising'
         : 'out';
-
-  const photoState =
-    phase === 'idle' ||
-    phase === 'seal-press' ||
-    phase === 'seal-break' ||
-    phase === 'flap-open' ||
-    phase === 'rising'
-      ? 'hidden'
-      : 'emerge';
-
-  const photosInteractive = photoState === 'emerge';
 
   const envelopeState =
     phase === 'idle'
@@ -482,27 +455,48 @@ export const Hero: React.FC<HeroProps> = ({
     >
       {!reduceMotion && (
         <div className="env-invite-particles pointer-events-none" aria-hidden="true">
-          <InviteParticles count={28} />
+          <InviteParticles count={28} palette={GOLD_PARTICLES} />
         </div>
       )}
 
+      <video
+        ref={videoRef}
+        className="env-invite-video"
+        src={encodeURI(BG_VIDEO)}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        disablePictureInPicture
+        aria-hidden="true"
+      />
+
       <div className="env-invite-bg-glow pointer-events-none" aria-hidden="true" />
 
-      <div className="env-invite-corner env-invite-corner--tl pointer-events-none" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/decoration/left-top-corner.png" alt="" className={CORNER_DECO_CLASS} />
+      <div className="env-invite-frame" aria-hidden="true">
+        <span className="env-invite-frame-arm env-invite-frame-arm--top-left" />
+        <span className="env-invite-frame-arm env-invite-frame-arm--top-right" />
+        <span className="env-invite-frame-arm env-invite-frame-arm--left" />
+        <span className="env-invite-frame-arm env-invite-frame-arm--right" />
+        <span className="env-invite-frame-arm env-invite-frame-arm--bottom" />
       </div>
-      <div className="env-invite-corner env-invite-corner--tr pointer-events-none" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/decoration/right-top-corner.png" alt="" className={CORNER_DECO_CLASS} />
+
+      <div className="env-invite-deco env-invite-deco--top pointer-events-none" aria-hidden="true">
+        <Image
+          src={DECO.top}
+          alt=""
+          width={2078}
+          height={598}
+          priority
+          sizes="(max-width: 768px) 90vw, 480px"
+        />
       </div>
-      <div className="env-invite-corner env-invite-corner--bl pointer-events-none" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/decoration/left-bottom-corner.png" alt="" className={CORNER_DECO_CLASS} />
+      <div className="env-invite-deco env-invite-deco--bl pointer-events-none" aria-hidden="true">
+        <Image src={DECO.bl} alt="" width={851} height={1472} sizes="200px" />
       </div>
-      <div className="env-invite-corner env-invite-corner--br pointer-events-none" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/decoration/right-bottom-corner.png" alt="" className={CORNER_DECO_CLASS} />
+      <div className="env-invite-deco env-invite-deco--br pointer-events-none" aria-hidden="true">
+        <Image src={DECO.br} alt="" width={851} height={1472} sizes="200px" />
       </div>
 
       <div className="env-invite-ghost-date pointer-events-none select-none" aria-hidden="true">
@@ -642,51 +636,19 @@ export const Hero: React.FC<HeroProps> = ({
                         className="env-invite-letter-names"
                         role="img"
                         aria-label={coupleNames}
+                        style={{
+                          WebkitMaskImage: `url("${encodeURI(DECO.names)}")`,
+                          maskImage: `url("${encodeURI(DECO.names)}")`,
+                        }}
                       />
+                      <span className="env-invite-letter-verse-title">
+                        Two Become One
+                      </span>
+                      <span className="env-invite-letter-verse">
+                        Written By God. Perfected In His Timing.
+                      </span>
                     </div>
                   </motion.div>
-
-                  <div className="env-invite-photos-emerge">
-                    <PolaroidPhoto
-                      side="left"
-                      src={POLAROID_PHOTOS[0].src}
-                      alt={coupleNames}
-                      variants={photoLeftVariants}
-                      photoState={photoState}
-                      liftedPhoto={liftedPhoto}
-                      onToggle={toggleLiftedPhoto}
-                      interactive={photosInteractive}
-                      emergenceDelay={0.55}
-                      reduceMotion={reduceMotion}
-                      isExiting={isExiting}
-                    />
-                    <PolaroidPhoto
-                      side="center"
-                      src={POLAROID_PHOTOS[1].src}
-                      alt={coupleNames}
-                      variants={photoCenterVariants}
-                      photoState={photoState}
-                      liftedPhoto={liftedPhoto}
-                      onToggle={toggleLiftedPhoto}
-                      interactive={photosInteractive}
-                      emergenceDelay={1.0}
-                      reduceMotion={reduceMotion}
-                      isExiting={isExiting}
-                    />
-                    <PolaroidPhoto
-                      side="right"
-                      src={POLAROID_PHOTOS[2].src}
-                      alt={coupleNames}
-                      variants={photoRightVariants}
-                      photoState={photoState}
-                      liftedPhoto={liftedPhoto}
-                      onToggle={toggleLiftedPhoto}
-                      interactive={photosInteractive}
-                      emergenceDelay={1.45}
-                      reduceMotion={reduceMotion}
-                      isExiting={isExiting}
-                    />
-                  </div>
                 </div>
               </div>
             </div>
@@ -747,187 +709,53 @@ export const Hero: React.FC<HeroProps> = ({
                   aria-hidden="true"
                 >
                   <defs>
-                    <radialGradient id={sealWaxGrad} cx="32%" cy="26%" r="78%">
-                      <stop offset="0%" stopColor="#C4CDC0" />
-                      <stop offset="28%" stopColor="#A8B3A4" />
-                      <stop offset="58%" stopColor="#9BA996" />
-                      <stop offset="82%" stopColor="#84917E" />
-                      <stop offset="100%" stopColor="#667463" />
+                    <radialGradient id={sealWaxGrad} cx="38%" cy="30%" r="72%">
+                      <stop offset="0%" stopColor="#e6d3a3" />
+                      <stop offset="48%" stopColor="#d4af37" />
+                      <stop offset="100%" stopColor="#8a6a18" />
                     </radialGradient>
-                    <radialGradient id={sealFaceGrad} cx="50%" cy="36%" r="68%">
-                      <stop offset="0%" stopColor="#A6B1A2" />
-                      <stop offset="42%" stopColor="#95A290" />
-                      <stop offset="100%" stopColor="#7A8974" />
-                    </radialGradient>
-                    <radialGradient id={`${sealId}-rim`} cx="38%" cy="30%" r="70%">
-                      <stop offset="0%" stopColor="#B8C2B4" />
-                      <stop offset="45%" stopColor="#9BA996" />
-                      <stop offset="100%" stopColor="#6F7D69" />
-                    </radialGradient>
-                    <filter id={sealSoftFilter} x="-30%" y="-30%" width="160%" height="160%">
-                      <feDropShadow dx="0" dy="2.2" stdDeviation="1.6" floodColor="#1a2218" floodOpacity="0.35" />
-                    </filter>
-                    <filter id={`${sealId}-inset`} x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur in="SourceAlpha" stdDeviation="1.4" result="b" />
-                      <feOffset dy="1.2" result="o" />
-                      <feComposite in="o" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="s" />
-                      <feColorMatrix
-                        in="s"
-                        type="matrix"
-                        values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.28 0"
-                        result="shadow"
-                      />
-                      <feBlend in="SourceGraphic" in2="shadow" mode="normal" />
-                    </filter>
-                    <clipPath id={`${sealId}-mono`}>
-                      <circle cx="60" cy="59.5" r="24" />
+                    <clipPath id={`${sealId}-circle`}>
+                      <circle cx="60" cy="60" r="54" />
                     </clipPath>
+                    <mask id={`${sealId}-mono-mask`}>
+                      <image
+                        href={DECO.monogram}
+                        x="18"
+                        y="16"
+                        width="84"
+                        height="84"
+                        preserveAspectRatio="xMidYMid meet"
+                      />
+                    </mask>
                   </defs>
 
-                  {/* Poured-wax outer blob — scalloped irregular rim */}
-                  <path
+                  <circle
                     className="env-invite-seal-blob"
-                    d="M59.5 4.2
-                       C66.8 3.1 73.2 5.4 78.8 8.6
-                       C84.6 12 91.8 14.2 96.8 19.8
-                       C102.2 25.8 107.4 31.2 109.8 39.2
-                       C112.4 47.8 113.6 56.4 111.6 65.2
-                       C109.8 73.4 106.2 81.6 100.2 87.8
-                       C94.6 93.6 88.4 99.4 80.2 102.8
-                       C72.4 106 63.8 108.6 55.2 107.4
-                       C46.2 106.2 38.4 101.8 31.6 96.2
-                       C24.4 90.2 17.8 83.6 14.2 74.8
-                       C10.4 65.4 7.8 55.2 9.6 45
-                       C11.2 36.2 15.8 28.4 22.4 22
-                       C29.2 15.4 36.8 10.8 45.6 7.6
-                       C50.8 5.6 55.2 4.8 59.5 4.2 Z"
+                    cx="60"
+                    cy="60"
+                    r="54"
                     fill={`url(#${sealWaxGrad})`}
-                    filter={`url(#${sealSoftFilter})`}
-                  />
-
-                  {/* Raised wax lip (ring between outer edge and face) */}
-                  <path
-                    fill={`url(#${sealId}-rim)`}
-                    fillRule="evenodd"
-                    d="M60 14.5
-                       C69.2 13.2 78 16.4 84.8 21.8
-                       C92 27.6 98.6 33.2 101.4 42.2
-                       C104.4 51.6 105.2 61.2 102.2 70.4
-                       C99.6 78.6 94.4 86.2 86.8 91.2
-                       C79.6 96 70.6 99.2 61.2 98.6
-                       C51.6 98 42.8 93.8 36.2 87.4
-                       C29.2 80.6 24.4 72.2 23.2 62.4
-                       C22 52.4 25.2 42.6 31.2 35
-                       C37.4 27.2 47.2 16.2 60 14.5 Z
-                       M60 26.5
-                       C70.2 25.4 79.4 31.2 84.2 39.6
-                       C89.2 48.4 88.6 59.8 82.6 67.8
-                       C76.8 75.6 66.8 80.2 57.2 78.8
-                       C47.4 77.4 39.2 70.4 36.4 61
-                       C33.6 51.4 37.8 40.8 45.8 35.2
-                       C50.2 32.2 55.2 27.2 60 26.5 Z"
-                  />
-                  {/* Rim highlight + shadow for 3D lip */}
-                  <ellipse
-                    cx="52"
-                    cy="28"
-                    rx="22"
-                    ry="10"
-                    fill="rgba(255,255,255,0.18)"
-                    style={{ mixBlendMode: 'soft-light' }}
-                  />
-                  <path
-                    d="M28 70 C34 88 52 98 72 96 C88 94 100 82 104 68"
-                    fill="none"
-                    stroke="rgba(0,0,0,0.12)"
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                  />
-
-                  {/* Recessed stamped face */}
-                  <circle
-                    cx="60"
-                    cy="59.5"
-                    r="28.5"
-                    fill={`url(#${sealFaceGrad})`}
-                    filter={`url(#${sealId}-inset)`}
                   />
                   <circle
                     cx="60"
-                    cy="59.5"
-                    r="28.5"
-                    fill="none"
-                    stroke="rgba(0,0,0,0.2)"
-                    strokeWidth="1.5"
-                  />
-                  <circle
-                    cx="60"
-                    cy="59.5"
-                    r="26"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.55)"
-                    strokeWidth="0.85"
-                  />
-                  <circle
-                    cx="60"
-                    cy="59.5"
-                    r="24.4"
+                    cy="60"
+                    r="54"
                     fill="none"
                     stroke="rgba(255,255,255,0.28)"
-                    strokeWidth="0.5"
+                    strokeWidth="1"
                   />
 
-                  {/* Left botanical sprig */}
-                  <g
-                    fill="rgba(255,255,255,0.95)"
-                    stroke="rgba(255,255,255,0.95)"
-                    strokeWidth="0.9"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M39.5 74.5 C35.5 66 34.2 55.5 37.5 44" fill="none" />
-                    <path d="M37.8 61 C33.2 59.2 30.2 55.5 29.2 51.5" fill="none" />
-                    <path d="M36.8 54.5 C32.4 52 30.6 47.5 31.2 43.5" fill="none" />
-                    <path d="M37.2 49 C34 46 33.2 42 34.4 38.5" fill="none" />
-                    <path d="M38.2 67.5 C34.2 66.2 31.5 63.2 30.5 59.8" fill="none" />
-                    <ellipse cx="29.4" cy="51.2" rx="1.7" ry="2.7" transform="rotate(-32 29.4 51.2)" />
-                    <ellipse cx="31.4" cy="43.8" rx="1.55" ry="2.5" transform="rotate(-20 31.4 43.8)" />
-                    <ellipse cx="34.6" cy="38.8" rx="1.4" ry="2.3" transform="rotate(-10 34.6 38.8)" />
-                    <ellipse cx="30.8" cy="59.5" rx="1.5" ry="2.4" transform="rotate(-38 30.8 59.5)" />
-                    <ellipse cx="33.2" cy="66.2" rx="1.25" ry="2" transform="rotate(-42 33.2 66.2)" />
+                  <g clipPath={`url(#${sealId}-circle)`}>
+                    <rect
+                      x="18"
+                      y="16"
+                      width="84"
+                      height="84"
+                      fill="#04103B"
+                      mask={`url(#${sealId}-mono-mask)`}
+                      className="env-invite-seal-mono-img"
+                    />
                   </g>
-
-                  {/* Right botanical sprig */}
-                  <g
-                    fill="rgba(255,255,255,0.95)"
-                    stroke="rgba(255,255,255,0.95)"
-                    strokeWidth="0.9"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M80.5 74.5 C84.5 66 85.8 55.5 82.5 44" fill="none" />
-                    <path d="M82.2 61 C86.8 59.2 89.8 55.5 90.8 51.5" fill="none" />
-                    <path d="M83.2 54.5 C87.6 52 89.4 47.5 88.8 43.5" fill="none" />
-                    <path d="M82.8 49 C86 46 86.8 42 85.6 38.5" fill="none" />
-                    <path d="M81.8 67.5 C85.8 66.2 88.5 63.2 89.5 59.8" fill="none" />
-                    <ellipse cx="90.6" cy="51.2" rx="1.7" ry="2.7" transform="rotate(32 90.6 51.2)" />
-                    <ellipse cx="88.6" cy="43.8" rx="1.55" ry="2.5" transform="rotate(20 88.6 43.8)" />
-                    <ellipse cx="85.4" cy="38.8" rx="1.4" ry="2.3" transform="rotate(10 85.4 38.8)" />
-                    <ellipse cx="89.2" cy="59.5" rx="1.5" ry="2.4" transform="rotate(38 89.2 59.5)" />
-                    <ellipse cx="86.8" cy="66.2" rx="1.25" ry="2" transform="rotate(42 86.8 66.2)" />
-                  </g>
-
-                  {/* Couple monogram from site config */}
-                  <image
-                    href={monogramSrc}
-                    x="36.5"
-                    y="36"
-                    width="47"
-                    height="47"
-                    preserveAspectRatio="xMidYMid meet"
-                    clipPath={`url(#${sealId}-mono)`}
-                    className="env-invite-seal-mono-img"
-                  />
                 </svg>
               </motion.button>
             </div>
@@ -1051,83 +879,4 @@ function wait(ms: number) {
   return new Promise<void>((resolve) => {
     window.setTimeout(resolve, ms);
   });
-}
-
-interface PolaroidPhotoProps {
-  side: PhotoSide;
-  src: string;
-  alt: string;
-  variants: Variants;
-  photoState: 'hidden' | 'emerge';
-  liftedPhoto: PhotoSide | null;
-  onToggle: (side: PhotoSide) => void;
-  interactive: boolean;
-  emergenceDelay: number;
-  reduceMotion: boolean | null;
-  isExiting?: boolean;
-}
-
-function PolaroidPhoto({
-  side,
-  src,
-  alt,
-  variants,
-  photoState,
-  liftedPhoto,
-  onToggle,
-  interactive,
-  emergenceDelay,
-  reduceMotion,
-  isExiting = false,
-}: PolaroidPhotoProps) {
-  const canInteract = interactive && !reduceMotion && !isExiting;
-
-  const animateState = isExiting
-    ? 'exit'
-    : photoState === 'hidden'
-      ? 'hidden'
-      : liftedPhoto === side
-        ? 'lifted'
-        : 'emerge';
-
-  return (
-    <motion.button
-      type="button"
-      className={`env-invite-polaroid env-invite-polaroid--${side}${liftedPhoto === side ? ' is-lifted' : ''}`}
-      variants={variants}
-      initial="hidden"
-      animate={animateState}
-      whileHover={canInteract && liftedPhoto !== side ? 'hover' : undefined}
-      whileTap={canInteract ? 'press' : undefined}
-      transition={
-        reduceMotion
-          ? { duration: 0.01 }
-          : isExiting
-            ? { duration: 0.85, ease: [0.4, 0, 0.2, 1], delay: 0.12 }
-            : photoState === 'hidden'
-              ? { duration: 0.01 }
-              : animateState === 'emerge' && liftedPhoto === null
-                ? { ...photoEmergenceEase, delay: emergenceDelay }
-                : photoInteractEase
-      }
-      onClick={(e) => {
-        e.stopPropagation();
-        if (interactive) onToggle(side);
-      }}
-      disabled={!interactive}
-      aria-label={`View photo ${side}`}
-      aria-pressed={liftedPhoto === side}
-    >
-      <div className="env-invite-polaroid-photo">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className="object-cover env-invite-polaroid-img"
-          sizes="112px"
-          priority
-        />
-      </div>
-    </motion.button>
-  );
 }

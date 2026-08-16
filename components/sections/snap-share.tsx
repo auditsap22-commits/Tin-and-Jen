@@ -26,27 +26,29 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
-const OUTSIDE_TEXT = "#FFFFFF"
-const OUTSIDE_TEXT_MUTED = "rgba(255, 255, 255, 0.88)"
-const OUTSIDE_TITLE_SHADOW =
-  "0 2px 6px rgba(0, 0, 0, 0.28), 0 0 18px rgba(0, 0, 0, 0.12)"
-const READABLE_SHADOW = "0 1px 3px rgba(0,0,0,0.55), 0 2px 10px rgba(0,0,0,0.35)"
+const C = {
+  navy: "#04103B",
+  gold: "#c5a059",
+  goldBright: "#d4af37",
+  goldSoft: "#e6d3a3",
+  paper: "#f7f3e9",
+} as const
+
+const goldLine = `color-mix(in srgb, ${C.gold} 55%, transparent)`
 
 const palette = {
-  body: "var(--color-welcome-text)",
-  heading: "var(--color-welcome-navy)",
-  label: "var(--color-welcome-heading)",
-  accent: "var(--color-welcome-green)",
+  body: C.navy,
+  heading: C.gold,
+  label: "#364061",
+  accent: C.gold,
 } as const
 
 const outsideDividerLineStyle = {
-  background:
-    "linear-gradient(to right, transparent, rgba(255, 255, 255, 0.55), transparent)",
+  background: `linear-gradient(to right, transparent, ${goldLine}, transparent)`,
 } as const
 
 const insideDividerLineStyle = {
-  background:
-    "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent), transparent)",
+  background: `linear-gradient(to right, transparent, ${goldLine}, transparent)`,
 } as const
 
 const ct = {
@@ -58,26 +60,35 @@ const ct = {
 } as const
 
 const cardStyle = {
-  background: "var(--color-welcome-bg)",
+  background: `linear-gradient(180deg, color-mix(in srgb, ${C.goldSoft} 28%, ${C.paper}) 0%, ${C.paper} 48%, color-mix(in srgb, ${C.gold} 10%, ${C.paper}) 100%)`,
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-  boxShadow:
-    "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
+  borderColor: goldLine,
+  boxShadow: `0 12px 36px color-mix(in srgb, ${C.navy} 28%, transparent), inset 0 1px 0 color-mix(in srgb, ${C.goldSoft} 55%, transparent)`,
 } as const
 
-const QR_FG = "#1a1a1a"
+const buttonStyle = {
+  backgroundColor: C.gold,
+  borderColor: `color-mix(in srgb, ${C.goldBright} 70%, transparent)`,
+  color: C.navy,
+  boxShadow: `0 10px 24px color-mix(in srgb, ${C.gold} 35%, transparent)`,
+} as const
+
+const QR_FG = C.navy
 
 function OutsideDivider() {
   return (
     <div className="flex items-center justify-center gap-1.5">
       <span className="h-px w-6 sm:w-10" style={outsideDividerLineStyle} />
-      <span className="h-0.5 w-0.5 rounded-full bg-white/50 sm:h-1 sm:w-1" aria-hidden />
+      <span
+        className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1"
+        style={{ backgroundColor: goldLine }}
+        aria-hidden
+      />
       <span
         className="h-px w-6 sm:w-10"
         style={{
-          background:
-            "linear-gradient(to left, transparent, rgba(255, 255, 255, 0.55), transparent)",
+          background: `linear-gradient(to left, transparent, ${goldLine}, transparent)`,
         }}
       />
     </div>
@@ -88,12 +99,15 @@ function InsideDivider() {
   return (
     <div className="flex items-center justify-center gap-1.5">
       <span className="h-px w-6 sm:w-10" style={insideDividerLineStyle} />
-      <span className="h-0.5 w-0.5 rounded-full bg-motif-deep/45 sm:h-1 sm:w-1" aria-hidden />
+      <span
+        className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1"
+        style={{ backgroundColor: goldLine }}
+        aria-hidden
+      />
       <span
         className="h-px w-6 sm:w-10"
         style={{
-          background:
-            "linear-gradient(to left, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent), transparent)",
+          background: `linear-gradient(to left, transparent, ${goldLine}, transparent)`,
         }}
       />
     </div>
@@ -115,8 +129,7 @@ function SnapShareTitle() {
         className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] md:tracking-[0.14em] pb-1 sm:pb-1.5`}
         style={{
           fontSize: "var(--title-size)",
-          color: OUTSIDE_TEXT,
-          textShadow: OUTSIDE_TITLE_SHADOW,
+          color: C.goldBright,
         }}
       >
         Snap and Share
@@ -126,8 +139,7 @@ function SnapShareTitle() {
         className={`${aboveTheBeyond.className} mx-auto block w-fit max-w-full px-1 leading-[0.88] sm:leading-[0.9] mt-2 sm:mt-2.5 md:mt-3`}
         style={{
           fontSize: "var(--script-size)",
-          color: OUTSIDE_TEXT_MUTED,
-          textShadow: OUTSIDE_TITLE_SHADOW,
+          color: C.goldSoft,
         }}
       >
         Share your memories
@@ -150,7 +162,10 @@ function ContentCard({
       style={cardStyle}
     >
       <div
-        className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-white/35 via-white/8 to-transparent"
+        className="pointer-events-none absolute inset-0 rounded-[inherit]"
+        style={{
+          background: `linear-gradient(135deg, color-mix(in srgb, ${C.goldSoft} 28%, transparent) 0%, transparent 48%)`,
+        }}
         aria-hidden
       />
       <div className="relative z-20 flex flex-col gap-3 px-4 py-5 sm:gap-4 sm:px-5 sm:py-6 md:px-6 md:py-7">
@@ -179,26 +194,22 @@ function PrimaryButton({
       style={
         active
           ? {
-              backgroundColor: "var(--color-welcome-navy)",
-              borderColor: "var(--color-welcome-green)",
-              color: "var(--color-welcome-bg)",
+              backgroundColor: C.goldBright,
+              borderColor: C.gold,
+              color: C.navy,
+              boxShadow: buttonStyle.boxShadow,
             }
-          : {
-              backgroundColor: "var(--color-welcome-green)",
-              borderColor: "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)",
-              color: "var(--color-welcome-bg)",
-            }
+          : buttonStyle
       }
       onMouseEnter={(e) => {
         if (active) return
-        e.currentTarget.style.backgroundColor = "var(--color-welcome-navy)"
-        e.currentTarget.style.borderColor = "var(--color-welcome-green)"
+        e.currentTarget.style.backgroundColor = C.goldBright
+        e.currentTarget.style.borderColor = C.gold
       }}
       onMouseLeave={(e) => {
         if (active) return
-        e.currentTarget.style.backgroundColor = "var(--color-welcome-green)"
-        e.currentTarget.style.borderColor =
-          "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)"
+        e.currentTarget.style.backgroundColor = C.gold
+        e.currentTarget.style.borderColor = buttonStyle.borderColor
       }}
     >
       {children}
@@ -310,13 +321,13 @@ export function SnapShare() {
           </div>
           <p
             className={`font-goudy-italic mx-auto mt-4 max-w-2xl px-2 sm:mt-5 md:mt-6 ${ct.bodyLg}`}
-            style={{ color: OUTSIDE_TEXT_MUTED, textShadow: READABLE_SHADOW }}
+            style={{ color: C.goldSoft }}
           >
             Help us remember the little moments of {coupleDisplayName}&apos;s day — every smile,
             embrace, and candid laugh. Your photos and clips complete our love story.
           </p>
           <div className="flex items-center justify-center pt-3 sm:pt-4">
-            <span className="h-px w-16 sm:w-24 md:w-32 bg-white/50" />
+            <span className="h-px w-16 sm:w-24 md:w-32" style={{ background: goldLine }} />
           </div>
         </div>
 
@@ -329,7 +340,7 @@ export function SnapShare() {
               Our Favorite Moments
             </h4>
             <div className="grid w-full min-w-0 grid-cols-2 gap-2 sm:gap-3">
-              <div className="relative aspect-square overflow-hidden rounded-xl border border-motif-deep/15 shadow-sm">
+              <div className="relative aspect-square overflow-hidden rounded-xl border shadow-sm" style={{ borderColor: goldLine }}>
                 <Image
                   src="/envelope/box (3).JPG"
                   alt="Wedding moment 1"
@@ -338,7 +349,7 @@ export function SnapShare() {
                   style={{ imageOrientation: "from-image" }}
                 />
               </div>
-              <div className="relative aspect-square overflow-hidden rounded-xl border border-motif-deep/15 shadow-sm">
+              <div className="relative aspect-square overflow-hidden rounded-xl border shadow-sm" style={{ borderColor: goldLine }}>
                 <Image
                   src="/envelope/box (5).JPG"
                   alt="Wedding moment 2"
@@ -347,7 +358,7 @@ export function SnapShare() {
                   style={{ imageOrientation: "from-image" }}
                 />
               </div>
-              <div className="relative col-span-2 aspect-[3/2] overflow-hidden rounded-xl border border-motif-deep/15 shadow-sm">
+              <div className="relative col-span-2 aspect-[3/2] overflow-hidden rounded-xl border shadow-sm" style={{ borderColor: goldLine }}>
                 <Image
                   src="/desktop-background/couple (3).webp"
                   alt="Wedding moment 3"
@@ -379,14 +390,17 @@ export function SnapShare() {
                 Spread the word about {coupleDisplayName}&apos;s celebration. Share this QR code so
                 friends and family can join us.
               </p>
-              <div className="mx-auto flex w-full max-w-[240px] flex-col items-center rounded-xl border border-motif-deep/15 bg-white p-3 shadow-sm sm:p-4">
+              <div
+                className="mx-auto flex w-full max-w-[240px] flex-col items-center rounded-xl border p-3 shadow-sm sm:p-4"
+                style={{ borderColor: goldLine, backgroundColor: C.paper }}
+              >
                 <div className="flex w-full max-w-full justify-center overflow-visible">
                   <QRCodeCanvas
                     id="snapshare-qr"
                     value={websiteUrl}
                     size={isMobile ? 160 : 200}
                     includeMargin
-                    className="h-auto max-w-full bg-white"
+                    className="h-auto max-w-full"
                     fgColor={QR_FG}
                   />
                 </div>
@@ -418,11 +432,18 @@ export function SnapShare() {
                     key={index}
                     type="button"
                     onClick={() => copyHashtag(hashtag, index)}
-                    className={`flex w-full min-w-0 items-center justify-between gap-2 rounded-lg border px-3 py-2.5 transition-all duration-200 active:scale-[0.98] ${
+                    className="flex w-full min-w-0 items-center justify-between gap-2 rounded-lg border px-3 py-2.5 transition-all duration-200 active:scale-[0.98]"
+                    style={
                       copiedHashtagIndex === index
-                        ? "border-motif-accent bg-motif-accent/10"
-                        : "border-motif-deep/20 bg-white hover:border-motif-accent/40 hover:bg-white/90"
-                    }`}
+                        ? {
+                            borderColor: C.gold,
+                            backgroundColor: `color-mix(in srgb, ${C.gold} 12%, ${C.paper})`,
+                          }
+                        : {
+                            borderColor: goldLine,
+                            backgroundColor: C.paper,
+                          }
+                    }
                   >
                     <span
                       className={`font-goudy-italic ${ct.body} min-w-0 flex-1 break-all text-left font-semibold`}
@@ -454,11 +475,16 @@ export function SnapShare() {
               <button
                 type="button"
                 onClick={copyAllHashtags}
-                className={`flex w-full items-center justify-center gap-1.5 rounded-lg border py-2.5 transition-all duration-200 active:scale-[0.98] ${
+                className="flex w-full items-center justify-center gap-1.5 rounded-lg border py-2.5 transition-all duration-200 active:scale-[0.98]"
+                style={
                   copiedAllHashtags
-                    ? "border-motif-accent bg-motif-accent/10 text-motif-accent"
-                    : "border-motif-deep/30 bg-motif-deep/5 hover:border-motif-deep hover:bg-motif-deep hover:text-motif-cream"
-                }`}
+                    ? {
+                        borderColor: C.gold,
+                        backgroundColor: `color-mix(in srgb, ${C.gold} 12%, ${C.paper})`,
+                        color: C.gold,
+                      }
+                    : buttonStyle
+                }
               >
                 {copiedAllHashtags ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                 <span className={`${cinzel.className} ${ct.btn} font-semibold uppercase tracking-[0.1em]`}>
@@ -494,7 +520,11 @@ export function SnapShare() {
                     key={platform}
                     type="button"
                     onClick={() => shareOnSocial(platform)}
-                    className="group flex w-full min-w-0 items-center justify-center gap-2 rounded-lg border border-motif-deep/25 bg-white px-3 py-3 shadow-sm transition-all duration-200 hover:border-motif-accent/50 hover:bg-motif-accent/5 hover:shadow-md"
+                    className="group flex w-full min-w-0 items-center justify-center gap-2 rounded-lg border px-3 py-3 shadow-sm transition-all duration-200 hover:shadow-md"
+                    style={{
+                      borderColor: goldLine,
+                      backgroundColor: C.paper,
+                    }}
                   >
                     <Icon className="h-4 w-4 flex-shrink-0 sm:h-5 sm:w-5" style={{ color: palette.accent }} />
                     <span
@@ -511,8 +541,12 @@ export function SnapShare() {
             {uploadLink && (
               <ContentCard>
                 <p
-                  className={`${cinzel.className} ${ct.label} w-full rounded-full border border-motif-deep/30 bg-motif-deep/10 px-3 py-1.5 text-center uppercase leading-snug tracking-[0.14em] sm:tracking-[0.18em] break-words`}
-                  style={{ color: palette.label }}
+                  className={`${cinzel.className} ${ct.label} w-full rounded-full border px-3 py-1.5 text-center uppercase leading-snug tracking-[0.14em] sm:tracking-[0.18em] break-words`}
+                  style={{
+                    color: C.gold,
+                    borderColor: goldLine,
+                    backgroundColor: `color-mix(in srgb, ${C.gold} 12%, ${C.paper})`,
+                  }}
                 >
                   Upload Your Photos &amp; Videos
                 </p>
@@ -522,7 +556,10 @@ export function SnapShare() {
                 >
                   {siteConfig.snapShare.instructions}
                 </p>
-                <div className="mx-auto flex w-full max-w-[240px] flex-col items-center rounded-xl border border-motif-deep/15 bg-white p-3 shadow-sm sm:p-4">
+                <div
+                className="mx-auto flex w-full max-w-[240px] flex-col items-center rounded-xl border p-3 shadow-sm sm:p-4"
+                style={{ borderColor: goldLine, backgroundColor: C.paper }}
+              >
                   <div className="flex w-full max-w-full justify-center overflow-visible">
                     <QRCodeCanvas
                       id="album-qr"
@@ -530,7 +567,7 @@ export function SnapShare() {
                       size={isMobile ? 160 : 200}
                       level="H"
                       includeMargin
-                      className="h-auto max-w-full bg-white"
+                      className="h-auto max-w-full"
                       fgColor={QR_FG}
                     />
                   </div>
@@ -562,19 +599,14 @@ export function SnapShare() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`${cinzel.className} group relative inline-flex items-center justify-center gap-1.5 rounded-sm border px-5 py-2.5 font-semibold uppercase tracking-[0.18em] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 sm:px-6 sm:py-3 sm:tracking-[0.2em] md:tracking-[0.24em] ${ct.btn}`}
-                    style={{
-                      backgroundColor: "var(--color-welcome-bg)",
-                      borderColor: "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)",
-                      color: palette.heading,
-                    }}
+                    style={buttonStyle}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = "color-mix(in srgb, var(--color-welcome-green) 12%, white)"
-                      e.currentTarget.style.borderColor = "var(--color-welcome-green)"
+                      e.currentTarget.style.backgroundColor = C.goldBright
+                      e.currentTarget.style.borderColor = C.gold
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "var(--color-welcome-bg)"
-                      e.currentTarget.style.borderColor =
-                        "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)"
+                      e.currentTarget.style.backgroundColor = C.gold
+                      e.currentTarget.style.borderColor = buttonStyle.borderColor
                     }}
                   >
                     <Share2 className="h-3.5 w-3.5 flex-shrink-0 sm:h-4 sm:w-4" />
@@ -589,14 +621,14 @@ export function SnapShare() {
         <div className="mt-6 space-y-2 text-center sm:mt-8 md:mt-10">
           <p
             className={`font-goudy-italic ${ct.bodyLg}`}
-            style={{ color: OUTSIDE_TEXT_MUTED, textShadow: READABLE_SHADOW }}
+            style={{ color: C.goldSoft }}
           >
             Thank you for helping make {coupleDisplayName}&apos;s wedding celebration memorable.
             Your photos and messages create beautiful memories we will treasure for a lifetime.
           </p>
           <p
             className={`${cinzel.className} ${ct.label} uppercase tracking-[0.18em] sm:tracking-[0.2em]`}
-            style={{ color: OUTSIDE_TEXT, textShadow: READABLE_SHADOW }}
+            style={{ color: C.goldBright }}
           >
             Thank you for sharing the joy
           </p>

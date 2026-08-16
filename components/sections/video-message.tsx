@@ -22,46 +22,58 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
-const OUTSIDE_TEXT = "#FFFFFF"
-const OUTSIDE_TEXT_MUTED = "rgba(255, 255, 255, 0.88)"
-const OUTSIDE_TITLE_SHADOW =
-  "0 2px 6px rgba(0, 0, 0, 0.28), 0 0 18px rgba(0, 0, 0, 0.12)"
+const C = {
+  navy: "#04103B",
+  gold: "#c5a059",
+  goldBright: "#d4af37",
+  goldSoft: "#e6d3a3",
+  paper: "#f7f3e9",
+} as const
+
+const goldLine = `color-mix(in srgb, ${C.gold} 55%, transparent)`
 
 const palette = {
-  body: "var(--color-welcome-text)",
-  heading: "var(--color-welcome-navy)",
-  accent: "var(--color-welcome-green)",
+  body: C.navy,
+  heading: C.gold,
+  accent: C.gold,
 } as const
 
 const outsideDividerLineStyle = {
-  background:
-    "linear-gradient(to right, transparent, rgba(255, 255, 255, 0.55), transparent)",
+  background: `linear-gradient(to right, transparent, ${goldLine}, transparent)`,
 } as const
 
 const insideDividerLineStyle = {
-  background:
-    "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent), transparent)",
+  background: `linear-gradient(to right, transparent, ${goldLine}, transparent)`,
 } as const
 
 const cardStyle = {
-  background: "var(--color-welcome-bg)",
+  background: `linear-gradient(180deg, color-mix(in srgb, ${C.goldSoft} 28%, ${C.paper}) 0%, ${C.paper} 48%, color-mix(in srgb, ${C.gold} 10%, ${C.paper}) 100%)`,
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-  boxShadow:
-    "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
+  borderColor: goldLine,
+  boxShadow: `0 12px 36px color-mix(in srgb, ${C.navy} 28%, transparent), inset 0 1px 0 color-mix(in srgb, ${C.goldSoft} 55%, transparent)`,
+} as const
+
+const buttonStyle = {
+  backgroundColor: C.gold,
+  borderColor: `color-mix(in srgb, ${C.goldBright} 70%, transparent)`,
+  color: C.navy,
+  boxShadow: `0 10px 24px color-mix(in srgb, ${C.gold} 35%, transparent)`,
 } as const
 
 function OutsideDivider() {
   return (
     <div className="flex items-center justify-center gap-1.5">
       <span className="h-px w-6 sm:w-10" style={outsideDividerLineStyle} />
-      <span className="h-0.5 w-0.5 rounded-full bg-white/50 sm:h-1 sm:w-1" aria-hidden />
+      <span
+        className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1"
+        style={{ backgroundColor: goldLine }}
+        aria-hidden
+      />
       <span
         className="h-px w-6 sm:w-10"
         style={{
-          background:
-            "linear-gradient(to left, transparent, rgba(255, 255, 255, 0.55), transparent)",
+          background: `linear-gradient(to left, transparent, ${goldLine}, transparent)`,
         }}
       />
     </div>
@@ -72,12 +84,15 @@ function InsideDivider() {
   return (
     <div className="flex items-center justify-center gap-1.5">
       <span className="h-px w-6 sm:w-10" style={insideDividerLineStyle} />
-      <span className="h-0.5 w-0.5 rounded-full bg-motif-deep/45 sm:h-1 sm:w-1" aria-hidden />
+      <span
+        className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1"
+        style={{ backgroundColor: goldLine }}
+        aria-hidden
+      />
       <span
         className="h-px w-6 sm:w-10"
         style={{
-          background:
-            "linear-gradient(to left, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent))",
+          background: `linear-gradient(to left, transparent, ${goldLine}, transparent)`,
         }}
       />
     </div>
@@ -99,8 +114,7 @@ function VideoMessageTitle() {
         className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] md:tracking-[0.14em] pb-1 sm:pb-1.5`}
         style={{
           fontSize: "var(--title-size)",
-          color: OUTSIDE_TEXT,
-          textShadow: OUTSIDE_TITLE_SHADOW,
+          color: C.goldBright,
         }}
       >
         Send Us a Video Message
@@ -110,8 +124,7 @@ function VideoMessageTitle() {
         className={`${aboveTheBeyond.className} mx-auto block w-fit max-w-full px-1 leading-[0.88] sm:leading-[0.9] mt-2 sm:mt-2.5 md:mt-3`}
         style={{
           fontSize: "var(--script-size)",
-          color: OUTSIDE_TEXT_MUTED,
-          textShadow: OUTSIDE_TITLE_SHADOW,
+          color: C.goldSoft,
         }}
       >
         A message we will treasure
@@ -139,7 +152,7 @@ export function VideoMessage() {
             <VideoMessageTitle />
           </div>
           <div className="flex items-center justify-center pt-3 sm:pt-4">
-            <span className="h-px w-16 sm:w-24 md:w-32 bg-white/50" />
+            <span className="h-px w-16 sm:w-24 md:w-32" style={{ background: goldLine }} />
           </div>
         </div>
 
@@ -148,7 +161,10 @@ export function VideoMessage() {
           style={cardStyle}
         >
           <div
-            className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-white/35 via-white/8 to-transparent"
+            className="pointer-events-none absolute inset-0 rounded-[inherit]"
+            style={{
+              background: `linear-gradient(135deg, color-mix(in srgb, ${C.goldSoft} 28%, transparent) 0%, transparent 48%)`,
+            }}
             aria-hidden
           />
 
@@ -192,25 +208,20 @@ export function VideoMessage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`${cinzel.className} group relative inline-flex items-center justify-center rounded-sm border px-6 py-2.5 ${sectionType.label} font-semibold uppercase tracking-[0.2em] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:px-8 sm:py-3 sm:tracking-[0.24em] md:px-10 md:py-3.5 md:tracking-[0.28em]`}
-                  style={{
-                    backgroundColor: "var(--color-welcome-green)",
-                    borderColor: "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)",
-                    color: "var(--color-welcome-bg)",
-                  }}
+                  style={buttonStyle}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = "var(--color-welcome-navy)"
-                    e.currentTarget.style.borderColor = "var(--color-welcome-green)"
+                    e.currentTarget.style.backgroundColor = C.goldBright
+                    e.currentTarget.style.borderColor = C.gold
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "var(--color-welcome-green)"
-                    e.currentTarget.style.borderColor =
-                      "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)"
+                    e.currentTarget.style.backgroundColor = C.gold
+                    e.currentTarget.style.borderColor = buttonStyle.borderColor
                   }}
                 >
                   <span className="relative z-10">Upload Video Message</span>
                   <div
                     className="absolute inset-0 -z-0 rounded-sm opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-25"
-                    style={{ backgroundColor: "var(--color-motif-deep)" }}
+                    style={{ backgroundColor: C.gold }}
                   />
                 </a>
               ) : (

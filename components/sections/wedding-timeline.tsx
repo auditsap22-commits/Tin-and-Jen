@@ -26,22 +26,25 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
-const OUTSIDE_TEXT = "#FFFFFF"
-const OUTSIDE_TEXT_MUTED = "rgba(255, 255, 255, 0.88)"
-const OUTSIDE_TITLE_SHADOW =
-  "0 2px 6px rgba(0, 0, 0, 0.28), 0 0 18px rgba(0, 0, 0, 0.12)"
+const C = {
+  gold: "#c5a059",
+  goldBright: "#d4af37",
+  goldSoft: "#e6d3a3",
+} as const
 
-const TIMELINE_TEXT = OUTSIDE_TEXT
-const TIMELINE_SVG_STROKE = "#FFFFFF"
-const READABLE_SHADOW = "0 1px 3px rgba(0,0,0,0.55), 0 2px 10px rgba(0,0,0,0.35)"
-const ICON_SHADOW = "drop-shadow(0 2px 6px rgba(0,0,0,0.55)) drop-shadow(0 0 10px rgba(0,0,0,0.35))"
+const DECO = {
+  top: "/decoration/deco/top-center-decoration.png",
+  bl: "/decoration/deco/left-bottom-small.png",
+  br: "/decoration/deco/right-bottom-small.png",
+} as const
 
-const SECTION_GRADIENT =
-  "linear-gradient(180deg, transparent 0%, color-mix(in srgb, #1a1510 18%, transparent) 18%, color-mix(in srgb, #1a1510 38%, transparent) 50%, color-mix(in srgb, #1a1510 18%, transparent) 82%, transparent 100%)"
+const goldLine = `color-mix(in srgb, ${C.gold} 55%, transparent)`
+const goldFill =
+  "linear-gradient(180deg, #e6d3a3 0%, #d4af37 42%, #c5a059 100%)"
+const goldGlow = `drop-shadow(0 0 16px color-mix(in srgb, ${C.gold} 38%, transparent))`
 
 const outsideDividerLineStyle = {
-  background:
-    "linear-gradient(to right, transparent, rgba(255, 255, 255, 0.55), transparent)",
+  background: `linear-gradient(to right, transparent, ${goldLine}, transparent)`,
 } as const
 
 type TimelineIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>
@@ -59,12 +62,15 @@ function OutsideDivider() {
   return (
     <div className="flex items-center justify-center gap-1.5">
       <span className="h-px w-6 sm:w-10" style={outsideDividerLineStyle} />
-      <span className="h-0.5 w-0.5 rounded-full bg-white/50 sm:h-1 sm:w-1" aria-hidden />
+      <span
+        className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1"
+        style={{ backgroundColor: goldLine }}
+        aria-hidden
+      />
       <span
         className="h-px w-6 sm:w-10"
         style={{
-          background:
-            "linear-gradient(to left, transparent, rgba(255, 255, 255, 0.55), transparent)",
+          background: `linear-gradient(to left, transparent, ${goldLine}, transparent)`,
         }}
       />
     </div>
@@ -86,8 +92,7 @@ function TimelineTitle() {
         className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] md:tracking-[0.14em] pb-1 sm:pb-1.5`}
         style={{
           fontSize: "var(--title-size)",
-          color: OUTSIDE_TEXT,
-          textShadow: OUTSIDE_TITLE_SHADOW,
+          color: C.goldBright,
         }}
       >
         Wedding Timeline
@@ -97,8 +102,7 @@ function TimelineTitle() {
         className={`${aboveTheBeyond.className} mx-auto block w-fit max-w-full px-1 leading-[0.88] sm:leading-[0.9] mt-2 sm:mt-2.5 md:mt-3`}
         style={{
           fontSize: "var(--script-size)",
-          color: OUTSIDE_TEXT_MUTED,
-          textShadow: OUTSIDE_TITLE_SHADOW,
+          color: C.goldSoft,
         }}
       >
         Our day, moment by moment
@@ -172,17 +176,34 @@ export function WeddingTimeline() {
   return (
     <section
       id="wedding-timeline"
-      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative z-10 overflow-hidden bg-transparent py-10 sm:py-12 md:py-16 lg:py-20`}
+      className={`${theSeasons.variable} ${aboveTheBeyond.variable} hero-invite relative z-10 overflow-hidden bg-transparent py-10 sm:py-12 md:py-16 lg:py-20`}
     >
-      {/* Soft dark veil for white text readability over silk */}
-      <div
-        className="pointer-events-none absolute inset-y-0 left-1/2 z-[2] w-screen -translate-x-1/2"
-        aria-hidden
-        style={{ background: SECTION_GRADIENT }}
-      />
+      <div className="hero-invite-frame" aria-hidden="true">
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--top-left" />
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--top-right" />
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--left" />
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--right" />
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--bottom" />
+      </div>
+
+      <div className="hero-invite-deco hero-invite-deco--top" aria-hidden="true">
+        <Image
+          src={DECO.top}
+          alt=""
+          width={2078}
+          height={598}
+          sizes="(max-width: 768px) 90vw, 480px"
+        />
+      </div>
+      <div className="hero-invite-deco hero-invite-deco--bl" aria-hidden="true">
+        <Image src={DECO.bl} alt="" width={851} height={1472} sizes="200px" />
+      </div>
+      <div className="hero-invite-deco hero-invite-deco--br" aria-hidden="true">
+        <Image src={DECO.br} alt="" width={851} height={1472} sizes="200px" />
+      </div>
 
       {/* Header */}
-      <div className="relative z-10 mx-auto mb-8 max-w-5xl px-3 text-center @container/timeline sm:mb-10 sm:px-4 md:mb-12">
+      <div className="relative z-10 mx-auto mb-8 max-w-5xl px-3 pt-16 text-center @container/timeline sm:mb-10 sm:px-4 sm:pt-20 md:mb-12 md:pt-24">
         <div className="mx-auto mb-5 sm:mb-6 md:mb-7">
           <OutsideDivider />
         </div>
@@ -191,22 +212,21 @@ export function WeddingTimeline() {
         </div>
         <p
           className={`font-goudy-italic mx-auto mt-4 max-w-xl px-2 sm:mt-5 md:mt-6 ${sectionType.textRelaxed}`}
-          style={{ color: OUTSIDE_TEXT_MUTED }}
+          style={{ color: C.goldSoft }}
         >
           A simple overview of the key moments of our day, from arrival to farewell.
         </p>
         <div className="mt-4 flex items-center justify-center sm:mt-5">
-          <span className="h-px w-16 sm:w-24 md:w-32 bg-white/50" />
+          <span className="h-px w-16 sm:w-24 md:w-32" style={{ background: goldLine }} />
         </div>
       </div>
 
       {/* Timeline */}
-      <div className="relative z-10 mx-auto max-w-6xl px-3 sm:px-5 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-6xl px-3 pb-16 sm:px-5 sm:pb-20 lg:px-8 md:pb-24">
         <div
-          className="absolute inset-y-0 left-1/2 z-0 w-[2px] -translate-x-1/2 pointer-events-none sm:w-px opacity-80"
+          className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-[2px] -translate-x-1/2 opacity-80 sm:w-px"
           style={{
-            background:
-              "linear-gradient(to bottom, transparent, color-mix(in srgb, var(--color-motif-cream) 60%, transparent), transparent)",
+            background: `linear-gradient(to bottom, transparent, ${goldLine}, transparent)`,
           }}
         />
 
@@ -243,14 +263,14 @@ function TimelineItem({ event, index }: { event: TimelineEvent; index: number })
             <div
               className="hidden h-px w-10 opacity-70 lg:block"
               style={{
-                backgroundColor: "color-mix(in srgb, var(--color-motif-cream) 65%, transparent)",
+                background: goldLine,
               }}
             />
           </div>
         </div>
 
         <div className="relative flex items-center justify-center">
-          <div className="h-2 w-2 rounded-full" style={{ backgroundColor: TIMELINE_TEXT }} />
+          <div className="h-2 w-2 rounded-full" style={{ backgroundColor: C.goldBright }} />
         </div>
 
         <div>
@@ -258,7 +278,7 @@ function TimelineItem({ event, index }: { event: TimelineEvent; index: number })
             <div
               className="hidden h-px w-10 opacity-70 lg:block"
               style={{
-                backgroundColor: "color-mix(in srgb, var(--color-motif-cream) 65%, transparent)",
+                background: goldLine,
               }}
             />
             {isEven ? (
@@ -281,14 +301,14 @@ function TimelineItem({ event, index }: { event: TimelineEvent; index: number })
             <div
               className="h-px w-6 opacity-70"
               style={{
-                backgroundColor: "color-mix(in srgb, var(--color-motif-cream) 65%, transparent)",
+                background: goldLine,
               }}
             />
           </div>
         </div>
 
         <div className="relative flex items-center justify-center">
-          <div className="h-2 w-2 rounded-full" style={{ backgroundColor: TIMELINE_TEXT }} />
+          <div className="h-2 w-2 rounded-full" style={{ backgroundColor: C.goldBright }} />
         </div>
 
         <div>
@@ -296,7 +316,7 @@ function TimelineItem({ event, index }: { event: TimelineEvent; index: number })
             <div
               className="h-px w-6 opacity-70"
               style={{
-                backgroundColor: "color-mix(in srgb, var(--color-motif-cream) 65%, transparent)",
+                background: goldLine,
               }}
             />
             {isEven ? (
@@ -324,13 +344,13 @@ function TimelineText({
     <div className={`max-w-md ${textAlign} ${align === "right" ? "ml-auto" : "mr-auto"}`}>
       <p
         className={`${cinzel.className} ${sectionType.label} tracking-[0.22em] uppercase`}
-        style={{ color: TIMELINE_TEXT, textShadow: READABLE_SHADOW }}
+        style={{ color: C.goldBright }}
       >
         {event.title}
       </p>
       <p
         className={`font-goudy-italic ${sectionType.textSnug} mt-0.5 opacity-95`}
-        style={{ color: TIMELINE_TEXT, textShadow: READABLE_SHADOW }}
+        style={{ color: C.goldSoft }}
       >
         at {event.time}
       </p>
@@ -338,7 +358,7 @@ function TimelineText({
       {event.description && (
         <p
           className={`font-goudy-italic ${sectionType.textRelaxed} mt-1.5 opacity-90`}
-          style={{ color: TIMELINE_TEXT, textShadow: READABLE_SHADOW }}
+          style={{ color: C.goldSoft }}
         >
           {event.description}
         </p>
@@ -347,7 +367,7 @@ function TimelineText({
       {event.location && (
         <p
           className={`font-goudy-italic ${sectionType.text} mt-1.5 leading-relaxed opacity-90`}
-          style={{ color: TIMELINE_TEXT, textShadow: READABLE_SHADOW }}
+          style={{ color: C.goldSoft }}
         >
           {event.location}
         </p>
@@ -367,15 +387,22 @@ function IconMark({
 }) {
   if (imageSrc) {
     return (
-      <Image
-        src={imageSrc}
-        alt=""
-        width={96}
-        height={96}
-        className={`${
-          mobile ? "h-16 w-16" : "h-18 w-18 lg:h-22 lg:w-22"
-        } object-contain`}
-        style={{ filter: `${ICON_SHADOW} brightness(0) invert(1)` }}
+      <div
+        className={mobile ? "h-16 w-16" : "h-18 w-18 lg:h-22 lg:w-22"}
+        role="img"
+        aria-hidden
+        style={{
+          background: goldFill,
+          WebkitMaskImage: `url("${encodeURI(imageSrc)}")`,
+          maskImage: `url("${encodeURI(imageSrc)}")`,
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskPosition: "center",
+          maskPosition: "center",
+          filter: goldGlow,
+        }}
       />
     )
   }
@@ -384,21 +411,22 @@ function IconMark({
     <div
       className={`${
         mobile ? "h-14 w-14" : "h-16 w-16 lg:h-18 lg:w-18"
-      } flex items-center justify-center rounded-full border bg-white/15`}
+      } flex items-center justify-center rounded-full border`}
       style={{
-        borderColor: "color-mix(in srgb, var(--color-motif-cream) 45%, transparent)",
-        filter: ICON_SHADOW,
+        borderColor: goldLine,
+        backgroundColor: `color-mix(in srgb, ${C.gold} 10%, transparent)`,
+        filter: goldGlow,
       }}
     >
       <Icon
         className={`${mobile ? "h-7 w-7" : "h-8 w-8 lg:h-9 lg:w-9"}`}
-        style={{ color: TIMELINE_TEXT }}
+        style={{ color: C.goldBright }}
       />
     </div>
   )
 }
 
-const iconStroke = TIMELINE_SVG_STROKE
+const iconStroke = C.goldBright
 
 function GuestsIcon(props: React.SVGProps<SVGSVGElement>) {
   return (

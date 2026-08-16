@@ -24,15 +24,17 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
-const OUTSIDE_TEXT = "#FFFFFF"
-const OUTSIDE_TEXT_MUTED = "rgba(255, 255, 255, 0.88)"
-const OUTSIDE_TITLE_SHADOW =
-  "0 2px 6px rgba(0, 0, 0, 0.28), 0 0 18px rgba(0, 0, 0, 0.12)"
-const READABLE_SHADOW = "0 1px 3px rgba(0,0,0,0.55), 0 2px 10px rgba(0,0,0,0.35)"
+const C = {
+  navy: "#04103B",
+  gold: "#c5a059",
+  goldBright: "#d4af37",
+  goldSoft: "#e6d3a3",
+} as const
+
+const goldLine = `color-mix(in srgb, ${C.gold} 55%, transparent)`
 
 const outsideDividerLineStyle = {
-  background:
-    "linear-gradient(to right, transparent, rgba(255, 255, 255, 0.55), transparent)",
+  background: `linear-gradient(to right, transparent, ${goldLine}, transparent)`,
 } as const
 
 const ct = {
@@ -45,12 +47,15 @@ function OutsideDivider() {
   return (
     <div className="flex items-center justify-center gap-1.5">
       <span className="h-px w-6 sm:w-10" style={outsideDividerLineStyle} />
-      <span className="h-0.5 w-0.5 rounded-full bg-white/50 sm:h-1 sm:w-1" aria-hidden />
+      <span
+        className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1"
+        style={{ backgroundColor: goldLine }}
+        aria-hidden
+      />
       <span
         className="h-px w-6 sm:w-10"
         style={{
-          background:
-            "linear-gradient(to left, transparent, rgba(255, 255, 255, 0.55), transparent)",
+          background: `linear-gradient(to left, transparent, ${goldLine}, transparent)`,
         }}
       />
     </div>
@@ -72,8 +77,7 @@ function RegistryTitle() {
         className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] md:tracking-[0.14em] pb-1 sm:pb-1.5`}
         style={{
           fontSize: "var(--title-size)",
-          color: OUTSIDE_TEXT,
-          textShadow: OUTSIDE_TITLE_SHADOW,
+          color: C.goldBright,
         }}
       >
         Gift Guide
@@ -83,8 +87,7 @@ function RegistryTitle() {
         className={`${aboveTheBeyond.className} mx-auto block w-fit max-w-full px-1 leading-[0.88] sm:leading-[0.9] mt-2 sm:mt-2.5 md:mt-3`}
         style={{
           fontSize: "var(--script-size)",
-          color: OUTSIDE_TEXT_MUTED,
-          textShadow: OUTSIDE_TITLE_SHADOW,
+          color: C.goldSoft,
         }}
       >
         With gratitude
@@ -116,17 +119,17 @@ export function Registry() {
           </div>
           <p
             className={`font-goudy-italic mx-auto mt-4 max-w-2xl whitespace-pre-line px-2 sm:mt-5 md:mt-6 ${ct.bodyLg}`}
-            style={{ color: OUTSIDE_TEXT_MUTED, textShadow: READABLE_SHADOW }}
+            style={{ color: C.goldSoft }}
           >
             {`As love is what this day is all about,\nyour presence is already the greatest gift we could ever ask for.\nHowever, if you'd like to give, a monetary gift toward our future would be most appreciated.`}
           </p>
           <div className="flex items-center justify-center pt-3 sm:pt-4">
-            <span className="h-px w-16 sm:w-24 md:w-32 bg-white/50" />
+            <span className="h-px w-16 sm:w-24 md:w-32" style={{ background: goldLine }} />
           </div>
         </div>
 
         {registryItems.length > 0 && activeItem && (
-          <div className="mt-6 text-center sm:mt-8 md:mt-10">
+          <div className="relative z-20 mt-6 text-center sm:mt-8 md:mt-10">
             {registryItems.length > 1 && (
               <div className="mb-5 flex flex-wrap items-center justify-center gap-2 sm:mb-6">
                 {registryItems.map((item) => {
@@ -140,15 +143,15 @@ export function Registry() {
                       style={
                         isActive
                           ? {
-                              backgroundColor: "rgba(255, 255, 255, 0.92)",
-                              borderColor: "rgba(255, 255, 255, 0.95)",
-                              color: "var(--color-welcome-navy)",
+                              backgroundColor: C.gold,
+                              borderColor: `color-mix(in srgb, ${C.goldBright} 70%, transparent)`,
+                              color: C.navy,
+                              boxShadow: `0 8px 20px color-mix(in srgb, ${C.gold} 35%, transparent)`,
                             }
                           : {
-                              backgroundColor: "rgba(255, 255, 255, 0.12)",
-                              borderColor: "rgba(255, 255, 255, 0.45)",
-                              color: OUTSIDE_TEXT,
-                              textShadow: READABLE_SHADOW,
+                              backgroundColor: "transparent",
+                              borderColor: goldLine,
+                              color: C.goldSoft,
                             }
                       }
                     >
@@ -161,7 +164,7 @@ export function Registry() {
 
             <p
               className={`${cinzel.className} ${ct.label} mb-4 font-semibold uppercase tracking-[0.18em] sm:mb-5`}
-              style={{ color: OUTSIDE_TEXT, textShadow: READABLE_SHADOW }}
+              style={{ color: C.goldBright }}
             >
               {activeItem.label}
             </p>
@@ -182,13 +185,13 @@ export function Registry() {
               <div className="mx-auto max-w-sm">
                 <p
                   className={`${cinzel.className} ${ct.label} mb-1 font-semibold uppercase tracking-[0.14em]`}
-                  style={{ color: OUTSIDE_TEXT, textShadow: READABLE_SHADOW }}
+                  style={{ color: C.goldBright }}
                 >
                   Account Details
                 </p>
                 <p
                   className={`font-goudy-italic ${ct.bodyLg}`}
-                  style={{ color: OUTSIDE_TEXT_MUTED, textShadow: READABLE_SHADOW }}
+                  style={{ color: C.goldSoft }}
                 >
                   {activeItem.accountNumber}
                 </p>
@@ -200,13 +203,13 @@ export function Registry() {
         <div className="mt-6 space-y-2 text-center sm:mt-8">
           <p
             className={`font-goudy-italic ${ct.body}`}
-            style={{ color: OUTSIDE_TEXT_MUTED, textShadow: READABLE_SHADOW }}
+            style={{ color: C.goldSoft }}
           >
             Thank you from the bottom of our hearts.
           </p>
           <p
             className={`font-goudy-italic ${ct.body} italic`}
-            style={{ color: OUTSIDE_TEXT_MUTED, textShadow: READABLE_SHADOW }}
+            style={{ color: C.goldSoft }}
           >
             With love,
             <br />

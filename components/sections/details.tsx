@@ -40,6 +40,60 @@ const aboveTheBeyond = localFont({
 const CORNER_DECO_CLASS =
   "block h-auto w-auto max-w-[88px] sm:max-w-[108px] md:max-w-[124px] lg:max-w-[140px]"
 
+const paperWash = {
+  cream: "#f7f3e9",
+  lift: "#faf7ef",
+  champagne: "#DDBA7A",
+  gold: "#AB832E",
+  slate: "#364061",
+} as const
+
+const detailsBackground = `
+  radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${paperWash.champagne} 35%, transparent) 0%, transparent 55%),
+  radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${paperWash.slate} 16%, transparent) 0%, transparent 58%),
+  radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${paperWash.gold} 14%, transparent) 0%, transparent 55%),
+  linear-gradient(180deg, ${paperWash.cream} 0%, ${paperWash.lift} 48%, ${paperWash.cream} 100%)
+`
+
+function CornerDecorations() {
+  return (
+    <>
+      <div className="pointer-events-none absolute left-0 top-0 z-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/decoration/deco/left-top-corner.png"
+          alt=""
+          className={CORNER_DECO_CLASS}
+        />
+      </div>
+      <div className="pointer-events-none absolute right-0 top-0 z-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/decoration/deco/right-top-corner.png"
+          alt=""
+          className={CORNER_DECO_CLASS}
+        />
+      </div>
+      <div className="pointer-events-none absolute bottom-0 left-0 z-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/decoration/deco/left-bottom-corner.png"
+          alt=""
+          className={CORNER_DECO_CLASS}
+        />
+      </div>
+      <div className="pointer-events-none absolute bottom-0 right-0 z-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/decoration/deco/right-bottom-corner.png"
+          alt=""
+          className={CORNER_DECO_CLASS}
+        />
+      </div>
+    </>
+  )
+}
+
 const detailText = {
   body: "var(--color-welcome-text)",
   heading: "var(--color-welcome-navy)",
@@ -144,85 +198,83 @@ const ct = {
   reminderBody: "text-xs sm:text-sm md:text-base lg:text-lg",
 } as const
 
+const reminderInk = {
+  navy: "#192030",
+  deep: "#04103B",
+  slate: "#364061",
+  gold: "#AB832E",
+  champagne: "#DDBA7A",
+} as const
+
+const motifSwatches = [
+  reminderInk.deep,
+  reminderInk.navy,
+  reminderInk.slate,
+  reminderInk.gold,
+  reminderInk.champagne,
+] as const
+
 const attireGuide = {
   entourage: {
     image: "/Details/entourage.png",
     imageAspect: "3/2",
     ladies: {
-      colors: [
-        "#587042",
-        "#A9B494",
-        "#FAF7E6",
-        "#F8DE8C",
-        "#F6C531",
-      ] as const,
+      colors: motifSwatches,
       description:
-        "Ladies are requested to wear a floor-length gown in Fern Green or Sage. Cosmic Latte, Jasmine, and Saffron from our palette may also be worn.",
+        "Ladies are requested to wear a floor-length gown in Midnight Navy or Slate Navy. Antique Gold and Champagne from our palette may also be worn.",
     },
     gentlemen: {
-      colors: ["#FAF7E6", "#000000"] as const,
+      colors: [reminderInk.champagne, reminderInk.deep] as const,
       description:
-        "Gentlemen are requested to wear a long-sleeved Cream Barong Tagalog, paired with tailored black trousers and polished black formal shoes.",
+        "Gentlemen are requested to wear a long-sleeved Champagne or Cream Barong Tagalog, paired with tailored navy trousers and polished navy or black formal shoes.",
     },
   },
   guests: {
     image: "/Details/guest.png",
     imageAspect: "3/2",
     ladies: {
-      colors: [
-        "#587042",
-        "#A9B494",
-        "#FAF7E6",
-        "#F8DE8C",
-        "#F6C531",
-      ] as const,
+      colors: motifSwatches,
       description:
         "Ladies may wear a midi or cocktail dress in any color from our palette. We welcome a range of elegant styles, so long as they stay within the guide.",
     },
     gentlemen: {
-      colors: [
-        "#587042",
-        "#A9B494",
-        "#FAF7E6",
-        "#F8DE8C",
-        "#F6C531",
-      ] as const,
+      colors: motifSwatches,
       description:
-        "Gentlemen may wear a collared shirt in Fern Green, Sage, Cosmic Latte, Jasmine, or Saffron, paired with cream trousers and brown leather loafers.",
+        "Gentlemen may wear a collared shirt in Midnight Navy, Slate Navy, Antique Gold, or Champagne, paired with cream trousers and brown or navy leather loafers.",
     },
   },
 } as const
 
 const dressCodePalette = [
   {
-    name: "FERN GREEN",
-    pantone: "18-0525 TCX",
-    hex: "#587042",
-    rgb: "(88, 112, 66)",
+    name: "MIDNIGHT NAVY",
+    pantone: "19-4052 TCX",
+    hex: reminderInk.deep,
+    rgb: "(4, 16, 59)",
   },
   {
-    name: "SAGE",
-    pantone: "15-6310 TCX",
-    hex: "#A9B494",
-    rgb: "(169, 180, 148)",
+    name: "DEEP NAVY",
+    pantone: "19-4010 TCX",
+    hex: reminderInk.navy,
+    rgb: "(25, 32, 48)",
   },
   {
-    name: "COSMIC LATTE",
-    pantone: "11-0105 TCX",
-    hex: "#FAF7E6",
-    rgb: "(250, 247, 230)",
+    name: "SLATE NAVY",
+    pantone: "19-3920 TCX",
+    hex: reminderInk.slate,
+    rgb: "(54, 64, 97)",
   },
   {
-    name: "JASMINE",
-    pantone: "12-0738 TCX",
-    hex: "#F8DE8C",
-    rgb: "(248, 222, 140)",
+    name: "ANTIQUE GOLD",
+    pantone: "18-0830 TCX",
+    hex: reminderInk.gold,
+    rgb: "(171, 131, 46)",
   },
   {
-    name: "SAFFRON",
-    pantone: "14-0848 TCX",
-    hex: "#F6C531",
-    rgb: "(246, 197, 49)",
+    name: "CHAMPAGNE",
+    pantone: "14-1036 TCX",
+    hex: reminderInk.champagne,
+    rgb: "(221, 186, 122)",
   },
 ] as const
 
@@ -235,21 +287,26 @@ function DressCodePaletteSwatch({
   const r = (n >> 16) & 255
   const g = (n >> 8) & 255
   const b = n & 255
-  const isLight = 0.299 * r + 0.587 * g + 0.114 * b > 165
+  const isLight = 0.299 * r + 0.587 * g + 0.114 * b > 125
 
   return (
     <div
-      className={`flex min-w-0 flex-1 flex-col ${isLast ? "" : "border-r border-white"}`}
+      className="flex min-w-0 flex-1 flex-col"
+      style={{
+        borderRight: isLast ? undefined : `1px solid color-mix(in srgb, ${reminderInk.gold} 55%, transparent)`,
+      }}
     >
       <div
         className="relative flex min-h-[132px] w-full items-center justify-center sm:min-h-[168px] md:min-h-[200px] lg:min-h-[232px]"
         style={{ backgroundColor: hex }}
       >
         <span
-          className={`text-[6px] font-semibold uppercase tracking-[0.08em] sm:text-[7px] md:text-[8px] lg:text-[9px] ${
-            isLight ? "text-[#3D3429]" : "text-white"
-          }`}
-          style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}
+          className="text-[6px] font-semibold uppercase tracking-[0.08em] sm:text-[7px] md:text-[8px] lg:text-[9px]"
+          style={{
+            writingMode: "vertical-rl",
+            textOrientation: "mixed",
+            color: isLight ? reminderInk.deep : reminderInk.champagne,
+          }}
         >
           {name}
         </span>
@@ -259,9 +316,8 @@ function DressCodePaletteSwatch({
 }
 
 const dressCodePalettePanelStyle = {
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 10%, transparent)",
-  backgroundColor: "#FDF8F2",
-  color: "#3D3429",
+  backgroundColor: reminderInk.deep,
+  color: reminderInk.champagne,
 } as const
 
 function DressCodePaletteHeader() {
@@ -273,20 +329,31 @@ function DressCodePaletteHeader() {
       <div className="mx-auto max-w-3xl text-center">
         <h5
           className={`${cinzel.className} text-sm font-semibold uppercase tracking-[0.14em] sm:text-base md:text-lg lg:text-xl`}
+          style={{ color: reminderInk.champagne }}
         >
           Dress Code Palette
         </h5>
         <p
           className={`${aboveTheBeyond.className} mt-1 text-lg leading-none sm:mt-1.5 sm:text-xl md:text-2xl`}
-          style={{ color: "var(--color-motif-accent)" }}
+          style={{ color: reminderInk.gold }}
         >
           Entourage and Guests
         </p>
 
         <div className="mx-auto mt-3 flex max-w-xs items-center justify-center gap-2 sm:mt-4 sm:max-w-sm md:max-w-md">
-          <span className="h-px flex-1 bg-[#3D3429]/30" />
-          <Heart className="h-2.5 w-2.5 shrink-0 fill-[#3D3429]/40 text-[#3D3429]/40 sm:h-3 sm:w-3" aria-hidden />
-          <span className="h-px flex-1 bg-[#3D3429]/30" />
+          <span
+            className="h-px flex-1"
+            style={{ backgroundColor: `color-mix(in srgb, ${reminderInk.gold} 55%, transparent)` }}
+          />
+          <Heart
+            className="h-2.5 w-2.5 shrink-0 sm:h-3 sm:w-3"
+            style={{ color: reminderInk.gold, fill: reminderInk.gold }}
+            aria-hidden
+          />
+          <span
+            className="h-px flex-1"
+            style={{ backgroundColor: `color-mix(in srgb, ${reminderInk.gold} 55%, transparent)` }}
+          />
         </div>
       </div>
     </div>
@@ -301,10 +368,14 @@ function DressCodePaletteCaption() {
     >
       <p
         className={`${cinzel.className} text-[10px] font-bold uppercase tracking-[0.12em] sm:text-xs md:text-sm`}
+        style={{ color: reminderInk.gold }}
       >
         Color Guide
       </p>
-      <p className="font-goudy-italic mt-1.5 text-[10px] italic leading-relaxed sm:mt-2 sm:text-xs md:text-sm">
+      <p
+        className="font-goudy-italic mt-1.5 text-[10px] italic leading-relaxed sm:mt-2 sm:text-xs md:text-sm"
+        style={{ color: reminderInk.champagne }}
+      >
         Please refer to the exact colors above for dress code.
       </p>
     </div>
@@ -314,9 +385,13 @@ function DressCodePaletteCaption() {
 function DressCodePaletteSwatches() {
   return (
     <div
-      className="flex w-full border-t border-white"
+      className="flex w-full"
       role="img"
-      aria-label="Dress code color palette: Fern Green, Sage, Cosmic Latte, Jasmine, Saffron"
+      aria-label="Dress code color palette: Midnight Navy, Deep Navy, Slate Navy, Antique Gold, Champagne"
+      style={{
+        borderTop: `1px solid color-mix(in srgb, ${reminderInk.gold} 55%, transparent)`,
+        borderBottom: `1px solid color-mix(in srgb, ${reminderInk.gold} 55%, transparent)`,
+      }}
     >
       {dressCodePalette.map((color, index) => (
         <DressCodePaletteSwatch
@@ -329,14 +404,23 @@ function DressCodePaletteSwatches() {
   )
 }
 
-function ColorPalette({ colors }: { colors: readonly string[] }) {
+function ColorPalette({
+  colors,
+  frame = "white",
+}: {
+  colors: readonly string[]
+  frame?: "white" | "gold"
+}) {
   const widthClass = colors.length > 4 ? "max-w-md" : "max-w-xs sm:max-w-sm"
 
   return (
     <div
-      className={`mx-auto flex h-8 w-full overflow-hidden rounded-full border-2 border-white sm:h-9 ${widthClass}`}
+      className={`mx-auto flex h-8 w-full overflow-hidden rounded-full border-2 sm:h-9 ${widthClass}`}
       role="img"
       aria-label={`Color palette: ${colors.join(", ")}`}
+      style={{
+        borderColor: frame === "gold" ? reminderInk.champagne : "#FFFFFF",
+      }}
     >
       {colors.map((color) => (
         <div
@@ -350,96 +434,83 @@ function ColorPalette({ colors }: { colors: readonly string[] }) {
   )
 }
 
-function CoupleImagesCarousel({
-  coupleImages,
-  currentImageIndex,
-  rotationOffset,
-}: {
-  coupleImages: string[]
-  currentImageIndex: number
-  rotationOffset: number
-}) {
-  return (
-    <div className="mb-4 flex w-full max-w-[min(100%,16.5rem)] justify-center gap-2.5 sm:mb-5 sm:max-w-[19rem] sm:gap-3">
-      {coupleImages.map((image, index) => {
-        const isActive = index === currentImageIndex
-        const baseRotation = index === 0 ? -4 : index === 1 ? 4 : index === 2 ? -2 : 3
-        const currentRotation = isActive
-          ? baseRotation + Math.sin((rotationOffset * Math.PI) / 180) * 1.5
-          : baseRotation
+const INVITATION_WORD = "/decoration/deco/invitation-word-image.png"
 
-        return (
-          <div
-            key={image}
-            className={`relative h-9 w-9 shrink-0 overflow-hidden rounded-md border sm:h-11 sm:w-11 md:h-12 md:w-12 ${
-              isActive ? "z-10" : "opacity-80"
-            }`}
-            style={{
-              transform: `rotate(${currentRotation}deg) scale(${isActive ? 1.38 : 1})`,
-              transition:
-                "transform 900ms cubic-bezier(0.22, 1, 0.36, 1), opacity 500ms ease",
-              borderColor: "rgba(255, 255, 255, 0.55)",
-            }}
-          >
-            <Image
-              src={image}
-              alt={`Wedding couple ${index + 1}`}
-              fill
-              className="object-cover object-center"
-              sizes="48px"
-              style={{ opacity: isActive ? 1 : 0.78 }}
-            />
-          </div>
-        )
-      })}
+function InvitationWordDeco({ side }: { side: "left" | "right" }) {
+  return (
+    <div
+      className={`pointer-events-none absolute top-[7%] bottom-[7%] z-[5] w-[1.7rem] sm:w-[2.55rem] md:w-[3.4rem] lg:w-[4.15rem] ${
+        side === "left"
+          ? "left-2.5 sm:left-3.5 md:left-4"
+          : "right-2.5 sm:right-3.5 md:right-4"
+      }`}
+      aria-hidden
+    >
+      <div
+        className={`h-full w-full ${side === "right" ? "-scale-x-100" : ""}`}
+        style={{
+          backgroundColor: reminderInk.champagne,
+          WebkitMaskImage: `url("${INVITATION_WORD}")`,
+          maskImage: `url("${INVITATION_WORD}")`,
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+          WebkitMaskPosition: "center",
+          maskPosition: "center",
+        }}
+      />
     </div>
   )
 }
 
-const reminderArch = {
-  forest: "#5d6f47",
-  heading: "#FFFFFF",
-  body: "#F8F5EC",
-} as const
-
-const reminderDividerStyle = {
-  background:
-    "linear-gradient(to right, transparent, rgba(255, 255, 255, 0.45), transparent)",
-} as const
+function ReminderTone({
+  label,
+  children,
+}: {
+  label: string
+  children: ReactNode
+}) {
+  return (
+    <div className="mx-auto w-full max-w-[34rem] space-y-2 text-center sm:space-y-2.5">
+      <p
+        className={`${cinzel.className} text-[10px] font-semibold uppercase tracking-[0.22em] sm:text-[11px] md:text-xs`}
+        style={{ color: reminderInk.gold }}
+      >
+        {label}
+      </p>
+      <p
+        className={`font-goudy-italic ${ct.reminderBody} mx-auto max-w-prose text-pretty leading-[1.75]`}
+        style={{ color: reminderInk.champagne }}
+      >
+        {children}
+      </p>
+    </div>
+  )
+}
 
 function ReminderCard({
   title,
   children,
-  showDivider = true,
 }: {
   title: string
   children: ReactNode
-  showDivider?: boolean
 }) {
   return (
-    <>
-      {showDivider ? (
-        <div
-          className="mx-auto my-3 h-px w-full max-w-md sm:my-4"
-          style={reminderDividerStyle}
-          aria-hidden
-        />
-      ) : null}
-      <div className="px-1 py-1 sm:py-1.5">
-        <h4
-          className={`${cinzel.className} ${ct.reminderHead} mb-2 font-semibold uppercase tracking-[0.14em] sm:mb-2.5`}
-          style={{ color: reminderArch.heading }}
-        >
-          {title}
-        </h4>
-        <div
-          className={`font-goudy-italic ${ct.reminderBody} leading-relaxed`}
-          style={{ color: reminderArch.body }}
-        >
-          {children}
-        </div>
+    <article className="mx-auto flex w-full max-w-[34rem] flex-col items-center text-center">
+      <h4
+        className={`${cinzel.className} mb-5 max-w-[18ch] text-balance font-bold uppercase tracking-[0.12em] sm:mb-7 md:mb-8`}
+        style={{
+          color: reminderInk.champagne,
+          fontSize: "clamp(0.98rem, 4.2vw, 1.85rem)",
+        }}
+      >
+        {title}
+      </h4>
+      <div className="flex w-full flex-col items-center gap-6 sm:gap-8 md:gap-9">
+        {children}
       </div>
-    </>
+    </article>
   )
 }
 
@@ -473,7 +544,7 @@ function AttirePaletteGroup({
       >
         {label}
       </p>
-      {colors ? <ColorPalette colors={colors} /> : null}
+      {colors ? <ColorPalette colors={colors} frame="gold" /> : null}
       <p
         className={`font-goudy-italic ${ct.body} px-1 text-center leading-relaxed`}
         style={{ color: detailText.body }}
@@ -819,21 +890,12 @@ function EventVenueCard({
 
 // Colors sourced from globals.css @theme inline — edit there to update everywhere
 
-const COUPLE_IMAGES = [
-  "/envelope/box (1).JPG",
-  "/envelope/box (2).JPG",
-  "/envelope/box (3).JPG",
-  "/envelope/box (4).JPG",
-]
-
 export function Details() {
   const siteConfig = useSiteConfig()
   const [copiedItems, setCopiedItems] = useState<Set<string>>(new Set())
   const [currentCeremonyImageIndex, setCurrentCeremonyImageIndex] = useState(0)
   const [currentReceptionImageIndex, setCurrentReceptionImageIndex] = useState(0)
   const [showImageModal, setShowImageModal] = useState<string | null>(null)
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [rotationOffset, setRotationOffset] = useState(0)
 
   const ceremonyImages = siteConfig.ceremony.image
   const receptionImages = siteConfig.reception.image
@@ -853,16 +915,6 @@ export function Details() {
     }, 4500)
     return () => clearInterval(timer)
   }, [receptionImages.length])
-
-  // Gentle reminders couple photos — subtle carousel + wobble animation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % COUPLE_IMAGES.length)
-      setRotationOffset((prev) => (prev + 10) % 360)
-    }, 2600)
-
-    return () => clearInterval(interval)
-  }, [])
 
   const copyToClipboard = async (text: string, itemId: string) => {
     try {
@@ -911,45 +963,13 @@ export function Details() {
   return (
     <div
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full`}
-      style={{ background: "var(--color-welcome-bg)" }}
+      style={{ background: detailsBackground }}
     >
       <Section
         id="details"
         className="relative z-10 pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14 overflow-hidden"
       >
-        {/* Corner decorations */}
-        <div className="pointer-events-none absolute left-0 top-0 z-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/decoration/left-top-corner.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-          />
-        </div>
-        <div className="pointer-events-none absolute right-0 top-0 z-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/decoration/right-top-corner.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-          />
-        </div>
-        <div className="pointer-events-none absolute bottom-0 left-0 z-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/decoration/left-bottom-corner.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-          />
-        </div>
-        <div className="pointer-events-none absolute bottom-0 right-0 z-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/decoration/right-bottom-corner.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-          />
-        </div>
+        <CornerDecorations />
 
         {/* Header */}
         <div className="relative z-20 mb-6 px-6 text-center sm:mb-8 sm:px-10 md:mb-10 md:px-12">
@@ -1062,6 +1082,7 @@ export function Details() {
               <div className="grid grid-cols-1 gap-5 sm:gap-6">
                 <AttirePaletteGroup
                   label="Ladies"
+                  colors={attireGuide.entourage.ladies.colors}
                   description={highlightAttirePhrase(
                     attireGuide.entourage.ladies.description,
                     "floor-length gown",
@@ -1069,9 +1090,10 @@ export function Details() {
                 />
                 <AttirePaletteGroup
                   label="Gentlemen"
+                  colors={attireGuide.entourage.gentlemen.colors}
                   description={highlightAttirePhrase(
                     attireGuide.entourage.gentlemen.description,
-                    "Cream Barong Tagalog",
+                    "Champagne or Cream Barong Tagalog",
                   )}
                 />
               </div>
@@ -1086,6 +1108,7 @@ export function Details() {
               <div className="grid grid-cols-1 gap-5 sm:gap-6">
                 <AttirePaletteGroup
                   label="Ladies"
+                  colors={attireGuide.guests.ladies.colors}
                   description={highlightAttirePhrase(
                     attireGuide.guests.ladies.description,
                     "midi or cocktail dress",
@@ -1093,6 +1116,7 @@ export function Details() {
                 />
                 <AttirePaletteGroup
                   label="Gentlemen"
+                  colors={attireGuide.guests.gentlemen.colors}
                   description={highlightAttirePhrase(
                     attireGuide.guests.gentlemen.description,
                     "collared shirt",
@@ -1102,12 +1126,28 @@ export function Details() {
             </AttireCard>
 
             <div
-              className="overflow-hidden rounded-xl border sm:rounded-2xl"
-              style={cardStyle}
+              className="relative overflow-hidden"
+              style={{
+                backgroundColor: reminderInk.deep,
+                boxShadow: `0 18px 48px color-mix(in srgb, ${reminderInk.deep} 28%, transparent)`,
+              }}
             >
-              <DressCodePaletteHeader />
-              <DressCodePaletteSwatches />
-              <DressCodePaletteCaption />
+              <div
+                className="pointer-events-none absolute inset-[0.55rem] z-10 sm:inset-3"
+                aria-hidden
+                style={{
+                  boxShadow: `
+                    inset 0 0 0 1px ${reminderInk.gold},
+                    inset 0 0 0 4px ${reminderInk.deep},
+                    inset 0 0 0 5px ${reminderInk.champagne}
+                  `,
+                }}
+              />
+              <div className="relative z-[11]">
+                <DressCodePaletteHeader />
+                <DressCodePaletteSwatches />
+                <DressCodePaletteCaption />
+              </div>
             </div>
           </div>
         </div>
@@ -1133,80 +1173,110 @@ export function Details() {
         </div> */}
 
         {/* Gentle Reminders */}
-        <div className="relative z-20 mx-auto mt-6 max-w-3xl px-4 pb-2 sm:mt-8 sm:max-w-4xl sm:px-6 md:px-8">
-          <div className="relative">
+        <div className="relative z-20 mx-auto mt-6 w-full max-w-3xl px-3 pb-2 sm:mt-8 sm:max-w-4xl sm:px-6 md:px-8 lg:max-w-5xl">
+          <div
+            className="relative overflow-hidden"
+            style={{
+              backgroundColor: reminderInk.deep,
+              backgroundImage: `radial-gradient(90% 48% at 50% 0%, color-mix(in srgb, ${reminderInk.gold} 18%, transparent) 0%, transparent 62%)`,
+              boxShadow: `0 18px 48px color-mix(in srgb, ${reminderInk.deep} 34%, transparent)`,
+            }}
+          >
             <div
-              className="relative z-20 overflow-hidden rounded-t-full"
+              className="pointer-events-none absolute inset-[0.7rem] z-20 sm:inset-4 md:inset-[1.15rem]"
+              aria-hidden
               style={{
-                backgroundColor: reminderArch.forest,
-                boxShadow: `0 18px 48px color-mix(in srgb, ${reminderArch.forest} 28%, transparent)`,
+                boxShadow: `
+                  inset 0 0 0 1px ${reminderInk.gold},
+                  inset 0 0 0 5px ${reminderInk.deep},
+                  inset 0 0 0 6px ${reminderInk.champagne}
+                `,
               }}
-            >
-              <div
-                className="pointer-events-none absolute inset-3 z-30 rounded-t-full border border-white sm:inset-4 md:inset-5"
-                aria-hidden
-              />
+            />
 
-              <div className="relative z-20 flex flex-col items-center px-5 pb-10 pt-[22%] text-center sm:px-8 sm:pb-12 md:px-12 md:pb-14 lg:px-14">
-                <CoupleImagesCarousel
-                  coupleImages={COUPLE_IMAGES}
-                  currentImageIndex={currentImageIndex}
-                  rotationOffset={rotationOffset}
-                />
+            <InvitationWordDeco side="left" />
+            <InvitationWordDeco side="right" />
 
-                <h3
-                  className={`${cinzel.className} ${ct.sectionTitle} font-semibold uppercase tracking-[0.14em]`}
-                  style={{ color: reminderArch.heading }}
-                >
-                  Gentle Reminders
-                </h3>
-                <p
-                  className={`font-goudy-italic ${ct.body} mx-auto mt-2 max-w-lg leading-relaxed`}
-                  style={{ color: reminderArch.body }}
-                >
-                  A few thoughtful notes to help everyone enjoy our celebration.
-                </p>
+            <div className="relative z-10 mx-auto flex w-full max-w-[40rem] flex-col items-center px-[3.15rem] py-11 text-center sm:max-w-[42rem] sm:px-16 sm:py-14 md:px-[4.75rem] md:py-16">
+              <p
+                className={`${cinzel.className} mb-8 text-[10px] font-semibold uppercase tracking-[0.32em] text-balance sm:mb-10 sm:text-[11px] md:mb-12`}
+                style={{ color: reminderInk.gold }}
+              >
+                Gentle Reminders
+              </p>
+
+              <div className="flex w-full flex-col items-center gap-11 sm:gap-14 md:gap-16">
+                <ReminderCard title="Adults-Only Celebration">
+                  <ReminderTone label="Formal">
+                    While we adore your little ones, we have chosen to celebrate as an
+                    adults-only affair, other than the children who are part of the
+                    entourage. We hope this gives you a well-deserved night out.
+                  </ReminderTone>
+                  <ReminderTone label="Warm">
+                    We love your kids, but consider this your night off! Please note that
+                    our celebration is adults-only.
+                  </ReminderTone>
+                  <ReminderTone label="Tagalog">
+                    Bagama&apos;t mahal namin ang inyong mga anak, ang aming pagdiriwang
+                    ay para lamang sa mga bisitang may sapat na gulang. Maraming salamat
+                    sa inyong pag-unawa.
+                  </ReminderTone>
+                </ReminderCard>
+
                 <div
-                  className="mx-auto mt-4 h-px w-full max-w-md sm:mt-5"
-                  style={reminderDividerStyle}
+                  className="h-px w-14 sm:w-20"
+                  style={{
+                    background: `linear-gradient(90deg, transparent, ${reminderInk.gold}, transparent)`,
+                  }}
                   aria-hidden
                 />
 
-                <div className="mx-auto mt-1 w-full max-w-2xl sm:mt-2">
-                  <ReminderCard title="Adults-Only Celebration" showDivider={false}>
-                    <p>
-                      We kindly request that our wedding be an adults-only occasion. We hope this allows
-                      everyone to relax and fully enjoy the celebration with us.
-                    </p>
-                  </ReminderCard>
+                <ReminderCard title="Unplugged Ceremony">
+                  <ReminderTone label="Formal">
+                    We invite you to be fully present as we exchange our vows. Kindly keep
+                    phones and cameras away during the ceremony and let our photographers
+                    capture the moment.
+                  </ReminderTone>
+                  <ReminderTone label="Warm">
+                    Be present, not on your phones! Enjoy our unplugged ceremony and let
+                    our photographers do the clicking.
+                  </ReminderTone>
+                  <ReminderTone label="Tagalog">
+                    Hangga&apos;t maaari, iwasan muna ang paggamit ng cellphone at camera
+                    upang lubos nating mapahalagahan ang sagradong seremonya ng aming
+                    pag-iisang dibdib.
+                  </ReminderTone>
+                </ReminderCard>
 
-                  <ReminderCard title="Unplugged Ceremony">
-                    <p>
-                      We&apos;re having a mostly unplugged ceremony. Guests may take photos, but we kindly
-                      ask that it be kept minimal. Please avoid blocking or crowding our official
-                      photographers so they can capture the special moments. We&apos;d love for everyone
-                      to stay present and share the moment with us. Don&apos;t worry—professional photos
-                      will be shared with you after the event. Thank you for your understanding.
-                    </p>
-                  </ReminderCard>
+                <div
+                  className="h-px w-14 sm:w-20"
+                  style={{
+                    background: `linear-gradient(90deg, transparent, ${reminderInk.gold}, transparent)`,
+                  }}
+                  aria-hidden
+                />
 
-                  <ReminderCard title="Strictly Formal">
-                    <div className="space-y-2.5">
-                      <p>
-                        Kindly follow our suggested attire and color palette above to match our wedding
-                        theme.
-                      </p>
-                      <ColorPalette colors={attireGuide.guests.ladies.colors} />
-                      <p>Strictly no casual clothes, shoes, or white-colored attire.</p>
-                    </div>
-                  </ReminderCard>
+                <ReminderCard title="Strictly Formal">
+                  <ReminderTone label="Attire">
+                    Kindly follow our suggested attire and color palette above to match our
+                    wedding theme. Strictly no casual clothes, shoes, or white-colored attire.
+                  </ReminderTone>
+                  <ColorPalette colors={attireGuide.guests.ladies.colors} frame="gold" />
+                </ReminderCard>
 
-                  <ReminderCard title="Arrival">
-                    <p>
-                      To ensure everything runs smoothly, please arrive at {siteConfig.ceremony.guestsTime}. This will give you enough time to find your seat, settle in comfortably, and fully enjoy the beautiful ceremony before it begins at {siteConfig.ceremony.time}. We truly appreciate your punctuality and look forward to celebrating this special moment with you.
-                    </p>
-                  </ReminderCard>
-                </div>
+                <div
+                  className="h-px w-14 sm:w-20"
+                  style={{
+                    background: `linear-gradient(90deg, transparent, ${reminderInk.gold}, transparent)`,
+                  }}
+                  aria-hidden
+                />
+
+                <ReminderCard title="Arrival">
+                  <ReminderTone label="Punctuality">
+                    To ensure everything runs smoothly, please arrive at {siteConfig.ceremony.guestsTime}. This will give you enough time to find your seat, settle in comfortably, and fully enjoy the beautiful ceremony before it begins at {siteConfig.ceremony.time}. We truly appreciate your punctuality and look forward to celebrating this special moment with you.
+                  </ReminderTone>
+                </ReminderCard>
               </div>
             </div>
           </div>

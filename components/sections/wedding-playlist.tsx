@@ -1,11 +1,16 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { useAudio } from "@/contexts/audio-context"
 import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
-import { Music2 } from "lucide-react"
+import { Loader2, Music2 } from "lucide-react"
+import { layeredSectionTitleSize } from "@/lib/section-typography"
+import { MobilePlaylistPlayer } from "@/components/sections/mobile-playlist-player"
+
+const LIST_EMBED_HEIGHT = 380
+const LARGE_EMBED_HEIGHT = 452
 
 interface SpotifyPlaybackUpdate {
   playingURI: string
@@ -18,11 +23,11 @@ interface SpotifyPlaybackUpdate {
 interface SpotifyEmbedController {
   addListener: (
     event: "playback_update" | "playback_started" | "ready",
-    callback: (event: { data: SpotifyPlaybackUpdate }) => void
+    callback: (event: { data?: SpotifyPlaybackUpdate }) => void
   ) => void
   removeListener: (
     event: "playback_update" | "playback_started" | "ready",
-    callback: (event: { data: SpotifyPlaybackUpdate }) => void
+    callback: (event: { data?: SpotifyPlaybackUpdate }) => void
   ) => void
   destroy: () => void
 }
@@ -30,7 +35,13 @@ interface SpotifyEmbedController {
 interface SpotifyIframeApi {
   createController: (
     element: HTMLElement,
-    options: { uri: string; width?: string; height?: string },
+    options: {
+      uri?: string
+      url?: string
+      width?: string
+      height?: string
+      theme?: string
+    },
     callback: (controller: SpotifyEmbedController) => void
   ) => void
 }
@@ -44,12 +55,24 @@ declare global {
 let cachedSpotifyIframeApi: SpotifyIframeApi | null = null
 const spotifyApiReadyQueue: Array<(api: SpotifyIframeApi) => void> = []
 
-function getSpotifyUri(spotifyUrl: string): string {
+function getSpotifyResource(spotifyUrl: string) {
   const match = spotifyUrl.match(
-    /open\.spotify\.com\/(playlist|album|track|episode)\/([^/?]+)/
+    /open\.spotify\.com\/(?:embed\/)?(playlist|album|track|episode)\/([^/?]+)/
   )
-  if (!match) return spotifyUrl
-  return `spotify:${match[1]}:${match[2]}`
+  if (!match) return null
+  return { type: match[1], id: match[2] }
+}
+
+function getSpotifyUri(spotifyUrl: string): string {
+  const resource = getSpotifyResource(spotifyUrl)
+  if (!resource) return spotifyUrl
+  return `spotify:${resource.type}:${resource.id}`
+}
+
+function getSpotifyEmbedUrl(spotifyUrl: string, embedUrl?: string): string {
+  const resource = getSpotifyResource(embedUrl || spotifyUrl)
+  if (!resource) return embedUrl || spotifyUrl
+  return `https://open.spotify.com/embed/${resource.type}/${resource.id}?utm_source=generator&theme=0`
 }
 
 function loadSpotifyIframeApi(onReady: (api: SpotifyIframeApi) => void) {
@@ -97,45 +120,57 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
-const OUTSIDE_TEXT = "#FFFFFF"
-const OUTSIDE_TEXT_MUTED = "rgba(255, 255, 255, 0.88)"
-const OUTSIDE_TITLE_SHADOW =
-  "0 2px 6px rgba(0, 0, 0, 0.28), 0 0 18px rgba(0, 0, 0, 0.12)"
+const C = {
+  navy: "#04103B",
+  gold: "#c5a059",
+  goldBright: "#d4af37",
+  goldSoft: "#e6d3a3",
+  paper: "#f7f3e9",
+} as const
+
+const goldLine = `color-mix(in srgb, ${C.gold} 55%, transparent)`
 
 const palette = {
-  heading: "var(--color-welcome-navy)",
+  heading: C.gold,
 } as const
 
 const outsideDividerLineStyle = {
-  background:
-    "linear-gradient(to right, transparent, rgba(255, 255, 255, 0.55), transparent)",
+  background: `linear-gradient(to right, transparent, ${goldLine}, transparent)`,
 } as const
 
 const ct = {
-  body: "text-xs sm:text-sm md:text-base",
   bodyLg: "text-sm sm:text-base md:text-lg",
   btn: "text-[0.625rem] sm:text-[0.6875rem] md:text-xs",
 } as const
 
 const cardStyle = {
-  background: "var(--color-welcome-bg)",
+  background: `linear-gradient(180deg, color-mix(in srgb, ${C.goldSoft} 28%, ${C.paper}) 0%, ${C.paper} 48%, color-mix(in srgb, ${C.gold} 10%, ${C.paper}) 100%)`,
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-  boxShadow:
-    "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
+  borderColor: goldLine,
+  boxShadow: `0 12px 36px color-mix(in srgb, ${C.navy} 28%, transparent), inset 0 1px 0 color-mix(in srgb, ${C.goldSoft} 55%, transparent)`,
+} as const
+
+const buttonStyle = {
+  backgroundColor: C.gold,
+  borderColor: `color-mix(in srgb, ${C.goldBright} 70%, transparent)`,
+  color: C.navy,
+  boxShadow: `0 10px 24px color-mix(in srgb, ${C.gold} 35%, transparent)`,
 } as const
 
 function OutsideDivider() {
   return (
     <div className="flex items-center justify-center gap-1.5">
       <span className="h-px w-6 sm:w-10" style={outsideDividerLineStyle} />
-      <span className="h-0.5 w-0.5 rounded-full bg-white/50 sm:h-1 sm:w-1" aria-hidden />
+      <span
+        className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1"
+        style={{ backgroundColor: goldLine }}
+        aria-hidden
+      />
       <span
         className="h-px w-6 sm:w-10"
         style={{
-          background:
-            "linear-gradient(to left, transparent, rgba(255, 255, 255, 0.55), transparent)",
+          background: `linear-gradient(to left, transparent, ${goldLine}, transparent)`,
         }}
       />
     </div>
@@ -145,31 +180,29 @@ function OutsideDivider() {
 function PlaylistTitle({ title, script }: { title: string; script: string }) {
   return (
     <h2
-      className="relative mx-auto w-full max-w-full text-center"
+      className="welcome-title-lockup relative mx-auto w-full max-w-full text-center"
       style={
         {
-          "--title-size": "clamp(2.15rem, 11vw, 4.5rem)",
-          "--script-size": "clamp(1.1rem, 4.5vw, 2.25rem)",
+          "--title-size": layeredSectionTitleSize.main,
+          "--script-size": layeredSectionTitleSize.script,
         } as React.CSSProperties
       }
     >
       <span
-        className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.15em] md:tracking-[0.18em] pb-1 sm:pb-1.5`}
+        className={`${theSeasons.className} block max-w-[16ch] mx-auto text-balance uppercase leading-[0.98] tracking-[0.04em] min-[400px]:tracking-[0.08em] sm:max-w-none sm:leading-[0.86] sm:tracking-[0.13em] md:leading-[0.78] md:tracking-[0.14em] pb-1 sm:pb-1.5`}
         style={{
           fontSize: "var(--title-size)",
-          color: OUTSIDE_TEXT,
-          textShadow: OUTSIDE_TITLE_SHADOW,
+          color: C.goldBright,
         }}
       >
         {title}
       </span>
       <span
         aria-hidden
-        className={`${aboveTheBeyond.className} mx-auto block w-fit max-w-full px-1 leading-[0.88] sm:leading-[0.9] mt-2 sm:mt-2.5 md:mt-3`}
+        className={`${aboveTheBeyond.className} mx-auto block w-fit max-w-[92%] px-1 leading-[1.05] sm:leading-[0.9] mt-1.5 sm:mt-2.5 md:mt-3`}
         style={{
           fontSize: "var(--script-size)",
-          color: OUTSIDE_TEXT_MUTED,
-          textShadow: OUTSIDE_TITLE_SHADOW,
+          color: C.goldSoft,
         }}
       >
         {script}
@@ -179,18 +212,64 @@ function PlaylistTitle({ title, script }: { title: string; script: string }) {
   )
 }
 
+function getEmbedHeight() {
+  if (typeof window === "undefined") return LIST_EMBED_HEIGHT
+  return window.matchMedia("(min-width: 768px)").matches
+    ? LARGE_EMBED_HEIGHT
+    : LIST_EMBED_HEIGHT
+}
+
+function SpotifyMark({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden
+      className={className}
+      fill="currentColor"
+    >
+      <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+    </svg>
+  )
+}
+
 export function WeddingPlaylist() {
   const siteConfig = useSiteConfig()
-  const { title, subtitle, playlistName, spotifyUrl } = siteConfig.playlist
+  const {
+    title,
+    subtitle,
+    playlistName,
+    spotifyUrl,
+    embedUrl,
+    spotifyTitle,
+    curator,
+    coverUrl,
+    tracks,
+  } = siteConfig.playlist
   const spotifyUri = getSpotifyUri(spotifyUrl)
-  const embedContainerRef = useRef<HTMLDivElement>(null)
+  const embedSrc = getSpotifyEmbedUrl(spotifyUrl, embedUrl)
+  const hostRef = useRef<HTMLDivElement>(null)
   const controllerRef = useRef<SpotifyEmbedController | null>(null)
   const playbackStateRef = useRef<"playing" | "paused">("paused")
   const { pauseMusic, resumeMusic } = useAudio()
+  const [embedHeight, setEmbedHeight] = useState(LARGE_EMBED_HEIGHT)
+  const [isReady, setIsReady] = useState(false)
+  const [useFallbackIframe, setUseFallbackIframe] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
 
   useEffect(() => {
-    const container = embedContainerRef.current
-    if (!container) return
+    const media = window.matchMedia("(min-width: 768px)")
+    const sync = () => {
+      setIsDesktop(media.matches)
+      setEmbedHeight(getEmbedHeight())
+    }
+    sync()
+    media.addEventListener("change", sync)
+    return () => media.removeEventListener("change", sync)
+  }, [])
+
+  useEffect(() => {
+    const host = hostRef.current
+    if (!host || !isDesktop) return
 
     let mounted = true
 
@@ -204,31 +283,58 @@ export function WeddingPlaylist() {
       }
     }
 
+    const fallbackTimer = window.setTimeout(() => {
+      if (mounted && !controllerRef.current) {
+        setUseFallbackIframe(true)
+      }
+    }, 3500)
+
     const initController = (IFrameAPI: SpotifyIframeApi) => {
-      if (!mounted || !embedContainerRef.current) return
+      if (!mounted || !hostRef.current) return
+
+      hostRef.current.replaceChildren()
+      const target = document.createElement("div")
+      hostRef.current.appendChild(target)
 
       IFrameAPI.createController(
-        embedContainerRef.current,
+        target,
         {
+          url: embedSrc,
           uri: spotifyUri,
           width: "100%",
-          height: "352",
+          height: String(embedHeight),
+          theme: "dark",
         },
         (EmbedController) => {
-          if (!mounted) return
+          if (!mounted) {
+            EmbedController.destroy()
+            return
+          }
 
           controllerRef.current = EmbedController
+          window.clearTimeout(fallbackTimer)
 
-          const handlePlaybackUpdate = (event: { data: SpotifyPlaybackUpdate }) => {
-            handlePlaybackStateChange(!event.data.isPaused)
+          const handlePlaybackUpdate = (event: {
+            data?: SpotifyPlaybackUpdate
+          }) => {
+            if (typeof event.data?.isPaused === "boolean") {
+              handlePlaybackStateChange(!event.data.isPaused)
+            }
           }
 
           const handlePlaybackStarted = () => {
             handlePlaybackStateChange(true)
           }
 
+          EmbedController.addListener("ready", () => {
+            if (mounted) setIsReady(true)
+          })
           EmbedController.addListener("playback_update", handlePlaybackUpdate)
           EmbedController.addListener("playback_started", handlePlaybackStarted)
+
+          window.setTimeout(() => {
+            if (mounted) setIsReady(true)
+          }, 800)
         }
       )
     }
@@ -237,91 +343,213 @@ export function WeddingPlaylist() {
 
     return () => {
       mounted = false
+      window.clearTimeout(fallbackTimer)
       if (playbackStateRef.current === "playing") {
         resumeMusic()
       }
       playbackStateRef.current = "paused"
       controllerRef.current?.destroy()
       controllerRef.current = null
+      if (host) host.replaceChildren()
     }
-  }, [pauseMusic, resumeMusic, spotifyUri])
+  }, [embedHeight, embedSrc, isDesktop, pauseMusic, resumeMusic, spotifyUri])
+
+  useEffect(() => {
+    const handlePlaybackStateChange = (isPlaying: boolean) => {
+      if (isPlaying && playbackStateRef.current !== "playing") {
+        playbackStateRef.current = "playing"
+        pauseMusic()
+      } else if (!isPlaying && playbackStateRef.current === "playing") {
+        playbackStateRef.current = "paused"
+        resumeMusic()
+      }
+    }
+
+    const onMessage = (event: MessageEvent) => {
+      if (event.origin !== "https://open.spotify.com") return
+
+      const data =
+        typeof event.data === "string"
+          ? (() => {
+              try {
+                return JSON.parse(event.data)
+              } catch {
+                return null
+              }
+            })()
+          : event.data
+
+      if (!data || typeof data !== "object") return
+
+      const record = data as Record<string, unknown>
+      const payload =
+        (record.payload as Record<string, unknown> | undefined) ?? record
+      const name = String(record.type ?? record.name ?? payload.name ?? "")
+      const playback = (payload.data ?? payload) as Record<string, unknown>
+
+      if (name.includes("playback_started")) {
+        handlePlaybackStateChange(true)
+        return
+      }
+
+      if (
+        name.includes("playback_update") &&
+        typeof playback.isPaused === "boolean"
+      ) {
+        handlePlaybackStateChange(!playback.isPaused)
+      }
+    }
+
+    window.addEventListener("message", onMessage)
+    return () => window.removeEventListener("message", onMessage)
+  }, [pauseMusic, resumeMusic])
 
   return (
     <section
       id="playlist"
-      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative z-10 bg-transparent pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14`}
+      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative z-10 bg-transparent pt-7 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14`}
     >
-      <div className="relative z-20 mx-auto max-w-3xl px-4 sm:px-6 md:px-8">
-        {/* Header — outside container, white on silk */}
-        <div className="relative z-20 px-6 text-center sm:px-10 md:px-12">
-          <div className="mx-auto mb-5 sm:mb-6 md:mb-7">
+      <div className="relative z-20 mx-auto w-full max-w-3xl overflow-x-hidden px-2 @container/playlist min-[400px]:px-3 sm:px-6 md:px-8">
+        <div className="relative z-20 px-1 text-center sm:px-10 md:px-12">
+          <div className="mx-auto mb-4 sm:mb-6 md:mb-7">
             <OutsideDivider />
           </div>
-          <div className="mx-auto mt-2 sm:mt-3 md:mt-4">
+          <div className="mx-auto mt-1.5 sm:mt-3 md:mt-4">
             <PlaylistTitle title={title} script={playlistName} />
           </div>
           <p
-            className={`font-goudy-italic ${ct.bodyLg} mx-auto mt-4 max-w-lg leading-relaxed px-2 sm:mt-5 md:mt-6`}
-            style={{ color: OUTSIDE_TEXT_MUTED }}
+            className={`font-goudy-italic ${ct.bodyLg} mx-auto mt-3 max-w-[22rem] leading-relaxed px-1 sm:mt-5 sm:max-w-lg sm:px-2 md:mt-6`}
+            style={{ color: C.goldSoft }}
           >
             {subtitle}
           </p>
-          <div className="flex items-center justify-center pt-3 sm:pt-4">
-            <span className="h-px w-16 sm:w-24 md:w-32 bg-white/50" />
+          <div className="flex items-center justify-center pt-2.5 sm:pt-4">
+            <span className="h-px w-12 sm:w-24 md:w-32" style={{ background: goldLine }} />
           </div>
         </div>
 
-        {/* Playlist card */}
         <div
-          className="relative mt-6 overflow-hidden rounded-xl border backdrop-blur-xl sm:mt-8 sm:rounded-2xl sm:backdrop-blur-2xl md:mt-10"
+          className="relative mt-5 overflow-hidden rounded-[22px] border backdrop-blur-xl sm:mt-8 sm:rounded-2xl sm:backdrop-blur-2xl md:mt-10"
           style={cardStyle}
         >
           <div
-            className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-white/35 via-white/8 to-transparent"
+            aria-hidden
+            className="pointer-events-none absolute inset-x-4 top-0 h-px sm:inset-x-8"
+            style={{ background: `linear-gradient(to right, transparent, ${C.gold}, transparent)` }}
+          />
+          <div
+            className="pointer-events-none absolute inset-0 rounded-[inherit]"
+            style={{
+              background: `linear-gradient(135deg, color-mix(in srgb, ${C.goldSoft} 28%, transparent) 0%, transparent 48%)`,
+            }}
             aria-hidden
           />
 
-          <div className="relative z-20 px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10">
+          <div className="relative z-20 px-3.5 py-4 sm:px-5 sm:py-5 md:px-6 md:py-6">
+            <div className="mb-3 flex items-center justify-center gap-2 sm:mb-4 sm:gap-2.5">
+              <span className="h-px w-6 sm:w-12" style={{ background: goldLine }} />
+              <div
+                className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full sm:h-9 sm:w-9"
+                style={{
+                  backgroundColor: C.gold,
+                  boxShadow: `0 4px 12px color-mix(in srgb, ${C.gold} 40%, transparent)`,
+                }}
+              >
+                <Music2 className="h-3 w-3 sm:h-4 sm:w-4" style={{ color: C.navy }} />
+              </div>
+              <p
+                className={`${cinzel.className} text-[0.625rem] font-semibold uppercase tracking-[0.16em] sm:text-[0.6875rem] sm:tracking-[0.26em] md:text-xs`}
+                style={{ color: palette.heading }}
+              >
+                Listen with us
+              </p>
+              <span className="h-px w-6 sm:w-12" style={{ background: goldLine }} />
+            </div>
+
             <p
-              className={`${cinzel.className} mb-4 text-center text-[0.625rem] font-semibold uppercase tracking-[0.2em] sm:mb-5 sm:text-[0.6875rem] sm:tracking-[0.24em] md:text-xs`}
-              style={{ color: palette.heading }}
+              className="font-goudy-italic mb-3 hidden text-center text-[0.8rem] leading-snug sm:mb-4 sm:block sm:text-[0.9rem]"
+              style={{ color: C.navy }}
             >
-              {playlistName}
+              Play our songs below, or open the full playlist in Spotify.
             </p>
 
-            <div
-              ref={embedContainerRef}
-              title={`${playlistName} — Spotify playlist`}
-              className="w-full min-h-[232px] overflow-hidden rounded-xl md:min-h-[352px] [&_iframe]:border-0"
-            />
+            <div className="md:hidden">
+              <MobilePlaylistPlayer
+                title={spotifyTitle}
+                curator={curator}
+                coverUrl={coverUrl}
+                spotifyUrl={spotifyUrl}
+                tracks={tracks}
+              />
+            </div>
 
-            <div className="mt-5 flex justify-center sm:mt-6">
+            <div
+              className="relative hidden overflow-hidden rounded-xl md:block"
+              style={{
+                border: `1px solid ${goldLine}`,
+                backgroundColor: "#121212",
+                boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${C.gold} 18%, transparent)`,
+              }}
+              onPointerDown={() => pauseMusic()}
+            >
+              {!isReady && (
+                <div
+                  className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2.5 px-5 text-center sm:gap-3 sm:px-6"
+                  style={{ backgroundColor: "#121212" }}
+                >
+                  <Loader2
+                    className="h-5 w-5 animate-spin sm:h-7 sm:w-7"
+                    style={{ color: C.gold }}
+                  />
+                  <p
+                    className={`${cinzel.className} text-[0.625rem] font-semibold uppercase tracking-[0.18em] sm:text-[0.6875rem] sm:tracking-[0.22em]`}
+                    style={{ color: C.goldSoft }}
+                  >
+                    Loading playlist
+                  </p>
+                </div>
+              )}
+
+              {useFallbackIframe ? (
+                <iframe
+                  src={embedSrc}
+                  title={`${playlistName} — Spotify playlist`}
+                  width="100%"
+                  height={embedHeight}
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                  onLoad={() => setIsReady(true)}
+                  className="block w-full max-w-full border-0"
+                  style={{ height: embedHeight }}
+                />
+              ) : (
+                <div
+                  ref={hostRef}
+                  title={`${playlistName} — Spotify playlist`}
+                  className="w-full max-w-full overflow-hidden [&_iframe]:block [&_iframe]:h-full [&_iframe]:w-full [&_iframe]:max-w-full [&_iframe]:border-0"
+                  style={{ height: embedHeight }}
+                />
+              )}
+            </div>
+
+            <div className="pt-3 sm:pt-4">
               <a
                 href={spotifyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${cinzel.className} group relative inline-flex items-center justify-center gap-2 rounded-sm border px-6 py-2.5 font-semibold uppercase tracking-[0.2em] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:px-8 sm:py-3 sm:tracking-[0.24em] md:px-10 md:py-3.5 md:tracking-[0.28em] ${ct.btn}`}
-                style={{
-                  backgroundColor: "var(--color-welcome-green)",
-                  borderColor: "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)",
-                  color: "var(--color-welcome-bg)",
-                }}
+                className={`${cinzel.className} group relative inline-flex w-full min-h-11 items-center justify-center gap-2 rounded-md border px-3 py-2.5 text-center font-semibold uppercase tracking-[0.12em] touch-manipulation transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:min-h-12 sm:rounded-sm sm:px-8 sm:py-3 sm:tracking-[0.24em] md:tracking-[0.28em] ${ct.btn}`}
+                style={buttonStyle}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "var(--color-welcome-navy)"
-                  e.currentTarget.style.borderColor = "var(--color-welcome-green)"
+                  e.currentTarget.style.backgroundColor = C.goldBright
+                  e.currentTarget.style.borderColor = C.gold
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "var(--color-welcome-green)"
-                  e.currentTarget.style.borderColor =
-                    "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)"
+                  e.currentTarget.style.backgroundColor = C.gold
+                  e.currentTarget.style.borderColor = buttonStyle.borderColor
                 }}
               >
-                <Music2 className="relative z-10 h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                <span className="relative z-10">Open in Spotify</span>
-                <div
-                  className="absolute inset-0 -z-0 rounded-sm opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-25"
-                  style={{ backgroundColor: "var(--color-motif-deep)" }}
-                />
+                <SpotifyMark className="relative z-10 h-4 w-4 shrink-0" />
+                <span className="relative z-10 whitespace-nowrap">Open in Spotify</span>
               </a>
             </div>
           </div>

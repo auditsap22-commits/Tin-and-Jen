@@ -28,11 +28,34 @@ const aboveTheBeyond = localFont({
 const CORNER_DECO_CLASS =
   "block h-auto w-auto max-w-[88px] sm:max-w-[108px] md:max-w-[124px] lg:max-w-[140px]"
 
+const reminderInk = {
+  navy: "#192030",
+  deep: "#04103B",
+  slate: "#364061",
+  gold: "#AB832E",
+  champagne: "#DDBA7A",
+} as const
+
+const paperWash = {
+  cream: "#f7f3e9",
+  lift: "#faf7ef",
+  champagne: reminderInk.champagne,
+  gold: reminderInk.gold,
+  slate: reminderInk.slate,
+} as const
+
+const creamWash = `
+  radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${paperWash.champagne} 35%, transparent) 0%, transparent 55%),
+  radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${paperWash.slate} 16%, transparent) 0%, transparent 58%),
+  radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${paperWash.gold} 14%, transparent) 0%, transparent 55%),
+  linear-gradient(180deg, ${paperWash.cream} 0%, ${paperWash.lift} 48%, ${paperWash.cream} 100%)
+`
+
 const palette = {
   body: "var(--color-welcome-text)",
   heading: "var(--color-welcome-navy)",
   label: "var(--color-welcome-heading)",
-  accent: "var(--color-welcome-green)",
+  accent: reminderInk.gold,
 } as const
 
 const dividerLineStyle = {
@@ -60,9 +83,9 @@ const cardStyle = {
 const socialLinkStyle = {
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 18%, transparent)",
-  backgroundColor: "var(--color-welcome-bg-soft)",
-  color: "var(--color-welcome-green)",
+  borderColor: `color-mix(in srgb, ${reminderInk.gold} 40%, transparent)`,
+  backgroundColor: `color-mix(in srgb, ${reminderInk.gold} 10%, var(--color-welcome-bg))`,
+  color: reminderInk.gold,
   boxShadow: "0 4px 12px color-mix(in srgb, var(--color-motif-deep) 10%, transparent)",
 } as const
 
@@ -94,7 +117,7 @@ function FooterCoupleNames({ groom, bride }: { groom: string; bride: string }) {
         className={`${aboveTheBeyond.className} mx-2 inline-block normal-case tracking-normal sm:mx-2.5`}
         style={{
           fontSize: "1.35em",
-          color: "var(--color-welcome-green)",
+          color: reminderInk.gold,
           verticalAlign: "middle",
         }}
         aria-hidden
@@ -222,14 +245,14 @@ export function Footer() {
   return (
     <div
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full overflow-hidden`}
-      style={{ background: "var(--color-welcome-bg)" }}
+      style={{ background: creamWash }}
     >
       <footer className="relative z-10 pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14">
         {/* Corner decorations */}
         <div className="pointer-events-none absolute left-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/left-top-corner.png"
+            src="/decoration/deco/left-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -237,7 +260,7 @@ export function Footer() {
         <div className="pointer-events-none absolute right-0 top-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/right-top-corner.png"
+            src="/decoration/deco/right-top-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -245,7 +268,7 @@ export function Footer() {
         <div className="pointer-events-none absolute bottom-0 left-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/left-bottom-corner.png"
+            src="/decoration/deco/left-bottom-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -253,7 +276,7 @@ export function Footer() {
         <div className="pointer-events-none absolute bottom-0 right-0 z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/decoration/right-bottom-corner.png"
+            src="/decoration/deco/right-bottom-corner.png"
             alt=""
             className={CORNER_DECO_CLASS}
           />
@@ -272,7 +295,7 @@ export function Footer() {
               role="img"
               aria-label={`${coupleDisplayName} monogram`}
               style={{
-                backgroundColor: "var(--color-welcome-green)",
+                backgroundColor: reminderInk.gold,
                 WebkitMaskImage: `url(${siteConfig.couple.monogram})`,
                 maskImage: `url(${siteConfig.couple.monogram})`,
                 WebkitMaskSize: "contain",
@@ -341,7 +364,7 @@ export function Footer() {
                     &ldquo;{displayedText}
                     <span
                       className="ml-1 inline-block h-4 w-0.5 animate-pulse align-middle sm:h-5"
-                      style={{ backgroundColor: "var(--color-welcome-green)" }}
+                      style={{ backgroundColor: reminderInk.gold }}
                     />
                     &rdquo;
                   </span>
@@ -384,7 +407,7 @@ export function Footer() {
                   className={`${cinzel.className} ${ct.cardTitle} font-semibold mb-3`}
                   style={{ color: palette.heading }}
                 >
-                  Ceremony &Reception
+                  Ceremony & Reception
                 </h4>
                 <div className="space-y-3">
                   <DetailRow label="Venue" value={siteConfig.ceremony.location} />
@@ -418,7 +441,7 @@ export function Footer() {
                 >
                   <span
                     className="h-6 w-1.5 flex-shrink-0 rounded-full sm:h-7"
-                    style={{ backgroundColor: "var(--color-welcome-green)" }}
+                    style={{ backgroundColor: reminderInk.gold }}
                   />
                   Follow Us
                 </h4>

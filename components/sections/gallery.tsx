@@ -16,11 +16,11 @@ const cinzel = Cinzel({
 })
 
 const C = {
-  forest: "#5d6f47",
-  sage: "#949981",
-  mustard: "#eec853",
-  butter: "#f4dd97",
   cream: "#f7f3e9",
+  lift: "#faf7ef",
+  champagne: "#DDBA7A",
+  gold: "#AB832E",
+  slate: "#364061",
 } as const
 
 const theSeasons = localFont({
@@ -210,10 +210,10 @@ export function Gallery() {
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full`}
       style={{
         background: `
-          radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.butter} 35%, transparent) 0%, transparent 55%),
-          radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${C.sage} 16%, transparent) 0%, transparent 58%),
-          radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${C.mustard} 14%, transparent) 0%, transparent 55%),
-          linear-gradient(180deg, ${C.cream} 0%, #faf7ef 48%, ${C.cream} 100%)
+          radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.champagne} 35%, transparent) 0%, transparent 55%),
+          radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${C.slate} 16%, transparent) 0%, transparent 58%),
+          radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${C.gold} 14%, transparent) 0%, transparent 55%),
+          linear-gradient(180deg, ${C.cream} 0%, ${C.lift} 48%, ${C.cream} 100%)
         `,
       }}
     >
@@ -225,7 +225,7 @@ export function Gallery() {
       <div className="pointer-events-none absolute left-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/left-top-corner.png"
+          src="/decoration/deco/left-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -233,7 +233,7 @@ export function Gallery() {
       <div className="pointer-events-none absolute right-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/right-top-corner.png"
+          src="/decoration/deco/right-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -241,7 +241,7 @@ export function Gallery() {
       <div className="pointer-events-none absolute bottom-0 left-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/left-bottom-corner.png"
+          src="/decoration/deco/left-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -249,7 +249,7 @@ export function Gallery() {
       <div className="pointer-events-none absolute bottom-0 right-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/right-bottom-corner.png"
+          src="/decoration/deco/right-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />

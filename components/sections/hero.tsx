@@ -13,19 +13,16 @@ const cinzel = Cinzel({
 })
 
 const C = {
-  forest: "#5d6f47",
-  sage: "#949981",
-  mustard: "#eec853",
-  butter: "#f4dd97",
-  cream: "#f7f3e9",
-  ink: "#3a3128",
+  navy: "#04103B",
+  gold: "#c5a059",
+  goldBright: "#d4af37",
+  goldSoft: "#e6d3a3",
 } as const
 
 const DECO = {
-  tl: "/decoration/left-top-corner.png",
-  tr: "/decoration/right-top-corner.png",
-  bl: "/decoration/left-bottom-corner.png",
-  br: "/decoration/right-bottom-corner.png",
+  top: "/decoration/deco/top-center-decoration.png",
+  bl: "/decoration/deco/left-bottom-small.png",
+  br: "/decoration/deco/right-bottom-small.png",
 } as const
 
 const entryEase = [0.22, 1, 0.36, 1] as const
@@ -95,59 +92,50 @@ export function Hero() {
     }
   }
 
+  const goldLine = `color-mix(in srgb, ${C.gold} 55%, transparent)`
+
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden"
+      className="hero-invite relative min-h-screen overflow-hidden"
       style={{
         background: `
-          radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.butter} 35%, transparent) 0%, transparent 55%),
-          radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${C.sage} 16%, transparent) 0%, transparent 58%),
-          radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${C.mustard} 14%, transparent) 0%, transparent 55%),
-          linear-gradient(180deg, ${C.cream} 0%, #faf7ef 48%, ${C.cream} 100%)
+          radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, ${C.gold} 10%, transparent) 0%, transparent 52%),
+          linear-gradient(180deg, rgb(5 25 45 / 28%) 0%, rgb(0 19 38 / 18%) 100%)
         `,
-        color: C.ink,
+        color: C.gold,
       }}
     >
-      {/* Corner florals — LoadingScreen deco */}
-      <div className="pointer-events-none absolute inset-0 z-[1]" aria-hidden="true">
+      <div className="hero-invite-frame" aria-hidden="true">
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--top-left" />
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--top-right" />
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--left" />
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--right" />
+        <span className="hero-invite-frame-arm hero-invite-frame-arm--bottom" />
+      </div>
+
+      <div className="hero-invite-deco hero-invite-deco--top" aria-hidden="true">
         <Image
-          src={DECO.tl}
+          src={DECO.top}
           alt=""
-          width={320}
-          height={320}
+          width={2078}
+          height={598}
           priority
-          className="absolute left-0 top-0 h-auto w-[min(22vw,88px)] opacity-90 sm:w-[108px] md:w-[124px]"
+          sizes="(max-width: 768px) 90vw, 480px"
         />
-        <Image
-          src={DECO.tr}
-          alt=""
-          width={320}
-          height={320}
-          priority
-          className="absolute right-0 top-0 h-auto w-[min(22vw,88px)] opacity-90 sm:w-[108px] md:w-[124px]"
-        />
-        <Image
-          src={DECO.bl}
-          alt=""
-          width={360}
-          height={360}
-          className="absolute bottom-0 left-0 h-auto w-[min(28vw,112px)] opacity-95 sm:w-[136px] md:w-[160px]"
-        />
-        <Image
-          src={DECO.br}
-          alt=""
-          width={360}
-          height={360}
-          className="absolute bottom-0 right-0 h-auto w-[min(28vw,112px)] opacity-95 sm:w-[136px] md:w-[160px]"
-        />
+      </div>
+      <div className="hero-invite-deco hero-invite-deco--bl" aria-hidden="true">
+        <Image src={DECO.bl} alt="" width={851} height={1472} sizes="200px" />
+      </div>
+      <div className="hero-invite-deco hero-invite-deco--br" aria-hidden="true">
+        <Image src={DECO.br} alt="" width={851} height={1472} sizes="200px" />
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-3xl flex-col items-center justify-center px-6 pb-[clamp(7rem,18vw,11rem)] pt-[clamp(7.5rem,18vw,11rem)] sm:px-10">
         <div className="flex w-full flex-col items-center text-center">
           <motion.p
             className={`${cinzel.className} text-[0.68rem] font-medium uppercase tracking-[0.28em] sm:text-[0.72rem] sm:tracking-[0.34em]`}
-            style={{ color: C.forest }}
+            style={{ color: C.goldSoft }}
             {...fadeUp(0.05)}
           >
             Together with their families
@@ -164,10 +152,31 @@ export function Hero() {
             />
           </motion.div>
 
+          <motion.div
+            className="mt-3 flex flex-col items-center gap-1.5 sm:mt-4"
+            {...fadeUp(0.16)}
+          >
+            <p
+              className={`${cinzel.className} text-[0.68rem] font-semibold uppercase tracking-[0.22em] sm:text-[0.74rem] sm:tracking-[0.26em]`}
+              style={{ color: C.goldSoft }}
+            >
+              Two Become One
+            </p>
+            <p
+              className="max-w-xs text-center text-[0.88rem] italic leading-snug sm:text-[0.95rem]"
+              style={{
+                color: C.goldSoft,
+                fontFamily: '"SortsMillGoudy", Georgia, "Times New Roman", serif',
+              }}
+            >
+              Written By God. Perfected In His Timing.
+            </p>
+          </motion.div>
+
           <motion.p
             className="mt-5 max-w-md text-[0.95rem] leading-relaxed sm:mt-6 sm:text-[1.05rem]"
             style={{
-              color: `color-mix(in srgb, ${C.ink} 78%, white)`,
+              color: C.goldSoft,
               fontFamily: '"SortsMillGoudy", Georgia, "Times New Roman", serif',
             }}
             {...fadeUp(0.2)}
@@ -176,52 +185,51 @@ export function Hero() {
             <br className="hidden sm:block" /> their marriage
           </motion.p>
 
-          {/* Date block — month / weekday · day · time / year */}
           <motion.div
             className="mt-8 flex w-full max-w-md flex-col items-center gap-3 sm:mt-10 sm:gap-3.5"
             {...fadeUp(0.28)}
           >
             <span
               className={`${cinzel.className} text-[0.68rem] font-medium uppercase tracking-[0.34em] sm:text-[0.75rem] sm:tracking-[0.4em]`}
-              style={{ color: C.forest }}
+              style={{ color: C.goldBright }}
             >
               {month}
             </span>
 
             <div className="flex w-full items-center gap-3 sm:gap-5">
               <div className="flex flex-1 flex-col items-center gap-2">
-                <span className="h-px w-full" style={{ background: `color-mix(in srgb, ${C.sage} 55%, transparent)` }} />
+                <span className="h-px w-full" style={{ background: goldLine }} />
                 <span
                   className={`${cinzel.className} text-[0.62rem] font-medium uppercase tracking-[0.22em] sm:text-[0.68rem] sm:tracking-[0.28em]`}
-                  style={{ color: C.forest }}
+                  style={{ color: C.goldSoft }}
                 >
                   {weekday}
                 </span>
-                <span className="h-px w-full" style={{ background: `color-mix(in srgb, ${C.sage} 55%, transparent)` }} />
+                <span className="h-px w-full" style={{ background: goldLine }} />
               </div>
 
               <span
                 className={`${cinzel.className} min-w-[3.5rem] text-center text-[clamp(3.25rem,12vw,4.75rem)] font-medium leading-none tracking-wide`}
-                style={{ color: C.forest }}
+                style={{ color: C.goldBright }}
               >
                 {dayNumber}
               </span>
 
               <div className="flex flex-1 flex-col items-center gap-2">
-                <span className="h-px w-full" style={{ background: `color-mix(in srgb, ${C.sage} 55%, transparent)` }} />
+                <span className="h-px w-full" style={{ background: goldLine }} />
                 <span
                   className={`${cinzel.className} text-[0.62rem] font-medium uppercase tracking-[0.18em] sm:text-[0.68rem] sm:tracking-[0.22em]`}
-                  style={{ color: C.forest }}
+                  style={{ color: C.goldSoft }}
                 >
                   {ceremonyTime}
                 </span>
-                <span className="h-px w-full" style={{ background: `color-mix(in srgb, ${C.sage} 55%, transparent)` }} />
+                <span className="h-px w-full" style={{ background: goldLine }} />
               </div>
             </div>
 
             <span
               className={`${cinzel.className} text-[0.68rem] font-medium uppercase tracking-[0.34em] sm:text-[0.75rem] sm:tracking-[0.4em]`}
-              style={{ color: C.forest }}
+              style={{ color: C.goldBright }}
             >
               {year}
             </span>
@@ -230,7 +238,7 @@ export function Hero() {
           <motion.div className="mt-6 sm:mt-7" {...fadeUp(0.36)}>
             <p
               className={`${cinzel.className} text-[0.72rem] font-semibold uppercase tracking-[0.2em] sm:text-[0.8rem] sm:tracking-[0.24em]`}
-              style={{ color: C.forest }}
+              style={{ color: C.goldBright }}
             >
               {venueTitle}
             </p>
@@ -238,7 +246,7 @@ export function Hero() {
               <p
                 className="mt-1.5 text-[0.9rem] sm:text-[0.95rem]"
                 style={{
-                  color: `color-mix(in srgb, ${C.ink} 70%, white)`,
+                  color: C.goldSoft,
                   fontFamily: '"SortsMillGoudy", Georgia, "Times New Roman", serif',
                 }}
               >
@@ -249,7 +257,7 @@ export function Hero() {
 
           <motion.p
             className="mt-6 font-goudy-italic text-[0.92rem] italic sm:mt-7 sm:text-[1rem]"
-            style={{ color: C.sage }}
+            style={{ color: C.goldSoft }}
             {...fadeUp(0.46)}
           >
             Dinner and dancing to follow
@@ -259,9 +267,9 @@ export function Hero() {
             href="#guest-list"
             className={`${cinzel.className} mt-8 inline-flex min-h-11 items-center justify-center px-8 text-[0.62rem] font-semibold uppercase tracking-[0.28em] transition-[background,transform,box-shadow] duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:mt-9 sm:min-h-12 sm:px-10 sm:text-[0.68rem]`}
             style={{
-              backgroundColor: C.mustard,
-              color: C.ink,
-              boxShadow: `0 10px 24px color-mix(in srgb, ${C.mustard} 35%, transparent)`,
+              backgroundColor: C.gold,
+              color: C.navy,
+              boxShadow: `0 10px 24px color-mix(in srgb, ${C.gold} 35%, transparent)`,
             }}
             {...fadeUp(0.52)}
           >

@@ -11,26 +11,32 @@ const cinzel = Cinzel({
   weight: ["400", "600", "700"],
 })
 
-const OUTSIDE_TEXT = "#FFFFFF"
-const OUTSIDE_TEXT_MUTED = "rgba(255, 255, 255, 0.88)"
+const C = {
+  navy: "#04103B",
+  gold: "#c5a059",
+  goldBright: "#d4af37",
+  goldSoft: "#e6d3a3",
+  paper: "#f7f3e9",
+} as const
+
+const goldLine = `color-mix(in srgb, ${C.gold} 55%, transparent)`
 
 const palette = {
-  body: "var(--color-welcome-text)",
-  heading: "var(--color-welcome-navy)",
-  label: "var(--color-welcome-heading)",
-  accent: "var(--color-welcome-green)",
+  body: C.navy,
+  heading: C.gold,
+  label: "#364061",
+  accent: C.gold,
 } as const
 
 const messageCardStyle = {
-  background: "var(--color-welcome-bg)",
+  background: `linear-gradient(180deg, color-mix(in srgb, ${C.goldSoft} 28%, ${C.paper}) 0%, ${C.paper} 48%, color-mix(in srgb, ${C.gold} 10%, ${C.paper}) 100%)`,
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-  boxShadow:
-    "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
+  borderColor: goldLine,
+  boxShadow: `0 12px 36px color-mix(in srgb, ${C.navy} 28%, transparent), inset 0 1px 0 color-mix(in srgb, ${C.goldSoft} 55%, transparent)`,
 } as const
 
-const skeletonBg = "color-mix(in srgb, var(--color-motif-deep) 18%, white)"
+const skeletonBg = `color-mix(in srgb, ${C.gold} 22%, ${C.paper})`
 
 interface Message {
   timestamp: string
@@ -87,13 +93,13 @@ export default function MessageWallDisplay({ messages, loading }: MessageWallDis
       <div className="px-4 py-8 text-center sm:py-12 md:py-16">
         <h3
           className={`${cinzel.className} mb-2 font-semibold sm:mb-3 ${sectionType.subheader}`}
-          style={{ color: OUTSIDE_TEXT }}
+          style={{ color: C.goldBright }}
         >
           No messages yet
         </h3>
         <p
           className={`font-goudy-italic mx-auto mb-5 max-w-md sm:mb-6 ${sectionType.textRelaxed}`}
-          style={{ color: OUTSIDE_TEXT_MUTED }}
+          style={{ color: C.goldSoft }}
         >
           Be the first to leave a note for the happy couple.
         </p>
@@ -101,9 +107,9 @@ export default function MessageWallDisplay({ messages, loading }: MessageWallDis
           <span
             className={`font-goudy-italic ${sectionType.label} rounded-sm border px-4 py-2`}
             style={{
-              color: palette.heading,
-              backgroundColor: "var(--color-welcome-bg-soft)",
-              borderColor: "color-mix(in srgb, var(--color-motif-deep) 18%, transparent)",
+              color: C.gold,
+              backgroundColor: C.paper,
+              borderColor: goldLine,
             }}
           >
             Your message will appear here
@@ -128,14 +134,17 @@ export default function MessageWallDisplay({ messages, loading }: MessageWallDis
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow =
-              "0 12px 32px color-mix(in srgb, var(--color-motif-deep) 12%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)"
+              `0 16px 40px color-mix(in srgb, ${C.navy} 32%, transparent), 0 0 0 1px color-mix(in srgb, ${C.gold} 40%, transparent), inset 0 1px 0 color-mix(in srgb, ${C.goldSoft} 55%, transparent)`
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow = messageCardStyle.boxShadow as string
           }}
         >
           <div
-            className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-white/35 via-white/8 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            style={{
+              background: `linear-gradient(135deg, color-mix(in srgb, ${C.goldSoft} 28%, transparent) 0%, transparent 48%)`,
+            }}
             aria-hidden
           />
           <div
@@ -147,10 +156,16 @@ export default function MessageWallDisplay({ messages, loading }: MessageWallDis
             <div className="mb-2 flex items-start justify-between sm:mb-3">
               <div className="flex min-w-0 flex-1 items-center space-x-2 sm:space-x-3">
                 <div
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-md ring-2 ring-white transition-transform duration-300 group-hover:scale-110 sm:h-9 sm:w-9 md:h-10 md:w-10"
-                  style={{ backgroundColor: palette.accent }}
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-md ring-2 transition-transform duration-300 group-hover:scale-110 sm:h-9 sm:w-9 md:h-10 md:w-10"
+                  style={{
+                    backgroundColor: C.gold,
+                    boxShadow: `0 0 0 2px color-mix(in srgb, ${C.goldSoft} 80%, white), 0 4px 12px color-mix(in srgb, ${C.gold} 40%, transparent)`,
+                  }}
                 >
-                  <span className={`${cinzel.className} ${sectionType.label} font-semibold text-white`}>
+                  <span
+                    className={`${cinzel.className} ${sectionType.label} font-semibold`}
+                    style={{ color: C.navy }}
+                  >
                     {msg.name
                       .split(" ")
                       .map((n) => n[0])

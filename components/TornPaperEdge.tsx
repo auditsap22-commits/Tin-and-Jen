@@ -1,39 +1,40 @@
-import React from 'react'
-import { coastalLightBg } from '@/lib/coastal-palette'
+import React from "react"
 
 interface TornPaperEdgeProps {
   className?: string
   flipped?: boolean
-  /** Solid fill — defaults to light section background */
+  /** Solid fill — must match the light paper face */
   color?: string
 }
 
+export const PAPER_FACE = "#F1E7D3"
+
 export const TornPaperEdge: React.FC<TornPaperEdgeProps> = ({
-  className = '',
+  className = "",
   flipped = false,
-  color = coastalLightBg,
+  color = PAPER_FACE,
 }) => {
   const path = `
-    M0,0 
-    L0,6
-    L2,8 L4,5 L6,9 L8,6 L10,10 L12,5 L14,9 L16,6 L18,10 L20,5 
-    L22,9 L24,6 L26,10 L28,6 L30,9 L32,5 L34,10 L36,6 L38,9 L40,5 
-    L42,9 L44,6 L46,10 L48,6 L50,9 L52,5 L54,10 L56,6 L58,9 L60,5
-    L62,9 L64,6 L66,10 L68,6 L70,9 L72,5 L74,10 L76,6 L78,9 L80,5
-    L82,9 L84,6 L86,10 L88,6 L90,9 L92,5 L94,10 L96,6 L98,9 L100,5
-    L100,0 
+    M0,-20
+    L100,-20
+    L100,5
+    L97.5,8.2 L95,5.4 L92.5,9.1 L90,5.8 L87.5,8.6 L85,5.2 L82.5,9.4
+    L80,6.0 L77.5,8.0 L75,5.5 L72.5,9.2 L70,5.7 L67.5,8.8 L65,5.1
+    L62.5,9.0 L60,6.1 L57.5,8.3 L55,5.4 L52.5,9.5 L50,5.9 L47.5,8.1
+    L45,5.3 L42.5,9.3 L40,5.6 L37.5,8.5 L35,5.0 L32.5,8.9 L30,6.2
+    L27.5,8.4 L25,5.5 L22.5,9.1 L20,5.8 L17.5,8.7 L15,5.2 L12.5,9.0
+    L10,6.0 L7.5,8.2 L5,5.4 L2.5,8.8 L0,5.6
     Z
   `
 
   return (
-    <div className={`w-full overflow-hidden leading-[0] ${className}`}>
+    <div className={`w-full leading-[0] ${className}`} aria-hidden>
       <svg
-        viewBox="0 0 100 10"
+        viewBox="0 -20 100 30"
         preserveAspectRatio="none"
-        className={`block h-3 w-full md:h-8 ${flipped ? 'rotate-180' : ''}`}
-        aria-hidden
+        className={`block h-6 w-full md:h-11 ${flipped ? "rotate-180" : ""}`}
       >
-        <path d={path} fill={color} />
+        <path d={path} fill={color} stroke={color} strokeWidth="0.35" />
       </svg>
     </div>
   )

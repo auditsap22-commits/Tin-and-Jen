@@ -27,65 +27,100 @@ const aboveTheBeyond = localFont({
 const CORNER_DECO_CLASS =
   "block h-auto w-auto max-w-[88px] sm:max-w-[108px] md:max-w-[124px] lg:max-w-[140px]"
 
-const C = {
-  forest: "#5d6f47",
-  sage: "#949981",
-  mustard: "#eec853",
-  butter: "#f4dd97",
+const reminderInk = {
+  navy: "#192030",
+  deep: "#04103B",
+  slate: "#364061",
+  gold: "#AB832E",
+  champagne: "#DDBA7A",
+} as const
+
+const paperWash = {
   cream: "#f7f3e9",
+  lift: "#faf7ef",
+  champagne: reminderInk.champagne,
+  gold: reminderInk.gold,
+  slate: reminderInk.slate,
 } as const
 
 const creamWash = `
-  radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.butter} 35%, transparent) 0%, transparent 55%),
-  radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${C.sage} 16%, transparent) 0%, transparent 58%),
-  radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${C.mustard} 14%, transparent) 0%, transparent 55%),
-  linear-gradient(180deg, ${C.cream} 0%, #faf7ef 48%, ${C.cream} 100%)
+  radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${paperWash.champagne} 35%, transparent) 0%, transparent 55%),
+  radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${paperWash.slate} 16%, transparent) 0%, transparent 58%),
+  radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${paperWash.gold} 14%, transparent) 0%, transparent 55%),
+  linear-gradient(180deg, ${paperWash.cream} 0%, ${paperWash.lift} 48%, ${paperWash.cream} 100%)
 `
 
 const palette = {
-  body: "var(--color-welcome-text)",
-  heading: "var(--color-welcome-navy)",
-  label: "var(--color-welcome-heading)",
-  accent: "var(--color-welcome-green)",
+  body: reminderInk.champagne,
+  heading: reminderInk.champagne,
+  label: `color-mix(in srgb, ${reminderInk.champagne} 82%, transparent)`,
+  accent: reminderInk.gold,
 } as const
 
-const cardStyle = {
-  background: "var(--color-welcome-bg)",
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
+const guestCardStyle = {
+  backgroundColor: `color-mix(in srgb, ${reminderInk.navy} 62%, transparent)`,
+  borderColor: `color-mix(in srgb, ${reminderInk.gold} 32%, transparent)`,
   borderWidth: "1px",
   borderStyle: "solid",
-  boxShadow:
-    "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
 } as const
 
-const ambientGlowStyle = {
-  background:
-    "linear-gradient(135deg, color-mix(in srgb, var(--color-motif-deep) 18%, transparent) 0%, color-mix(in srgb, var(--color-welcome-green) 12%, transparent) 48%, color-mix(in srgb, var(--color-motif-deep) 10%, transparent) 100%)",
-} as const
-
-const dividerLineStyle = {
+const headerDividerLineStyle = {
   background:
     "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent), transparent)",
 } as const
 
+const dividerLineStyle = {
+  background: `linear-gradient(90deg, transparent, ${reminderInk.gold}, transparent)`,
+} as const
+
 const refreshButtonStyle = {
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-  backgroundColor: "var(--color-welcome-bg-soft)",
-  boxShadow:
-    "0 4px 14px color-mix(in srgb, var(--color-motif-deep) 10%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
+  color: reminderInk.deep,
+  backgroundColor: reminderInk.gold,
+  borderColor: reminderInk.champagne,
+  boxShadow: `0 8px 22px color-mix(in srgb, ${reminderInk.gold} 32%, transparent)`,
 } as const
 
 const chipPrimaryStyle = {
-  color: "var(--color-welcome-navy)",
-  borderColor: "color-mix(in srgb, var(--color-welcome-green) 30%, transparent)",
-  backgroundColor: "color-mix(in srgb, var(--color-welcome-green) 12%, transparent)",
+  color: reminderInk.champagne,
+  borderColor: `color-mix(in srgb, ${reminderInk.gold} 55%, transparent)`,
+  backgroundColor: `color-mix(in srgb, ${reminderInk.gold} 16%, transparent)`,
 } as const
 
 const chipSecondaryStyle = {
-  color: "var(--color-welcome-navy)",
-  borderColor: "color-mix(in srgb, var(--color-motif-deep) 22%, transparent)",
-  backgroundColor: "color-mix(in srgb, var(--color-motif-deep) 10%, transparent)",
+  color: reminderInk.champagne,
+  borderColor: `color-mix(in srgb, ${reminderInk.champagne} 28%, transparent)`,
+  backgroundColor: `color-mix(in srgb, ${reminderInk.champagne} 8%, transparent)`,
 } as const
+
+const INVITATION_WORD = "/decoration/deco/invitation-word-image.png"
+
+function InvitationWordDeco({ side }: { side: "left" | "right" }) {
+  return (
+    <div
+      className={`pointer-events-none absolute top-[7%] bottom-[7%] z-[5] w-[1.7rem] sm:w-[2.55rem] md:w-[3.4rem] lg:w-[4.15rem] ${
+        side === "left"
+          ? "left-2.5 sm:left-3.5 md:left-4"
+          : "right-2.5 sm:right-3.5 md:right-4"
+      }`}
+      aria-hidden
+    >
+      <div
+        className={`h-full w-full ${side === "right" ? "-scale-x-100" : ""}`}
+        style={{
+          backgroundColor: reminderInk.champagne,
+          WebkitMaskImage: `url("${INVITATION_WORD}")`,
+          maskImage: `url("${INVITATION_WORD}")`,
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+          WebkitMaskPosition: "center",
+          maskPosition: "center",
+        }}
+      />
+    </div>
+  )
+}
 
 const ct = {
   label: sectionType.label,
@@ -343,7 +378,7 @@ export function BookOfGuests() {
       <div className="pointer-events-none absolute left-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/left-top-corner.png"
+          src="/decoration/deco/left-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -351,7 +386,7 @@ export function BookOfGuests() {
       <div className="pointer-events-none absolute right-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/right-top-corner.png"
+          src="/decoration/deco/right-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -359,7 +394,7 @@ export function BookOfGuests() {
       <div className="pointer-events-none absolute bottom-0 left-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/left-bottom-corner.png"
+          src="/decoration/deco/left-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -367,7 +402,7 @@ export function BookOfGuests() {
       <div className="pointer-events-none absolute bottom-0 right-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/right-bottom-corner.png"
+          src="/decoration/deco/right-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -387,318 +422,289 @@ export function BookOfGuests() {
           special.
         </p>
         <div className="flex items-center justify-center pt-3 sm:pt-4">
-          <span className="h-px w-16 sm:w-24 md:w-32" style={dividerLineStyle} />
+          <span className="h-px w-16 sm:w-24 md:w-32" style={headerDividerLineStyle} />
         </div>
       </div>
 
       {/* Guests content */}
-      <div className="relative z-20 my-6 sm:my-8 md:my-10 mb-12 sm:mb-16 md:mb-20 px-6 sm:px-10 md:px-12">
-        {/* Stats card */}
-        <div className="text-center mb-8 sm:mb-10 md:mb-12">
-          <div className="relative max-w-3xl mx-auto z-20">
-            <div
-              className="pointer-events-none absolute -inset-1 rounded-2xl opacity-50 blur-2xl sm:-inset-2"
-              style={ambientGlowStyle}
-              aria-hidden
-            />
-            <div
-              className="relative z-20 overflow-hidden rounded-xl border backdrop-blur-xl transition-all duration-300 sm:rounded-2xl sm:backdrop-blur-2xl"
-              style={cardStyle}
-            >
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/40 via-white/10 to-transparent" aria-hidden />
-              <div
-                className="pointer-events-none absolute inset-0 rounded-xl sm:rounded-2xl ring-1 ring-inset ring-white/35"
-                aria-hidden
-              />
+      <div className="relative z-20 mx-auto w-full max-w-3xl px-3 pb-2 sm:max-w-4xl sm:px-6 md:px-8 lg:max-w-5xl">
+        <div
+          className="relative overflow-hidden"
+          style={{
+            backgroundColor: reminderInk.deep,
+            backgroundImage: `radial-gradient(90% 48% at 50% 0%, color-mix(in srgb, ${reminderInk.gold} 18%, transparent) 0%, transparent 62%)`,
+            boxShadow: `0 18px 48px color-mix(in srgb, ${reminderInk.deep} 34%, transparent)`,
+          }}
+        >
+          <div
+            className="pointer-events-none absolute inset-[0.7rem] z-20 sm:inset-4 md:inset-[1.15rem]"
+            aria-hidden
+            style={{
+              boxShadow: `
+                inset 0 0 0 1px ${reminderInk.gold},
+                inset 0 0 0 5px ${reminderInk.deep},
+                inset 0 0 0 6px ${reminderInk.champagne}
+              `,
+            }}
+          />
 
-              {/* Refresh — corner icon, outside centered content flow */}
-              <button
-                type="button"
-                onClick={() => fetchGuests(true)}
-                disabled={isRefreshing}
-                className="group absolute top-3 right-3 sm:top-4 sm:right-4 z-30 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-45 disabled:hover:scale-100"
-                style={refreshButtonStyle}
-                title="Refresh guest counts"
-                aria-label="Refresh guest counts"
+          <InvitationWordDeco side="left" />
+          <InvitationWordDeco side="right" />
+
+          <div className="relative z-10 mx-auto w-full px-[3.15rem] py-11 sm:px-16 sm:py-14 md:px-[4.75rem] md:py-16">
+            <div className="text-center">
+              <p
+                className={`${cinzel.className} ${ct.label} mb-3 font-semibold uppercase tracking-[0.2em] sm:mb-4`}
+                style={{ color: palette.accent }}
               >
-                <RefreshCw
-                  className={`h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform duration-500 ${isRefreshing ? "animate-spin" : "group-hover:rotate-180"}`}
-                  style={{ color: "var(--color-welcome-green)" }}
-                  aria-hidden
-                />
-              </button>
+                Our Celebration
+              </p>
 
-              <div className="relative z-[1] px-6 sm:px-10 md:px-12 py-5 sm:py-6 md:py-8 text-center">
+              <div className="mb-1 flex items-center justify-center gap-3 sm:mb-2 sm:gap-4">
+                <span
+                  className={`${cinzel.className} ${ct.stat} font-semibold tabular-nums leading-none transition-transform duration-500 ${showIncrease ? "scale-110" : ""}`}
+                  style={{ color: palette.accent }}
+                >
+                  {totalGuests}
+                </span>
                 <p
-                  className={`${cinzel.className} ${ct.label} uppercase tracking-[0.2em] font-semibold mb-3 sm:mb-4`}
+                  className={`${cinzel.className} ${ct.bodyLg} max-w-[10rem] text-left font-medium leading-snug sm:max-w-none`}
+                  style={{ color: palette.heading }}
+                >
+                  {totalGuests === 1 ? "Guest" : "Guests"}
+                  <span className="block text-[0.85em] font-normal opacity-90">Celebrating With Us</span>
+                </p>
+              </div>
+
+              <div className="mb-4 mt-4 flex flex-wrap items-center justify-center gap-2 sm:mb-5 sm:mt-5 sm:gap-3">
+                <span
+                  className={`${cinzel.className} ${ct.meta} rounded-full border px-3 py-1 font-semibold uppercase tracking-[0.12em]`}
+                  style={chipPrimaryStyle}
+                >
+                  {rsvpCount} {rsvpCount === 1 ? "RSVP" : "RSVPs"}
+                </span>
+                <span
+                  className={`${cinzel.className} ${ct.meta} rounded-full border px-3 py-1 font-semibold uppercase tracking-[0.12em]`}
+                  style={chipSecondaryStyle}
+                >
+                  {confirmedGuests.length} {confirmedGuests.length === 1 ? "Party" : "Parties"}
+                </span>
+              </div>
+
+              <div className="mx-auto mb-4 h-px w-12 sm:mb-5 sm:w-16" style={dividerLineStyle} />
+
+              <p className={`font-goudy-italic ${ct.body} mx-auto max-w-md leading-relaxed`} style={{ color: palette.body }}>
+                Thank you for confirming your RSVP — your presence means the world to us.
+              </p>
+
+              <div className="mt-5 flex flex-col items-center gap-3 sm:mt-6">
+                <p
+                  className={`${cinzel.className} ${ct.meta} uppercase tracking-[0.14em]`}
                   style={{ color: palette.label }}
                 >
-                  Our Celebration
+                  {isRefreshing ? "Updating guest list" : `Updated ${formatLastUpdate(lastUpdate)}`}
                 </p>
-
-                <div className="flex items-center justify-center gap-3 sm:gap-4 mb-1 sm:mb-2">
-                  <span
-                    className={`${cinzel.className} ${ct.stat} font-semibold tabular-nums leading-none transition-transform duration-500 ${showIncrease ? "scale-110" : ""}`}
-                    style={{ color: palette.accent }}
-                  >
-                    {totalGuests}
-                  </span>
-                  <p
-                    className={`${cinzel.className} ${ct.bodyLg} font-medium leading-snug text-left max-w-[10rem] sm:max-w-none`}
-                    style={{ color: palette.heading }}
-                  >
-                    {totalGuests === 1 ? "Guest" : "Guests"}
-                    <span className="block text-[0.85em] font-normal opacity-90">Celebrating With Us</span>
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-4 sm:mt-5 mb-4 sm:mb-5">
-                  <span
-                    className={`${cinzel.className} ${ct.meta} px-3 py-1 rounded-full border font-semibold uppercase tracking-[0.12em]`}
-                    style={chipPrimaryStyle}
-                  >
-                    {rsvpCount} {rsvpCount === 1 ? "RSVP" : "RSVPs"}
-                  </span>
-                  <span
-                    className={`${cinzel.className} ${ct.meta} px-3 py-1 rounded-full border font-semibold uppercase tracking-[0.12em]`}
-                    style={chipSecondaryStyle}
-                  >
-                    {confirmedGuests.length} {confirmedGuests.length === 1 ? "Party" : "Parties"}
-                  </span>
-                </div>
-
-                <div className="mx-auto mb-4 h-px w-12 sm:mb-5 sm:w-16" style={dividerLineStyle} />
-
-                <p className={`font-goudy-italic ${ct.body} mx-auto max-w-md leading-relaxed`} style={{ color: palette.body }}>
-                  Thank you for confirming your RSVP — your presence means the world to us.
-                </p>
-
-                <p className={`${cinzel.className} ${ct.meta} mt-3 sm:mt-4 uppercase tracking-[0.14em] opacity-70`} style={{ color: palette.body }}>
-                  Updated {formatLastUpdate(lastUpdate)}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Guest List Display */}
-        {confirmedGuests.length > 0 && (
-          <div className="relative z-20 max-w-5xl mx-auto">
-            <div className="text-center mb-4 sm:mb-6 md:mb-8">
-              <p
-                className={`${cinzel.className} ${ct.label} uppercase tracking-[0.2em] font-semibold`}
-                style={{ color: palette.label }}
-              >
-                Joining Us
-              </p>
-              <p className={`font-goudy-italic ${ct.body} mt-1.5`} style={{ color: palette.body }}>
-                A glimpse of the wonderful guests celebrating with us
-              </p>
-            </div>
-            <div
-              className="relative overflow-hidden"
-              style={{
-                perspective: "1200px",
-                perspectiveOrigin: "center 85%",
-                transformStyle: "preserve-3d",
-              }}
-            >
-              <div
-                className={`space-y-2 sm:space-y-3 md:space-y-4 ${isTransitioning ? "animate-guest-roll-out" : ""}`}
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                {getVisibleGuests().map((guest, index) => (
-                  <div
-                    key={`${guest.id}-${currentIndex}-${index}`}
-                    className={`relative z-20 group rounded-xl sm:rounded-2xl p-3.5 sm:p-4 md:p-5 transition-all duration-300 border backdrop-blur-xl overflow-hidden hover:shadow-xl ${justEntered ? "animate-guest-roll-in" : ""}`}
-                    style={{
-                      ...cardStyle,
-                      ...(justEntered
-                        ? {
-                            animationDelay: `${index * 120}ms`,
-                            backfaceVisibility: "hidden",
-                          }
-                        : {}),
-                    }}
-                  >
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden />
-                  <div
-                    className="pointer-events-none absolute inset-0 rounded-xl sm:rounded-2xl ring-1 ring-inset ring-white/20 group-hover:ring-white/40 transition-all duration-300"
+                <button
+                  type="button"
+                  onClick={() => fetchGuests(true)}
+                  disabled={isRefreshing}
+                  className={`${cinzel.className} ${ct.meta} inline-flex min-w-[9.5rem] items-center justify-center gap-2 rounded-full border px-5 py-2 font-semibold uppercase tracking-[0.16em] transition-all duration-300 hover:scale-[1.03] hover:brightness-110 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:min-w-[10.5rem] sm:px-6 sm:py-2.5`}
+                  style={refreshButtonStyle}
+                  aria-label="Update guest list"
+                >
+                  <RefreshCw
+                    className={`h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4 ${isRefreshing ? "animate-spin" : ""}`}
                     aria-hidden
                   />
-                  <div className="relative z-[1] flex items-start gap-3 sm:gap-4">
-                    <div className="relative flex-shrink-0">
-                      <div
-                        className="w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-md ring-2 ring-white/80"
-                        style={{
-                          background:
-                            "linear-gradient(145deg, var(--color-welcome-green) 0%, var(--color-welcome-navy) 100%)",
-                        }}
-                      >
-                        <span className={`${cinzel.className} text-white font-semibold ${sectionType.text}`}>
-                          {getInitials(guest.name)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex-1 min-w-0 pt-0.5">
-                      <div className="flex items-start justify-between gap-2 mb-2 sm:mb-2.5">
-                        <div className="min-w-0">
-                          <h3
-                            className={`font-goudy-italic ${ct.guestName} truncate font-semibold leading-tight`}
-                            style={{ color: palette.heading }}
-                            title={guest.name}
-                          >
-                            {guest.name}
-                          </h3>
-                          {guest.role && (
-                            <p
-                              className={`${cinzel.className} ${ct.meta} font-medium uppercase tracking-wide mt-0.5`}
-                              style={{ color: palette.label }}
-                            >
-                              {guest.role}
-                            </p>
-                          )}
-                        </div>
-                        {guest.isVip && (
-                          <span
-                            className={`${cinzel.className} shrink-0 ${ct.meta} px-2 py-0.5 rounded-full font-semibold uppercase tracking-[0.12em] text-white border border-white/80`}
-                            style={{ backgroundColor: "var(--color-welcome-green)" }}
-                          >
-                            VIP
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
-                        <span
-                          className={`${cinzel.className} ${ct.meta} px-2.5 py-1 rounded-full border font-semibold uppercase tracking-[0.1em]`}
-                          style={chipPrimaryStyle}
-                        >
-                          {guest.allowedGuests} {guest.allowedGuests === 1 ? "Guest" : "Guests"}
-                        </span>
-                        <span
-                          className={`${cinzel.className} ${ct.meta} px-2.5 py-1 rounded-full border font-semibold uppercase tracking-[0.1em]`}
-                          style={chipSecondaryStyle}
-                        >
-                          {guest.tableNumber && guest.tableNumber.trim() !== "" ? (
-                            <> {guest.tableNumber}</>
-                          ) : (
-                            <span className="opacity-65">No Table Yet</span>
-                          )}
-                        </span>
-                      </div>
-
-                      {guest.companions && guest.companions.length > 0 && (
-                        <div
-                          className="pt-2.5 sm:pt-3 border-t"
-                          style={{
-                            borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-                          }}
-                        >
-                          <span
-                            className={`${cinzel.className} ${ct.meta} font-semibold uppercase tracking-[0.14em] mb-2 block`}
-                            style={{ color: palette.label }}
-                          >
-                            With Them
-                          </span>
-                          <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                            {guest.companions.map((companion, idx) => (
-                              <div
-                                key={idx}
-                                className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg border transition-colors"
-                                style={{
-                                  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
-                                  backgroundColor: "var(--color-welcome-bg-soft)",
-                                }}
-                              >
-                                <span className={`font-goudy-italic ${ct.meta} whitespace-nowrap font-medium`} style={{ color: palette.body }}>
-                                  {companion.name}
-                                </span>
-                                {companion.relationship && companion.relationship.trim() !== "" && (
-                                  <span
-                                    className={`${cinzel.className} rounded-full border px-1.5 py-0.5 ${sectionType.label} font-medium whitespace-nowrap sm:px-2`}
-                                    style={chipSecondaryStyle}
-                                  >
-                                    {companion.relationship}
-                                  </span>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      <div
-                        className="pt-2.5 sm:pt-3 mt-2.5 border-t flex items-center justify-between gap-2"
-                        style={{
-                          borderColor: "color-mix(in srgb, var(--color-motif-deep) 12%, transparent)",
-                        }}
-                      >
-                        <span className={`font-goudy-italic ${ct.meta}`} style={{ color: palette.body, opacity: 0.85 }}>
-                          Confirmed {formatDate(guest.updatedAt)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                  <span>{isRefreshing ? "Updating" : "Update"}</span>
+                </button>
               </div>
+            </div>
 
-              {/* Carousel indicators */}
-              {/* {confirmedGuests.length > CARDS_PER_VIEW && (
-                <div className="flex flex-col items-center gap-2 mt-5 sm:mt-7">
-                  <div className="flex items-center justify-center gap-2">
-                    {Array.from({ length: Math.ceil(confirmedGuests.length / CARDS_PER_VIEW) }).map((_, idx) => {
-                      const pageIndex = Math.floor(currentIndex / CARDS_PER_VIEW)
-                      const isActive = pageIndex === idx
-                      return (
-                        <button
-                          key={idx}
-                          type="button"
-                          onClick={() => {
-                            setIsTransitioning(true)
-                            setTimeout(() => {
-                              setCurrentIndex(idx * CARDS_PER_VIEW)
-                              setIsTransitioning(false)
-                              setJustEntered(true)
-                              setTimeout(() => setJustEntered(false), 1100)
-                            }, 600)
-                          }}
-                          className="h-2 rounded-full transition-all duration-300 hover:opacity-90"
-                          style={{
-                            width: isActive ? "1.75rem" : "0.5rem",
-                            backgroundColor: isActive
-                              ? palette.accent
-                              : "color-mix(in srgb, var(--color-motif-deep) 35%, transparent)",
-                          }}
-                          aria-label={`Go to page ${idx + 1}`}
-                        />
-                      )
-                    })}
-                  </div>
-                  <p className={`${cinzel.className} ${ct.meta} uppercase tracking-[0.14em] opacity-70`} style={{ color: palette.body }}>
-                    Page {Math.floor(currentIndex / CARDS_PER_VIEW) + 1} of {Math.ceil(confirmedGuests.length / CARDS_PER_VIEW)}
+            {confirmedGuests.length > 0 && (
+              <div className="mt-10 sm:mt-12 md:mt-14">
+                <div className="mb-4 text-center sm:mb-6 md:mb-8">
+                  <p
+                    className={`${cinzel.className} ${ct.label} font-semibold uppercase tracking-[0.2em]`}
+                    style={{ color: palette.accent }}
+                  >
+                    Joining Us
+                  </p>
+                  <p className={`font-goudy-italic ${ct.body} mt-1.5`} style={{ color: palette.body }}>
+                    A glimpse of the wonderful guests celebrating with us
                   </p>
                 </div>
-              )} */}
-            </div>
-          </div>
-        )}
+                <div
+                  className="relative overflow-hidden"
+                  style={{
+                    perspective: "1200px",
+                    perspectiveOrigin: "center 85%",
+                    transformStyle: "preserve-3d",
+                  }}
+                >
+                  <div
+                    className={`space-y-2 sm:space-y-3 md:space-y-4 ${isTransitioning ? "animate-guest-roll-out" : ""}`}
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    {getVisibleGuests().map((guest, index) => (
+                      <div
+                        key={`${guest.id}-${currentIndex}-${index}`}
+                        className={`relative z-20 group overflow-hidden rounded-xl border p-3.5 transition-all duration-300 sm:rounded-2xl sm:p-4 md:p-5 ${justEntered ? "animate-guest-roll-in" : ""}`}
+                        style={{
+                          ...guestCardStyle,
+                          ...(justEntered
+                            ? {
+                                animationDelay: `${index * 120}ms`,
+                                backfaceVisibility: "hidden",
+                              }
+                            : {}),
+                        }}
+                      >
+                      <div className="relative z-[1] flex items-start gap-3 sm:gap-4">
+                        <div className="relative flex-shrink-0">
+                          <div
+                            className="flex h-11 w-11 items-center justify-center rounded-full shadow-md ring-2 sm:h-12 sm:w-12 md:h-14 md:w-14"
+                            style={{
+                              background: `linear-gradient(145deg, ${reminderInk.gold} 0%, ${reminderInk.navy} 100%)`,
+                              boxShadow: `0 0 0 2px color-mix(in srgb, ${reminderInk.champagne} 70%, transparent)`,
+                            }}
+                          >
+                            <span
+                              className={`${cinzel.className} font-semibold ${sectionType.text}`}
+                              style={{ color: reminderInk.champagne }}
+                            >
+                              {getInitials(guest.name)}
+                            </span>
+                          </div>
+                        </div>
 
-        {confirmedGuests.length === 0 && !isRefreshing && (
-          <div className="relative z-20 max-w-xl mx-auto text-center px-4">
-            <div className="rounded-xl border px-6 py-10 backdrop-blur-xl sm:rounded-2xl sm:py-12" style={cardStyle}>
-              <p className={`${cinzel.className} ${ct.bodyLg} mb-2 font-semibold`} style={{ color: palette.heading }}>
-                Guest list updating
-              </p>
-              <p className={`font-goudy-italic ${ct.body}`} style={{ color: palette.body }}>
-                Confirmed guests will appear here as RSVPs come in.
-              </p>
-            </div>
-          </div>
-        )}
+                        <div className="min-w-0 flex-1 pt-0.5">
+                          <div className="mb-2 flex items-start justify-between gap-2 sm:mb-2.5">
+                            <div className="min-w-0">
+                              <h3
+                                className={`font-goudy-italic ${ct.guestName} truncate font-semibold leading-tight`}
+                                style={{ color: palette.heading }}
+                                title={guest.name}
+                              >
+                                {guest.name}
+                              </h3>
+                              {guest.role && (
+                                <p
+                                  className={`${cinzel.className} ${ct.meta} mt-0.5 font-medium uppercase tracking-wide`}
+                                  style={{ color: palette.label }}
+                                >
+                                  {guest.role}
+                                </p>
+                              )}
+                            </div>
+                            {guest.isVip && (
+                              <span
+                                className={`${cinzel.className} ${ct.meta} shrink-0 rounded-full border px-2 py-0.5 font-semibold uppercase tracking-[0.12em]`}
+                                style={{
+                                  backgroundColor: reminderInk.gold,
+                                  borderColor: reminderInk.champagne,
+                                  color: reminderInk.deep,
+                                }}
+                              >
+                                VIP
+                              </span>
+                            )}
+                          </div>
 
+                          <div className="mb-2 flex flex-wrap items-center gap-1.5 sm:mb-3 sm:gap-2">
+                            <span
+                              className={`${cinzel.className} ${ct.meta} rounded-full border px-2.5 py-1 font-semibold uppercase tracking-[0.1em]`}
+                              style={chipPrimaryStyle}
+                            >
+                              {guest.allowedGuests} {guest.allowedGuests === 1 ? "Guest" : "Guests"}
+                            </span>
+                            <span
+                              className={`${cinzel.className} ${ct.meta} rounded-full border px-2.5 py-1 font-semibold uppercase tracking-[0.1em]`}
+                              style={chipSecondaryStyle}
+                            >
+                              {guest.tableNumber && guest.tableNumber.trim() !== "" ? (
+                                <> {guest.tableNumber}</>
+                              ) : (
+                                <span className="opacity-65">No Table Yet</span>
+                              )}
+                            </span>
+                          </div>
+
+                          {guest.companions && guest.companions.length > 0 && (
+                            <div
+                              className="border-t pt-2.5 sm:pt-3"
+                              style={{
+                                borderColor: `color-mix(in srgb, ${reminderInk.gold} 28%, transparent)`,
+                              }}
+                            >
+                              <span
+                                className={`${cinzel.className} ${ct.meta} mb-2 block font-semibold uppercase tracking-[0.14em]`}
+                                style={{ color: palette.label }}
+                              >
+                                With Them
+                              </span>
+                              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                                {guest.companions.map((companion, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="inline-flex items-center gap-1.5 rounded-lg border px-2 py-0.5 sm:px-2.5 sm:py-1"
+                                    style={{
+                                      borderColor: `color-mix(in srgb, ${reminderInk.champagne} 28%, transparent)`,
+                                      backgroundColor: `color-mix(in srgb, ${reminderInk.navy} 55%, transparent)`,
+                                    }}
+                                  >
+                                    <span className={`font-goudy-italic ${ct.meta} whitespace-nowrap font-medium`} style={{ color: palette.body }}>
+                                      {companion.name}
+                                    </span>
+                                    {companion.relationship && companion.relationship.trim() !== "" && (
+                                      <span
+                                        className={`${cinzel.className} ${sectionType.label} whitespace-nowrap rounded-full border px-1.5 py-0.5 font-medium sm:px-2`}
+                                        style={chipSecondaryStyle}
+                                      >
+                                        {companion.relationship}
+                                      </span>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          <div
+                            className="mt-2.5 flex items-center justify-between gap-2 border-t pt-2.5 sm:pt-3"
+                            style={{
+                              borderColor: `color-mix(in srgb, ${reminderInk.gold} 22%, transparent)`,
+                            }}
+                          >
+                            <span className={`font-goudy-italic ${ct.meta}`} style={{ color: palette.body, opacity: 0.85 }}>
+                              Confirmed {formatDate(guest.updatedAt)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {confirmedGuests.length === 0 && !isRefreshing && (
+              <div className="mt-10 text-center sm:mt-12">
+                <div
+                  className="mx-auto h-px w-12 sm:w-16"
+                  style={dividerLineStyle}
+                />
+                <p className={`${cinzel.className} ${ct.bodyLg} mt-6 mb-2 font-semibold sm:mt-8`} style={{ color: palette.heading }}>
+                  Guest list updating
+                </p>
+                <p className={`font-goudy-italic ${ct.body}`} style={{ color: palette.body }}>
+                  Confirmed guests will appear here as RSVPs come in.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   )

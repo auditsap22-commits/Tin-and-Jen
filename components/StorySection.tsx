@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react"
 import localFont from "next/font/local"
 import { sectionType, storyChapterTitleSize } from "@/lib/section-typography"
 import Image from "next/image"
-import { TornPaperEdge } from "./TornPaperEdge"
+import { TornPaperEdge, PAPER_FACE } from "./TornPaperEdge"
 
 const theSeasons = localFont({
   src: "../Font/Fontspring-DEMO-theseasons-reg.otf",
@@ -12,8 +12,26 @@ const theSeasons = localFont({
   variable: "--font-the-seasons",
 })
 
-const lightBg = "var(--color-welcome-bg)"
-const darkBg = "var(--color-welcome-green)"
+const storyInk = {
+  cream: PAPER_FACE,
+  lift: PAPER_FACE,
+  champagne: "#DDBA7A",
+  gold: "#AB832E",
+  slate: "#364061",
+  navy: "#192030",
+  midnight: "#04103B",
+} as const
+
+const lightSectionBg = PAPER_FACE
+
+export { lightSectionBg, storyInk }
+
+const darkSectionBg = `
+  radial-gradient(820px 460px at 50% 0%, color-mix(in srgb, ${storyInk.gold} 22%, transparent) 0%, transparent 58%),
+  radial-gradient(560px 380px at 12% 100%, color-mix(in srgb, ${storyInk.champagne} 12%, transparent) 0%, transparent 55%),
+  linear-gradient(180deg, ${storyInk.midnight} 0%, ${storyInk.navy} 100%)
+`
+
 interface StorySectionProps {
   imageSrc: string
   title?: string
@@ -53,15 +71,14 @@ export const StorySection: React.FC<StorySectionProps> = ({
 
   const imageFrameStyle = isDark
     ? {
-        background: "color-mix(in srgb, var(--color-welcome-bg-soft) 12%, var(--color-welcome-bg-soft))",
-        boxShadow:
-          "0 10px 28px color-mix(in srgb, var(--color-motif-accent) 35%, transparent)",
+        background: `color-mix(in srgb, ${storyInk.champagne} 18%, ${storyInk.midnight})`,
+        boxShadow: `0 10px 28px color-mix(in srgb, ${storyInk.gold} 32%, transparent)`,
+        border: `1px solid color-mix(in srgb, ${storyInk.gold} 48%, transparent)`,
       }
     : {
-        background: "var(--color-welcome-bg-soft)",
-        border: "1px solid color-mix(in srgb, var(--color-motif-deep) 10%, transparent)",
-        boxShadow:
-          "0 8px 24px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
+        background: storyInk.lift,
+        border: `1px solid color-mix(in srgb, ${storyInk.gold} 28%, transparent)`,
+        boxShadow: `0 8px 24px color-mix(in srgb, ${storyInk.navy} 8%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)`,
       }
 
   const rotation = layout === "image-left" ? "rotate-1 md:rotate-2" : "-rotate-1 md:-rotate-2"
@@ -70,18 +87,23 @@ export const StorySection: React.FC<StorySectionProps> = ({
   return (
     <div
       className={`${theSeasons.variable} relative`}
-      style={{ background: isDark ? darkBg : lightBg }}
+      style={{
+        background: isDark ? darkSectionBg : lightSectionBg,
+        backgroundAttachment: isDark ? undefined : "fixed",
+      }}
     >
       {!isDark && (
         <>
           {!isFirst && (
-            <div className="pointer-events-none absolute left-0 top-0 z-20 -mt-[8px] w-full md:-mt-[20px]">
-              <TornPaperEdge flipped={true} color={lightBg} />
+            <div className="pointer-events-none absolute left-0 top-0 z-20 -mt-[14px] w-full md:-mt-[32px]">
+              <TornPaperEdge flipped={true} color={PAPER_FACE} />
             </div>
           )}
-          <div className="pointer-events-none absolute bottom-0 left-0 z-20 -mb-[8px] w-full md:-mb-[20px]">
-            <TornPaperEdge flipped={false} color={lightBg} />
-          </div>
+          {!isLast && (
+            <div className="pointer-events-none absolute bottom-0 left-0 z-20 -mb-[14px] w-full md:-mb-[32px]">
+              <TornPaperEdge flipped={false} color={PAPER_FACE} />
+            </div>
+          )}
         </>
       )}
       <div
@@ -105,7 +127,10 @@ export const StorySection: React.FC<StorySectionProps> = ({
                     priority={false}
                   />
                   {isDark && (
-                    <div className="pointer-events-none absolute inset-0 z-10 bg-black/5 mix-blend-multiply" />
+                    <div
+                      className="pointer-events-none absolute inset-0 z-10 mix-blend-multiply"
+                      style={{ backgroundColor: "color-mix(in srgb, #04103B 18%, transparent)" }}
+                    />
                   )}
                 </div>
               </div>
@@ -114,14 +139,14 @@ export const StorySection: React.FC<StorySectionProps> = ({
 
           <div
             className="w-[55%] @container/story md:w-5/12"
-            style={{ color: isDark ? lightBg : "var(--color-welcome-text)" }}
+            style={{ color: isDark ? storyInk.champagne : storyInk.navy }}
           >
             {title && (
               <h2
                 className={`${theSeasons.className} mb-3 uppercase leading-tight tracking-[0.08em] transition-all delay-500 duration-1000 sm:mb-4 sm:tracking-[0.1em] md:mb-6 md:tracking-[0.12em] ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} `}
                 style={{
                   fontSize: storyChapterTitleSize,
-                  color: isDark ? lightBg : "var(--color-welcome-navy)",
+                  color: isDark ? storyInk.champagne : storyInk.navy,
                 }}
               >
                 {title}

@@ -149,49 +149,59 @@
   /* ─── Motif palette — edit here, affects every component ─── */
 /* ==========================================
    MOTIF COLORS
-   Theme: Nested Arch — Forest + Sage + Mustard + Cream
-   (aligned with LoadingScreen palette)
+   Theme: Nested Arch — Deep Navy + Antique Gold + Warm Cream
 ========================================== */
 
 /* Background */
---color-motif-cream:   #F7F3E9; /* Arch cream */
+--color-motif-cream:   #EEEDEB; /* Warm ivory */
 
 /* Primary Highlight */
---color-motif-yellow:  #EEC853; /* Mustard gold */
+--color-motif-yellow:  #AB832E; /* Antique gold */
 
 /* Secondary */
---color-motif-soft:    #FAF7EF; /* Soft cream sections */
---color-motif-accent:  #949981; /* Sage green */
+--color-motif-soft:    #EEEDEB; /* Soft warm cream */
+--color-motif-accent:  #DDBA7A; /* Champagne gold */
 
 /* Primary Brand */
---color-motif-deep:    #5D6F47; /* Forest olive */
---color-motif-medium:  #949981; /* Sage */
+--color-motif-ink:     #04103B; /* Midnight navy */
+--color-motif-deep:    #192030; /* Deep navy */
+--color-motif-medium:  #364061; /* Slate navy */
 
 /* Neutral */
---color-motif-silver:  #F5F1E6; /* Warm parchment alternate */
+--color-motif-silver:  #EEEDEB; /* Warm ivory */
+
 
 /* ==========================================
    WELCOME SECTION
 ========================================== */
 
---color-welcome-bg:        color-mix(in srgb, var(--color-motif-cream) 45%, white);
---color-welcome-bg-soft:   color-mix(in srgb, var(--color-motif-cream) 25%, white);
+/* Background */
+--color-welcome-bg:
+    color-mix(in srgb, var(--color-motif-cream) 45%, white);
+
+--color-welcome-bg-soft:
+    color-mix(in srgb, var(--color-motif-cream) 25%, white);
+
 
 /* Paragraphs */
---color-welcome-text:      #3A3128; /* Ink */
---color-welcome-text-soft: color-mix(in srgb, #3A3128 68%, white);
+--color-welcome-text:      #192030; /* Deep navy ink */
+--color-welcome-text-soft: color-mix(in srgb, #192030 68%, white);
+
 
 /* Small Headings */
---color-welcome-heading:   #5D6F47; /* Forest */
+--color-welcome-heading:   #364061; /* Slate navy */
+
 
 /* Script Font */
---color-welcome-script:    #EEC853; /* Mustard */
+--color-welcome-script:    #AB832E; /* Antique gold */
+
 
 /* Main Hero Heading */
---color-welcome-navy:      #5D6F47; /* Forest */
+--color-welcome-navy:      #192030; /* Deep navy */
+
 
 /* Buttons / Decorative Lines / Icons */
---color-welcome-green:     #5D6F47; /* Forest */
+--color-welcome-green:     #192030; /* Deep navy */
   /* ─────────────────────────────────────────────────────────── */
   --font-imperial-script: "Imperial Script", cursive;
   --font-anastasia-script: "CoupleAnastasia";
@@ -258,20 +268,147 @@ html {
   font-style: normal;
 }
 
-/* Couple-name lockup — public/Details/coupleName.png filled with forest green. */
+/* Couple-name lockup — gold fill, aligned with LoadingScreen. */
 .couple-name-lockup {
   display: block;
   width: 100%;
-  aspect-ratio: 1672 / 940;
-  background-color: #5c6e46;
-  -webkit-mask-image: url("/Details/coupleName.png");
-  mask-image: url("/Details/coupleName.png");
+  aspect-ratio: 1536 / 1024;
+  background: linear-gradient(180deg, #e6d3a3 0%, #d4af37 42%, #c5a059 100%);
+  -webkit-mask-image: url("/decoration/deco/couple%20name.png");
+  mask-image: url("/decoration/deco/couple%20name.png");
   -webkit-mask-size: contain;
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
+  filter: drop-shadow(0 0 16px color-mix(in srgb, #c5a059 38%, transparent));
+}
+
+.hero-invite {
+  --hero-navy: #04103b;
+  --hero-gold: #c5a059;
+  --hero-gold-bright: #d4af37;
+  --hero-gold-soft: #e6d3a3;
+  --hero-frame-inset: clamp(0.75rem, 3vw, 1.35rem);
+  --hero-frame-double: 5px;
+  --hero-deco-top: clamp(15rem, 72vw, 22rem);
+  --hero-deco-sprig: clamp(5.25rem, 26vw, 9.5rem);
+  --hero-gap-top: calc(var(--hero-deco-top) * 0.5);
+  --hero-gap-bottom-x: calc(var(--hero-deco-sprig) * 0.88);
+  --hero-gap-bottom-y: calc(var(--hero-deco-sprig) * 1.22);
+}
+
+.hero-invite-frame {
+  position: absolute;
+  z-index: 2;
+  inset: var(--hero-frame-inset);
+  pointer-events: none;
+}
+
+.hero-invite-frame-arm {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.hero-invite-frame-arm--top-left,
+.hero-invite-frame-arm--top-right {
+  top: 0;
+  width: calc(50% - var(--hero-gap-top) / 2);
+  height: calc(var(--hero-frame-double) + 1px);
+  border-top: 1px solid var(--hero-gold);
+  border-bottom: 1px solid color-mix(in srgb, var(--hero-gold) 78%, transparent);
+}
+
+.hero-invite-frame-arm--top-left {
+  left: 0;
+}
+
+.hero-invite-frame-arm--top-right {
+  right: 0;
+}
+
+.hero-invite-frame-arm--left,
+.hero-invite-frame-arm--right {
+  top: 0;
+  width: calc(var(--hero-frame-double) + 1px);
+  height: calc(100% - var(--hero-gap-bottom-y));
+}
+
+.hero-invite-frame-arm--left {
+  left: 0;
+  border-left: 1px solid var(--hero-gold);
+  border-right: 1px solid color-mix(in srgb, var(--hero-gold) 78%, transparent);
+}
+
+.hero-invite-frame-arm--right {
+  right: 0;
+  border-right: 1px solid var(--hero-gold);
+  border-left: 1px solid color-mix(in srgb, var(--hero-gold) 78%, transparent);
+}
+
+.hero-invite-frame-arm--bottom {
+  left: var(--hero-gap-bottom-x);
+  right: var(--hero-gap-bottom-x);
+  bottom: 0;
+  height: calc(var(--hero-frame-double) + 1px);
+  border-top: 1px solid color-mix(in srgb, var(--hero-gold) 78%, transparent);
+  border-bottom: 1px solid var(--hero-gold);
+}
+
+.hero-invite-deco {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero-invite-deco img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  filter: drop-shadow(0 0 18px color-mix(in srgb, var(--hero-gold) 18%, transparent));
+}
+
+.hero-invite-deco--top {
+  top: calc(var(--hero-frame-inset) - 1.65rem);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-invite-deco--top img {
+  width: var(--hero-deco-top);
+}
+
+.hero-invite-deco--bl,
+.hero-invite-deco--br {
+  bottom: 0;
+  width: var(--hero-deco-sprig);
+}
+
+.hero-invite-deco--bl {
+  left: 0;
+}
+
+.hero-invite-deco--br {
+  right: 0;
+}
+
+@media (min-width: 768px) {
+  .hero-invite {
+    --hero-frame-inset: 1.25rem;
+    --hero-deco-top: min(24rem, 48vw);
+    --hero-deco-sprig: clamp(7rem, 14vw, 11rem);
+  }
+}
+
+@media (max-height: 700px) and (max-width: 430px) {
+  .hero-invite {
+    --hero-deco-top: clamp(12.5rem, 72vw, 17rem);
+    --hero-deco-sprig: clamp(4.25rem, 24vw, 6.25rem);
+  }
 }
 
 /* Couple names only — Anastasia Script (public/fonts/AnastasiaScript.ttf). */

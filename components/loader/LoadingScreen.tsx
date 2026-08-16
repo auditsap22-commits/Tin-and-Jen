@@ -1,16 +1,21 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { Cinzel } from 'next/font/google';
+import { motion, useReducedMotion } from 'motion/react';
+import { Cinzel, Montserrat } from 'next/font/google';
 import { useSiteConfig } from '@/hooks/use-site-config';
 import { parseWeddingDate } from '@/lib/wedding-date';
 import './loading-screen.css';
 
 const cinzel = Cinzel({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
+});
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
 });
 
 interface LoadingScreenProps {
@@ -20,20 +25,11 @@ interface LoadingScreenProps {
 
 const TOTAL_DURATION_MS = 9000;
 const MESSAGE_HOLD_MS = TOTAL_DURATION_MS / 4;
-const PHOTO_HOLD_MS = 2200;
 const FADE_OUT_MS = 950;
 const entryEase = [0.22, 1, 0.36, 1] as const;
 const rollerEase = [0.16, 1, 0.3, 1] as const;
 const ROLLER_TRANSITION_MS = 720;
-const STATUS_LINE_HEIGHT_REM = 1.75;
-
-const COUPLE_SWEEP_PHOTOS = [
-  '/envelope/box (1).JPG',
-  '/envelope/box (2).JPG',
-  '/envelope/box (3).JPG',
-  '/envelope/box (4).JPG',
-  '/envelope/box (5).JPG',
-] as const;
+const STATUS_LINE_HEIGHT_REM = 1.65;
 
 const LOADING_MESSAGES = [
   'Preparing your invitation',
@@ -42,95 +38,86 @@ const LOADING_MESSAGES = [
   'Your invitation awaits',
 ] as const;
 
-const C = {
-  forest: '#5d6f47',
-  sage: '#949981',
-  mustard: '#eec853',
-  butter: '#f4dd97',
-  cream: '#f7f3e9',
-  ink: '#3a3128',
-} as const;
-
-const ARCH_LABELS = [
-  { id: 'entourage', text: 'the ENTOURAGE', tone: 'light' as const, offset: '66%' },
-  { id: 'sponsors', text: 'the SPONSORS', tone: 'light' as const, offset: '65%' },
-  { id: 'details', text: 'the FINER Details', tone: 'dark' as const, offset: '63%' },
-  { id: 'date', text: 'save the DATE', tone: 'dark' as const, offset: '62%' },
-] as const;
-
-const ARCH_BANDS = [
-  { x: 0, y: 0, w: 360, h: 640, r: 180 },
-  { x: 22, y: 22, w: 316, h: 618, r: 158 },
-  { x: 44, y: 44, w: 272, h: 596, r: 136 },
-  { x: 64, y: 64, w: 232, h: 576, r: 116 },
-] as const;
-
-/* Cream doorway — keep content overlay locked to these coords */
-const INNER = { x: 72, y: 72, w: 216, h: 568, r: 108 } as const;
-const BAND_FILLS = [C.forest, C.sage, C.mustard, C.butter] as const;
-
 const DECO = {
-  tl: '/decoration/left-top-corner.png',
-  tr: '/decoration/right-top-corner.png',
-  bl: '/decoration/left-bottom-corner.png',
-  br: '/decoration/right-bottom-corner.png',
+  top: '/decoration/deco/top-center-decoration.png',
+  bl: '/decoration/deco/left-bottom-small.png',
+  br: '/decoration/deco/right-bottom-small.png',
+  names: '/decoration/deco/couple name.png',
+  monogram: '/decoration/deco/monogram.png',
 } as const;
 
-function archPath(x: number, y: number, w: number, h: number, r: number) {
-  const radius = Math.min(r, w / 2);
-  return [
-    `M ${x} ${y + h}`,
-    `L ${x} ${y + radius}`,
-    `A ${radius} ${radius} 0 0 1 ${x + w} ${y + radius}`,
-    `L ${x + w} ${y + h}`,
-    'Z',
-  ].join(' ');
+const BG_VIDEO =
+  '/background_music/No Copyright Video, Background, Blue Screen, Motion Graphics, Animated Background.mp4';
+
+function formatClockTime(raw: string) {
+  const trimmed = raw.trim();
+  const match = trimmed.match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?/i);
+  if (!match) return trimmed.toUpperCase();
+
+  let hour = Number(match[1]);
+  const minutes = match[2] ?? '00';
+  let meridiem = (match[3] || '').toUpperCase();
+
+  if (!meridiem) {
+    meridiem = hour >= 12 ? 'PM' : 'AM';
+    hour = hour % 12 || 12;
+  } else if (meridiem === 'PM' && hour > 12) {
+    hour = hour % 12;
+  } else if (meridiem === 'AM' && hour === 0) {
+    hour = 12;
+  } else if (hour > 12) {
+    hour = hour % 12;
+  }
+
+  return `${hour}:${minutes} ${meridiem}`;
 }
 
-function labelArcPath(x: number, y: number, w: number, r: number, ring = 18) {
-  const outerR = Math.min(r, w / 2);
-  const midR = Math.max(outerR - ring / 2, 20);
-  const cx = x + w / 2;
-  const cy = y + outerR;
-  return `M ${cx - midR} ${cy} A ${midR} ${midR} 0 0 1 ${cx + midR} ${cy}`;
-}
-
-export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFadeStart }) => {
+export const LoadingScreen: React.FC<LoadingScreenProps> = ({
+  onComplete,
+  onFadeStart,
+}) => {
   const siteConfig = useSiteConfig();
   const reduceMotion = useReducedMotion();
   const [fadeOut, setFadeOut] = useState(false);
   const [progress, setProgress] = useState(0);
   const [messageIndex, setMessageIndex] = useState(0);
-  const [photoIndex, setPhotoIndex] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  const groomName = siteConfig.couple.groomNickname;
-  const brideName = siteConfig.couple.brideNickname;
+  const groomName = siteConfig.couple.groomNickname || 'Paul';
+  const brideName = siteConfig.couple.brideNickname || 'Ana';
 
   const weddingMeta = useMemo(() => {
-    const parsed = parseWeddingDate(siteConfig.ceremony.date ?? siteConfig.wedding.date);
-    const wedding = new Date(`${parsed.month} ${parsed.day}, ${parsed.year}`);
-    if (Number.isNaN(wedding.getTime())) {
-      const monthDate = new Date(`${parsed.month} 1, ${parsed.year}`);
-      const month = Number.isNaN(monthDate.getTime())
-        ? '00'
-        : String(monthDate.getMonth() + 1).padStart(2, '0');
-      return {
-        numeric: `${month}.${String(parsed.day).padStart(2, '0')}.${String(parsed.year).slice(-2)}`,
-        day: parsed.dayOfWeek || siteConfig.ceremony.day || '',
-      };
-    }
+    const parsed = parseWeddingDate(
+      siteConfig.ceremony.date ?? siteConfig.wedding.date,
+    );
+    const weekday = (
+      parsed.dayOfWeek ||
+      siteConfig.ceremony.day ||
+      ''
+    ).toUpperCase();
+    const time = formatClockTime(
+      siteConfig.ceremony.time ?? siteConfig.wedding.time ?? '',
+    );
+    const venue =
+      siteConfig.ceremony.location || siteConfig.wedding.venue || '';
+
     return {
-      numeric: [
-        String(wedding.getMonth() + 1).padStart(2, '0'),
-        String(wedding.getDate()).padStart(2, '0'),
-        String(wedding.getFullYear()).slice(-2),
-      ].join('.'),
-      day:
-        wedding.toLocaleDateString('en-US', { weekday: 'long' }) ||
-        siteConfig.ceremony.day ||
-        '',
+      weekday,
+      time,
+      month: parsed.month.toUpperCase(),
+      day: parsed.day,
+      year: parsed.year,
+      venue,
     };
-  }, [siteConfig.ceremony.date, siteConfig.ceremony.day, siteConfig.wedding.date]);
+  }, [
+    siteConfig.ceremony.date,
+    siteConfig.ceremony.day,
+    siteConfig.ceremony.location,
+    siteConfig.ceremony.time,
+    siteConfig.wedding.date,
+    siteConfig.wedding.time,
+    siteConfig.wedding.venue,
+  ]);
 
   useEffect(() => {
     document.documentElement.style.overflow = 'hidden';
@@ -140,6 +127,51 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
       document.body.style.overflow = '';
     };
   }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+
+    const playLoop = () => {
+      if (reduceMotion) return;
+      video.muted = true;
+      const playback = video.play();
+      if (playback) playback.catch(() => {});
+    };
+
+    const restart = () => {
+      if (reduceMotion) return;
+      video.currentTime = 0.001;
+      playLoop();
+    };
+
+    const keepAlive = () => {
+      if (reduceMotion || !video.duration) return;
+      if (video.currentTime >= video.duration - 0.05) {
+        restart();
+      }
+    };
+
+    if (reduceMotion) {
+      video.pause();
+      return;
+    }
+
+    playLoop();
+    video.addEventListener('ended', restart);
+    video.addEventListener('timeupdate', keepAlive);
+    video.addEventListener('stalled', playLoop);
+
+    return () => {
+      video.removeEventListener('ended', restart);
+      video.removeEventListener('timeupdate', keepAlive);
+      video.removeEventListener('stalled', playLoop);
+    };
+  }, [reduceMotion]);
 
   useEffect(() => {
     const startTime = Date.now();
@@ -152,10 +184,6 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
       setMessageIndex((current) => (current + 1) % LOADING_MESSAGES.length);
     }, MESSAGE_HOLD_MS);
 
-    const photoInterval = setInterval(() => {
-      setPhotoIndex((current) => (current + 1) % COUPLE_SWEEP_PHOTOS.length);
-    }, PHOTO_HOLD_MS);
-
     const completeTimer = setTimeout(() => {
       setProgress(100);
       onFadeStart?.();
@@ -167,15 +195,14 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
       clearTimeout(completeTimer);
       clearInterval(progressInterval);
       clearInterval(messageInterval);
-      clearInterval(photoInterval);
     };
   }, [onComplete, onFadeStart]);
 
-  const textDelay = reduceMotion ? 0 : 0.72;
+  const textDelay = reduceMotion ? 0 : 0.55;
 
   return (
     <motion.div
-      className="loading-screen fixed inset-0 z-50 flex items-stretch justify-center overflow-hidden overscroll-none h-dvh max-h-dvh w-screen"
+      className={`loading-screen fixed inset-0 z-50 flex items-stretch justify-center overflow-hidden overscroll-none h-dvh max-h-dvh w-screen ${montserrat.className}`}
       aria-live="polite"
       aria-busy={!fadeOut}
       aria-label="Loading invitation"
@@ -184,7 +211,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
         fadeOut
           ? {
               opacity: 0,
-              scale: reduceMotion ? 1 : 1.015,
+              scale: reduceMotion ? 1 : 1.012,
               filter: reduceMotion ? 'blur(0px)' : 'blur(6px)',
             }
           : { opacity: 1, scale: 1, filter: 'blur(0px)' }
@@ -195,264 +222,233 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
       }}
       style={{ pointerEvents: fadeOut ? 'none' : 'auto' }}
     >
-      <div className="loading-screen__stage">
-        <svg
-          className="loading-screen__arch-svg"
-          viewBox="0 0 360 640"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <defs>
-            {ARCH_BANDS.map((band, index) => (
-              <path
-                key={`arc-${ARCH_LABELS[index].id}`}
-                id={`ls-label-arc-${index}`}
-                d={labelArcPath(band.x, band.y, band.w, band.r, index === 0 ? 24 : 20)}
-                fill="none"
-              />
-            ))}
-          </defs>
+      <video
+        ref={videoRef}
+        className="loading-screen__video"
+        src={encodeURI(BG_VIDEO)}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        disablePictureInPicture
+        aria-hidden="true"
+      />
 
-          {ARCH_BANDS.map((band, index) => (
-            <motion.path
-              key={ARCH_LABELS[index].id}
-              d={archPath(band.x, band.y, band.w, band.h, band.r)}
-              fill={BAND_FILLS[index]}
-              initial={reduceMotion ? false : { opacity: 0, scaleY: 0.9 }}
-              animate={{ opacity: 1, scaleY: 1 }}
-              transition={{
-                duration: 0.9,
-                ease: entryEase,
-                delay: reduceMotion ? 0 : 0.04 + index * 0.12,
-              }}
-              style={{ transformBox: 'fill-box', transformOrigin: '50% 100%' }}
-            />
-          ))}
-
-          <motion.path
-            d={archPath(INNER.x, INNER.y, INNER.w, INNER.h, INNER.r)}
-            fill={C.cream}
-            initial={reduceMotion ? false : { opacity: 0, scaleY: 0.92 }}
-            animate={{ opacity: 1, scaleY: 1 }}
-            transition={{ duration: 0.85, ease: entryEase, delay: reduceMotion ? 0 : 0.52 }}
-            style={{ transformBox: 'fill-box', transformOrigin: '50% 100%' }}
-          />
-
-          {ARCH_LABELS.map((label, index) => (
-            <motion.text
-              key={label.id}
-              className={`loading-screen__arch-label loading-screen__arch-label--${label.tone} ${cinzel.className}`}
-              initial={reduceMotion ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                duration: 0.55,
-                ease: entryEase,
-                delay: reduceMotion ? 0 : 0.48 + index * 0.1,
-              }}
-            >
-              <textPath
-                href={`#ls-label-arc-${index}`}
-                startOffset={label.offset}
-                textAnchor="middle"
-              >
-                {label.text}
-              </textPath>
-            </motion.text>
-          ))}
-        </svg>
-
-        <div className="loading-screen__threshold" aria-hidden="true" />
-
-        {/* Content locked inside cream aisle of the arch */}
-        <div
-          className="loading-screen__aisle"
-          style={{
-            ['--ls-inner-x' as string]: INNER.x,
-            ['--ls-inner-y' as string]: INNER.y,
-            ['--ls-inner-w' as string]: INNER.w,
-            ['--ls-view-w' as string]: 360,
-            ['--ls-view-h' as string]: 640,
-          }}
-        >
-          <div className="loading-screen__panel">
-            <motion.div
-              className="loading-screen__photo-frame"
-              initial={reduceMotion ? false : { opacity: 0, y: 16, scale: 0.94 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.9, ease: entryEase, delay: textDelay }}
-              aria-hidden="true"
-            >
-              <div className="loading-screen__photo-well">
-                <AnimatePresence mode="sync" initial={false}>
-                  <motion.div
-                    key={COUPLE_SWEEP_PHOTOS[photoIndex]}
-                    className="loading-screen__photo-slide"
-                    initial={
-                      reduceMotion
-                        ? { opacity: 1 }
-                        : { opacity: 0, scale: 1.08, x: '6%' }
-                    }
-                    animate={{ opacity: 1, scale: 1.02, x: '0%' }}
-                    exit={
-                      reduceMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, scale: 1.06, x: '-6%' }
-                    }
-                    transition={{ duration: reduceMotion ? 0.2 : 1.05, ease: entryEase }}
-                  >
-                    <Image
-                      src={COUPLE_SWEEP_PHOTOS[photoIndex]}
-                      alt=""
-                      fill
-                      priority={photoIndex === 0}
-                      sizes="(max-width: 768px) 42vw, 220px"
-                      className="loading-screen__photo-img"
-                    />
-                  </motion.div>
-                </AnimatePresence>
-                <div className="loading-screen__photo-sheen" />
-              </div>
-            </motion.div>
-
-            <div className="loading-screen__invite">
-              <motion.p
-                className={`loading-screen__eyebrow ${cinzel.className}`}
-                initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: entryEase, delay: textDelay + 0.1 }}
-              >
-                With joy, we invite you
-              </motion.p>
-
-              <motion.div
-                className="loading-screen__rule"
-                aria-hidden="true"
-                initial={reduceMotion ? false : { scaleX: 0, opacity: 0 }}
-                animate={{ scaleX: 1, opacity: 1 }}
-                transition={{ duration: 0.65, ease: entryEase, delay: textDelay + 0.16 }}
-              />
-
-              <motion.div
-                className="loading-screen__names"
-                initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.85, ease: entryEase, delay: textDelay + 0.22 }}
-              >
-                <div
-                  className="loading-screen__names-img"
-                  role="img"
-                  aria-label={`${groomName} and ${brideName}`}
-                />
-              </motion.div>
-            </div>
-
-            <div className={`loading-screen__footer ${cinzel.className}`}>
-              <motion.div
-                className="loading-screen__date-block"
-                initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.75, ease: entryEase, delay: textDelay + 0.4 }}
-              >
-                {weddingMeta.day ? (
-                  <span className="loading-screen__weekday">{weddingMeta.day}</span>
-                ) : null}
-                <span className="loading-screen__date">{weddingMeta.numeric}</span>
-              </motion.div>
-
-              <motion.div
-                className="loading-screen__rule loading-screen__rule--soft"
-                aria-hidden="true"
-                initial={reduceMotion ? false : { scaleX: 0, opacity: 0 }}
-                animate={{ scaleX: 1, opacity: 1 }}
-                transition={{ duration: 0.6, ease: entryEase, delay: textDelay + 0.48 }}
-              />
-
-              <motion.div
-                className="loading-screen__status"
-                aria-live="polite"
-                aria-atomic="true"
-                initial={reduceMotion ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, ease: entryEase, delay: textDelay + 0.52 }}
-              >
-                <motion.div
-                  className="loading-screen__status-roller"
-                  animate={{ y: `-${messageIndex * STATUS_LINE_HEIGHT_REM}rem` }}
-                  transition={
-                    reduceMotion
-                      ? { duration: 0.01 }
-                      : { duration: ROLLER_TRANSITION_MS / 1000, ease: rollerEase }
-                  }
-                >
-                  {LOADING_MESSAGES.map((message) => (
-                    <p key={message} className="loading-screen__status-line">
-                      {message}
-                    </p>
-                  ))}
-                </motion.div>
-              </motion.div>
-
-              <motion.div
-                className="loading-screen__track"
-                role="progressbar"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={Math.round(progress)}
-                aria-label="Loading progress"
-                initial={reduceMotion ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.55, ease: entryEase, delay: textDelay + 0.56 }}
-              >
-                <div
-                  className="loading-screen__bar"
-                  style={{ width: `${progress}%` }}
-                />
-              </motion.div>
-            </div>
-          </div>
-        </div>
+      <div className="loading-screen__frame" aria-hidden="true">
+        <motion.span
+          className="loading-screen__frame-arm loading-screen__frame-arm--top-left"
+          initial={reduceMotion ? false : { opacity: 0, y: -18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.15, ease: entryEase, delay: reduceMotion ? 0 : 0.12 }}
+        />
+        <motion.span
+          className="loading-screen__frame-arm loading-screen__frame-arm--top-right"
+          initial={reduceMotion ? false : { opacity: 0, y: -18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.15, ease: entryEase, delay: reduceMotion ? 0 : 0.12 }}
+        />
+        <motion.span
+          className="loading-screen__frame-arm loading-screen__frame-arm--left"
+          initial={reduceMotion ? false : { opacity: 0, x: -18, y: 22 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ duration: 1.15, ease: entryEase, delay: reduceMotion ? 0 : 0.28 }}
+        />
+        <motion.span
+          className="loading-screen__frame-arm loading-screen__frame-arm--right"
+          initial={reduceMotion ? false : { opacity: 0, x: 18, y: 22 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ duration: 1.15, ease: entryEase, delay: reduceMotion ? 0 : 0.36 }}
+        />
+        <motion.span
+          className="loading-screen__frame-arm loading-screen__frame-arm--bottom"
+          initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.15, ease: entryEase, delay: reduceMotion ? 0 : 0.32 }}
+        />
       </div>
 
       <motion.div
-        className="loading-screen__deco loading-screen__deco--tl"
+        className="loading-screen__deco loading-screen__deco--top pointer-events-none"
         aria-hidden="true"
-        initial={reduceMotion ? false : { opacity: 0, x: -28, y: -28 }}
-        animate={{ opacity: 1, x: 0, y: 0 }}
-        transition={{ duration: 1.1, ease: entryEase, delay: reduceMotion ? 0 : 0.65 }}
+        initial={reduceMotion ? false : { opacity: 0, y: -18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.15, ease: entryEase, delay: reduceMotion ? 0 : 0.12 }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={DECO.tl} alt="" />
+        <Image
+          src={DECO.top}
+          alt=""
+          width={2078}
+          height={598}
+          priority
+          sizes="(max-width: 768px) 90vw, 480px"
+        />
+      </motion.div>
+
+      <motion.div
+        className="loading-screen__deco loading-screen__deco--bl pointer-events-none"
+        aria-hidden="true"
+        initial={reduceMotion ? false : { opacity: 0, x: -18, y: 22 }}
+        animate={{ opacity: 1, x: 0, y: 0 }}
+        transition={{ duration: 1.15, ease: entryEase, delay: reduceMotion ? 0 : 0.28 }}
+      >
+        <Image src={DECO.bl} alt="" width={851} height={1472} sizes="200px" />
       </motion.div>
       <motion.div
-        className="loading-screen__deco loading-screen__deco--tr"
+        className="loading-screen__deco loading-screen__deco--br pointer-events-none"
         aria-hidden="true"
-        initial={reduceMotion ? false : { opacity: 0, x: 28, y: -28 }}
+        initial={reduceMotion ? false : { opacity: 0, x: 18, y: 22 }}
         animate={{ opacity: 1, x: 0, y: 0 }}
-        transition={{ duration: 1.1, ease: entryEase, delay: reduceMotion ? 0 : 0.78 }}
+        transition={{ duration: 1.15, ease: entryEase, delay: reduceMotion ? 0 : 0.36 }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={DECO.tr} alt="" />
+        <Image src={DECO.br} alt="" width={851} height={1472} sizes="200px" />
       </motion.div>
-      <motion.div
-        className="loading-screen__deco loading-screen__deco--bl"
-        aria-hidden="true"
-        initial={reduceMotion ? false : { opacity: 0, x: -28, y: 32 }}
-        animate={{ opacity: 1, x: 0, y: 0 }}
-        transition={{ duration: 1.15, ease: entryEase, delay: reduceMotion ? 0 : 0.86 }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={DECO.bl} alt="" />
-      </motion.div>
-      <motion.div
-        className="loading-screen__deco loading-screen__deco--br"
-        aria-hidden="true"
-        initial={reduceMotion ? false : { opacity: 0, x: 28, y: 32 }}
-        animate={{ opacity: 1, x: 0, y: 0 }}
-        transition={{ duration: 1.15, ease: entryEase, delay: reduceMotion ? 0 : 0.98 }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={DECO.br} alt="" />
-      </motion.div>
+
+      <div className="loading-screen__stage">
+        <div className="loading-screen__panel">
+          <motion.div
+            className="loading-screen__monogram"
+            role="img"
+            aria-label="Wedding monogram"
+            style={{
+              WebkitMaskImage: `url("${encodeURI(DECO.monogram)}")`,
+              maskImage: `url("${encodeURI(DECO.monogram)}")`,
+            }}
+            initial={reduceMotion ? false : { opacity: 0, y: 10, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.9, ease: entryEase, delay: textDelay }}
+          />
+
+          <motion.p
+            className={`loading-screen__eyebrow ${cinzel.className}`}
+            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, ease: entryEase, delay: textDelay + 0.08 }}
+          >
+            Together with their families
+          </motion.p>
+
+          <motion.div
+            className="loading-screen__names"
+            role="img"
+            aria-label={`${groomName} and ${brideName}`}
+            style={{
+              WebkitMaskImage: `url("${encodeURI(DECO.names)}")`,
+              maskImage: `url("${encodeURI(DECO.names)}")`,
+            }}
+            initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: entryEase, delay: textDelay + 0.14 }}
+          />
+
+          <motion.p
+            className="loading-screen__invite-line"
+            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, ease: entryEase, delay: textDelay + 0.22 }}
+          >
+            Invite you to celebrate their wedding
+          </motion.p>
+
+          <motion.div
+            className="loading-screen__details"
+            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: entryEase, delay: textDelay + 0.32 }}
+          >
+            <p className={`loading-screen__date-month ${cinzel.className}`}>
+              {weddingMeta.month}
+            </p>
+
+            <div className={`loading-screen__date-lockup ${cinzel.className}`}>
+              <div className="loading-screen__date-side">
+                {weddingMeta.weekday ? (
+                  <>
+                    <span className="loading-screen__date-line" />
+                    <span className="loading-screen__date-label">{weddingMeta.weekday}</span>
+                    <span className="loading-screen__date-line" />
+                  </>
+                ) : null}
+              </div>
+
+              <span className="loading-screen__date-day">{weddingMeta.day}</span>
+
+              <div className="loading-screen__date-side">
+                {weddingMeta.time ? (
+                  <>
+                    <span className="loading-screen__date-line" />
+                    <span className="loading-screen__date-label">AT {weddingMeta.time}</span>
+                    <span className="loading-screen__date-line" />
+                  </>
+                ) : null}
+              </div>
+            </div>
+
+            <p className={`loading-screen__date-year ${cinzel.className}`}>
+              {weddingMeta.year}
+            </p>
+
+            {weddingMeta.venue ? (
+              <p className={`loading-screen__venue ${cinzel.className}`}>
+                {weddingMeta.venue}
+              </p>
+            ) : null}
+          </motion.div>
+
+          <motion.p
+            className="loading-screen__script"
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, ease: entryEase, delay: textDelay + 0.46 }}
+          >
+            reception to follow
+          </motion.p>
+
+          <div className="loading-screen__footer">
+            <motion.div
+              className="loading-screen__status"
+              aria-live="polite"
+              aria-atomic="true"
+              initial={reduceMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, ease: entryEase, delay: textDelay + 0.58 }}
+            >
+            <motion.div
+              className="loading-screen__status-roller"
+              animate={{ y: `-${messageIndex * STATUS_LINE_HEIGHT_REM}rem` }}
+              transition={
+                reduceMotion
+                  ? { duration: 0.01 }
+                  : { duration: ROLLER_TRANSITION_MS / 1000, ease: rollerEase }
+              }
+            >
+              {LOADING_MESSAGES.map((message) => (
+                <p key={message} className="loading-screen__status-line">
+                  {message}
+                </p>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            className="loading-screen__track"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(progress)}
+            aria-label="Loading progress"
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.55, ease: entryEase, delay: textDelay + 0.62 }}
+          >
+            <div
+              className="loading-screen__bar"
+              style={{ width: `${progress}%` }}
+            />
+          </motion.div>
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 };

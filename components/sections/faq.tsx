@@ -2,7 +2,7 @@
 
 import { useMemo, useState, type ReactNode } from "react"
 import type { SiteConfig } from "@/lib/site-config"
-import { ChevronDown } from "lucide-react"
+import { Plus } from "lucide-react"
 import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
 import { useSiteConfig } from "@/hooks/use-site-config"
@@ -28,19 +28,27 @@ const aboveTheBeyond = localFont({
 const CORNER_DECO_CLASS =
   "block h-auto w-auto max-w-[88px] sm:max-w-[108px] md:max-w-[124px] lg:max-w-[140px]"
 
-const C = {
-  forest: "#5d6f47",
-  sage: "#949981",
-  mustard: "#eec853",
-  butter: "#f4dd97",
+const reminderInk = {
+  navy: "#192030",
+  deep: "#04103B",
+  slate: "#364061",
+  gold: "#AB832E",
+  champagne: "#DDBA7A",
+} as const
+
+const paperWash = {
   cream: "#f7f3e9",
+  lift: "#faf7ef",
+  champagne: reminderInk.champagne,
+  gold: reminderInk.gold,
+  slate: reminderInk.slate,
 } as const
 
 const creamWash = `
-  radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.butter} 35%, transparent) 0%, transparent 55%),
-  radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${C.sage} 16%, transparent) 0%, transparent 58%),
-  radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${C.mustard} 14%, transparent) 0%, transparent 55%),
-  linear-gradient(180deg, ${C.cream} 0%, #faf7ef 48%, ${C.cream} 100%)
+  radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${paperWash.champagne} 35%, transparent) 0%, transparent 55%),
+  radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${paperWash.slate} 16%, transparent) 0%, transparent 58%),
+  radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${paperWash.gold} 14%, transparent) 0%, transparent 55%),
+  linear-gradient(180deg, ${paperWash.cream} 0%, ${paperWash.lift} 48%, ${paperWash.cream} 100%)
 `
 
 const palette = {
@@ -51,13 +59,13 @@ const palette = {
 } as const
 
 const faqPalette = {
-  body: "#F8F5EC",
-  heading: "#FFFFFF",
-  label: "rgba(248, 245, 236, 0.82)",
-  accent: "#f4dd97",
+  body: palette.body,
+  heading: palette.heading,
+  label: palette.label,
+  accent: reminderInk.gold,
 } as const
 
-const dividerLineStyle = {
+const headerDividerLineStyle = {
   background:
     "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent), transparent)",
 } as const
@@ -72,14 +80,6 @@ const ct = {
 const linkClass =
   "underline font-semibold transition-colors hover:opacity-80"
 
-const cardStyle = {
-  background: C.forest,
-  borderWidth: "1px",
-  borderStyle: "solid",
-  borderColor: "rgba(255, 255, 255, 0.28)",
-  boxShadow: `0 18px 48px color-mix(in srgb, ${C.forest} 28%, transparent)`,
-} as const
-
 interface FAQItem {
   question: string
   answer: string | ReactNode
@@ -88,7 +88,7 @@ interface FAQItem {
 function OrnamentalDivider() {
   return (
     <div className="flex items-center justify-center gap-1.5">
-      <span className="h-px w-6 sm:w-10" style={dividerLineStyle} />
+      <span className="h-px w-6 sm:w-10" style={headerDividerLineStyle} />
       <span className="h-0.5 w-0.5 rounded-full bg-motif-deep/45 sm:h-1 sm:w-1" aria-hidden />
       <span
         className="h-px w-6 sm:w-10"
@@ -252,7 +252,7 @@ function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
     {
       question: "What is the dress code?",
       answer:
-        "Please follow the attire guide in Event Details. Guests may wear a midi or cocktail dress, or a collared shirt with cream trousers, in Fern Green, Sage, Cosmic Latte, Jasmine, or Saffron. Kindly avoid white, black, and casual clothes or shoes.",
+        "Please follow the attire guide in Event Details. Guests may wear a midi or cocktail dress, or a collared shirt with cream trousers, in Midnight Navy, Slate Navy, Antique Gold, or Champagne. Kindly avoid white, black, and casual clothes or shoes.",
     },
     {
       question: "Will the ceremony be unplugged?",
@@ -323,7 +323,7 @@ export function FAQ() {
       <div className="pointer-events-none absolute left-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/left-top-corner.png"
+          src="/decoration/deco/left-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -331,7 +331,7 @@ export function FAQ() {
       <div className="pointer-events-none absolute right-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/right-top-corner.png"
+          src="/decoration/deco/right-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -339,7 +339,7 @@ export function FAQ() {
       <div className="pointer-events-none absolute bottom-0 left-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/left-bottom-corner.png"
+          src="/decoration/deco/left-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -347,7 +347,7 @@ export function FAQ() {
       <div className="pointer-events-none absolute bottom-0 right-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/right-bottom-corner.png"
+          src="/decoration/deco/right-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -368,60 +368,62 @@ export function FAQ() {
           Helpful notes so you can simply arrive, celebrate, and enjoy this new chapter with us.
         </p>
         <div className="flex items-center justify-center pt-3 sm:pt-4">
-          <span className="h-px w-16 sm:w-24 md:w-32" style={dividerLineStyle} />
+          <span className="h-px w-16 sm:w-24 md:w-32" style={headerDividerLineStyle} />
         </div>
       </div>
 
       {/* FAQ accordion */}
-      <div className="relative z-20 mx-auto my-6 mb-12 max-w-3xl px-4 sm:my-8 sm:px-6 md:my-10 md:mb-20 md:px-8">
-        <div
-          className="relative overflow-hidden rounded-xl border backdrop-blur-xl sm:rounded-2xl sm:backdrop-blur-2xl"
-          style={cardStyle}
-        >
-          <div
-            className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-white/10 via-transparent to-transparent"
-            aria-hidden
-          />
-
-          <div className="relative z-20 space-y-2 p-3 sm:space-y-2.5 sm:p-4 md:p-5">
+      <div className="relative z-20 mx-auto mt-6 w-full max-w-3xl px-4 pb-2 sm:mt-8 sm:max-w-4xl sm:px-6 md:px-8 lg:max-w-5xl">
+        <div className="space-y-2.5 sm:space-y-3">
             {faqItems.map((item, index) => {
               const isOpen = openIndex === index
               const contentId = `faq-item-${index}`
+              const number = String(index + 1).padStart(2, "0")
               return (
                 <div
                   key={index}
-                  className="relative z-20 rounded-xl border transition-all duration-300"
+                  className="relative z-20 overflow-hidden rounded-xl border transition-all duration-300"
                   style={{
                     borderColor: isOpen
-                      ? "rgba(255, 255, 255, 0.42)"
-                      : "rgba(255, 255, 255, 0.16)",
+                      ? `color-mix(in srgb, ${reminderInk.gold} 55%, transparent)`
+                      : "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
                     backgroundColor: isOpen
-                      ? "rgba(255, 255, 255, 0.12)"
-                      : "rgba(255, 255, 255, 0.06)",
+                      ? `color-mix(in srgb, ${reminderInk.gold} 10%, ${paperWash.cream})`
+                      : "var(--color-welcome-bg)",
                     boxShadow: isOpen
-                      ? "0 4px 16px rgba(0, 0, 0, 0.12)"
-                      : "none",
+                      ? `inset 3px 0 0 ${reminderInk.gold}`
+                      : "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
                   }}
                 >
                   <button
+                    type="button"
                     onClick={() => toggleItem(index)}
-                    className="group flex w-full items-center justify-between px-3 py-2.5 text-left outline-none transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:px-4 sm:py-3 md:px-5"
-                    style={{ outlineColor: faqPalette.accent }}
+                    className="flex w-full items-start gap-3 px-3.5 py-3.5 text-left outline-none transition-colors duration-200 sm:gap-4 sm:px-5 sm:py-4 md:px-6"
                     aria-expanded={isOpen}
                     aria-controls={contentId}
                   >
                     <span
-                      className={`${cinzel.className} ${ct.question} pr-3 font-semibold leading-snug transition-colors duration-200`}
+                      className={`${cinzel.className} mt-0.5 shrink-0 text-[10px] font-semibold tracking-[0.16em] sm:text-[11px]`}
+                      style={{ color: isOpen ? faqPalette.accent : faqPalette.label }}
+                    >
+                      {number}
+                    </span>
+                    <span
+                      className={`${cinzel.className} ${ct.question} min-w-0 flex-1 font-semibold leading-snug transition-colors duration-200`}
                       style={{ color: isOpen ? faqPalette.accent : faqPalette.heading }}
                     >
                       {item.question}
                     </span>
-                    <ChevronDown
-                      size={18}
-                      className={`h-4 w-4 flex-shrink-0 transition-transform duration-300 sm:h-5 sm:w-5 ${isOpen ? "rotate-180" : ""}`}
+                    <span
+                      className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center transition-colors duration-300 sm:h-8 sm:w-8"
                       style={{ color: isOpen ? faqPalette.accent : faqPalette.label }}
                       aria-hidden
-                    />
+                    >
+                      <Plus
+                        className={`h-3.5 w-3.5 transition-transform duration-300 sm:h-4 sm:w-4 ${isOpen ? "rotate-45" : ""}`}
+                        strokeWidth={2.25}
+                      />
+                    </span>
                   </button>
 
                   <div
@@ -433,9 +435,9 @@ export function FAQ() {
                   >
                     <div className="overflow-hidden">
                       <div
-                        className="border-t px-3 pb-3 pt-0 sm:px-4 sm:pb-4 md:px-5"
+                        className="border-t px-3.5 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4 md:px-6"
                         style={{
-                          borderColor: "rgba(255, 255, 255, 0.18)",
+                          borderColor: `color-mix(in srgb, ${reminderInk.gold} 28%, transparent)`,
                         }}
                       >
                         <FaqAnswer answer={item.answer} />
@@ -445,7 +447,6 @@ export function FAQ() {
                 </div>
               )
             })}
-          </div>
         </div>
       </div>
     </section>
