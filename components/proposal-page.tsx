@@ -392,7 +392,7 @@ function ProposalDateBlock({
 
 function ProposalRoleTitle({ roleSingular }: { roleSingular: string }) {
   return (
-    <div className="mx-auto w-full max-w-xl space-y-3 text-center sm:space-y-4">
+    <div className="mx-auto w-full max-w-xl space-y-3 text-left sm:space-y-4">
       {/* <p
         className={`${cinzel.className} ${sectionType.label} font-semibold uppercase tracking-[0.16em] sm:tracking-[0.2em] md:tracking-[0.24em]`}
         style={{ color: palette.label }}
@@ -413,9 +413,9 @@ function ProposalRoleTitle({ roleSingular }: { roleSingular: string }) {
       </div> */}
 
       <h2
-        className={`${theSeasons.className} capitalize leading-[1.1] tracking-[0.06em] sm:tracking-[0.08em] [overflow-wrap:anywhere]`}
+        className={`${theSeasons.className} capitalize leading-[0.98] tracking-[0.04em] sm:leading-[1.1] sm:tracking-[0.08em] [overflow-wrap:anywhere]`}
         style={{
-          fontSize: "clamp(2rem, 8.5vw, 3.75rem)",
+          fontSize: "clamp(1.85rem, 8vw, 3.75rem)",
           color: palette.title,
           textShadow: NAME_SHADOW,
         }}
@@ -681,39 +681,38 @@ function ProposalAskSection({
         <div className="mb-6 flex items-center justify-center sm:mb-8">
           <DividerLine className="w-full max-w-md" />
         </div>
-        <div className="relative mt-8 flex flex-col gap-5 sm:mt-10 sm:flex-row sm:items-end sm:justify-between sm:gap-8 md:gap-10">
-          {/* Question + quote — text wraps around floated image on mobile */}
-          <div className="relative z-10 min-w-0 flex-1 text-center sm:text-left">
-            {/* <motion.div
-              initial={{ opacity: 0, y: 16 }}
+        <div className="relative mt-6 sm:mt-10 sm:flex sm:items-end sm:justify-between sm:gap-8 md:gap-10">
+          <div className="grid grid-cols-[minmax(0,1.15fr)_minmax(8.5rem,0.9fr)] sm:flex sm:min-w-0 sm:flex-1 sm:flex-col">
+            <div className="col-start-1 row-start-1 min-w-0">
+              <ProposalRoleTitle roleSingular={roleSingular} />
+            </div>
+
+            <p
+              ref={questionRef}
+              className={`font-goudy-italic col-start-1 row-start-2 mt-3 min-w-0 text-left sm:mt-6 sm:max-w-xl ${sectionType.textRelaxed}`}
+              style={{ color: palette.body }}
+            >
+              &ldquo;{description}&rdquo;
+            </p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               aria-hidden
-              className="pointer-events-none relative float-right ml-3 mb-2 h-[clamp(240px,62vw,340px)] w-[44%] max-w-[190px] shrink-0 sm:hidden"
-              style={{ shapeOutside: "margin-box" }}
+              className="pointer-events-none relative col-start-2 row-start-1 row-span-2 -mr-1 min-h-[320px] sm:hidden"
             >
               <Image
-                src="/Details/coupleImage.png"
+                src="/Details/proposalcoupleimg.png"
                 alt=""
                 fill
-                className="object-contain object-bottom drop-shadow-[0_20px_48px_rgba(42,37,32,0.12)]"
-                sizes="44vw"
+                className="object-contain object-bottom object-right drop-shadow-[0_16px_36px_rgba(4,16,59,0.16)]"
+                sizes="42vw"
                 priority
               />
-            </motion.div> */}
+            </motion.div>
 
-            <div ref={questionRef} className="mx-auto w-full max-w-xl space-y-5 sm:space-y-6">
-              <ProposalRoleTitle roleSingular={roleSingular} />
-
-              <p
-                className={`font-goudy-italic mx-auto max-w-lg ${sectionType.textRelaxed} sm:text-left`}
-                style={{ color: palette.body }}
-              >
-                &ldquo;{description}&rdquo;
-              </p>
-            </div>
-
-            <div className="clear-both mt-10 hidden w-full flex-row gap-3 sm:mt-12 sm:flex sm:max-w-md md:mt-14">
+            <div className="col-span-2 mt-8 hidden w-full flex-row gap-3 sm:mt-12 sm:flex sm:max-w-md md:mt-14">
               <button
                 onClick={onYes}
                 className={`${primaryBtnClass} min-w-0 flex-1`}
@@ -731,7 +730,6 @@ function ProposalAskSection({
             </div>
           </div>
 
-          {/* Couple illustration — desktop */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -744,22 +742,19 @@ function ProposalAskSection({
             }
             className="pointer-events-none relative hidden shrink-0 sm:block sm:w-[min(36vw,240px)] md:w-[min(32vw,280px)] lg:w-[300px]"
           >
-            <div
-              className="relative w-full sm:aspect-[3/4] sm:translate-y-4 md:translate-y-6"
-              style={questionHeight ? { minHeight: "var(--ask-image-h)" } : undefined}
-            >
+            <div className="relative aspect-[3/4] w-full sm:min-h-[var(--ask-image-h)] sm:translate-y-4 md:translate-y-6">
               <Image
-                src="/Details/coupleImage.png"
+                src="/Details/proposalcoupleimg.png"
                 alt=""
                 fill
                 className="object-contain object-bottom drop-shadow-[0_20px_48px_rgba(42,37,32,0.12)]"
-                sizes="(max-width: 640px) 44vw, 300px"
+                sizes="300px"
                 priority
               />
             </div>
           </motion.div>
 
-          <div className="flex w-full flex-row gap-2.5 sm:hidden">
+          <div className="mt-6 flex w-full flex-row gap-2.5 sm:hidden">
             <button
               onClick={onYes}
               className={`${primaryBtnClass} min-h-11 min-w-0 flex-1 px-4 py-3.5`}
