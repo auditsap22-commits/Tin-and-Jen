@@ -1071,7 +1071,7 @@ export function ProposalPage({ role }: ProposalPageProps) {
                     borderColor: `color-mix(in srgb, ${C.goldBright} 70%, transparent)`,
                     boxShadow: `0 8px 20px color-mix(in srgb, ${C.gold} 35%, transparent)`,
                   }}
-                  main="It's Official"
+                  main="Its Official"
                   script="thank you"
                 />
 
