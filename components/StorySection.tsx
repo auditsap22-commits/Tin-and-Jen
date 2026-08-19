@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react"
 import localFont from "next/font/local"
-import { sectionType, storyChapterTitleSize } from "@/lib/section-typography"
+import { storyChapterTitleSize } from "@/lib/section-typography"
 import Image from "next/image"
 import { TornPaperEdge, PAPER_FACE } from "./TornPaperEdge"
 
@@ -143,7 +143,7 @@ export const StorySection: React.FC<StorySectionProps> = ({
             )}
 
             <div
-              className={`font-goudy-italic space-y-3 transition-all delay-700 duration-1000 sm:space-y-4 md:space-y-6 lg:leading-[1.7] ${sectionType.textRelaxed} ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} `}
+              className={`font-goudy-italic space-y-3 text-[11px] leading-[1.62] transition-all delay-700 duration-1000 sm:space-y-4 sm:text-[14px] sm:leading-[1.65] md:space-y-6 md:text-[16px] lg:text-[18px] lg:leading-[1.7] ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} `}
             >
               {text}
             </div>

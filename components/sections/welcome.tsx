@@ -126,7 +126,7 @@ function LayeredWelcomeTitle() {
         className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] md:tracking-[0.14em]`}
         style={{
           fontSize: "var(--welcome-size)",
-          color: C.goldBright,
+          color: C.navy,
         }}
       >
         Welcome
@@ -137,7 +137,7 @@ function LayeredWelcomeTitle() {
         className={`${aboveTheBeyond.className} relative z-10 mx-auto block w-fit max-w-full px-1 leading-[0.88] sm:leading-[0.9]`}
         style={{
           fontSize: "var(--script-size)",
-          color: C.goldSoft,
+          color: C.navy,
         }}
       >
         to our love story
@@ -291,7 +291,7 @@ export function Welcome() {
               <p>
                 Dear family and friends, we are overjoyed to begin this new chapter together and
                 grateful to God for every step that led us here. What began as a simple story has
-                grown into a love we cherish deeply — and we cannot imagine celebrating without you.
+                grown into a love we cherish deeply and we cannot imagine celebrating without you.
               </p>
               <p>
                 This invitation holds everything you may need for our wedding day: the schedule,

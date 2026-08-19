@@ -129,7 +129,7 @@ export default async function GalleryPage() {
 
   return (
     <main
-      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative min-h-screen overflow-hidden`}
+      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative min-h-screen overflow-x-hidden`}
       style={{ background: "var(--color-welcome-bg)" }}
     >
       <div className="pointer-events-none absolute left-0 top-0 z-10">

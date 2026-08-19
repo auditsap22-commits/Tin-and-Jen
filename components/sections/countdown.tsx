@@ -400,6 +400,29 @@ export function Countdown() {
               </div>
             </div>
       </div>
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-[calc(var(--hero-frame-inset)+2.25rem)] z-10 flex justify-center px-16 text-center sm:bottom-[calc(var(--hero-frame-inset)+2.75rem)] sm:px-24 md:bottom-[calc(var(--hero-frame-inset)+3.25rem)] md:px-32">
+        <div>
+          <span
+            className={`${theSeasons.className} block uppercase tracking-[0.16em] sm:tracking-[0.2em]`}
+            style={{
+              fontSize: "clamp(0.8rem, 2.2vw, 1.1rem)",
+              color: C.goldSoft,
+            }}
+          >
+            Until We Say
+          </span>
+          <span
+            className={`${aboveTheBeyond.className} mt-1 block leading-[0.9] sm:mt-1.5`}
+            style={{
+              fontSize: "clamp(1.35rem, 4.5vw, 2.25rem)",
+              color: C.goldBright,
+            }}
+          >
+            &ldquo;I Do.&rdquo;
+          </span>
+        </div>
+      </div>
     </Section>
   )
 }

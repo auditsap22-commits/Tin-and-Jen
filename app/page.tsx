@@ -221,21 +221,21 @@ export default function Home() {
               <Welcome />
                <CoupleVideo /> 
               <LoveStory />
-              <ProposalVideo />
+              {/* <ProposalVideo /> */}
               <Countdown />
               <Gallery />
+              <Details />
               <VideoMessage />
               <Messages />
-              <Details />
+
               {/* <Accommodation /> */}
               {/* <GuestInformation /> */}
               <WeddingTimeline />
               <Entourage />
               <GuestList />
               <BookOfGuests />
-      
               {/* <PrincipalSponsors /> */}
-              <WeddingPlaylist />
+              {/* <WeddingPlaylist /> */}
               <FAQ />
               <Registry />
               <SnapShare />

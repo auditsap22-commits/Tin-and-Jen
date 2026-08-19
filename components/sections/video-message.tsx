@@ -2,6 +2,7 @@
 
 import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
+import { ArrowRight } from "lucide-react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
 
@@ -52,13 +53,6 @@ const cardStyle = {
   borderStyle: "solid",
   borderColor: goldLine,
   boxShadow: `0 12px 36px color-mix(in srgb, ${C.navy} 28%, transparent), inset 0 1px 0 color-mix(in srgb, ${C.goldSoft} 55%, transparent)`,
-} as const
-
-const buttonStyle = {
-  backgroundColor: C.gold,
-  borderColor: `color-mix(in srgb, ${C.goldBright} 70%, transparent)`,
-  color: C.navy,
-  boxShadow: `0 10px 24px color-mix(in srgb, ${C.gold} 35%, transparent)`,
 } as const
 
 function OutsideDivider() {
@@ -207,22 +201,38 @@ export function VideoMessage() {
                   href={uploadUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${cinzel.className} group relative inline-flex items-center justify-center rounded-sm border px-6 py-2.5 ${sectionType.label} font-semibold uppercase tracking-[0.2em] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:px-8 sm:py-3 sm:tracking-[0.24em] md:px-10 md:py-3.5 md:tracking-[0.28em]`}
-                  style={buttonStyle}
+                  className={`${cinzel.className} group inline-flex items-center gap-4 rounded-full border py-1 pl-7 pr-1 text-[0.625rem] font-semibold uppercase tracking-[0.22em] transition-all duration-300 hover:scale-[1.02] sm:gap-5 sm:py-1.5 sm:pl-9 sm:pr-1.5 sm:text-[0.6875rem] sm:tracking-[0.28em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4`}
+                  style={{
+                    backgroundColor: "#04103B",
+                    borderColor: "color-mix(in srgb, #04103B 35%, transparent)",
+                    color: "var(--color-welcome-bg)",
+                    boxShadow: "0 6px 20px color-mix(in srgb, #04103B 35%, transparent)",
+                  }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = C.goldBright
-                    e.currentTarget.style.borderColor = C.gold
+                    e.currentTarget.style.backgroundColor = "#192030"
+                    e.currentTarget.style.borderColor = "#04103B"
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = C.gold
-                    e.currentTarget.style.borderColor = buttonStyle.borderColor
+                    e.currentTarget.style.backgroundColor = "#04103B"
+                    e.currentTarget.style.borderColor =
+                      "color-mix(in srgb, #04103B 35%, transparent)"
                   }}
                 >
-                  <span className="relative z-10">Upload Video Message</span>
-                  <div
-                    className="absolute inset-0 -z-0 rounded-sm opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-25"
-                    style={{ backgroundColor: C.gold }}
-                  />
+                  <span>Upload Video Message</span>
+                  <span
+                    className="flex h-8 w-8 items-center justify-center rounded-full sm:h-10 sm:w-10"
+                    style={{
+                      backgroundColor: "var(--color-welcome-bg)",
+                      boxShadow: "0 1px 0 color-mix(in srgb, var(--color-welcome-navy) 10%, transparent)",
+                    }}
+                  >
+                    <ArrowRight
+                      className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 sm:h-4 sm:w-4"
+                      strokeWidth={2.25}
+                      style={{ color: "#04103B" }}
+                      aria-hidden
+                    />
+                  </span>
                 </a>
               ) : (
                 <p className={`font-goudy-italic ${sectionType.text}`} style={{ color: palette.body }}>

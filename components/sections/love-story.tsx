@@ -3,6 +3,7 @@
 import React from "react"
 import localFont from "next/font/local"
 import { Cinzel } from "next/font/google"
+import { ArrowRight } from "lucide-react"
 import { StorySection, lightSectionBg } from "@/components/StorySection"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
 
@@ -66,19 +67,19 @@ function LoveStoryTitle() {
           color: "var(--color-welcome-navy)",
         }}
       >
-        Our Love Story
+       Every love story is beautiful
       </span>
       <span
         aria-hidden
         className={`${aboveTheBeyond.className} mx-auto block w-fit max-w-full px-1 leading-[0.88] sm:leading-[0.9] mt-2 sm:mt-2.5 md:mt-3`}
         style={{
           fontSize: "var(--script-size)",
-          color: "var(--color-welcome-green)",
+          color: "var(--color-welcome-navy)",
         }}
       >
-        How We Met
+          but ours is my favorite.
       </span>
-      <span className="sr-only">How We Met</span>
+      <span className="sr-only">but ours is my favorite</span>
     </h1>
   )
 }
@@ -112,6 +113,12 @@ export function LoveStory() {
           </div>
           <div className="mx-auto">
             <LoveStoryTitle />
+            <p
+              className={`font-goudy-italic mx-auto mt-4 max-w-xl px-2 sm:mt-5 md:mt-6 ${sectionType.textRelaxed}`}
+              style={{ color: "var(--color-welcome-text)" }}
+            >
+           
+            </p>
           </div>
         </div>
       </div>
@@ -120,7 +127,7 @@ export function LoveStory() {
         theme="light"
         layout="image-left"
         isFirst={true}
-        title="How We Met"
+        title="Love in  Gods Perfect  Time"
         imageSrc="/mobile-background/couple (1).jpeg"
         text={
           <>
@@ -148,7 +155,7 @@ export function LoveStory() {
         text={
           <>
             <p className="mb-4">
-              One day, I went to Binondo, where our YouTube partner was staying.
+              One day, I went to Binondo, where our Youth Pastor partner was staying.
             </p>
             <p className="mb-4">That was the first time I saw Christine.</p>
             <p className="mb-4">We didn&apos;t talk. We weren&apos;t introduced. She was simply there.</p>
@@ -271,7 +278,7 @@ export function LoveStory() {
               Reflection
             </p>
             <p
-              className={`font-goudy-italic ${sectionType.textRelaxed} italic leading-relaxed`}
+              className="font-goudy-italic text-[11px] italic leading-[1.62] sm:text-[14px] sm:leading-[1.65] md:text-[16px] lg:text-[18px]"
               style={{ color: "var(--color-welcome-text)" }}
             >
               Sometimes God doesn&apos;t begin a love story with fireworks. Sometimes He begins it with a
@@ -285,6 +292,44 @@ export function LoveStory() {
               — Isaiah 60:22
             </footer>
           </blockquote>
+
+          <div className="mt-8 flex justify-center sm:mt-10 md:mt-12">
+            <a
+              href="#guest-list"
+              className={`${cinzel.className} group inline-flex items-center gap-4 rounded-full border py-1 pl-7 pr-1 text-[0.625rem] font-semibold uppercase tracking-[0.22em] transition-all duration-300 hover:scale-[1.02] sm:gap-5 sm:py-1.5 sm:pl-9 sm:pr-1.5 sm:text-[0.6875rem] sm:tracking-[0.28em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4`}
+              style={{
+                backgroundColor: "#04103B",
+                borderColor: "color-mix(in srgb, #04103B 35%, transparent)",
+                color: "var(--color-welcome-bg)",
+                boxShadow: "0 6px 20px color-mix(in srgb, #04103B 35%, transparent)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#192030"
+                e.currentTarget.style.borderColor = "#04103B"
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#04103B"
+                e.currentTarget.style.borderColor =
+                  "color-mix(in srgb, #04103B 35%, transparent)"
+              }}
+            >
+              <span>Join us</span>
+              <span
+                className="flex h-8 w-8 items-center justify-center rounded-full sm:h-10 sm:w-10"
+                style={{
+                  backgroundColor: "var(--color-welcome-bg)",
+                  boxShadow: "0 1px 0 color-mix(in srgb, var(--color-welcome-navy) 10%, transparent)",
+                }}
+              >
+                <ArrowRight
+                  className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 sm:h-4 sm:w-4"
+                  strokeWidth={2.25}
+                  style={{ color: "#04103B" }}
+                  aria-hidden
+                />
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

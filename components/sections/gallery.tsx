@@ -1,10 +1,11 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
+import { createPortal } from "react-dom"
 import Link from "next/link"
 import Image from "next/image"
 import localFont from "next/font/local"
-import { X, ChevronLeft, ChevronRight, Camera } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, Camera, ArrowRight } from "lucide-react"
 import { Cinzel } from "next/font/google"
 import { Section } from "@/components/section"
 import { useSiteConfig } from "@/hooks/use-site-config"
@@ -139,6 +140,11 @@ export function Gallery() {
   const [pinchStartScale, setPinchStartScale] = useState(1)
   const [lastTap, setLastTap] = useState(0)
   const [panStart, setPanStart] = useState<{ x: number; y: number; panX: number; panY: number } | null>(null)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     // Simulate loading for better UX
@@ -311,15 +317,16 @@ export function Gallery() {
                   <button
                     key={item.image + index}
                     type="button"
-                    className="group relative snap-center shrink-0 w-[82%] overflow-hidden rounded-lg transition-all duration-300"
+                    className="group relative snap-center shrink-0 w-[82%] cursor-pointer overflow-hidden rounded-lg transition-all duration-300"
                     onClick={() => {
+                      resetZoom()
                       setSelectedImage(item)
                       setCurrentIndex(index)
                     }}
                     aria-label={`Open image ${index + 1}`}
                   >
                     <div
-                      className="absolute -inset-0.5 rounded-lg opacity-0 blur-sm transition-opacity duration-300 group-active:opacity-100"
+                      className="pointer-events-none absolute -inset-0.5 rounded-lg opacity-0 blur-sm transition-opacity duration-300 group-active:opacity-100"
                       style={{
                         background:
                           "color-mix(in srgb, var(--color-welcome-green) 25%, transparent)",
@@ -369,15 +376,16 @@ export function Gallery() {
                 <button
                   key={item.image + index}
                   type="button"
-                  className="group relative w-full overflow-hidden rounded-xl transition-all duration-300"
+                  className="group relative w-full cursor-pointer overflow-hidden rounded-xl transition-all duration-300"
                   onClick={() => {
+                    resetZoom()
                     setSelectedImage(item)
                     setCurrentIndex(index)
                   }}
                   aria-label={`Open image ${index + 1}`}
                 >
                   <div
-                    className="absolute -inset-0.5 rounded-xl opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100"
+                    className="pointer-events-none absolute -inset-0.5 rounded-xl opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100"
                     style={{
                       background:
                         "color-mix(in srgb, var(--color-welcome-green) 22%, transparent)",
@@ -416,25 +424,38 @@ export function Gallery() {
             <div className="mt-10 sm:mt-12 md:mt-14 flex justify-center">
               <Link
                 href="/gallery"
-                className={`${cinzel.className} inline-flex items-center justify-center rounded-full border px-8 py-3 text-[0.625rem] font-semibold uppercase tracking-[0.18em] transition-all duration-300 hover:scale-[1.02] sm:text-[0.6875rem] sm:tracking-[0.22em]`}
+                className={`${cinzel.className} group inline-flex items-center gap-4 rounded-full border py-1 pl-7 pr-1 text-[0.625rem] font-semibold uppercase tracking-[0.22em] transition-all duration-300 hover:scale-[1.02] sm:gap-5 sm:py-1.5 sm:pl-9 sm:pr-1.5 sm:text-[0.6875rem] sm:tracking-[0.28em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4`}
                 style={{
-                  backgroundColor: "var(--color-welcome-green)",
-                  borderColor: "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)",
+                  backgroundColor: "#04103B",
+                  borderColor: "color-mix(in srgb, #04103B 35%, transparent)",
                   color: "var(--color-welcome-bg)",
-                  boxShadow:
-                    "0 6px 20px color-mix(in srgb, var(--color-welcome-green) 35%, transparent)",
+                  boxShadow: "0 6px 20px color-mix(in srgb, #04103B 35%, transparent)",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "var(--color-welcome-navy)"
-                  e.currentTarget.style.borderColor = "var(--color-welcome-green)"
+                  e.currentTarget.style.backgroundColor = "#192030"
+                  e.currentTarget.style.borderColor = "#04103B"
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "var(--color-welcome-green)"
+                  e.currentTarget.style.backgroundColor = "#04103B"
                   e.currentTarget.style.borderColor =
-                    "color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)"
+                    "color-mix(in srgb, #04103B 35%, transparent)"
                 }}
               >
-                View Full Gallery
+                <span>View Full Gallery</span>
+                <span
+                  className="flex h-8 w-8 items-center justify-center rounded-full sm:h-10 sm:w-10"
+                  style={{
+                    backgroundColor: "var(--color-welcome-bg)",
+                    boxShadow: "0 1px 0 color-mix(in srgb, var(--color-welcome-navy) 10%, transparent)",
+                  }}
+                >
+                  <ArrowRight
+                    className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 sm:h-4 sm:w-4"
+                    strokeWidth={2.25}
+                    style={{ color: "#04103B" }}
+                    aria-hidden
+                  />
+                </span>
               </Link>
             </div>
           </>
@@ -442,7 +463,7 @@ export function Gallery() {
       </div>
 
       {/* Lightbox Modal */}
-      {selectedImage && (
+      {mounted && selectedImage && createPortal(
         <div
           className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4"
           onClick={() => {
@@ -609,7 +630,8 @@ export function Gallery() {
               </div>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
       </Section>
     </div>

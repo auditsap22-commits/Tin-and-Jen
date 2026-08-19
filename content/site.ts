@@ -41,7 +41,7 @@ export const siteConfig = {
   details: {
     rsvp: {
       deadline: "November 15, 2026",
-      coordinator: "Ana / Paul",
+      coordinator: "Jen / Tin",
       phone: "to be announced",
     },
   },
@@ -52,24 +52,24 @@ export const siteConfig = {
   },
   giftRegistry: {
     QR_1:{
-    id: "BPI",
-    src: "/QR/BPI.png",
-    label: "BPI",
-    accountNumber: "KAMS : ***********569",
+    id: "GOtyme",
+    src: "/QR/GOTYM-TIN.png",
+    label: "GO tyme bank",
+    accountNumber: "TIN : ******** 3388",
     },
     QR_2:{
     id: "MariBank",
-    src: "/QR/MariBank.png",
-    label: "MariBank",
-    accountNumber: "****7672",
+    src: "/QR/GOTYM-JEN.png",
+    label: "GO tyme bank",
+    accountNumber: "JEN : ******** 1092",
     }
-    // ,
-    // QR_3:{
-    // id: "Gcash",
-    // src: "/QR/pleaseProvideQR.png",
-    // label: "Gcash",
-    // accountNumber: "to be announced",
-    // }
+    ,
+    QR_3:{
+    id: "BPI",
+    src: "/QR/BPI.png",
+    label: "BPI",
+    accountNumber: "JEN: ************102",
+    }
   },
   ceremony: {
     location: "RAI Atrium Suites",

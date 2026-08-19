@@ -1,274 +1,280 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
-import { motion, useReducedMotion } from "motion/react"
+import { useEffect, useState } from "react"
+import localFont from "next/font/local"
 import { Cinzel } from "next/font/google"
-import Image from "next/image"
-import { useSiteConfig } from "@/hooks/use-site-config"
-import { parseWeddingDate } from "@/lib/wedding-date"
+import { ArrowRight } from "lucide-react"
+import { siteConfig } from "@/content/site"
+import { sectionType, welcomeTitleSize } from "@/lib/section-typography"
 
 const cinzel = Cinzel({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "600", "700"],
 })
 
 const C = {
-  navy: "#04103B",
-  gold: "#c5a059",
-  goldBright: "#d4af37",
-  goldSoft: "#e6d3a3",
+  cream: "#f7f3e9",
+  lift: "#faf7ef",
+  champagne: "#DDBA7A",
+  gold: "#AB832E",
+  slate: "#364061",
 } as const
 
-const DECO = {
-  top: "/decoration/deco/top-center-decoration.png",
-  bl: "/decoration/deco/left-bottom-small.png",
-  br: "/decoration/deco/right-bottom-small.png",
-} as const
+const theSeasons = localFont({
+  src: "../../Font/Fontspring-DEMO-theseasons-reg.otf",
+  display: "swap",
+  variable: "--font-the-seasons",
+})
 
-const entryEase = [0.22, 1, 0.36, 1] as const
+const aboveTheBeyond = localFont({
+  src: "../../Font/above-the-beyond-script.otf",
+  display: "swap",
+  variable: "--font-above-beyond",
+})
 
-function formatClockTime(raw: string) {
-  const trimmed = raw.trim()
-  const match = trimmed.match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?/i)
-  if (!match) return trimmed.toUpperCase()
-
-  let hour = Number(match[1])
-  const minutes = match[2] ?? "00"
-  let meridiem = (match[3] || "").toUpperCase()
-
-  if (!meridiem) {
-    meridiem = hour >= 12 ? "PM" : "AM"
-    hour = hour % 12 || 12
-  } else if (meridiem === "PM" && hour > 12) {
-    hour = hour % 12
-  } else if (meridiem === "AM" && hour === 0) {
-    hour = 12
-  } else if (hour > 12) {
-    hour = hour % 12
-  }
-
-  return `${hour}:${minutes} ${meridiem}`
-}
+const CORNER_DECO_CLASS =
+  "block h-auto w-auto max-w-[88px] sm:max-w-[108px] md:max-w-[124px] lg:max-w-[140px]"
 
 export function Hero() {
-  const siteConfig = useSiteConfig()
-  const reduceMotion = useReducedMotion()
-  const [visible, setVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const id = window.setTimeout(() => setVisible(true), 40)
-    return () => window.clearTimeout(id)
+    const t = setTimeout(() => setIsVisible(true), 150)
+    return () => clearTimeout(t)
   }, [])
 
-  const groomName = siteConfig.couple.groomNickname || siteConfig.couple.groom
-  const brideName = siteConfig.couple.brideNickname || siteConfig.couple.bride
-
-  const parsedDate = useMemo(
-    () => parseWeddingDate(siteConfig.ceremony.date ?? siteConfig.wedding.date),
-    [siteConfig.ceremony.date, siteConfig.wedding.date],
-  )
-
-  const weekday = (
-    siteConfig.ceremony.day ?? parsedDate.dayOfWeek
-  ).toUpperCase()
-  const month = parsedDate.month.toUpperCase()
-  const dayNumber = parsedDate.day
-  const year = parsedDate.year
-  const ceremonyTime = formatClockTime(
-    siteConfig.ceremony.time ?? siteConfig.wedding.time,
-  )
-  const venueTitle =
-    siteConfig.ceremony.location || siteConfig.wedding.venue
-  const venueAddress = siteConfig.ceremony.venue || ""
-
-  const fadeUp = (delay: number) => {
-    if (reduceMotion) {
-      return { initial: false as const, animate: { opacity: 1, y: 0 } }
-    }
-    return {
-      initial: { opacity: 0, y: 18 },
-      animate: visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
-      transition: { duration: 0.85, delay, ease: entryEase },
-    }
-  }
-
-  const goldLine = `color-mix(in srgb, ${C.gold} 55%, transparent)`
+  const ceremonyDay = siteConfig.ceremony.day ?? "Saturday"
+  const ceremonyTime = siteConfig.ceremony.time
+  const ceremonyDate = siteConfig.ceremony.date
+  const groomName = siteConfig.couple.groomNickname ?? siteConfig.couple.groom
+  const brideName = siteConfig.couple.brideNickname ?? siteConfig.couple.bride
 
   return (
     <section
       id="home"
-      className="hero-invite relative min-h-screen overflow-hidden"
+      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative min-h-screen flex items-center justify-center overflow-hidden`}
       style={{
         background: `
-          radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, ${C.gold} 10%, transparent) 0%, transparent 52%),
-          linear-gradient(180deg, rgb(5 25 45 / 28%) 0%, rgb(0 19 38 / 18%) 100%)
+          radial-gradient(920px 520px at 50% 8%, color-mix(in srgb, ${C.champagne} 35%, transparent) 0%, transparent 55%),
+          radial-gradient(640px 420px at 12% 88%, color-mix(in srgb, ${C.slate} 16%, transparent) 0%, transparent 58%),
+          radial-gradient(560px 380px at 92% 78%, color-mix(in srgb, ${C.gold} 14%, transparent) 0%, transparent 55%),
+          linear-gradient(180deg, ${C.cream} 0%, ${C.lift} 48%, ${C.cream} 100%)
         `,
-        color: C.gold,
       }}
     >
-      <div className="hero-invite-frame" aria-hidden="true">
-        <span className="hero-invite-frame-arm hero-invite-frame-arm--top-left" />
-        <span className="hero-invite-frame-arm hero-invite-frame-arm--top-right" />
-        <span className="hero-invite-frame-arm hero-invite-frame-arm--left" />
-        <span className="hero-invite-frame-arm hero-invite-frame-arm--right" />
-        <span className="hero-invite-frame-arm hero-invite-frame-arm--bottom" />
-      </div>
-
-      <div className="hero-invite-deco hero-invite-deco--top" aria-hidden="true">
-        <Image
-          src={DECO.top}
-          alt=""
-          width={2078}
-          height={598}
-          priority
-          sizes="(max-width: 768px) 90vw, 480px"
+      {/* Date watermark */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+        aria-hidden
+      >
+        <span
+          className={`${theSeasons.className} text-[clamp(5.5rem,18vw,12rem)] font-extralight tracking-[0.25em] opacity-[0.07]`}
+          style={{ color: "var(--color-welcome-navy)" }}
         />
       </div>
-      <div className="hero-invite-deco hero-invite-deco--bl" aria-hidden="true">
-        <Image src={DECO.bl} alt="" width={851} height={1472} sizes="200px" />
+
+      {/* Corner decorations */}
+      <div className="pointer-events-none absolute left-0 top-0 z-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/decoration/deco/left-top-corner.png"
+          alt=""
+          className={CORNER_DECO_CLASS}
+        />
       </div>
-      <div className="hero-invite-deco hero-invite-deco--br" aria-hidden="true">
-        <Image src={DECO.br} alt="" width={851} height={1472} sizes="200px" />
+      <div className="pointer-events-none absolute right-0 top-0 z-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/decoration/deco/right-top-corner.png"
+          alt=""
+          className={CORNER_DECO_CLASS}
+        />
+      </div>
+      <div className="pointer-events-none absolute bottom-0 left-0 z-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/decoration/deco/left-bottom-corner.png"
+          alt=""
+          className={CORNER_DECO_CLASS}
+        />
+      </div>
+      <div className="pointer-events-none absolute bottom-0 right-0 z-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/decoration/deco/right-bottom-corner.png"
+          alt=""
+          className={CORNER_DECO_CLASS}
+        />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-3xl flex-col items-center justify-center px-6 pb-[clamp(7rem,18vw,11rem)] pt-[clamp(7.5rem,18vw,11rem)] sm:px-10">
-        <div className="flex w-full flex-col items-center text-center">
-          <motion.p
-            className={`${cinzel.className} text-[0.68rem] font-medium uppercase tracking-[0.28em] sm:text-[0.72rem] sm:tracking-[0.34em]`}
-            style={{ color: C.goldSoft }}
-            {...fadeUp(0.05)}
+      <div className="relative z-20 w-full container mx-auto px-5 sm:px-8 md:px-10 flex flex-col items-center justify-center min-h-screen pt-20 sm:pt-24 pb-20 sm:pb-24">
+        <div
+          className={`w-full max-w-xl text-center transition-all duration-700 ease-out ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          <p
+            className={`font-goudy-italic mx-auto max-w-2xl px-2 ${sectionType.textRelaxed}`}
+            style={{ color: "var(--color-welcome-text)" }}
           >
-            Together with their families
-          </motion.p>
+            With grateful hearts, together with our families, we warmly invite you to celebrate with us as we say “I do”
+          </p>
 
-          <motion.div
-            className="mt-6 w-full max-w-[min(22rem,92%)] sm:mt-8 sm:max-w-[28rem] md:max-w-[32rem]"
-            {...fadeUp(0.12)}
-          >
-            <div
-              className="couple-name-lockup"
-              role="img"
-              aria-label={`${groomName} and ${brideName}`}
-            />
-          </motion.div>
-
-          <motion.div
-            className="mt-3 flex flex-col items-center gap-1.5 sm:mt-4"
-            {...fadeUp(0.16)}
-          >
+          <div className="my-6 sm:my-8">
+            <div className="flex items-center justify-center gap-2 pt-1 sm:pt-2">
+              <span
+                className="h-px w-8 sm:w-12 md:w-16"
+                style={{
+                  background:
+                    "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-welcome-navy) 38%, transparent))",
+                }}
+                aria-hidden
+              />
+              <span
+                className="h-0.5 w-0.5 rounded-full sm:h-1 sm:w-1"
+                style={{ backgroundColor: "var(--color-welcome-green)" }}
+                aria-hidden
+              />
+              <span
+                className="h-px w-8 sm:w-12 md:w-16"
+                style={{
+                  background:
+                    "linear-gradient(to left, transparent, color-mix(in srgb, var(--color-welcome-navy) 38%, transparent))",
+                }}
+                aria-hidden
+              />
+            </div>
             <p
-              className={`${cinzel.className} text-[0.68rem] font-semibold uppercase tracking-[0.22em] sm:text-[0.74rem] sm:tracking-[0.26em]`}
-              style={{ color: C.goldSoft }}
+              className={`font-goudy-italic mx-auto mt-3 max-w-2xl px-2 ${sectionType.textRelaxed}`}
+              style={{ color: "var(--color-welcome-text)" }}
             >
-              Two Become One
+              at the celebration of a love so dearly cherished
             </p>
-            <p
-              className="max-w-xs text-center text-[0.88rem] italic leading-snug sm:text-[0.95rem]"
+          </div>
+
+          <h1
+            className="welcome-title-lockup relative mx-auto w-full max-w-full text-center"
+            style={
+              {
+                "--title-size": welcomeTitleSize.main,
+                "--script-size": welcomeTitleSize.script,
+              } as React.CSSProperties
+            }
+          >
+            <span
+              className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] md:tracking-[0.14em] pb-1 sm:pb-1.5`}
               style={{
-                color: C.goldSoft,
-                fontFamily: '"SortsMillGoudy", Georgia, "Times New Roman", serif',
+                fontSize: "var(--title-size)",
+                color: "var(--color-welcome-navy)",
               }}
             >
-              Written By God. Perfected In His Timing.
-            </p>
-          </motion.div>
-
-          <motion.p
-            className="mt-5 max-w-md text-[0.95rem] leading-relaxed sm:mt-6 sm:text-[1.05rem]"
-            style={{
-              color: C.goldSoft,
-              fontFamily: '"SortsMillGoudy", Georgia, "Times New Roman", serif',
-            }}
-            {...fadeUp(0.2)}
-          >
-            joyfully invite you to the celebration of
-            <br className="hidden sm:block" /> their marriage
-          </motion.p>
-
-          <motion.div
-            className="mt-8 flex w-full max-w-md flex-col items-center gap-3 sm:mt-10 sm:gap-3.5"
-            {...fadeUp(0.28)}
-          >
-            <span
-              className={`${cinzel.className} text-[0.68rem] font-medium uppercase tracking-[0.34em] sm:text-[0.75rem] sm:tracking-[0.4em]`}
-              style={{ color: C.goldBright }}
-            >
-              {month}
-            </span>
-
-            <div className="flex w-full items-center gap-3 sm:gap-5">
-              <div className="flex flex-1 flex-col items-center gap-2">
-                <span className="h-px w-full" style={{ background: goldLine }} />
-                <span
-                  className={`${cinzel.className} text-[0.62rem] font-medium uppercase tracking-[0.22em] sm:text-[0.68rem] sm:tracking-[0.28em]`}
-                  style={{ color: C.goldSoft }}
-                >
-                  {weekday}
-                </span>
-                <span className="h-px w-full" style={{ background: goldLine }} />
-              </div>
-
-              <span
-                className={`${cinzel.className} min-w-[3.5rem] text-center text-[clamp(3.25rem,12vw,4.75rem)] font-medium leading-none tracking-wide`}
-                style={{ color: C.goldBright }}
-              >
-                {dayNumber}
+              <span className="inline-block align-baseline text-[1.18em] leading-none">
+                {groomName[0]}
               </span>
-
-              <div className="flex flex-1 flex-col items-center gap-2">
-                <span className="h-px w-full" style={{ background: goldLine }} />
-                <span
-                  className={`${cinzel.className} text-[0.62rem] font-medium uppercase tracking-[0.18em] sm:text-[0.68rem] sm:tracking-[0.22em]`}
-                  style={{ color: C.goldSoft }}
-                >
-                  {ceremonyTime}
-                </span>
-                <span className="h-px w-full" style={{ background: goldLine }} />
-              </div>
-            </div>
-
-            <span
-              className={`${cinzel.className} text-[0.68rem] font-medium uppercase tracking-[0.34em] sm:text-[0.75rem] sm:tracking-[0.4em]`}
-              style={{ color: C.goldBright }}
-            >
-              {year}
+              <span className="inline-block align-baseline ml-1">
+                {groomName.slice(1)}
+              </span>
             </span>
-          </motion.div>
-
-          <motion.div className="mt-6 sm:mt-7" {...fadeUp(0.36)}>
-            <p
-              className={`${cinzel.className} text-[0.72rem] font-semibold uppercase tracking-[0.2em] sm:text-[0.8rem] sm:tracking-[0.24em]`}
-              style={{ color: C.goldBright }}
+            <span
+              aria-hidden
+              className={`${aboveTheBeyond.className} mx-auto block w-fit max-w-full px-1 leading-[0.88] sm:leading-[0.9] my-2 sm:my-2.5 md:my-3`}
+              style={{
+                fontSize: "var(--script-size)",
+                color: "var(--color-welcome-green)",
+              }}
             >
-              {venueTitle}
+              &
+            </span>
+            <span
+              className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] md:tracking-[0.14em] pb-1 sm:pb-1.5`}
+              style={{
+                fontSize: "var(--title-size)",
+                color: "var(--color-welcome-navy)",
+              }}
+            >
+              <span className="inline-block align-baseline text-[1.18em] leading-none">
+                {brideName[0]}
+              </span>
+              <span className="inline-block align-baseline ml-1">
+                {brideName.slice(1)}
+              </span>
+            </span>
+          </h1>
+
+          <div
+            className="mt-8 sm:mt-10 space-y-2 sm:space-y-2.5"
+            style={{ color: "var(--color-welcome-navy)" }}
+          >
+            <p
+              className={`${cinzel.className} ${sectionType.label} uppercase tracking-[0.18em] leading-relaxed max-w-sm mx-auto font-semibold`}
+            >
+              {siteConfig.ceremony.location}
             </p>
-            {venueAddress ? (
-              <p
-                className="mt-1.5 text-[0.9rem] sm:text-[0.95rem]"
+            <p
+              className={`${cinzel.className} ${sectionType.label} uppercase tracking-[0.22em]`}
+              style={{ color: "var(--color-welcome-heading)" }}
+            >
+              Ceremony &amp; Reception
+            </p>
+          </div>
+
+          <div
+            className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t"
+            style={{
+              borderColor: "color-mix(in srgb, var(--color-welcome-navy) 18%, transparent)",
+              color: "var(--color-welcome-navy)",
+            }}
+          >
+            <p
+              className={`${cinzel.className} ${sectionType.label} uppercase tracking-[0.2em] font-semibold`}
+            >
+              {ceremonyDay} · {ceremonyTime}
+            </p>
+            <p
+              className={`font-goudy-italic ${sectionType.text} mt-1.5`}
+              style={{ color: "var(--color-welcome-text)" }}
+            >
+              {ceremonyDate}
+            </p>
+          </div>
+
+          <div className="mt-10 sm:mt-12">
+            <a
+              href="#guest-list"
+              className={`${cinzel.className} group inline-flex items-center gap-4 rounded-full border py-1 pl-7 pr-1 text-[0.625rem] font-semibold uppercase tracking-[0.22em] transition-all duration-300 hover:scale-[1.02] sm:gap-5 sm:py-1.5 sm:pl-9 sm:pr-1.5 sm:text-[0.6875rem] sm:tracking-[0.28em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4`}
+              style={{
+                backgroundColor: "#04103B",
+                borderColor: "color-mix(in srgb, #04103B 35%, transparent)",
+                color: "var(--color-welcome-bg)",
+                boxShadow: "0 6px 20px color-mix(in srgb, #04103B 35%, transparent)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#192030"
+                e.currentTarget.style.borderColor = "#04103B"
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#04103B"
+                e.currentTarget.style.borderColor =
+                  "color-mix(in srgb, #04103B 35%, transparent)"
+              }}
+            >
+              <span>Confirm your attendance (RSVP)</span>
+              <span
+                className="flex h-8 w-8 items-center justify-center rounded-full sm:h-10 sm:w-10"
                 style={{
-                  color: C.goldSoft,
-                  fontFamily: '"SortsMillGoudy", Georgia, "Times New Roman", serif',
+                  backgroundColor: "var(--color-welcome-bg)",
+                  boxShadow: "0 1px 0 color-mix(in srgb, var(--color-welcome-navy) 10%, transparent)",
                 }}
               >
-                {venueAddress}
-              </p>
-            ) : null}
-          </motion.div>
-
-        
-
-          <motion.a
-            href="#guest-list"
-            className={`${cinzel.className} mt-8 inline-flex min-h-11 items-center justify-center px-8 text-[0.62rem] font-semibold uppercase tracking-[0.28em] transition-[background,transform,box-shadow] duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:mt-9 sm:min-h-12 sm:px-10 sm:text-[0.68rem]`}
-            style={{
-              backgroundColor: C.gold,
-              color: C.navy,
-              boxShadow: `0 10px 24px color-mix(in srgb, ${C.gold} 35%, transparent)`,
-            }}
-            {...fadeUp(0.52)}
-          >
-            Confirm Attendance
-          </motion.a>
+                <ArrowRight
+                  className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 sm:h-4 sm:w-4"
+                  strokeWidth={2.25}
+                  style={{ color: "#04103B" }}
+                  aria-hidden
+                />
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

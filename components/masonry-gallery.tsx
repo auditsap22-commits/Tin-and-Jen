@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { createPortal } from "react-dom"
 import Image from "next/image"
 
 type ImageItem = {
@@ -13,7 +14,12 @@ type ImageItem = {
 
 export default function MasonryGallery({ images }: { images: ImageItem[] }) {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null)
+  const [mounted, setMounted] = useState(false)
   const topRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -51,7 +57,7 @@ export default function MasonryGallery({ images }: { images: ImageItem[] }) {
           <button
             key={img.src}
             type="button"
-            className="group mb-3 sm:mb-4 block break-inside-avoid w-full text-left"
+            className="group mb-3 sm:mb-4 block w-full cursor-pointer break-inside-avoid text-left"
             onClick={() => setLightboxIdx(idx)}
             aria-label="Open image"
           >
@@ -75,7 +81,7 @@ export default function MasonryGallery({ images }: { images: ImageItem[] }) {
       )}
 
       {/* Lightbox */}
-      {lightboxIdx != null && images[lightboxIdx] && (
+      {mounted && lightboxIdx != null && images[lightboxIdx] && createPortal(
         <div
           className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setLightboxIdx(null)}
@@ -111,7 +117,8 @@ export default function MasonryGallery({ images }: { images: ImageItem[] }) {
               Close
             </button>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Back to top */}

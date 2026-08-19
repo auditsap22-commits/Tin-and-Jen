@@ -118,53 +118,46 @@ function buildTimelineEvents(siteConfig: SiteConfig): TimelineEvent[] {
 
   return [
     {
-      time: siteConfig.ceremony.guestsTime,
+      time: "2:30 PM",
       title: "Assembly",
       location: ceremonyVenue,
       icon: GuestsIcon,
       imageSrc: "/weddingtimeline/arrivalimage.png",
     },
     {
-      time: siteConfig.ceremony.time,
+      time: "3:00 PM",
       title: "Processional",
       location: ceremonyVenue,
       icon: RingsIcon,
       imageSrc: "/weddingtimeline/WeddingCeremony.png",
     },
     {
-      time: "10:00 AM",
+      time: "4:30 PM",
       title: "Photos",
       location: ceremonyVenue,
       icon: RingsIcon,
       imageSrc: "/weddingtimeline/PhotoSession.png",
     },
     {
-      time: "11:00 AM",
+      time: "5:00 PM",
       title: "Cocktail Hour",
       location: receptionVenue,
       icon: CocktailIcon,
       imageSrc: "/weddingtimeline/CockTailHour.png",
     },
     {
-      time: siteConfig.reception.time,
+      time: "5:30 PM",
       title: "Reception",
       location: receptionVenue,
       icon: DinnerIcon,
       imageSrc: "/weddingtimeline/reception welcom.png",
     },
     {
-      time: "1:00 PM",
+      time: "6:15 PM",
       title: "Dinner",
       location: receptionVenue,
       icon: DinnerIcon,
       imageSrc: "/weddingtimeline/DinnerService.png",
-    },
-    {
-      time: "2:30 PM",
-      title: "End of Program",
-      location: receptionVenue,
-      icon: DanceIcon,
-      imageSrc: "/weddingtimeline/SendOff.png",
     },
   ]
 }
