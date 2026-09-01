@@ -366,8 +366,7 @@ const guestSwatches = [
 
 function GuestDressGuide() {
   const siteConfig = useSiteConfig()
-  const groomInitial = (siteConfig.couple.groomNickname || siteConfig.couple.groom).charAt(0)
-  const brideInitial = (siteConfig.couple.brideNickname || siteConfig.couple.bride).charAt(0)
+  const coupleNames = `${siteConfig.couple.groomNickname || siteConfig.couple.groom} & ${siteConfig.couple.brideNickname || siteConfig.couple.bride}`
   const dateParts = siteConfig.ceremony.date.replace(",", "").split(" ")
   const monthNum =
     [
@@ -524,12 +523,22 @@ function GuestDressGuide() {
           >
             We can&apos;t wait to celebrate with you!
           </p>
-          <p
-            className={`${aboveTheBeyond.className} mt-3 text-xl sm:mt-4 sm:text-2xl`}
-            style={{ color: reminderInk.deep }}
-          >
-            {groomInitial} & {brideInitial}
-          </p>
+          <span
+            className="mt-5 block aspect-[2078/363] w-[min(8.5rem,48%)] sm:mt-6"
+            role="img"
+            aria-label={coupleNames}
+            style={{
+              background: reminderInk.deep,
+              WebkitMaskImage: 'url("/decoration/display-couple.png")',
+              maskImage: 'url("/decoration/display-couple.png")',
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+            }}
+          />
           <p
             className={`${cinzel.className} mt-1 text-[0.55rem] font-semibold uppercase tracking-[0.28em] sm:tracking-[0.34em]`}
             style={{ color: reminderInk.gold }}

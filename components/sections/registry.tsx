@@ -200,7 +200,7 @@ export function Registry() {
           </div>
         )}
 
-        <div className="mt-6 space-y-2 text-center sm:mt-8">
+        <div className="mt-6 flex flex-col items-center text-center sm:mt-8">
           <p
             className={`font-goudy-italic ${ct.body}`}
             style={{ color: C.goldSoft }}
@@ -208,13 +208,27 @@ export function Registry() {
             Thank you from the bottom of our hearts.
           </p>
           <p
-            className={`font-goudy-italic ${ct.body} italic`}
+            className={`font-goudy-italic mt-2 italic ${ct.body}`}
             style={{ color: C.goldSoft }}
           >
             With love,
-            <br />
-            {groomNickname} and {brideNickname}
           </p>
+          <span
+            className="mt-4 block aspect-[2078/363] w-[min(6.5rem,42%)] sm:mt-5 sm:w-[min(8.5rem,48%)]"
+            role="img"
+            aria-label={`${groomNickname} and ${brideNickname}`}
+            style={{
+              background: `linear-gradient(180deg, ${C.goldSoft} 0%, ${C.goldBright} 42%, ${C.gold} 100%)`,
+              WebkitMaskImage: 'url("/decoration/display-couple.png")',
+              maskImage: 'url("/decoration/display-couple.png")',
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+            }}
+          />
         </div>
       </div>
     </section>

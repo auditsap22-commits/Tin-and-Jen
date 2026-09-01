@@ -51,19 +51,6 @@ export const siteConfig = {
     email: "to be announced",
   },
   giftRegistry: {
-    QR_1:{
-    id: "GOtyme",
-    src: "/QR/GOTYM-TIN.png",
-    label: "GO tyme bank",
-    accountNumber: "TIN : ******** 3388",
-    },
-    QR_2:{
-    id: "MariBank",
-    src: "/QR/GOTYM-JEN.png",
-    label: "GO tyme bank",
-    accountNumber: "JEN : ******** 1092",
-    }
-    ,
     QR_3:{
     id: "BPI",
     src: "/QR/BPI.png",

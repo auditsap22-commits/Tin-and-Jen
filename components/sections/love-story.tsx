@@ -5,7 +5,7 @@ import localFont from "next/font/local"
 import { Cinzel } from "next/font/google"
 import { ArrowRight } from "lucide-react"
 import { StorySection, lightSectionBg } from "@/components/StorySection"
-import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
+import { layeredSectionTitleSize, sectionType, storyChapterTitleSize } from "@/lib/section-typography"
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -46,6 +46,40 @@ function OrnamentalDivider() {
         }}
       />
     </div>
+  )
+}
+
+function FirstChapterTitle() {
+  return (
+    <span className="welcome-title-lockup block w-full max-w-full text-left">
+      <span
+        className={`${theSeasons.className} block uppercase leading-[0.9] tracking-[0.08em] min-[400px]:tracking-[0.1em] sm:tracking-[0.12em]`}
+        style={{
+          fontSize: storyChapterTitleSize,
+          color: "inherit",
+        }}
+      >
+        Love in Gods Perfect Time
+      </span>
+      <span
+        className={`${aboveTheBeyond.className} mt-2 block leading-[0.9] sm:mt-2.5 md:mt-3`}
+        style={{
+          fontSize: layeredSectionTitleSize.script,
+          color: "inherit",
+        }}
+      >
+        Our Love Story
+      </span>
+      <span
+        className={`${theSeasons.className} mt-2 block uppercase leading-[0.95] tracking-[0.1em] sm:mt-2.5 sm:tracking-[0.12em]`}
+        style={{
+          fontSize: "clamp(0.95rem, min(4.2vw, 5.2cqi), 1.55rem)",
+          color: "inherit",
+        }}
+      >
+        How we meet
+      </span>
+    </span>
   )
 }
 
@@ -127,15 +161,10 @@ export function LoveStory() {
         theme="light"
         layout="image-left"
         isFirst={true}
-        title="Love in  Gods Perfect  Time"
+        title={<FirstChapterTitle />}
         imageSrc="/mobile-background/couple (1).jpeg"
         text={
           <>
-            <p
-              className={`${cinzel.className} mb-3 text-[0.62rem] font-semibold uppercase tracking-[0.28em] sm:mb-4 sm:text-[0.7rem]`}
-            >
-           
-            </p>
             <p className="mb-4">Every love story begins differently.</p>
             <p className="mb-4">Some start with a grand moment. Some with a single conversation.</p>
             <p className="mb-4">Ours started quietly.</p>

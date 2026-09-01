@@ -33,6 +33,7 @@ const DECO = {
   bl: '/decoration/deco/left-bottom-small.png',
   br: '/decoration/deco/right-bottom-small.png',
   names: '/decoration/deco/couple name.png',
+  displayCouple: '/decoration/display-couple.png',
   monogram: '/decoration/deco/monogram.png',
 } as const;
 
@@ -381,8 +382,8 @@ export const Hero: React.FC<HeroProps> = ({
   const focusLiftVariants: Variants = {
     idle: { y: 'clamp(3.75rem, 9dvh, 5.25rem)' },
     opening: { y: 'clamp(3.75rem, 9dvh, 5.25rem)' },
-    revealed: { y: 'clamp(3.75rem, 9dvh, 5.25rem)' },
-    cta: { y: 'clamp(3.75rem, 9dvh, 5.25rem)' },
+    revealed: { y: 'clamp(1.15rem, 3.2dvh, 2.15rem)' },
+    cta: { y: 'clamp(1.15rem, 3.2dvh, 2.15rem)' },
   };
 
   const daysToGoVariants: Variants = {
@@ -839,7 +840,18 @@ export const Hero: React.FC<HeroProps> = ({
           className={`script ${anastasiaScript.className}`}
           variants={revealCopyItemVariants}
         >
-          With love, {coupleNames}
+          <span className="env-invite-reveal-love">
+            With <span className="env-invite-reveal-love-word">LOVE</span>,
+          </span>
+          <span
+            className="env-invite-reveal-names"
+            role="img"
+            aria-label={coupleNames}
+            style={{
+              WebkitMaskImage: `url("${encodeURI(DECO.displayCouple)}")`,
+              maskImage: `url("${encodeURI(DECO.displayCouple)}")`,
+            }}
+          />
         </motion.span>
       </motion.div>
 

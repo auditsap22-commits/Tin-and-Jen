@@ -13,6 +13,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://kath-and-jopert.weddinginvitationrsvp.com/sitemap.xml",
+    sitemap: "https://janlee-and-christine.weddinginvitationrsvp.com/sitemap.xml",
   }
 }

@@ -73,32 +73,45 @@ function OrnamentalDivider({ compact = false }: { compact?: boolean }) {
   )
 }
 
-function CoupleLabel({ groom, bride }: { groom: string; bride: string }) {
+function DisplayCoupleName({
+  label,
+  className,
+}: {
+  label: string
+  className?: string
+}) {
+  return (
+    <span
+      className={`block aspect-[2078/363] shrink-0 ${className ?? ""}`}
+      role="img"
+      aria-label={label}
+      style={{
+        background: C.navy,
+        WebkitMaskImage: 'url("/decoration/display-couple.png")',
+        maskImage: 'url("/decoration/display-couple.png")',
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+      }}
+    />
+  )
+}
+
+function CoupleLabel({ names }: { names: string }) {
   const lineStyle = {
     background: `linear-gradient(to right, transparent, color-mix(in srgb, ${C.gold} 70%, transparent))`,
   }
 
   return (
-    <div className="flex items-center justify-center gap-2.5 pt-1 sm:gap-3.5 sm:pt-1.5">
+    <div className="flex items-center justify-center gap-3.5 pt-1 sm:gap-5 sm:pt-1.5">
       <span className="h-px w-5 sm:w-7 md:w-9" style={lineStyle} aria-hidden />
-      <p
-        className={`${cinzel.className} ${sectionType.label} shrink-0 py-0.5 font-semibold uppercase leading-normal tracking-[0.34em] min-[400px]:tracking-[0.38em] sm:tracking-[0.44em]`}
-        style={{ color: C.navy }}
-      >
-        {groom}
-        <span
-          className={`${aboveTheBeyond.className} mx-1.5 inline-block normal-case tracking-normal sm:mx-2`}
-          style={{
-            fontSize: "1.35em",
-            color: C.gold,
-            verticalAlign: "middle",
-          }}
-          aria-hidden
-        >
-          &
-        </span>
-        {bride}
-      </p>
+      <DisplayCoupleName
+        label={names}
+        className="w-[min(7.5rem,46%)] sm:w-[min(9.75rem,52%)] md:w-[min(13rem,58%)]"
+      />
       <span
         className="h-px w-5 sm:w-7 md:w-9"
         style={{
@@ -209,6 +222,7 @@ export function Welcome() {
   const siteConfig = useSiteConfig()
   const brideName = siteConfig.couple.brideNickname || siteConfig.couple.bride
   const groomName = siteConfig.couple.groomNickname || siteConfig.couple.groom
+  const coupleNames = `${groomName} & ${brideName}`
 
   return (
     <section
@@ -252,8 +266,8 @@ export function Welcome() {
             }}
           />
 
-          <header className="relative z-10 overflow-visible space-y-3 px-1 pt-4 pb-6 sm:space-y-3.5 sm:px-2 sm:pt-5 sm:pb-7 md:space-y-4 md:pt-6 md:pb-8">
-            <CoupleLabel groom={groomName} bride={brideName} />
+          <header className="relative z-10 overflow-visible space-y-4 px-1 pt-4 pb-6 sm:space-y-5 sm:px-2 sm:pt-5 sm:pb-7 md:space-y-6 md:pt-6 md:pb-8">
+            <CoupleLabel names={coupleNames} />
             <LayeredWelcomeTitle />
             <div className="pt-2 sm:pt-2.5">
               <OrnamentalDivider compact />
@@ -306,18 +320,15 @@ export function Welcome() {
 
             <div className="space-y-5 pt-1 sm:space-y-6 sm:pt-2 md:space-y-7">
               <aside className="px-1 py-1 sm:px-2">
-                <div className="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:justify-center sm:gap-2.5">
+                <div className="flex flex-col items-center gap-2 sm:gap-2.5">
                   <p
-                    className={`${cinzel.className} ${sectionType.label} shrink-0 font-semibold uppercase tracking-[0.18em] sm:tracking-[0.22em]`}
+                    className={`${cinzel.className} ${sectionType.label} font-semibold uppercase tracking-[0.18em] sm:tracking-[0.22em]`}
                     style={{ color: C.gold }}
                   >
                     Share in our joy
                   </p>
-                  <span className="hidden sm:inline" style={{ color: `${C.gold}66` }} aria-hidden>
-                    ·
-                  </span>
                   <p
-                    className={`font-goudy-italic ${sectionType.textSnug}`}
+                    className={`${cinzel.className} ${sectionType.subheader} font-bold tracking-[0.04em] sm:tracking-[0.06em]`}
                     style={{ color: C.navy }}
                   >
                     {siteConfig.snapShare.hashtag.join(" ")}
@@ -325,19 +336,17 @@ export function Welcome() {
                 </div>
               </aside>
 
-              <footer className="space-y-2 px-1 pt-4 pb-2 sm:space-y-2.5 sm:px-2 sm:pt-5 sm:pb-3 md:pt-6 md:pb-4">
+              <footer className="flex flex-col items-center px-1 pt-4 pb-2 sm:px-2 sm:pt-5 sm:pb-3 md:pt-6 md:pb-4">
                 <p
-                  className={`${aboveTheBeyond.className} ${sectionType.script}`}
+                  className={`${aboveTheBeyond.className} ${sectionType.script} leading-[1.35]`}
                   style={{ color: C.goldSoft }}
                 >
                   With all our love,
                 </p>
-                <p
-                  className={`${cinzel.className} ${sectionType.subheader} mb-3 font-semibold tracking-[0.12em] sm:mb-4 sm:tracking-[0.16em] md:mb-5 md:tracking-[0.18em]`}
-                  style={{ color: C.navy }}
-                >
-                  {groomName} &amp; {brideName}
-                </p>
+                <DisplayCoupleName
+                  label={coupleNames}
+                  className="mt-5 mb-3 w-[min(6.25rem,40%)] sm:mt-6 sm:mb-4 sm:w-[min(9.5rem,50%)] md:mt-7 md:mb-5 md:w-[min(13.5rem,58%)]"
+                />
               </footer>
             </div>
           </div>

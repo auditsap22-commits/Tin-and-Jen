@@ -219,7 +219,7 @@ export default function Home() {
                 transition={cinematicEntry ? undefined : { duration: 0.01 }}
               >
               <Welcome />
-               <CoupleVideo /> 
+               {/* <CoupleVideo />  */}
               <LoveStory />
               {/* <ProposalVideo /> */}
               <Countdown />

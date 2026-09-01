@@ -299,6 +299,116 @@ html {
   --hero-gap-bottom-y: calc(var(--hero-deco-sprig) * 1.22);
 }
 
+.hero-invite-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.hero-invite-video-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--hero-gold) 8%, transparent) 0%, transparent 52%),
+    radial-gradient(70% 52% at 50% 44%, color-mix(in srgb, var(--hero-gold) 10%, transparent) 0%, transparent 62%),
+    linear-gradient(180deg, rgb(5 25 45 / 32%) 0%, rgb(0 19 38 / 46%) 100%);
+}
+
+.hero-invite-names {
+  display: block;
+  width: min(78%, 16.5rem);
+  margin-inline: auto;
+}
+
+.hero-invite-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 22rem);
+  margin: 1.15rem auto 0.25rem;
+}
+
+.hero-invite-date-month,
+.hero-invite-date-year {
+  margin: 0;
+  font-size: clamp(0.62rem, 2.6vw, 0.76rem);
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--hero-gold-bright);
+}
+
+.hero-invite-date-month {
+  margin-top: 0.85rem;
+  margin-bottom: 0.7rem;
+}
+
+.hero-invite-date-year {
+  margin-top: 0.7rem;
+}
+
+.hero-invite-date-lockup {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  column-gap: 0.95rem;
+  width: 100%;
+  color: var(--hero-gold-bright);
+}
+
+.hero-invite-date-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.hero-invite-date-line {
+  display: block;
+  width: 100%;
+  max-width: 5.75rem;
+  height: 1px;
+  background: color-mix(in srgb, var(--hero-gold) 58%, transparent);
+}
+
+.hero-invite-date-label {
+  font-size: clamp(0.52rem, 2.2vw, 0.64rem);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--hero-gold-soft);
+}
+
+.hero-invite-date-day {
+  min-width: 2.4rem;
+  padding: 0 0.45rem;
+  font-size: clamp(2.35rem, 10vw, 3.35rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.hero-invite-venue {
+  margin: 1.05rem 0 0;
+  max-width: 18rem;
+  font-size: clamp(0.62rem, 2.5vw, 0.76rem);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hero-gold-bright);
+}
+
 .hero-invite-frame {
   position: absolute;
   z-index: 2;

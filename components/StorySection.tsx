@@ -30,7 +30,7 @@ const darkSectionBg = storyInk.midnight
 
 interface StorySectionProps {
   imageSrc: string
-  title?: string
+  title?: React.ReactNode
   text: React.ReactNode
   layout: "image-left" | "image-right"
   theme: "dark" | "light"
@@ -132,9 +132,9 @@ export const StorySection: React.FC<StorySectionProps> = ({
           >
             {title && (
               <h2
-                className={`${theSeasons.className} mb-3 uppercase leading-tight tracking-[0.08em] transition-all delay-500 duration-1000 sm:mb-4 sm:tracking-[0.1em] md:mb-6 md:tracking-[0.12em] ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} `}
+                className={`${theSeasons.className} mb-3 leading-tight transition-all delay-500 duration-1000 sm:mb-4 md:mb-6 ${typeof title === "string" ? "uppercase tracking-[0.08em] sm:tracking-[0.1em] md:tracking-[0.12em]" : ""} ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} `}
                 style={{
-                  fontSize: storyChapterTitleSize,
+                  fontSize: typeof title === "string" ? storyChapterTitleSize : undefined,
                   color: isDark ? storyInk.gold : storyInk.navy,
                 }}
               >

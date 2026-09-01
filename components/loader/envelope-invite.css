@@ -59,7 +59,7 @@
     --env-cta-chrome: reveal copy + enter button when shown
   */
   --env-chrome: clamp(4.25rem, 11dvh, 6rem);
-  --env-cta-chrome: clamp(7rem, 17dvh, 9rem);
+  --env-cta-chrome: clamp(9.5rem, 21dvh, 11.75rem);
   --env-available-h: calc(100dvh - var(--env-chrome));
   --env-width: min(310px, 78vw, calc(var(--env-available-h) * 0.64));
   --env-ratio: 1.5;
@@ -1200,7 +1200,7 @@
 
 .env-invite-screen[data-phase="revealed"] .env-invite-days-to-go,
 .env-invite-screen[data-phase="cta"] .env-invite-days-to-go {
-  margin-top: clamp(2rem, 5.5dvh, 3.25rem);
+  margin-top: clamp(1.1rem, 3.2dvh, 1.85rem);
   max-height: 3.5rem;
 }
 
@@ -1220,7 +1220,7 @@
 .env-invite-reveal-copy {
   position: absolute;
   left: 50%;
-  bottom: calc(clamp(6.75rem, 14dvh, 8.25rem) + env(safe-area-inset-bottom, 0px));
+  bottom: calc(clamp(8rem, 16.5dvh, 9.75rem) + env(safe-area-inset-bottom, 0px));
   z-index: 4;
   width: min(420px, 92vw);
   margin: 0;
@@ -1242,7 +1242,7 @@
   font-size: clamp(0.66rem, 2.1vw, 0.82rem);
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  line-height: 1.75;
+  line-height: 1.55;
   color: var(--env-gold-soft);
   font-weight: 500;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
@@ -1257,12 +1257,48 @@
 }
 
 .env-invite-reveal-copy .script {
-  display: block;
-  margin-top: 0.45rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.22rem;
+  margin-top: 0.32rem;
   font-style: normal;
-  font-size: clamp(1.55rem, 4.4vw, 2.05rem);
+  font-size: clamp(1.12rem, 3.4vw, 1.38rem);
+  line-height: 1;
   color: var(--env-gold-soft);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
+}
+
+.env-invite-reveal-love {
+  display: block;
+  line-height: 1.15;
+}
+
+.env-invite-reveal-love-word {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.env-invite-reveal-names {
+  display: block;
+  width: min(11rem, 62vw);
+  max-width: 80%;
+  aspect-ratio: 2078 / 363;
+  flex-shrink: 0;
+  background: linear-gradient(
+    180deg,
+    var(--env-gold-soft) 0%,
+    var(--env-gold-bright) 42%,
+    var(--env-gold) 100%
+  );
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.28));
 }
 
 .env-invite-enter-btn {
@@ -1325,7 +1361,7 @@
 @media (max-width: 480px) {
   .env-invite-screen {
     --env-chrome: clamp(3.75rem, 10dvh, 5.5rem);
-    --env-cta-chrome: clamp(6.5rem, 15dvh, 8.5rem);
+    --env-cta-chrome: clamp(8.85rem, 20dvh, 10.85rem);
     --env-deco-top: clamp(16.5rem, 86vw, 24rem);
     --env-deco-sprig: clamp(5.75rem, 30vw, 10rem);
   }
@@ -1339,7 +1375,7 @@
 @media (max-width: 390px), (max-height: 700px) {
   .env-invite-screen {
     --env-chrome: clamp(3.5rem, 9dvh, 5rem);
-    --env-cta-chrome: clamp(9rem, 22dvh, 10.5rem);
+    --env-cta-chrome: clamp(11rem, 26dvh, 12.75rem);
     --env-scene-shift: clamp(0.45rem, 1.75dvh, 1rem);
     --env-deco-top: clamp(13.5rem, 78vw, 18rem);
     --env-deco-sprig: clamp(4.5rem, 26vw, 6.5rem);
@@ -1369,18 +1405,18 @@
 
   .env-invite-screen[data-phase="revealed"] .env-invite-days-to-go,
   .env-invite-screen[data-phase="cta"] .env-invite-days-to-go {
-    margin-top: clamp(1.75rem, 5dvh, 2.75rem);
+    margin-top: clamp(0.85rem, 2.4dvh, 1.35rem);
   }
 
   .env-invite-reveal-copy {
     padding: 0 0.75rem;
-    bottom: calc(clamp(4.75rem, 11dvh, 6.25rem) + env(safe-area-inset-bottom, 0px));
+    bottom: calc(clamp(5.85rem, 13dvh, 7.25rem) + env(safe-area-inset-bottom, 0px));
   }
 
   .env-invite-reveal-copy h2 {
-    font-size: max(0.56rem, 2.7vw);
+    font-size: max(0.52rem, 2.5vw);
     letter-spacing: 0.11em;
-    line-height: 1.65;
+    line-height: 1.5;
   }
 
   .env-invite-reveal-copy p {
@@ -1388,8 +1424,14 @@
   }
 
   .env-invite-reveal-copy .script {
-    font-size: clamp(1rem, 4.6vw, 1.3rem);
-    margin-top: 0.55rem;
+    font-size: clamp(0.95rem, 3.6vw, 1.15rem);
+    margin-top: 0.22rem;
+    gap: 0.14rem;
+  }
+
+  .env-invite-reveal-names {
+    width: min(9.25rem, 68vw);
+    max-width: 78%;
   }
 
   .env-invite-enter-btn {
@@ -1413,20 +1455,27 @@
 @media (max-width: 320px), (max-height: 580px) {
   .env-invite-screen {
     --env-chrome: clamp(2.5rem, 7dvh, 3.75rem);
-    --env-cta-chrome: clamp(8.25rem, 21dvh, 9.75rem);
+    --env-cta-chrome: clamp(9.75rem, 24dvh, 11.35rem);
     --env-scene-shift: clamp(0.1rem, 1.5dvh, 0.85rem);
   }
 
   .env-invite-reveal-copy {
-    bottom: calc(clamp(4.25rem, 10.5dvh, 5.5rem) + env(safe-area-inset-bottom, 0px));
+    bottom: calc(clamp(5.15rem, 12dvh, 6.35rem) + env(safe-area-inset-bottom, 0px));
   }
 
   .env-invite-reveal-copy h2 {
-    line-height: 1.55;
+    line-height: 1.4;
   }
 
   .env-invite-reveal-copy .script {
-    margin-top: 0.35rem;
+    margin-top: 0.14rem;
+    font-size: clamp(0.85rem, 3.3vw, 1.02rem);
+    gap: 0.1rem;
+  }
+
+  .env-invite-reveal-names {
+    width: min(8rem, 62vw);
+    max-width: 74%;
   }
 
   .env-invite-enter-btn {

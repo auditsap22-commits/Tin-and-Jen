@@ -99,26 +99,24 @@ const LONGEST_FOOTER_QUOTE = FOOTER_QUOTES.reduce((longest, quote) =>
   quote.length > longest.length ? quote : longest
 )
 
-function FooterCoupleNames({ groom, bride }: { groom: string; bride: string }) {
+function FooterCoupleNames({ names }: { names: string }) {
   return (
-    <h2
-      className={`${cinzel.className} mx-auto whitespace-nowrap text-center ${sectionType.subheader} font-semibold tracking-[0.12em] sm:tracking-[0.16em] md:tracking-[0.18em]`}
-      style={{ color: "var(--color-welcome-navy)" }}
-    >
-      {groom}
-      <span
-        className={`${aboveTheBeyond.className} mx-2 inline-block normal-case tracking-normal sm:mx-2.5`}
-        style={{
-          fontSize: "1.35em",
-          color: reminderInk.gold,
-          verticalAlign: "middle",
-        }}
-        aria-hidden
-      >
-        &
-      </span>
-      {bride}
-    </h2>
+    <span
+      className="mb-3 block aspect-[2078/363] w-[min(6.5rem,42%)] sm:mb-4 sm:w-[min(10rem,55%)]"
+      role="img"
+      aria-label={names}
+      style={{
+        background: reminderInk.deep,
+        WebkitMaskImage: 'url("/decoration/display-couple.png")',
+        maskImage: 'url("/decoration/display-couple.png")',
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+      }}
+    />
   )
 }
 
@@ -325,12 +323,7 @@ export function Footer() {
             {/* Couple info + quote */}
             <motion.div className="lg:col-span-2 min-w-0" variants={fadeInUp}>
               <div className="mb-5 sm:mb-6">
-                <h3
-                  className={`${cinzel.className} ${ct.title} font-semibold leading-tight mb-4`}
-                  style={{ color: palette.heading }}
-                >
-                  {coupleDisplayName}
-                </h3>
+                <FooterCoupleNames names={coupleDisplayName} />
                 <div className="space-y-3 sm:space-y-4">
                   <DetailRow label="Wedding Date" value={ceremonyDate} />
                   {/* <DetailRow label="Venue" value={toTitleCase(ceremonyVenue)} /> */}
