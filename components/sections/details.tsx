@@ -369,10 +369,10 @@ function AttireRowLabel({ children }: { children: string }) {
 const attireLooks = [
   {
     label: "Sponsors",
-    src: "/Details/sponsors.png",
+    src: "/Details/sponsorsnew.png",
     alt: "Principal sponsors attire: formal navy, champagne, and silver looks for ninong and ninang",
-    width: 1253,
-    height: 1024,
+    width: 543,
+    height: 447,
   },
   {
     label: "Entourage",

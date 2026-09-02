@@ -329,7 +329,7 @@ export function Welcome() {
                   </p>
                   <p
                     className={`${cinzel.className} ${sectionType.subheader} font-bold tracking-[0.04em] sm:tracking-[0.06em]`}
-                    style={{ color: C.goldBright }}
+                    style={{ color: C.navy }}
                   >
                     {siteConfig.snapShare.hashtag.join(" ")}
                   </p>

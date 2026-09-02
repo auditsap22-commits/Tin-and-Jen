@@ -342,7 +342,7 @@ export function SnapShare() {
             Help us remember the little moments of {coupleDisplayName}&apos;s day: every smile,
             embrace, and candid laugh. Your <GoldNote>photos and clips</GoldNote> complete our love
             story. Tag us with{" "}
-            <strong className="font-semibold not-italic" style={{ color: "#ffffff" }}>
+            <strong className="font-semibold not-italic" style={{ color: C.navy }}>
               {hashtags[0]}
             </strong>
             .
@@ -469,7 +469,7 @@ export function SnapShare() {
                     <span
                       className={`${cinzel.className} ${ct.body} min-w-0 flex-1 break-all text-left font-semibold not-italic`}
                       style={{
-                        color: copiedHashtagIndex === index ? C.goldBright : C.navy,
+                        color: C.navy,
                       }}
                     >
                       {hashtag}

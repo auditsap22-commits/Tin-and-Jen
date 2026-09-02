@@ -336,7 +336,7 @@ export function Footer() {
                 {weddingHashtag ? (
                   <p
                     className={`${cinzel.className} ${ct.cardTitle} mb-3 font-semibold tracking-[0.04em] sm:mb-4`}
-                    style={{ color: reminderInk.gold }}
+                    style={{ color: reminderInk.deep }}
                   >
                     {weddingHashtag}
                   </p>
