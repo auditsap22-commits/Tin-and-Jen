@@ -67,7 +67,7 @@ export const siteConfig = {
     time: "3:00 PM",
     entourageTime: "2:00 PM",
     guestsTime: "2:30 PM",
-    image: ["/Details/reception.png", "/Details/reception2.png","/Details/reception3.png"],
+    image: ["/Details/reception1.webp", "/Details/reception2.webp","/Details/reception3.webp"],
   },
   reception: {
     location: "RAI Atrium Suites",
@@ -76,7 +76,7 @@ export const siteConfig = {
     date: "November 28, 2026",
     day: "Saturday",
     time: "6:00 PM",
-    image: ["/Details/reception.png", "/Details/reception2.png","/Details/reception3.png"],
+    image: ["/Details/reception1.webp", "/Details/reception2.webp","/Details/reception3.webp"],
   },
   dressCode: {
     theme: "STRICTLY FORMAL",
@@ -114,7 +114,7 @@ export const siteConfig = {
       title: "Guests",
       label: "Guests",
       description: "Formal attire and formal dress.",
-      image: "/Details/guest.png",
+      image: "/Details/guest2.png",
       palette: ["#04103B", "#192030", "#364061", "#AB832E", "#DDBA7A"],
     },
     paletteNote:
@@ -179,7 +179,7 @@ He makes everything happen.
 Isaiah 60:22`,
     groom: `The first time Mark saw Catherine, time seemed to slow down. It was an ordinary day that instantly became unforgettable: one smile, one hello, and suddenly his world had a new center. He didn't have the perfect words ready, but he knew he had met someone who felt like home.
 
-Early conversations turned into late-night talks, sharing dreams, favorite meals, and whispered prayers for a future together. With every small adventure—coffee runs, long drives, quiet walks—Mark found himself choosing her over and over again. He loved how she laughed freely, how she listened with her whole heart, and how her faith steadied him.
+Early conversations turned into late-night talks, sharing dreams, favorite meals, and whispered prayers for a future together. With every small adventure (coffee runs, long drives, quiet walks), Mark found himself choosing her over and over again. He loved how she laughed freely, how she listened with her whole heart, and how her faith steadied him.
 
 There were seasons of distance and long workdays, but every reunion reminded him why he stayed patient: because Catherine was worth every mile and every minute apart. When he finally knelt to ask for her hand, it wasn't a question of "if," only "when can we start forever?"`,
     bride: `Catherine remembers the first time Mark said her name. It was gentle but sure, a kindness that made her feel both seen and safe. In that softness, she found a partner who met her with the same grace she prayed to give.

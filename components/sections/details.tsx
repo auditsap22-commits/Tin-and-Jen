@@ -298,6 +298,14 @@ function ReminderTone({
   )
 }
 
+function Note({ children }: { children: ReactNode }) {
+  return (
+    <strong className="font-semibold not-italic" style={{ color: reminderInk.champagne }}>
+      {children}
+    </strong>
+  )
+}
+
 function ReminderCard({
   title,
   children,
@@ -357,6 +365,30 @@ function AttireRowLabel({ children }: { children: string }) {
     </div>
   )
 }
+
+const attireLooks = [
+  {
+    label: "Sponsors",
+    src: "/Details/sponsors.png",
+    alt: "Principal sponsors attire: formal navy, champagne, and silver looks for ninong and ninang",
+    width: 1253,
+    height: 1024,
+  },
+  {
+    label: "Entourage",
+    src: "/Details/entourage.png",
+    alt: "Entourage attire: navy formalwear for the wedding party, including children",
+    width: 1224,
+    height: 1285,
+  },
+  {
+    label: "Guests",
+    src: "/Details/guest2.png",
+    alt: "Guest attire: modest navy and champagne formal looks for ladies and gentlemen",
+    width: 1536,
+    height: 1024,
+  },
+] as const
 
 const guestSwatches = [
   { color: "#04103B", name: "Navy Blue" },
@@ -477,29 +509,64 @@ function GuestDressGuide() {
           . We&apos;d love to see you in these colors as we celebrate this meaningful day.
         </p>
 
-        <div className="mt-8 space-y-4 sm:mt-10 sm:space-y-5 md:mt-12">
-          <AttireRowLabel>For Men</AttireRowLabel>
-          <div className="overflow-hidden">
-            <Image
-              src="/Details/attire-guide.png"
-              alt="Guest attire examples — gentlemen in navy and champagne suits, ladies in navy, ivory, and champagne gowns"
-              width={1536}
-              height={1024}
-              className="h-auto w-full object-contain"
-              sizes="(max-width: 768px) 100vw, 960px"
-              priority={false}
-            />
-          </div>
-          <AttireRowLabel>For Women</AttireRowLabel>
+        <div className="mt-8 space-y-6 sm:mt-10 sm:space-y-7 md:mt-12 md:space-y-8">
+          {attireLooks.map((look) => (
+            <div key={look.label} className="space-y-3.5 sm:space-y-4">
+              <AttireRowLabel>{look.label}</AttireRowLabel>
+              <div className="overflow-hidden">
+                <Image
+                  src={look.src}
+                  alt={look.alt}
+                  width={look.width}
+                  height={look.height}
+                  className="mx-auto h-auto w-full max-h-[min(72vw,28rem)] object-contain sm:max-h-[32rem] md:max-h-[36rem]"
+                  sizes="(max-width: 768px) 100vw, 960px"
+                />
+              </div>
+            </div>
+          ))}
         </div>
 
-        <p
-          className={`font-goudy-italic mx-auto mt-7 max-w-xl text-center ${ct.body} leading-relaxed sm:mt-8`}
+        <div
+          className={`font-goudy-italic mx-auto mt-7 max-w-xl space-y-4 text-center ${ct.body} leading-relaxed sm:mt-8`}
           style={{ color: reminderInk.navy }}
         >
-          Kindly avoid sharp patterns or prints, denim, or casual items. Our color palette is
-          thoughtfully chosen to create a warm and timeless celebration.
-        </p>
+          <p className="font-semibold" style={{ color: reminderInk.deep }}>
+            Dear Valued Guests,
+          </p>
+          <p>
+            As we gather to celebrate our Christ-centered wedding, we kindly request everyone to
+            wear modest and elegant attire as a sign of respect for the solemnity of the ceremony.
+          </p>
+          <p>
+            For our lovely ladies, we respectfully ask that you{" "}
+            <strong className="font-semibold not-italic" style={{ color: reminderInk.deep }}>
+              avoid wearing very short dresses, plunging necklines, backless dresses, or overly
+              revealing outfits
+            </strong>
+            . We also kindly request that you{" "}
+            <strong className="font-semibold not-italic" style={{ color: reminderInk.deep }}>
+              refrain from wearing shiny or heavily embellished dresses that may draw too much
+              attention
+            </strong>
+            .
+          </p>
+          <p>
+            To help us maintain our chosen wedding color palette, we kindly ask that guests{" "}
+            <strong className="font-semibold not-italic" style={{ color: reminderInk.deep }}>
+              avoid wearing white, black, or red dresses
+            </strong>
+            .
+          </p>
+          <p>
+            Thank you for your understanding and for helping us create a beautiful, respectful, and
+            God-honoring celebration.
+          </p>
+          <p>
+            We are truly grateful for your love, support, and presence on our special day. We
+            can&apos;t wait to celebrate with you! 💙
+          </p>
+        </div>
 
         <footer className="relative mt-8 flex flex-col items-center text-center sm:mt-10">
           <Heart
@@ -1031,17 +1098,18 @@ export function Details() {
               <div className="flex w-full flex-col items-center gap-11 sm:gap-14 md:gap-16">
                 <ReminderCard title="Adults-Only Celebration">
                   <ReminderTone label="Formal">
-                    While we adore your little ones, we have chosen to celebrate as an
-                    adults-only affair, other than the children who are part of the
-                    entourage. We hope this gives you a well-deserved night out.
+                    While we adore your little ones, we have chosen to celebrate as an{" "}
+                    <Note>adults-only affair</Note>, other than the{" "}
+                    <Note>children who are part of the entourage</Note>. We hope this gives you a
+                    well-deserved night out.
                   </ReminderTone>
                   <ReminderTone label="Warm">
-                    We love your kids, but consider this your night off! Please note that
-                    our celebration is adults-only.
+                    We love your kids, but consider this your night off! Please note that our
+                    celebration is <Note>adults-only</Note>.
                   </ReminderTone>
                   <ReminderTone label="Tagalog">
-                    Bagama&apos;t mahal namin ang inyong mga anak, ang aming pagdiriwang
-                    ay para lamang sa mga bisitang may sapat na gulang. Maraming salamat
+                    Bagama&apos;t mahal namin ang inyong mga anak, ang aming pagdiriwang ay{" "}
+                    <Note>para lamang sa mga bisitang may sapat na gulang</Note>. Maraming salamat
                     sa inyong pag-unawa.
                   </ReminderTone>
                 </ReminderCard>
@@ -1056,18 +1124,18 @@ export function Details() {
 
                 <ReminderCard title="Unplugged Ceremony">
                   <ReminderTone label="Formal">
-                    We invite you to be fully present as we exchange our vows. Kindly keep
-                    phones and cameras away during the ceremony and let our photographers
-                    capture the moment.
+                    We invite you to be fully present as we exchange our vows. Kindly{" "}
+                    <Note>keep phones and cameras away during the ceremony</Note> and let our
+                    photographers capture the moment.
                   </ReminderTone>
                   <ReminderTone label="Warm">
-                    Be present, not on your phones! Enjoy our unplugged ceremony and let
-                    our photographers do the clicking.
+                    Be present, <Note>not on your phones</Note>! Enjoy our{" "}
+                    <Note>unplugged ceremony</Note> and let our photographers do the clicking.
                   </ReminderTone>
                   <ReminderTone label="Tagalog">
-                    Hangga&apos;t maaari, iwasan muna ang paggamit ng cellphone at camera
-                    upang lubos nating mapahalagahan ang sagradong seremonya ng aming
-                    pag-iisang dibdib.
+                    Hangga&apos;t maaari,{" "}
+                    <Note>iwasan muna ang paggamit ng cellphone at camera</Note> upang lubos
+                    nating mapahalagahan ang sagradong seremonya ng aming pag-iisang dibdib.
                   </ReminderTone>
                 </ReminderCard>
 
@@ -1081,8 +1149,10 @@ export function Details() {
 
                 <ReminderCard title="Strictly Formal">
                   <ReminderTone label="Attire">
-                    Kindly follow our suggested attire and color palette above to match our
-                    wedding theme. Strictly no casual clothes, shoes, or white-colored attire.
+                    Kindly follow our suggested <Note>attire and color palette</Note> above to
+                    match our wedding theme.{" "}
+                    <Note>Strictly no casual clothes, shoes, or white-colored attire</Note>. Please
+                    also <Note>avoid wearing white, black, or red dresses</Note>.
                   </ReminderTone>
                   <ColorPalette colors={motifSwatches} frame="gold" />
                 </ReminderCard>
@@ -1097,7 +1167,12 @@ export function Details() {
 
                 <ReminderCard title="Arrival">
                   <ReminderTone label="Punctuality">
-                    To ensure everything runs smoothly, please arrive at {siteConfig.ceremony.guestsTime}. This will give you enough time to find your seat, settle in comfortably, and fully enjoy the beautiful ceremony before it begins at {siteConfig.ceremony.time}. We truly appreciate your punctuality and look forward to celebrating this special moment with you.
+                    To ensure everything runs smoothly, please arrive at{" "}
+                    <Note>{siteConfig.ceremony.guestsTime}</Note>. This will give you enough time to
+                    find your seat, settle in comfortably, and fully enjoy the beautiful ceremony
+                    before it begins at <Note>{siteConfig.ceremony.time}</Note>. We truly
+                    appreciate your punctuality and look forward to celebrating this special moment
+                    with you.
                   </ReminderTone>
                 </ReminderCard>
               </div>

@@ -175,7 +175,7 @@ export function VideoMessage() {
                 You are a blessing we hold close to our hearts.
               </p>
               <p>
-                We would love to receive a short video message from you—something we can keep and
+                We would love to receive a short video message from you, something we can keep and
                 look back on through the years ahead.
               </p>
               <p>

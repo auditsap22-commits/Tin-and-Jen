@@ -114,13 +114,21 @@ function GalleryTitle() {
 }
 
 const galleryItems = [
-  { image: "/mobile-background/couple (1).jpeg", text: " " },
-  { image: "/mobile-background/couple (1).jpg", text: " " },
-  { image: "/mobile-background/couple (2).jpeg", text: " " },
-  { image: "/mobile-background/couple (2).jpg", text: " " },
-  { image: "/mobile-background/couple (3).jpeg", text: " " },
-  { image: "/mobile-background/couple (3).jpg", text: " " },
-  { image: "/mobile-background/couple (4).jpg", text: " " },
+  { image: "/mobile-background/couples (3).webp", text: " " },
+  { image: "/mobile-background/couples (6).webp", text: " " },
+  { image: "/mobile-background/couples (5).webp", text: " " },
+  { image: "/mobile-background/couples (4).webp", text: " " },
+  { image: "/mobile-background/couples (9).webp", text: " " },
+  { image: "/mobile-background/couples (11).webp", text: " " },
+  { image: "/mobile-background/couples (14).webp", text: " " },
+  { image: "/mobile-background/couples (17).webp", text: " " },
+  { image: "/mobile-background/couples (16).webp", text: " " },
+  { image: "/mobile-background/couples (18).webp", text: " " },
+  { image: "/mobile-background/couples (23).webp", text: " " },
+  { image: "/mobile-background/couples (25).webp", text: " " },
+  { image: "/mobile-background/couples (30).webp", text: " " },
+  { image: "/mobile-background/couples (21).webp", text: " " },
+  { image: "/mobile-background/couples (20).webp", text: " " },
 ]
 
 export function Gallery() {
@@ -266,7 +274,7 @@ export function Gallery() {
           className={`font-goudy-italic mx-auto max-w-2xl px-2 ${sectionType.textRelaxed}`}
           style={{ color: "var(--color-welcome-text)" }}
         >
-          From our first chapter to this beautiful season of commitment — every moment has been a
+          From our first chapter to this beautiful season of commitment, every moment has been a
           testament to love, faith, and grace.
         </p>
 
@@ -333,7 +341,7 @@ export function Gallery() {
                       }}
                     />
 
-                    <div className="relative aspect-[3/4] overflow-hidden rounded-lg">
+                    <div className="relative aspect-[2/3] overflow-hidden rounded-lg">
                       <Image
                         src={item.image}
                         alt={item.text || `Gallery image ${index + 1}`}
@@ -392,7 +400,7 @@ export function Gallery() {
                     }}
                   />
 
-                  <div className="relative aspect-[3/4] md:aspect-square overflow-hidden rounded-xl">
+                  <div className="relative aspect-[2/3] md:aspect-[4/5] overflow-hidden rounded-xl">
                     <Image
                       src={item.image}
                       alt={item.text || `Gallery image ${index + 1}`}

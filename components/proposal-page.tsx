@@ -571,7 +571,7 @@ function ProposalIntroSection() {
       >
         <p>
           As we prepare for our wedding day, we keep coming back to the people who have meant the
-          most to us — and you are one of them.
+          most to us, and you are one of them.
         </p>
         <p>
           This is not a general invitation. It is a personal ask, from our hearts to yours: we would
@@ -912,7 +912,7 @@ export function ProposalPage({ role }: ProposalPageProps) {
                         className={`font-goudy-italic ${sectionType.textSnug}`}
                         style={{ color: palette.body }}
                       >
-                        In choosing who will stand with us, we did not begin with titles — we began
+                        In choosing who will stand with us, we did not begin with titles. We began
                         with the people who have walked with us, believed in us, and loved us along
                         the way.
                       </p>
@@ -924,7 +924,7 @@ export function ProposalPage({ role }: ProposalPageProps) {
                     style={{ color: palette.body }}
                   >
                     <p>
-                      You have been a blessing in our lives — through your kindness, your laughter,
+                      You have been a blessing in our lives, through your kindness, your laughter,
                       and the love you have shown us. That is why we are reaching out to you
                       personally, and not to everyone.
                     </p>
@@ -938,7 +938,7 @@ export function ProposalPage({ role }: ProposalPageProps) {
                       className={`${cinzel.className} ${sectionType.label} font-semibold uppercase tracking-[0.1em] sm:tracking-[0.14em] md:tracking-[0.16em]`}
                       style={{ color: palette.accent }}
                     >
-                      With sincerity and gratitude, we ask — would you stand with us as our:
+                      With sincerity and gratitude we ask, would you stand with us as our:
                     </p>
                   </div>
                 </div>
@@ -982,7 +982,7 @@ export function ProposalPage({ role }: ProposalPageProps) {
 
                 <ProposalFlowBody className="mb-2 max-w-md text-center sm:mb-3">
                   Thank you for accepting our invitation to stand with us. Your yes means more to
-                  us than we can easily put into words — we are truly grateful.
+                  us than we can easily put into words. We are truly grateful.
                 </ProposalFlowBody>
 
                 <p

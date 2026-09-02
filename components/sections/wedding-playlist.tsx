@@ -545,7 +545,7 @@ export function WeddingPlaylist() {
               {useFallbackIframe ? (
                 <iframe
                   src={embedSrc}
-                  title={`${playlistName} — Spotify playlist`}
+                  title={`${playlistName} Spotify playlist`}
                   width="100%"
                   height={embedHeight}
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -557,7 +557,7 @@ export function WeddingPlaylist() {
               ) : (
                 <div
                   ref={hostRef}
-                  title={`${playlistName} — Spotify playlist`}
+                  title={`${playlistName} Spotify playlist`}
                   className="w-full max-w-full overflow-hidden [&_iframe]:block [&_iframe]:h-full [&_iframe]:w-full [&_iframe]:max-w-full [&_iframe]:border-0"
                   style={{ height: embedHeight }}
                 />

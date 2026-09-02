@@ -231,7 +231,7 @@ function principalSponsorFromApi(row: Record<string, unknown>): PrincipalSponsor
 const ct = {
   label: sectionType.label,
   sectionTitle: `${sectionType.label} lg:text-base`,
-  role: "text-[11px] sm:text-xs md:text-sm",
+  role: "text-[0.5rem] sm:text-[0.5625rem] md:text-[0.625rem] lg:text-xs",
   body: sectionType.text,
   bodyLg: sectionType.subheader,
 } as const
@@ -466,14 +466,14 @@ export function Entourage() {
         />
         <p
           className={`font-goudy-italic relative font-medium normal-case ${textAlign} transition-all duration-300 whitespace-nowrap max-w-full overflow-hidden text-ellipsis`}
-          style={{ ...nameStyle, color: palette.heading }}
+          style={{ ...nameStyle, color: "#ffffff" }}
           title={displayName}
         >
           {displayName}
         </p>
         {showRole && member.roleTitle && (
           <p
-            className={`relative ${ct.role} font-medium mt-0.5 leading-tight ${textAlign} tracking-wide uppercase transition-colors duration-300 whitespace-nowrap max-w-full overflow-hidden text-ellipsis`}
+            className={`relative ${cinzel.className} ${ct.role} font-semibold mt-0.5 leading-tight ${textAlign} tracking-[0.1em] sm:tracking-[0.14em] md:tracking-[0.16em] uppercase transition-colors duration-300 whitespace-nowrap max-w-full overflow-hidden text-ellipsis`}
             style={{ color: palette.label }}
             title={member.roleTitle}
           >

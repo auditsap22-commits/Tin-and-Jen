@@ -135,7 +135,7 @@ export default async function GalleryPage() {
       <div className="pointer-events-none absolute left-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/left-top-corner.png"
+          src="/decoration/deco/left-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -143,7 +143,7 @@ export default async function GalleryPage() {
       <div className="pointer-events-none absolute right-0 top-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/right-top-corner.png"
+          src="/decoration/deco/right-top-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -151,7 +151,7 @@ export default async function GalleryPage() {
       <div className="pointer-events-none absolute bottom-0 left-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/left-bottom-corner.png"
+          src="/decoration/deco/left-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -159,7 +159,7 @@ export default async function GalleryPage() {
       <div className="pointer-events-none absolute bottom-0 right-0 z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/decoration/right-bottom-corner.png"
+          src="/decoration/deco/right-bottom-corner.png"
           alt=""
           className={CORNER_DECO_CLASS}
         />
@@ -178,7 +178,7 @@ export default async function GalleryPage() {
             className="font-goudy-italic mx-auto max-w-2xl px-2 text-[0.75rem] leading-[1.62] sm:text-[0.8125rem] sm:leading-[1.65] md:text-[0.84375rem]"
             style={{ color: "var(--color-welcome-text)" }}
           >
-            From our first chapter to this beautiful season of commitment — every moment has been a
+            From our first chapter to this beautiful season of commitment, every moment has been a
             testament to love, faith, and grace.
           </p>
 

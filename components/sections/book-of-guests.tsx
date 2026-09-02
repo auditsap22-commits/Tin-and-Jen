@@ -55,6 +55,7 @@ const palette = {
   heading: reminderInk.champagne,
   label: `color-mix(in srgb, ${reminderInk.champagne} 82%, transparent)`,
   accent: reminderInk.gold,
+  name: "#ffffff",
 } as const
 
 const guestCardStyle = {
@@ -127,8 +128,10 @@ const ct = {
   body: sectionType.text,
   bodyLg: sectionType.subheader,
   stat: "text-2xl sm:text-3xl md:text-4xl",
-  guestName: sectionType.subheader,
+  guestName: "text-xs sm:text-base md:text-lg",
   meta: sectionType.label,
+  cardMeta: "text-[0.575rem] sm:text-xs md:text-sm",
+  avatarInitials: "text-[0.625rem] sm:text-[0.9375rem] md:text-base",
 } as const
 
 function GuestsCoupleLabel({ groom, bride }: { groom: string; bride: string }) {
@@ -418,7 +421,7 @@ export function BookOfGuests() {
           className={`font-goudy-italic mx-auto max-w-2xl px-2 ${sectionType.textRelaxed}`}
           style={{ color: "var(--color-welcome-text)" }}
         >
-          Meet the cherished souls joining us in celebration — your presence makes our day truly
+          Meet the cherished souls joining us in celebration. Your presence makes our day truly
           special.
         </p>
         <div className="flex items-center justify-center pt-3 sm:pt-4">
@@ -469,7 +472,7 @@ export function BookOfGuests() {
                 </span>
                 <p
                   className={`${cinzel.className} ${ct.bodyLg} max-w-[10rem] text-left font-medium leading-snug sm:max-w-none`}
-                  style={{ color: palette.heading }}
+                  style={{ color: palette.name }}
                 >
                   {totalGuests === 1 ? "Guest" : "Guests"}
                   <span className="block text-[0.85em] font-normal opacity-90">Celebrating With Us</span>
@@ -494,7 +497,7 @@ export function BookOfGuests() {
               <div className="mx-auto mb-4 h-px w-12 sm:mb-5 sm:w-16" style={dividerLineStyle} />
 
               <p className={`font-goudy-italic ${ct.body} mx-auto max-w-md leading-relaxed`} style={{ color: palette.body }}>
-                Thank you for confirming your RSVP — your presence means the world to us.
+                Thank you for confirming your RSVP. Your presence means the world to us.
               </p>
 
               <div className="mt-5 flex flex-col items-center gap-3 sm:mt-6">
@@ -522,15 +525,18 @@ export function BookOfGuests() {
             </div>
 
             {confirmedGuests.length > 0 && (
-              <div className="mt-10 sm:mt-12 md:mt-14">
-                <div className="mb-4 text-center sm:mb-6 md:mb-8">
+              <div className="mt-7 sm:mt-12 md:mt-14">
+                <div className="mb-3 text-center sm:mb-6 md:mb-8">
                   <p
                     className={`${cinzel.className} ${ct.label} font-semibold uppercase tracking-[0.2em]`}
                     style={{ color: palette.accent }}
                   >
                     Joining Us
                   </p>
-                  <p className={`font-goudy-italic ${ct.body} mt-1.5`} style={{ color: palette.body }}>
+                  <p
+                    className={`font-goudy-italic mt-1 text-[0.75rem] leading-snug sm:mt-1.5 sm:text-[0.9375rem] sm:leading-[1.62] md:text-base`}
+                    style={{ color: palette.body }}
+                  >
                     A glimpse of the wonderful guests celebrating with us
                   </p>
                 </div>
@@ -543,13 +549,13 @@ export function BookOfGuests() {
                   }}
                 >
                   <div
-                    className={`space-y-2 sm:space-y-3 md:space-y-4 ${isTransitioning ? "animate-guest-roll-out" : ""}`}
+                    className={`space-y-1.5 sm:space-y-3 md:space-y-4 ${isTransitioning ? "animate-guest-roll-out" : ""}`}
                     style={{ transformStyle: "preserve-3d" }}
                   >
                     {getVisibleGuests().map((guest, index) => (
                       <div
                         key={`${guest.id}-${currentIndex}-${index}`}
-                        className={`relative z-20 group overflow-hidden rounded-xl border p-3.5 transition-all duration-300 sm:rounded-2xl sm:p-4 md:p-5 ${justEntered ? "animate-guest-roll-in" : ""}`}
+                        className={`relative z-20 group overflow-hidden rounded-lg border p-2.5 transition-all duration-300 sm:rounded-2xl sm:p-4 md:p-5 ${justEntered ? "animate-guest-roll-in" : ""}`}
                         style={{
                           ...guestCardStyle,
                           ...(justEntered
@@ -560,17 +566,17 @@ export function BookOfGuests() {
                             : {}),
                         }}
                       >
-                      <div className="relative z-[1] flex items-start gap-3 sm:gap-4">
+                      <div className="relative z-[1] flex items-start gap-2 sm:gap-4">
                         <div className="relative flex-shrink-0">
                           <div
-                            className="flex h-11 w-11 items-center justify-center rounded-full shadow-md ring-2 sm:h-12 sm:w-12 md:h-14 md:w-14"
+                            className="flex h-8 w-8 items-center justify-center rounded-full shadow-md ring-2 sm:h-12 sm:w-12 md:h-14 md:w-14"
                             style={{
                               background: `linear-gradient(145deg, ${reminderInk.gold} 0%, ${reminderInk.navy} 100%)`,
                               boxShadow: `0 0 0 2px color-mix(in srgb, ${reminderInk.champagne} 70%, transparent)`,
                             }}
                           >
                             <span
-                              className={`${cinzel.className} font-semibold ${sectionType.text}`}
+                              className={`${cinzel.className} font-semibold ${ct.avatarInitials}`}
                               style={{ color: reminderInk.champagne }}
                             >
                               {getInitials(guest.name)}
@@ -578,19 +584,19 @@ export function BookOfGuests() {
                           </div>
                         </div>
 
-                        <div className="min-w-0 flex-1 pt-0.5">
-                          <div className="mb-2 flex items-start justify-between gap-2 sm:mb-2.5">
+                        <div className="min-w-0 flex-1">
+                          <div className="mb-1 flex items-start justify-between gap-1.5 sm:mb-2.5 sm:gap-2">
                             <div className="min-w-0">
                               <h3
                                 className={`font-goudy-italic ${ct.guestName} truncate font-semibold leading-tight`}
-                                style={{ color: palette.heading }}
+                                style={{ color: palette.name }}
                                 title={guest.name}
                               >
                                 {guest.name}
                               </h3>
                               {guest.role && (
                                 <p
-                                  className={`${cinzel.className} ${ct.meta} mt-0.5 font-medium uppercase tracking-wide`}
+                                  className={`${cinzel.className} ${ct.cardMeta} mt-px font-medium uppercase tracking-wide sm:mt-0.5`}
                                   style={{ color: palette.label }}
                                 >
                                   {guest.role}
@@ -599,7 +605,7 @@ export function BookOfGuests() {
                             </div>
                             {guest.isVip && (
                               <span
-                                className={`${cinzel.className} ${ct.meta} shrink-0 rounded-full border px-2 py-0.5 font-semibold uppercase tracking-[0.12em]`}
+                                className={`${cinzel.className} ${ct.cardMeta} shrink-0 rounded-full border px-1.5 py-px font-semibold uppercase tracking-[0.12em] sm:px-2 sm:py-0.5`}
                                 style={{
                                   backgroundColor: reminderInk.gold,
                                   borderColor: reminderInk.champagne,
@@ -611,15 +617,15 @@ export function BookOfGuests() {
                             )}
                           </div>
 
-                          <div className="mb-2 flex flex-wrap items-center gap-1.5 sm:mb-3 sm:gap-2">
+                          <div className="mb-1.5 flex flex-wrap items-center gap-1 sm:mb-3 sm:gap-2">
                             <span
-                              className={`${cinzel.className} ${ct.meta} rounded-full border px-2.5 py-1 font-semibold uppercase tracking-[0.1em]`}
+                              className={`${cinzel.className} ${ct.cardMeta} rounded-full border px-2 py-0.5 font-semibold uppercase tracking-[0.1em] sm:px-2.5 sm:py-1`}
                               style={chipPrimaryStyle}
                             >
                               {guest.allowedGuests} {guest.allowedGuests === 1 ? "Guest" : "Guests"}
                             </span>
                             <span
-                              className={`${cinzel.className} ${ct.meta} rounded-full border px-2.5 py-1 font-semibold uppercase tracking-[0.1em]`}
+                              className={`${cinzel.className} ${ct.cardMeta} rounded-full border px-2 py-0.5 font-semibold uppercase tracking-[0.1em] sm:px-2.5 sm:py-1`}
                               style={chipSecondaryStyle}
                             >
                               {guest.tableNumber && guest.tableNumber.trim() !== "" ? (
@@ -632,33 +638,33 @@ export function BookOfGuests() {
 
                           {guest.companions && guest.companions.length > 0 && (
                             <div
-                              className="border-t pt-2.5 sm:pt-3"
+                              className="border-t pt-1.5 sm:pt-3"
                               style={{
                                 borderColor: `color-mix(in srgb, ${reminderInk.gold} 28%, transparent)`,
                               }}
                             >
                               <span
-                                className={`${cinzel.className} ${ct.meta} mb-2 block font-semibold uppercase tracking-[0.14em]`}
+                                className={`${cinzel.className} ${ct.cardMeta} mb-1 block font-semibold uppercase tracking-[0.14em] sm:mb-2`}
                                 style={{ color: palette.label }}
                               >
                                 With Them
                               </span>
-                              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                              <div className="flex flex-wrap gap-1 sm:gap-2">
                                 {guest.companions.map((companion, idx) => (
                                   <div
                                     key={idx}
-                                    className="inline-flex items-center gap-1.5 rounded-lg border px-2 py-0.5 sm:px-2.5 sm:py-1"
+                                    className="inline-flex items-center gap-1 rounded-md border px-1.5 py-px sm:gap-1.5 sm:rounded-lg sm:px-2.5 sm:py-1"
                                     style={{
                                       borderColor: `color-mix(in srgb, ${reminderInk.champagne} 28%, transparent)`,
                                       backgroundColor: `color-mix(in srgb, ${reminderInk.navy} 55%, transparent)`,
                                     }}
                                   >
-                                    <span className={`font-goudy-italic ${ct.meta} whitespace-nowrap font-medium`} style={{ color: palette.body }}>
+                                    <span className={`font-goudy-italic ${ct.cardMeta} whitespace-nowrap font-medium`} style={{ color: palette.name }}>
                                       {companion.name}
                                     </span>
                                     {companion.relationship && companion.relationship.trim() !== "" && (
                                       <span
-                                        className={`${cinzel.className} ${sectionType.label} whitespace-nowrap rounded-full border px-1.5 py-0.5 font-medium sm:px-2`}
+                                        className={`${cinzel.className} ${ct.cardMeta} whitespace-nowrap rounded-full border px-1 py-px font-medium sm:px-2 sm:py-0.5`}
                                         style={chipSecondaryStyle}
                                       >
                                         {companion.relationship}
@@ -671,12 +677,12 @@ export function BookOfGuests() {
                           )}
 
                           <div
-                            className="mt-2.5 flex items-center justify-between gap-2 border-t pt-2.5 sm:pt-3"
+                            className="mt-1.5 flex items-center justify-between gap-2 border-t pt-1.5 sm:mt-2.5 sm:pt-3"
                             style={{
                               borderColor: `color-mix(in srgb, ${reminderInk.gold} 22%, transparent)`,
                             }}
                           >
-                            <span className={`font-goudy-italic ${ct.meta}`} style={{ color: palette.body, opacity: 0.85 }}>
+                            <span className={`font-goudy-italic ${ct.cardMeta}`} style={{ color: palette.body, opacity: 0.85 }}>
                               Confirmed {formatDate(guest.updatedAt)}
                             </span>
                           </div>
@@ -695,7 +701,7 @@ export function BookOfGuests() {
                   className="mx-auto h-px w-12 sm:w-16"
                   style={dividerLineStyle}
                 />
-                <p className={`${cinzel.className} ${ct.bodyLg} mt-6 mb-2 font-semibold sm:mt-8`} style={{ color: palette.heading }}>
+                <p className={`${cinzel.className} ${ct.bodyLg} mt-6 mb-2 font-semibold sm:mt-8`} style={{ color: palette.name }}>
                   Guest list updating
                 </p>
                 <p className={`font-goudy-italic ${ct.body}`} style={{ color: palette.body }}>

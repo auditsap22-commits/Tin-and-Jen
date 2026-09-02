@@ -12,9 +12,9 @@ export const HONOR_ATTENDANT_CATEGORIES: HonorAttendantTitle[] = [
 
 const DEFAULT_HONOR_ATTENDANT_DESCRIPTIONS: Record<HonorAttendantTitle, string> = {
   "Matron of Honor":
-    "To stand beside the bride with love and grace — lending a steady hand through every step of the day, sharing in her joy and excitement, and helping make each moment leading up to and on our wedding day truly unforgettable.",
+    "To stand beside the bride with love and grace, lending a steady hand through every step of the day, sharing in her joy and excitement, and helping make each moment leading up to and on our wedding day truly unforgettable.",
   "Maid of Honor":
-    "To stand beside the bride with love and loyalty — lending a steady hand through every step of the day, sharing in her joy and excitement, and helping make each moment leading up to and on our wedding day truly unforgettable.",
+    "To stand beside the bride with love and loyalty, lending a steady hand through every step of the day, sharing in her joy and excitement, and helping make each moment leading up to and on our wedding day truly unforgettable.",
 }
 
 function getProposalConfig() {

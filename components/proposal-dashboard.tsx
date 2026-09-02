@@ -169,7 +169,7 @@ export function ProposalDashboard() {
               <h2 className="text-2xl font-bold text-[#111827]">Proposal Invitations</h2>
               <p className="mt-1 max-w-xl text-sm leading-relaxed text-[#6B7280]">
                 Share a unique proposal link for each role. When someone accepts, their name fills
-                the next available empty slot in Google Sheets (entourage or sponsors) — matched by
+                the next available empty slot in Google Sheets (entourage or sponsors), matched by
                 role category.
               </p>
             </div>

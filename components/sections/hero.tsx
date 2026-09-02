@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import { Cinzel } from "next/font/google"
 import { ArrowRight } from "lucide-react"
@@ -24,8 +24,30 @@ const DECO = {
   br: "/decoration/deco/right-bottom-small.png",
 } as const
 
-const BG_VIDEO =
-  "/background_music/No Copyright Video, Background, Blue Screen, Motion Graphics, Animated Background.mp4"
+const DESKTOP_BACKGROUNDS = [
+  "/desktop-background/couples (1).webp",
+  "/desktop-background/couples (7).webp",
+  "/desktop-background/couples (12).webp",
+  "/desktop-background/couples (18).webp",
+  "/desktop-background/couples (24).webp",
+  "/desktop-background/couples (30).webp",
+  "/desktop-background/couples (36).webp",
+  "/desktop-background/couples (42).webp",
+] as const
+
+const MOBILE_BACKGROUNDS = [
+  "/mobile-background/couples (1).webp",
+  "/mobile-background/couples (5).webp",
+  "/mobile-background/couples (9).webp",
+  "/mobile-background/couples (13).webp",
+  "/mobile-background/couples (17).webp",
+  "/mobile-background/couples (21).webp",
+  "/mobile-background/couples (25).webp",
+  "/mobile-background/couples (29).webp",
+] as const
+
+const SLIDE_MS = 7200
+const FADE_MS = 2600
 
 function formatClockTime(raw: string) {
   const trimmed = raw.trim()
@@ -52,8 +74,10 @@ function formatClockTime(raw: string) {
 
 export function Hero() {
   const [isVisible, setIsVisible] = useState(false)
+  const [slideIndex, setSlideIndex] = useState(0)
+  const [prevIndex, setPrevIndex] = useState<number | null>(null)
+  const [isDesktop, setIsDesktop] = useState(false)
   const reduceMotion = useReducedMotion()
-  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const t = setTimeout(() => setIsVisible(true), 150)
@@ -61,49 +85,37 @@ export function Hero() {
   }, [])
 
   useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
+    const media = window.matchMedia("(min-width: 768px)")
+    const sync = () => setIsDesktop(media.matches)
+    sync()
+    media.addEventListener("change", sync)
+    return () => media.removeEventListener("change", sync)
+  }, [])
 
-    video.muted = true
-    video.loop = true
-    video.playsInline = true
+  useEffect(() => {
+    setSlideIndex(0)
+    setPrevIndex(null)
+  }, [isDesktop])
 
-    const playLoop = () => {
-      if (reduceMotion) return
-      video.muted = true
-      const playback = video.play()
-      if (playback) playback.catch(() => {})
-    }
+  const backgrounds = isDesktop ? DESKTOP_BACKGROUNDS : MOBILE_BACKGROUNDS
+  const nextIndex = (slideIndex + 1) % backgrounds.length
 
-    const restart = () => {
-      if (reduceMotion) return
-      video.currentTime = 0.001
-      playLoop()
-    }
+  useEffect(() => {
+    if (reduceMotion) return
+    const id = window.setInterval(() => {
+      setSlideIndex((current) => {
+        setPrevIndex(current)
+        return (current + 1) % backgrounds.length
+      })
+    }, SLIDE_MS)
+    return () => window.clearInterval(id)
+  }, [reduceMotion, backgrounds.length])
 
-    const keepAlive = () => {
-      if (reduceMotion || !video.duration) return
-      if (video.currentTime >= video.duration - 0.05) {
-        restart()
-      }
-    }
-
-    if (reduceMotion) {
-      video.pause()
-      return
-    }
-
-    playLoop()
-    video.addEventListener("ended", restart)
-    video.addEventListener("timeupdate", keepAlive)
-    video.addEventListener("stalled", playLoop)
-
-    return () => {
-      video.removeEventListener("ended", restart)
-      video.removeEventListener("timeupdate", keepAlive)
-      video.removeEventListener("stalled", playLoop)
-    }
-  }, [reduceMotion])
+  useEffect(() => {
+    if (prevIndex === null) return
+    const id = window.setTimeout(() => setPrevIndex(null), FADE_MS)
+    return () => window.clearTimeout(id)
+  }, [prevIndex, slideIndex])
 
   const ceremonyDay = siteConfig.ceremony.day ?? "Saturday"
   const ceremonyTime = siteConfig.ceremony.time
@@ -153,18 +165,28 @@ export function Hero() {
         paddingRight: "max(1.15rem, calc(var(--hero-frame-inset) + 0.7rem))",
       }}
     >
-      <video
-        ref={videoRef}
-        className="hero-invite-video"
-        src={encodeURI(BG_VIDEO)}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        disablePictureInPicture
-        aria-hidden="true"
-      />
+      <div className="hero-invite-slideshow" aria-hidden="true">
+        {backgrounds.map((src, index) => {
+          const isActive = index === slideIndex
+          const isPrev = index === prevIndex
+
+          return (
+            <div
+              key={src}
+              className={`hero-invite-slide${isActive ? " is-active" : ""}${isPrev ? " is-prev" : ""}`}
+            >
+              <Image
+                src={src}
+                alt=""
+                fill
+                priority={index === 0 || isActive || index === nextIndex}
+                sizes="100vw"
+                className="object-cover"
+              />
+            </div>
+          )
+        })}
+      </div>
       <div className="hero-invite-video-veil" aria-hidden="true" />
 
       <div className="hero-invite-frame" aria-hidden="true">

@@ -50,7 +50,7 @@ export function buildProposalMetadata(options?: {
           height: 630,
           type: "image/jpeg",
           alt: roleTitle
-            ? `Will you be our ${roleTitle}? — ${coupleNames} Wedding Proposal`
+            ? `Will you be our ${roleTitle}? ${coupleNames} Wedding Proposal`
             : `${coupleNames} Wedding Proposal`,
         },
       ],

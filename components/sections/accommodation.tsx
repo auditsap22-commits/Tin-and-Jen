@@ -373,7 +373,7 @@ function AddressBlock() {
           borderColor: "color-mix(in srgb, var(--color-motif-deep) 10%, transparent)",
         }}
       >
-        Depending on traffic, the journey from NAIA typically takes 30–60 minutes.
+        Depending on traffic, the journey from NAIA typically takes 30-60 minutes.
       </p>
     </SoftPanel>
   )
@@ -395,7 +395,7 @@ function PrimaryVenuePanel() {
         Shangri-La The Fort, Manila
       </p>
       <p className={`font-goudy-italic mt-2 ${sectionType.textSnug}`} style={{ color: palette.body }}>
-        We&apos;d love for you to stay here if it&apos;s convenient. Book early — availability may
+        We&apos;d love for you to stay here if it&apos;s convenient. Book early; availability may
         be limited.
       </p>
     </SoftPanel>
@@ -408,7 +408,7 @@ function FavoriteSpot({ name, note }: { name: string; note: string }) {
       <span className={`${cinzel.className} font-semibold`} style={{ color: palette.heading }}>
         {name}
       </span>
-      <span style={{ color: palette.body }}> — {note}</span>
+      <span style={{ color: palette.body }}>: {note}</span>
     </li>
   )
 }

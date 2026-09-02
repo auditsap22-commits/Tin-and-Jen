@@ -80,9 +80,25 @@ const ct = {
 const linkClass =
   "underline font-semibold transition-colors hover:opacity-80"
 
+function Note({ children }: { children: ReactNode }) {
+  return (
+    <strong className="font-semibold not-italic" style={{ color: reminderInk.deep }}>
+      {children}
+    </strong>
+  )
+}
+
+function GoldNote({ children }: { children: ReactNode }) {
+  return (
+    <strong className="font-semibold not-italic" style={{ color: reminderInk.gold }}>
+      {children}
+    </strong>
+  )
+}
+
 interface FAQItem {
   question: string
-  answer: string | ReactNode
+  answer: ReactNode
 }
 
 function OrnamentalDivider() {
@@ -137,27 +153,48 @@ function FaqTitle() {
 }
 
 function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
-  const guestArrival = siteConfig.ceremony.guestsTime ?? "8:30 AM"
+  const guestArrival = siteConfig.ceremony.guestsTime ?? "2:30 PM"
   const rsvpPhone = siteConfig.details.rsvp.phone.trim()
   const showRsvpPhone =
     rsvpPhone.length > 0 && !/to be announced/i.test(rsvpPhone)
+  const rsvpDeadline = siteConfig.details.rsvp.deadline.replace(/\.\s*$/, "")
 
   return [
     {
       question: "When is the wedding?",
-      answer: `Our wedding will be held on ${siteConfig.ceremony.date}, ${siteConfig.ceremony.day}, at ${siteConfig.ceremony.location}. The ceremony begins at ${siteConfig.ceremony.time}, and the reception follows at ${siteConfig.reception.time} at the same venue.`,
+      answer: (
+        <p>
+          Our wedding will be held on{" "}
+          <Note>
+            {siteConfig.ceremony.date}, {siteConfig.ceremony.day}
+          </Note>
+          , at {siteConfig.ceremony.location}. The ceremony begins at{" "}
+          <Note>{siteConfig.ceremony.time}</Note>, and the reception follows at{" "}
+          <Note>{siteConfig.reception.time}</Note> at the same venue.
+        </p>
+      ),
     },
     {
       question: "What time should I arrive?",
-      answer: `Please arrive by ${guestArrival} so you have time to find your seat and settle in. The ceremony will begin promptly at ${siteConfig.ceremony.time}. Entourage members are requested to assemble at ${siteConfig.ceremony.entourageTime}.`,
+      answer: (
+        <p>
+          Please arrive by <Note>{guestArrival}</Note> so you have time to find your seat and
+          settle in. The ceremony will begin promptly at <Note>{siteConfig.ceremony.time}</Note>.
+          Entourage members are requested to assemble at{" "}
+          <Note>{siteConfig.ceremony.entourageTime}</Note>.
+        </p>
+      ),
     },
     {
       question: "Where will the ceremony and reception take place?",
       answer: (
-        <>
-          Both the ceremony and reception will be held at {siteConfig.ceremony.location},{" "}
-          {siteConfig.ceremony.venue}. The ceremony begins at {siteConfig.ceremony.time}, and the
-          reception follows at {siteConfig.reception.time}.{" "}
+        <p>
+          Both the ceremony and reception will be held at{" "}
+          <Note>
+            {siteConfig.ceremony.location}, {siteConfig.ceremony.venue}
+          </Note>
+          . The ceremony begins at <Note>{siteConfig.ceremony.time}</Note>, and the reception
+          follows at <Note>{siteConfig.reception.time}</Note>.{" "}
           <a
             href={siteConfig.ceremony.map}
             target="_blank"
@@ -168,122 +205,222 @@ function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
             Open in Google Maps
           </a>
           .
-        </>
+        </p>
       ),
     },
     {
       question: "How do I RSVP?",
       answer: (
         <>
-          Please RSVP using the{" "}
-          <a
-            href="#guest-list"
-            className={linkClass}
-            style={{ color: faqPalette.accent }}
-            onClick={(e) => {
-              e.preventDefault()
-              document.getElementById("guest-list")?.scrollIntoView({ behavior: "smooth" })
-            }}
-          >
-            guest list
-          </a>{" "}
-          on this invitation: search for your name and confirm your attendance.
-          {"\n\n"}
-          Please respond by {siteConfig.details.rsvp.deadline.replace(/\.\s*$/, "")}.
-          {showRsvpPhone
-            ? `\n\nIf you have questions, please contact ${siteConfig.details.rsvp.coordinator} at ${rsvpPhone}.`
-            : `\n\nIf you have questions, please contact ${siteConfig.details.rsvp.coordinator}.`}
+          <p>
+            Please RSVP using the{" "}
+            <a
+              href="#guest-list"
+              className={linkClass}
+              style={{ color: faqPalette.accent }}
+              onClick={(e) => {
+                e.preventDefault()
+                document.getElementById("guest-list")?.scrollIntoView({ behavior: "smooth" })
+              }}
+            >
+              guest list
+            </a>{" "}
+            on this invitation: search for your name and confirm your attendance.
+          </p>
+          <p>
+            Please respond by <Note>{rsvpDeadline}</Note>.
+            {showRsvpPhone
+              ? ` If you have questions, please contact ${siteConfig.details.rsvp.coordinator} at ${rsvpPhone}.`
+              : ` If you have questions, please contact ${siteConfig.details.rsvp.coordinator}.`}
+          </p>
         </>
       ),
     },
     {
       question: 'Do we really need to RSVP? We already said "Yes" to the couple.',
-      answer:
-        "Yes, please. We will be needing your formal RSVP to consolidate guest details and finalize the headcount for catering and seating purposes.",
+      answer: (
+        <p>
+          Yes, please. We will be needing your <Note>formal RSVP</Note> to consolidate guest
+          details and finalize the headcount for <Note>catering and seating</Note>.
+        </p>
+      ),
     },
     {
       question: "Can I sit anywhere at the reception?",
-      answer:
-        "Please don't. It took us a lot of effort and discussion to finish the seating arrangement, which is planned for everyone's convenience and preference.",
+      answer: (
+        <p>
+          Please don&apos;t. It took us a lot of effort and discussion to finish the{" "}
+          <Note>seating arrangement</Note>, which is planned for everyone&apos;s convenience and
+          preference.
+        </p>
+      ),
     },
     {
       question: 'Can I bring a "Plus One" to the event?',
-      answer:
-        "As much as we would love to accommodate all our friends and family, we have a limited number of guests. Please understand that this event is strictly by invitation only.",
+      answer: (
+        <p>
+          As much as we would love to accommodate all our friends and family, we have a limited
+          number of guests. Please understand that this event is{" "}
+          <Note>strictly by invitation only</Note>.
+        </p>
+      ),
     },
     {
       question: "Can I bring my child to the event?",
-      answer:
-        "We kindly request that our wedding be an adults-only celebration, other than the children who are part of the entourage. We hope this allows everyone to relax and fully enjoy the day with us.",
+      answer: (
+        <p>
+          While we adore your little ones, we have chosen to celebrate as an{" "}
+          <Note>adults-only affair</Note>, other than the{" "}
+          <Note>children who are part of the entourage</Note>. We hope this gives you a
+          well-deserved night out.
+        </p>
+      ),
     },
     {
       question:
-        'I said "No" to the RSVP but I had a change of plans—I can attend now! What should I do?',
-      answer:
-        "Please check with us first as we have a strict guest list. If seats become available, we will let you know as soon as possible. Please do not attend unannounced, as we may not have any available seats for you.",
+        'I said "No" to the RSVP but I had a change of plans. I can attend now! What should I do?',
+      answer: (
+        <p>
+          Please check with us first, as we have a <Note>strict guest list</Note>. If seats become
+          available, we will let you know as soon as possible. Please{" "}
+          <Note>do not attend unannounced</Note>, as we may not have any available seats for you.
+        </p>
+      ),
     },
     {
       question: "What if I RSVP'd but cannot attend?",
-      answer:
-        "We would love to have you at our wedding, but we understand that there are circumstances beyond our control. However, please let us know as soon as possible so we can reallocate your seat/s.",
+      answer: (
+        <p>
+          We would love to have you at our wedding, but we understand that there are circumstances
+          beyond our control. However, please <Note>let us know as soon as possible</Note> so we
+          can reallocate your seat.
+        </p>
+      ),
     },
     {
       question: "Is there parking available?",
-      answer:
-        "Yes, parking is available at the venue. Please arrive a little early so you have time to park comfortably.",
+      answer: (
+        <p>
+          Yes, <Note>parking is available at the venue</Note>. Please arrive a little early so you
+          have time to park comfortably.
+        </p>
+      ),
     },
     {
       question: "What is the dress code?",
-      answer:
-        "Please follow the attire guide in Event Details. Guests may wear a midi or cocktail dress, or a collared shirt with cream trousers, in Midnight Navy, Slate Navy, Antique Gold, or Champagne. Kindly avoid white, black, and casual clothes or shoes.",
+      answer: (
+        <>
+          <p>
+            Kindly follow the attire guide in{" "}
+            <a
+              href="#details"
+              className={linkClass}
+              style={{ color: faqPalette.accent }}
+              onClick={(e) => {
+                e.preventDefault()
+                document.getElementById("details")?.scrollIntoView({ behavior: "smooth" })
+              }}
+            >
+              Event Details
+            </a>
+            . Our theme is <Note>Navy Blue</Note> and <GoldNote>Champagne Gold</GoldNote>, and
+            guests are asked to wear <Note>modest and elegant formal attire</Note>.
+          </p>
+          <p>
+            For our lovely ladies, please{" "}
+            <Note>
+              avoid wearing very short dresses, plunging necklines, backless dresses, or overly
+              revealing outfits
+            </Note>
+            . We also kindly request that you{" "}
+            <Note>refrain from wearing shiny or heavily embellished dresses</Note>.
+          </p>
+          <p>
+            To keep our wedding color palette, please{" "}
+            <Note>avoid wearing white, black, or red dresses</Note>.{" "}
+            <Note>Strictly no casual clothes or shoes</Note>.
+          </p>
+        </>
+      ),
     },
     {
       question: "Will the ceremony be unplugged?",
-      answer:
-        "Yes. The greatest gift you can give us during our ceremony is your presence. Guests may take a few photos, but we kindly ask that it be kept minimal so our official photographers can capture every moment. We promise to share the photos with you afterward.",
+      answer: (
+        <p>
+          Yes. The greatest gift you can give us during our ceremony is your presence. Kindly{" "}
+          <Note>keep phones and cameras away during the ceremony</Note> and let our photographers
+          capture the moment. We promise to share the photos with you afterward.
+        </p>
+      ),
     },
     {
       question: "Can I take photos or videos during the reception?",
-      answer:
-        "Yes. While our ceremony will be mostly unplugged, we would love for you to capture the joy throughout the reception. We prepared this celebration wholeheartedly and we want everyone to enjoy it fully.",
+      answer: (
+        <p>
+          Yes. While our ceremony will be <Note>unplugged</Note>, we would love for you to capture
+          the joy throughout the <Note>reception</Note>. We prepared this celebration
+          wholeheartedly and we want everyone to enjoy it fully.
+        </p>
+      ),
     },
     {
       question: "When is the appropriate time to leave?",
-      answer:
-        "It took us some time to plan a heartfelt wedding that everyone would hopefully enjoy. We humbly request that you celebrate with us until the program ends. Let's laugh, take pictures, and have fun!",
+      answer: (
+        <p>
+          It took us some time to plan a heartfelt wedding that everyone would hopefully enjoy. We
+          humbly request that you <Note>celebrate with us until the program ends</Note>. Let&apos;s
+          laugh, take pictures, and have fun!
+        </p>
+      ),
     },
     {
       question: "What if I have dietary restrictions or allergies?",
-      answer:
-        "Please let us know about any dietary restrictions or allergies when you RSVP. We want to ensure everyone can enjoy the celebration comfortably.",
+      answer: (
+        <p>
+          Please let us know about any dietary restrictions or allergies{" "}
+          <Note>when you RSVP</Note>. We want to ensure everyone can enjoy the celebration
+          comfortably.
+        </p>
+      ),
     },
     {
       question: "How can I help the couple have a great time during their wedding?",
-      answer:
-        "• Pray with us for favorable weather and the continuous blessings of our Lord as we enter this new chapter of our lives as husband and wife.\n\n• RSVP as soon as your schedule is cleared.\n\n• Dress according to the attire guide and color palette.\n\n• Arrive on time.\n\n• Follow the seating arrangement at the reception.\n\n• Stay until the end of the program.\n\n• Join the activities and enjoy!",
+      answer: (
+        <ul className="list-none space-y-2.5 text-left">
+          <li>
+            Pray with us for favorable weather and the continuous blessings of our Lord as we enter
+            this new chapter of our lives as husband and wife.
+          </li>
+          <li>
+            <Note>RSVP as soon as your schedule is cleared.</Note>
+          </li>
+          <li>
+            Dress according to the <Note>attire guide and color palette</Note>.
+          </li>
+          <li>
+            <Note>Arrive on time</Note> by {guestArrival}.
+          </li>
+          <li>
+            Follow the <Note>seating arrangement</Note> at the reception.
+          </li>
+          <li>
+            <Note>Stay until the end of the program.</Note>
+          </li>
+          <li>Join the activities and enjoy!</li>
+        </ul>
+      ),
     },
   ]
 }
 
-function FaqAnswer({ answer }: { answer: string | ReactNode }) {
-  if (typeof answer !== "string") {
-    return (
-      <div
-        className={`font-goudy-italic ${ct.body} whitespace-pre-line`}
-        style={{ color: faqPalette.body }}
-      >
-        {answer}
-      </div>
-    )
-  }
-
+function FaqAnswer({ answer }: { answer: ReactNode }) {
   return (
-    <p
-      className={`font-goudy-italic ${ct.body} whitespace-pre-line`}
+    <div
+      className={`font-goudy-italic ${ct.body} space-y-3`}
       style={{ color: faqPalette.body }}
     >
       {answer}
-    </p>
+    </div>
   )
 }
 

@@ -162,7 +162,7 @@ export function LoveStory() {
         layout="image-left"
         isFirst={true}
         title={<FirstChapterTitle />}
-        imageSrc="/mobile-background/couple (1).jpeg"
+        imageSrc="/mobile-background/couples (16).webp"
         text={
           <>
             <p className="mb-4">Every love story begins differently.</p>
@@ -180,7 +180,7 @@ export function LoveStory() {
       <StorySection
         theme="dark"
         layout="image-right"
-        imageSrc="/mobile-background/couple (1).jpg"
+        imageSrc="/mobile-background/couples (26).webp"
         text={
           <>
             <p className="mb-4">
@@ -199,7 +199,7 @@ export function LoveStory() {
       <StorySection
         theme="light"
         layout="image-left"
-        imageSrc="/mobile-background/couple (2).jpeg"
+        imageSrc="/mobile-background/couples (25).webp"
         text={
           <>
             <p className="mb-4">Life went on.</p>
@@ -215,7 +215,7 @@ export function LoveStory() {
       <StorySection
         theme="dark"
         layout="image-right"
-        imageSrc="/mobile-background/couple (2).jpg"
+        imageSrc="/mobile-background/couples (15).webp"
         text={
           <>
             <p className="mb-4">Then came the day everything began to change.</p>
@@ -235,7 +235,7 @@ export function LoveStory() {
       <StorySection
         theme="light"
         layout="image-left"
-        imageSrc="/mobile-background/couple (3).jpeg"
+        imageSrc="/mobile-background/couples (31).webp"
         text={
           <>
             <p className="mb-4">That short trip became our very first real conversation.</p>
@@ -248,7 +248,7 @@ export function LoveStory() {
       <StorySection
         theme="dark"
         layout="image-right"
-        imageSrc="/mobile-background/couple (3).jpg"
+        imageSrc="/mobile-background/couples (5).webp"
         text={
           <>
             <p className="mb-4 italic">&ldquo;Ingat sa pag-uwi. 😊&rdquo;</p>
@@ -262,7 +262,7 @@ export function LoveStory() {
         theme="light"
         layout="image-left"
         isLast={true}
-        imageSrc="/mobile-background/couple (4).jpg"
+        imageSrc="/mobile-background/couples (21).webp"
         text={
           <>
             <p className="mb-4">Looking back now, I smile whenever I remember that message.</p>
@@ -318,7 +318,7 @@ export function LoveStory() {
               className={`font-goudy-italic mt-2 sm:mt-3 ${sectionType.label} not-italic tracking-wide`}
               style={{ color: "var(--color-welcome-green)" }}
             >
-              — Isaiah 60:22
+              Isaiah 60:22
             </footer>
           </blockquote>
 

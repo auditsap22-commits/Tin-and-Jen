@@ -90,7 +90,7 @@ const socialLinkStyle = {
 } as const
 
 const FOOTER_QUOTES = [
-  `"I have found the one whom my soul loves." – Song of Solomon 3:4`,
+  `"I have found the one whom my soul loves." Song of Solomon 3:4`,
   "Welcome to our wedding website! We've found a love that's a true blessing, and we give thanks to God for writing the beautiful story of our journey together.",
   "Thank you for your love, prayers, and support. We can't wait to celebrate this joyful day together!",
 ] as const
@@ -98,6 +98,14 @@ const FOOTER_QUOTES = [
 const LONGEST_FOOTER_QUOTE = FOOTER_QUOTES.reduce((longest, quote) =>
   quote.length > longest.length ? quote : longest
 )
+
+function Note({ children }: { children: ReactNode }) {
+  return (
+    <strong className="font-semibold not-italic" style={{ color: reminderInk.deep }}>
+      {children}
+    </strong>
+  )
+}
 
 function FooterCoupleNames({ names }: { names: string }) {
   return (
@@ -157,7 +165,7 @@ function DetailRow({
         {label}
       </p>
       <p className={`font-goudy-italic ${ct.body}`} style={{ color: palette.body }}>
-        {value}
+        <Note>{value}</Note>
       </p>
     </div>
   )
@@ -175,6 +183,7 @@ export function Footer() {
   const groomName = siteConfig.couple.groomNickname || siteConfig.couple.groom
   const brideName = siteConfig.couple.brideNickname || siteConfig.couple.bride
   const coupleDisplayName = `${groomName} & ${brideName}`
+  const weddingHashtag = siteConfig.snapShare.hashtag[0]
 
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0)
   const [displayedText, setDisplayedText] = useState("")
@@ -324,6 +333,14 @@ export function Footer() {
             <motion.div className="lg:col-span-2 min-w-0" variants={fadeInUp}>
               <div className="mb-5 sm:mb-6">
                 <FooterCoupleNames names={coupleDisplayName} />
+                {weddingHashtag ? (
+                  <p
+                    className={`${cinzel.className} ${ct.cardTitle} mb-3 font-semibold tracking-[0.04em] sm:mb-4`}
+                    style={{ color: reminderInk.gold }}
+                  >
+                    {weddingHashtag}
+                  </p>
+                ) : null}
                 <div className="space-y-3 sm:space-y-4">
                   <DetailRow label="Wedding Date" value={ceremonyDate} />
                   {/* <DetailRow label="Venue" value={toTitleCase(ceremonyVenue)} /> */}
@@ -396,7 +413,8 @@ export function Footer() {
                 <div className="space-y-2">
                   <DetailRow label="Please respond by" value={siteConfig.details.rsvp.deadline} />
                   <p className={`font-goudy-italic ${ct.body} opacity-90`} style={{ color: palette.body }}>
-                    Please confirm your attendance by this date.
+                    Please <Note>confirm your attendance</Note> by this date so we can finalize{" "}
+                    <Note>catering and seating</Note>.
                   </p>
                 </div>
               </FooterCard>
@@ -473,13 +491,15 @@ export function Footer() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
               <div className="text-center md:text-left min-w-0">
                 <p className={`font-goudy-italic ${ct.body}`} style={{ color: palette.body }}>
-                  © {year} {coupleDisplayName} — crafted with love, prayers, and gratitude.
+                  © {year} {coupleDisplayName}. Crafted with{" "}
+                  <Note>love, prayers, and gratitude</Note>.
                 </p>
                 <p
                   className={`font-goudy-italic ${ct.body} mt-1 opacity-90`}
                   style={{ color: palette.body }}
                 >
-                  This celebration site was designed to share our story and joy with you.
+                  This celebration site was designed to share <Note>our story and joy</Note> with
+                  you.
                 </p>
               </div>
               <div className="min-w-0 space-y-1 text-center md:text-right">

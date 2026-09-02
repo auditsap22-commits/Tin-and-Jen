@@ -1144,7 +1144,7 @@ export function GuestList() {
 
                   {formData.RSVP === "Yes" && (
                     <p className="font-goudy-italic text-sm leading-snug" style={{ color: palette.body }}>
-                      We&apos;re thrilled you&apos;ll be joining us — your spot is saved!
+                      We&apos;re thrilled you&apos;ll be joining us. Your spot is saved!
                     </p>
                   )}
                   {formData.RSVP === "No" && (
@@ -1165,7 +1165,7 @@ export function GuestList() {
                   </div>
 
                   <p className="font-goudy-italic mb-4 text-sm leading-relaxed" style={{ color: palette.body }}>
-                    Before you go, leave a message for the couple — your words will be a cherished memory
+                    Before you go, leave a message for the couple. Your words will be a cherished memory
                     they can always look back on.
                   </p>
 
@@ -1198,7 +1198,7 @@ export function GuestList() {
                     className={`font-goudy-italic ${sectionType.label} tracking-wide transition-colors duration-200`}
                     style={{ color: palette.body }}
                   >
-                    Maybe later — close
+                    Maybe later. Close
                   </button>
                 </div>
               </div>
@@ -1275,7 +1275,7 @@ export function GuestList() {
                 >
                   {requestFormData.Name ? (
                     <>
-                      Hi <span style={{ color: palette.heading }}>{requestFormData.Name}</span> — want to
+                      Hi <span style={{ color: palette.heading }}>{requestFormData.Name}</span>, want to
                       celebrate with us? Send a request!
                     </>
                   ) : (

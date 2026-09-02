@@ -227,7 +227,6 @@ export default function Home() {
               <Details />
               <VideoMessage />
               <Messages />
-
               {/* <Accommodation /> */}
               {/* <GuestInformation /> */}
               <WeddingTimeline />
@@ -239,7 +238,6 @@ export default function Home() {
               <FAQ />
               <Registry />
               <SnapShare />
-
               <Footer />
               </motion.div>
             </div>

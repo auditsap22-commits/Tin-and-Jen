@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
 import { Instagram, Facebook, Twitter, Share2, Copy, Download, Check } from "lucide-react"
@@ -75,6 +75,22 @@ const buttonStyle = {
 } as const
 
 const QR_FG = C.navy
+
+function Note({ children }: { children: ReactNode }) {
+  return (
+    <strong className="font-semibold not-italic" style={{ color: C.navy }}>
+      {children}
+    </strong>
+  )
+}
+
+function GoldNote({ children }: { children: ReactNode }) {
+  return (
+    <strong className="font-semibold not-italic" style={{ color: C.goldBright }}>
+      {children}
+    </strong>
+  )
+}
 
 function OutsideDivider() {
   return (
@@ -323,8 +339,13 @@ export function SnapShare() {
             className={`font-goudy-italic mx-auto mt-4 max-w-2xl px-2 sm:mt-5 md:mt-6 ${ct.bodyLg}`}
             style={{ color: C.goldSoft }}
           >
-            Help us remember the little moments of {coupleDisplayName}&apos;s day — every smile,
-            embrace, and candid laugh. Your photos and clips complete our love story.
+            Help us remember the little moments of {coupleDisplayName}&apos;s day: every smile,
+            embrace, and candid laugh. Your <GoldNote>photos and clips</GoldNote> complete our love
+            story. Tag us with{" "}
+            <strong className="font-semibold not-italic" style={{ color: "#ffffff" }}>
+              {hashtags[0]}
+            </strong>
+            .
           </p>
           <div className="flex items-center justify-center pt-3 sm:pt-4">
             <span className="h-px w-16 sm:w-24 md:w-32" style={{ background: goldLine }} />
@@ -371,7 +392,7 @@ export function SnapShare() {
               className={`font-goudy-italic ${ct.body} text-center`}
               style={{ color: palette.body }}
             >
-              Share your snapshots to be featured in our keepsake gallery.
+              Share your snapshots to be featured in our <Note>keepsake gallery</Note>.
             </p>
           </ContentCard>
 
@@ -387,8 +408,8 @@ export function SnapShare() {
                 className={`font-goudy-italic ${ct.body} text-center`}
                 style={{ color: palette.body }}
               >
-                Spread the word about {coupleDisplayName}&apos;s celebration. Share this QR code so
-                friends and family can join us.
+                Spread the word about {coupleDisplayName}&apos;s celebration. Share this{" "}
+                <Note>QR code</Note> so friends and family can join us.
               </p>
               <div
                 className="mx-auto flex w-full max-w-[240px] flex-col items-center rounded-xl border p-3 shadow-sm sm:p-4"
@@ -415,7 +436,7 @@ export function SnapShare() {
                 className={`font-goudy-italic ${ct.body} text-center`}
                 style={{ color: palette.body }}
               >
-                Scan with any camera app to open the full invitation and schedule.
+                Scan with any camera app to open the <Note>full invitation and schedule</Note>.
               </p>
             </ContentCard> 
 
@@ -446,9 +467,9 @@ export function SnapShare() {
                     }
                   >
                     <span
-                      className={`font-goudy-italic ${ct.body} min-w-0 flex-1 break-all text-left font-semibold`}
+                      className={`${cinzel.className} ${ct.body} min-w-0 flex-1 break-all text-left font-semibold not-italic`}
                       style={{
-                        color: copiedHashtagIndex === index ? palette.accent : palette.body,
+                        color: copiedHashtagIndex === index ? C.goldBright : C.navy,
                       }}
                     >
                       {hashtag}
@@ -504,8 +525,8 @@ export function SnapShare() {
                 className={`font-goudy-italic ${ct.body} text-center`}
                 style={{ color: palette.body }}
               >
-                Help spread the word about {coupleDisplayName}&apos;s wedding across your favorite
-                platforms.
+                Help spread the word about {coupleDisplayName}&apos;s wedding. Please use our{" "}
+                <Note>wedding hashtags</Note> when you post.
               </p>
               <div className="grid w-full min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
                 {(
@@ -554,7 +575,9 @@ export function SnapShare() {
                   className={`font-goudy-italic ${ct.body} break-words text-center`}
                   style={{ color: palette.body }}
                 >
-                  {siteConfig.snapShare.instructions}
+                  Please <Note>scan this QR code</Note> and{" "}
+                  <Note>upload the photos and videos</Note> you have taken during our{" "}
+                  <Note>wedding reception</Note>. We are delighted to see your snaps too!
                 </p>
                 <div
                 className="mx-auto flex w-full max-w-[240px] flex-col items-center rounded-xl border p-3 shadow-sm sm:p-4"
@@ -575,7 +598,7 @@ export function SnapShare() {
                     className={`font-goudy-italic ${ct.body} mt-2 text-center sm:mt-3`}
                     style={{ color: palette.label }}
                   >
-                    Scan with your camera app
+                  Scan with your <Note>camera app</Note>
                   </p>
                 </div>
                 <div className="mx-auto flex items-center justify-center pt-1 sm:pt-2">
@@ -624,7 +647,8 @@ export function SnapShare() {
             style={{ color: C.goldSoft }}
           >
             Thank you for helping make {coupleDisplayName}&apos;s wedding celebration memorable.
-            Your photos and messages create beautiful memories we will treasure for a lifetime.
+            Your <GoldNote>photos and messages</GoldNote> create beautiful memories we will
+            treasure for a lifetime.
           </p>
           <p
             className={`${cinzel.className} ${ct.label} uppercase tracking-[0.18em] sm:tracking-[0.2em]`}
