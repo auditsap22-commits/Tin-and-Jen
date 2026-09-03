@@ -5,6 +5,7 @@ import { motion } from "motion/react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { sectionType, welcomeTitleSize } from "@/lib/section-typography"
 import { Cinzel } from "next/font/google"
+import { HighlightedHashtag } from "@/components/highlighted-hashtag"
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -327,12 +328,9 @@ export function Welcome() {
                   >
                     Share in our joy
                   </p>
-                  <p
-                    className={`${cinzel.className} ${sectionType.subheader} font-bold tracking-[0.04em] sm:tracking-[0.06em]`}
-                    style={{ color: C.navy }}
-                  >
-                    {siteConfig.snapShare.hashtag.join(" ")}
-                  </p>
+                  {siteConfig.snapShare.hashtag.map((tag) => (
+                    <HighlightedHashtag key={tag} value={tag} />
+                  ))}
                 </div>
               </aside>
 

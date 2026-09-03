@@ -7,6 +7,7 @@ import { Instagram, Twitter, Facebook, Music2 } from "lucide-react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { sectionType } from "@/lib/section-typography"
 import { Cinzel } from "next/font/google"
+import { HighlightedHashtag } from "@/components/highlighted-hashtag"
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -334,12 +335,10 @@ export function Footer() {
               <div className="mb-5 sm:mb-6">
                 <FooterCoupleNames names={coupleDisplayName} />
                 {weddingHashtag ? (
-                  <p
-                    className={`${cinzel.className} ${ct.cardTitle} mb-3 font-semibold tracking-[0.04em] sm:mb-4`}
-                    style={{ color: reminderInk.deep }}
-                  >
-                    {weddingHashtag}
-                  </p>
+                  <HighlightedHashtag
+                    value={weddingHashtag}
+                    className={`${ct.cardTitle} mb-3 font-semibold tracking-[0.04em] sm:mb-4`}
+                  />
                 ) : null}
                 <div className="space-y-3 sm:space-y-4">
                   <DetailRow label="Wedding Date" value={ceremonyDate} />

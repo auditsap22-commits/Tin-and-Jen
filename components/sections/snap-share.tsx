@@ -8,6 +8,7 @@ import { QRCodeCanvas } from "qrcode.react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
 import Image from "next/image"
+import { HighlightedHashtag } from "@/components/highlighted-hashtag"
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -342,9 +343,13 @@ export function SnapShare() {
             Help us remember the little moments of {coupleDisplayName}&apos;s day: every smile,
             embrace, and candid laugh. Your <GoldNote>photos and clips</GoldNote> complete our love
             story. Tag us with{" "}
-            <strong className="font-semibold not-italic" style={{ color: C.navy }}>
-              {hashtags[0]}
-            </strong>
+            {hashtags[0] ? (
+              <HighlightedHashtag
+                as="span"
+                value={hashtags[0]}
+                className="font-semibold"
+              />
+            ) : null}
             .
           </p>
           <div className="flex items-center justify-center pt-3 sm:pt-4">
@@ -466,14 +471,11 @@ export function SnapShare() {
                           }
                     }
                   >
-                    <span
-                      className={`${cinzel.className} ${ct.body} min-w-0 flex-1 break-all text-left font-semibold not-italic`}
-                      style={{
-                        color: C.navy,
-                      }}
-                    >
-                      {hashtag}
-                    </span>
+                    <HighlightedHashtag
+                      as="span"
+                      value={hashtag}
+                      className={`${ct.body} min-w-0 flex-1 break-all text-left font-semibold`}
+                    />
                     <span
                       className={`${cinzel.className} flex flex-shrink-0 items-center gap-1 whitespace-nowrap ${sectionType.label} font-semibold uppercase tracking-wider`}
                       style={{

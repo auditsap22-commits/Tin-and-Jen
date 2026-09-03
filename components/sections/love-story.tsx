@@ -59,7 +59,19 @@ function FirstChapterTitle() {
           color: "inherit",
         }}
       >
-        Love in Gods Perfect Time
+        Love in God
+        <span
+          className={`${cinzel.className} inline-block px-[0.02em]`}
+          style={{
+            fontWeight: 600,
+            fontSize: "1.08em",
+            lineHeight: 1,
+            verticalAlign: "0.02em",
+          }}
+        >
+          &rsquo;
+        </span>
+        s Perfect Time
       </span>
       <span
         className={`${aboveTheBeyond.className} mt-2 block leading-[0.9] sm:mt-2.5 md:mt-3`}
