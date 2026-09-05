@@ -104,14 +104,15 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: "/favicon_io/favicon.ico" },
       { url: "/favicon_io/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon_io/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon_io/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/favicon_io/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
     ],
     shortcut: "/favicon_io/favicon.ico",
-    apple: "/favicon_io/apple-touch-icon.png",
-    other: [
-      { rel: "android-chrome-192x192", url: "/favicon_io/android-chrome-192x192.png" },
-      { rel: "android-chrome-512x512", url: "/favicon_io/android-chrome-512x512.png" },
+    apple: [
+      { url: "/favicon_io/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
   manifest: "/favicon_io/site.webmanifest",
@@ -189,6 +190,11 @@ export default function RootLayout({
         <meta name="color-scheme" content="light" />
         <meta name="theme-color" content="#D2A4A4" />
         <meta name="format-detection" content="telephone=yes,email=no,address=no" />
+        <link rel="icon" href="/favicon_io/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png" />
+        <link rel="manifest" href="/favicon_io/site.webmanifest" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet" />

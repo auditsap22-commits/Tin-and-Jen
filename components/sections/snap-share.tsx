@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react"
 import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
-import { Instagram, Facebook, Twitter, Share2, Copy, Download, Check } from "lucide-react"
+import { Instagram, Facebook, Twitter, Share2, Copy, Download, Check, Phone, MessageSquare } from "lucide-react"
 import { QRCodeCanvas } from "qrcode.react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
@@ -76,6 +76,121 @@ const buttonStyle = {
 } as const
 
 const QR_FG = C.navy
+
+function toPhE164(display: string) {
+  const digits = display.replace(/\D/g, "")
+  if (digits.startsWith("63")) return `+${digits}`
+  if (digits.startsWith("0")) return `+63${digits.slice(1)}`
+  return `+63${digits}`
+}
+
+function TelegramMark({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+      aria-hidden
+    >
+      <path d="M21.8 4.3c.3-.9-.5-1.7-1.4-1.4L2.9 9.1c-.9.3-.9 1.6.1 1.9l4.6 1.5 1.7 5.3c.2.8 1.3 1 1.8.4l2.4-2.5 4.6 3.4c.7.5 1.7.1 1.9-.7l2-14.1ZM8.7 13.2l8.8-6.3c.2-.1.4.2.2.3l-7.5 7.1-.4 2.3-1.1-3.4Z" />
+    </svg>
+  )
+}
+
+function ContactAction({
+  href,
+  label,
+  children,
+  variant = "ghost",
+}: {
+  href: string
+  label: string
+  children: ReactNode
+  variant?: "primary" | "ghost"
+}) {
+  const isPrimary = variant === "primary"
+
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      className={`${cinzel.className} inline-flex min-h-8 flex-1 items-center justify-center gap-1 rounded-md border px-1.5 py-1.5 font-semibold uppercase tracking-[0.1em] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] sm:min-h-9 sm:px-2 sm:tracking-[0.12em] ${ct.label}`}
+      style={
+        isPrimary
+          ? {
+              color: C.navy,
+              borderColor: `color-mix(in srgb, ${C.goldBright} 70%, transparent)`,
+              backgroundColor: C.gold,
+              boxShadow: `0 6px 16px color-mix(in srgb, ${C.gold} 28%, transparent)`,
+            }
+          : {
+              color: C.navy,
+              borderColor: goldLine,
+              backgroundColor: `color-mix(in srgb, ${C.paper} 88%, white)`,
+            }
+      }
+    >
+      {children}
+    </a>
+  )
+}
+
+function ReachUsContact({
+  name,
+  phone,
+}: {
+  name: string
+  phone: string
+}) {
+  const e164 = toPhE164(phone)
+
+  return (
+    <div
+      className="overflow-hidden rounded-md border sm:rounded-lg"
+      style={{
+        borderColor: goldLine,
+        backgroundColor: `color-mix(in srgb, ${C.paper} 92%, white)`,
+      }}
+    >
+      <div className="flex items-baseline justify-between gap-2 px-2.5 py-1.5 sm:px-3 sm:py-2">
+        <p
+          className={`${cinzel.className} ${ct.label} shrink-0 font-semibold uppercase tracking-[0.16em]`}
+          style={{ color: C.gold }}
+        >
+          {name}
+        </p>
+        <a
+          href={`tel:${e164}`}
+          className={`font-goudy-italic ${ct.body} min-w-0 truncate text-right font-semibold leading-none`}
+          style={{ color: C.navy }}
+        >
+          {phone}
+        </a>
+      </div>
+      <div
+        className="grid grid-cols-3 gap-1 border-t px-1.5 py-1.5 sm:gap-1.5 sm:px-2 sm:py-2"
+        style={{
+          borderColor: `color-mix(in srgb, ${C.gold} 28%, transparent)`,
+        }}
+      >
+        <ContactAction href={`tel:${e164}`} label={`Call ${name} at ${phone}`} variant="primary">
+          <Phone className="h-3 w-3 shrink-0" />
+          Call
+        </ContactAction>
+        <ContactAction href={`sms:${e164}`} label={`Message ${name} at ${phone}`}>
+          <MessageSquare className="h-3 w-3 shrink-0" />
+          <span className="hidden min-[380px]:inline">Message</span>
+          <span className="min-[380px]:hidden">SMS</span>
+        </ContactAction>
+        <ContactAction href={`https://t.me/${e164}`} label={`Open Telegram chat with ${name}`}>
+          <TelegramMark className="h-3 w-3 shrink-0" />
+          <span className="hidden min-[380px]:inline">Telegram</span>
+          <span className="min-[380px]:hidden">TG</span>
+        </ContactAction>
+      </div>
+    </div>
+  )
+}
 
 function Note({ children }: { children: ReactNode }) {
   return (
@@ -243,6 +358,10 @@ export function SnapShare() {
 
   const { groomNickname, brideNickname } = siteConfig.couple
   const coupleDisplayName = `${groomNickname} & ${brideNickname}`
+  const contacts = [
+    { name: groomNickname.toUpperCase(), phone: siteConfig.contact.groomPhone },
+    { name: brideNickname.toUpperCase(), phone: siteConfig.contact.bridePhone },
+  ].filter((contact) => contact.phone && !/to be announced/i.test(contact.phone))
   const websiteUrl = typeof window !== "undefined" ? window.location.href : "https://example.com"
   const uploadLink = siteConfig.snapShare.googleDriveLink
   const hashtags = siteConfig.snapShare.hashtag
@@ -348,6 +467,7 @@ export function SnapShare() {
                 as="span"
                 value={hashtags[0]}
                 className="font-semibold"
+                nameColor="#ffffff"
               />
             ) : null}
             .
@@ -366,16 +486,16 @@ export function SnapShare() {
               Our Favorite Moments
             </h4>
             <div className="grid w-full min-w-0 grid-cols-2 gap-2 sm:gap-3">
-              <div className="relative aspect-square overflow-hidden rounded-xl border shadow-sm" style={{ borderColor: goldLine }}>
+              <div className="relative aspect-[3/4] overflow-hidden rounded-xl border shadow-sm" style={{ borderColor: goldLine }}>
                 <Image
-                  src="/mobile-background/couples (15).webp"
+                  src="/mobile-background/couples (12).webp"
                   alt="Wedding moment 1"
                   fill
                   className="object-cover"
                   style={{ imageOrientation: "from-image" }}
                 />
               </div>
-              <div className="relative aspect-square overflow-hidden rounded-xl border shadow-sm" style={{ borderColor: goldLine }}>
+              <div className="relative aspect-[3/4] overflow-hidden rounded-xl border shadow-sm" style={{ borderColor: goldLine }}>
                 <Image
                   src="/mobile-background/couples (5).webp"
                   alt="Wedding moment 2"
@@ -386,7 +506,7 @@ export function SnapShare() {
               </div>
               <div className="relative col-span-2 aspect-[3/2] overflow-hidden rounded-xl border shadow-sm" style={{ borderColor: goldLine }}>
                 <Image
-                  src="/desktop-background/couples (1).webp"
+                  src="/desktop-background/couples (4).webp"
                   alt="Wedding moment 3"
                   fill
                   className="object-cover"
@@ -414,7 +534,7 @@ export function SnapShare() {
                 style={{ color: palette.body }}
               >
                 Spread the word about {coupleDisplayName}&apos;s celebration. Share this{" "}
-                <Note>QR code</Note> so friends and family can join us.
+                <Note>QR code</Note> to friends and family can join us.
               </p>
               <div
                 className="mx-auto flex w-full max-w-[240px] flex-col items-center rounded-xl border p-3 shadow-sm sm:p-4"
@@ -560,6 +680,33 @@ export function SnapShare() {
                 ))}
               </div>
             </ContentCard> 
+
+            {contacts.length > 0 && (
+              <ContentCard>
+                <h5
+                  className={`${cinzel.className} ${ct.cardTitle} text-center font-semibold uppercase tracking-[0.08em]`}
+                  style={{ color: palette.heading }}
+                >
+                  Reach Us
+                </h5>
+                <p
+                  className={`font-goudy-italic ${ct.body} text-center`}
+                  style={{ color: palette.body }}
+                >
+                  Questions about the day? <Note>Call</Note>, <Note>message</Note>, or{" "}
+                  <Note>Telegram</Note> Jen and Tin.
+                </p>
+                <div className="w-full min-w-0 space-y-2">
+                  {contacts.map((contact) => (
+                    <ReachUsContact
+                      key={contact.name}
+                      name={contact.name}
+                      phone={contact.phone}
+                    />
+                  ))}
+                </div>
+              </ContentCard>
+            )}
 
             {uploadLink && (
               <ContentCard>

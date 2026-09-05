@@ -46,8 +46,8 @@ export const siteConfig = {
     },
   },
   contact: {
-    bridePhone: "to be announced",
-    groomPhone: "to be announced",
+    bridePhone: "0936 510 4711",
+    groomPhone: "0935 6858 644",
     email: "to be announced",
   },
   giftRegistry: {

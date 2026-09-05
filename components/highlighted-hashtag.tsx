@@ -15,10 +15,12 @@ export function HighlightedHashtag({
   value,
   as: Tag = "p",
   className,
+  nameColor = NAVY,
 }: {
   value: string
   as?: "p" | "span"
   className?: string
+  nameColor?: string
 }) {
   const parts = value.split(/(JEN|TIN)/gi)
 
@@ -35,7 +37,7 @@ export function HighlightedHashtag({
             <span
               key={`${part}-${index}`}
               className={cinzel.className}
-              style={{ color: NAVY }}
+              style={{ color: nameColor }}
             >
               {part.toUpperCase()}
             </span>

@@ -465,7 +465,7 @@ export function Entourage() {
           style={{ background: `linear-gradient(to right, transparent, color-mix(in srgb, ${reminderInk.champagne} 28%, transparent), transparent)` }}
         />
         <p
-          className={`font-goudy-italic relative font-medium normal-case ${textAlign} transition-all duration-300 whitespace-nowrap max-w-full overflow-hidden text-ellipsis`}
+          className={`font-goudy-italic relative font-medium normal-case ${textAlign} transition-all duration-300 max-w-full whitespace-normal break-words text-balance`}
           style={{ ...nameStyle, color: "#ffffff" }}
           title={displayName}
         >

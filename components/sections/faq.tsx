@@ -356,11 +356,17 @@ function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
     {
       question: "Can I take photos or videos during the reception?",
       answer: (
-        <p>
-          Yes. While our ceremony will be <Note>unplugged</Note>, we would love for you to capture
-          the joy throughout the <Note>reception</Note>. We prepared this celebration
-          wholeheartedly and we want everyone to enjoy it fully.
-        </p>
+        <>
+          <p>
+            Absolutely! While our ceremony will be <Note>unplugged</Note>, you are more than
+            welcome to take <Note>photos and videos during the reception</Note>. Capture the
+            laughter, the dancing, and all the special moments, and feel free to{" "}
+            <Note>share the memories with us</Note>.
+          </p>
+          <p>
+            <Note>Be present for the vows.</Note> <Note>Capture the celebration.</Note>
+          </p>
+        </>
       ),
     },
     {
