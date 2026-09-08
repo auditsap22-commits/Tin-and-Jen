@@ -84,19 +84,6 @@ function toPhE164(display: string) {
   return `+63${digits}`
 }
 
-function TelegramMark({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill="currentColor"
-      aria-hidden
-    >
-      <path d="M21.8 4.3c.3-.9-.5-1.7-1.4-1.4L2.9 9.1c-.9.3-.9 1.6.1 1.9l4.6 1.5 1.7 5.3c.2.8 1.3 1 1.8.4l2.4-2.5 4.6 3.4c.7.5 1.7.1 1.9-.7l2-14.1ZM8.7 13.2l8.8-6.3c.2-.1.4.2.2.3l-7.5 7.1-.4 2.3-1.1-3.4Z" />
-    </svg>
-  )
-}
-
 function ContactAction({
   href,
   label,
@@ -168,7 +155,7 @@ function ReachUsContact({
         </a>
       </div>
       <div
-        className="grid grid-cols-3 gap-1 border-t px-1.5 py-1.5 sm:gap-1.5 sm:px-2 sm:py-2"
+        className="grid grid-cols-2 gap-1 border-t px-1.5 py-1.5 sm:gap-1.5 sm:px-2 sm:py-2"
         style={{
           borderColor: `color-mix(in srgb, ${C.gold} 28%, transparent)`,
         }}
@@ -179,13 +166,7 @@ function ReachUsContact({
         </ContactAction>
         <ContactAction href={`sms:${e164}`} label={`Message ${name} at ${phone}`}>
           <MessageSquare className="h-3 w-3 shrink-0" />
-          <span className="hidden min-[380px]:inline">Message</span>
-          <span className="min-[380px]:hidden">SMS</span>
-        </ContactAction>
-        <ContactAction href={`https://t.me/${e164}`} label={`Open Telegram chat with ${name}`}>
-          <TelegramMark className="h-3 w-3 shrink-0" />
-          <span className="hidden min-[380px]:inline">Telegram</span>
-          <span className="min-[380px]:hidden">TG</span>
+          Message
         </ContactAction>
       </div>
     </div>
@@ -693,8 +674,7 @@ export function SnapShare() {
                   className={`font-goudy-italic ${ct.body} text-center`}
                   style={{ color: palette.body }}
                 >
-                  Questions about the day? <Note>Call</Note>, <Note>message</Note>, or{" "}
-                  <Note>Telegram</Note> Jen and Tin.
+                  Questions about the day? <Note>Call</Note> or <Note>message</Note> Jen and Tin.
                 </p>
                 <div className="w-full min-w-0 space-y-2">
                   {contacts.map((contact) => (

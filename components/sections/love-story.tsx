@@ -192,7 +192,7 @@ export function LoveStory() {
       <StorySection
         theme="dark"
         layout="image-right"
-        imageSrc="/mobile-background/couples (26).webp"
+        imageSrc="/mobile-background/couples (33).webp"
         text={
           <>
             <p className="mb-4">
@@ -260,7 +260,7 @@ export function LoveStory() {
       <StorySection
         theme="dark"
         layout="image-right"
-        imageSrc="/mobile-background/couples (5).webp"
+        imageSrc="/mobile-background/couples (32).webp"
         text={
           <>
             <p className="mb-4 italic">&ldquo;Ingat sa pag-uwi. 😊&rdquo;</p>

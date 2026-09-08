@@ -111,7 +111,7 @@ export const StorySection: React.FC<StorySectionProps> = ({
               className={`relative w-full transition-all delay-300 duration-1000 ease-out md:max-w-md ${rotation} ${isVisible ? "scale-100 opacity-100" : "scale-90 opacity-0"} `}
             >
               <div className="w-full p-1.5 md:p-3" style={imageFrameStyle}>
-                <div className="group relative aspect-[3/4] w-full overflow-hidden">
+                <div className="group relative aspect-[2/3] w-full overflow-hidden">
                   <Image
                     src={imageSrc}
                     alt="Story Moment"
