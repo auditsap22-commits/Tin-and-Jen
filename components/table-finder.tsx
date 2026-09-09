@@ -7,7 +7,6 @@ import {
   Armchair,
   CheckCircle2,
   Clock,
-  Download,
   QrCode,
   RefreshCw,
   Search,
@@ -16,7 +15,6 @@ import {
 } from "lucide-react"
 import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
-import { QRCodeCanvas } from "qrcode.react"
 import { useReducedMotion } from "motion/react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
@@ -75,9 +73,6 @@ const innerSurfaceStyle = {
   background: `color-mix(in srgb, ${ink.champagne} 16%, ${paper.cream})`,
   borderColor: goldLine,
 } as const
-
-const QR_FG = ink.deep
-const QR_BG = "#FAF7F2"
 
 type RsvpStatus = "pending" | "confirmed" | "declined" | "request"
 
@@ -323,14 +318,9 @@ export function TableFinder() {
   const [searchQuery, setSearchQuery] = useState("")
   const [isSearching, setIsSearching] = useState(false)
   const [selectedSeat, setSelectedSeat] = useState<SeatEntry | null>(null)
-  const [pageUrl, setPageUrl] = useState("/table")
   const searchRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const reduceMotion = useReducedMotion()
-
-  useEffect(() => {
-    setPageUrl(`${window.location.origin}/table`)
-  }, [])
 
   useEffect(() => {
     const video = videoRef.current
@@ -428,19 +418,6 @@ export function TableFinder() {
     setSelectedSeat(seat)
     setSearchQuery(seat.name)
     setIsSearching(false)
-  }
-
-  const downloadQRCode = () => {
-    const canvas = document.getElementById("table-qr-download") as HTMLCanvasElement | null
-    if (!canvas) return
-    const fileName = `${groomName}-${brideName}`
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^a-z0-9-]/g, "")
-    const link = document.createElement("a")
-    link.download = `${fileName || "wedding"}-find-your-table.png`
-    link.href = canvas.toDataURL("image/png")
-    link.click()
   }
 
   return (
@@ -871,103 +848,6 @@ export function TableFinder() {
         </div>
 
           <div className="mx-auto mt-12 max-w-4xl border-t pt-8 sm:mt-16 sm:pt-10" style={{ borderColor: `color-mix(in srgb, ${lsGold.base} 45%, transparent)` }}>
-          <div
-            className="mx-auto grid max-w-lg items-center gap-5 rounded-2xl border px-4 py-5 sm:max-w-none sm:grid-cols-[minmax(0,16.5rem)_1fr] sm:gap-8 sm:px-8 sm:py-8"
-            style={cardStyle}
-          >
-            <div className="order-2 mx-auto w-full max-w-[17.5rem] sm:order-1 sm:max-w-none">
-              <div
-                className="relative aspect-square w-full overflow-hidden rounded-2xl border p-4 sm:p-5"
-                style={{
-                  backgroundColor: "#fffdf8",
-                  borderColor: ink.gold,
-                  boxShadow: `0 16px 36px color-mix(in srgb, ${ink.navy} 12%, transparent)`,
-                }}
-              >
-                <span
-                  className="pointer-events-none absolute left-2.5 top-2.5 h-3 w-3 border-l border-t"
-                  style={{ borderColor: ink.gold }}
-                  aria-hidden
-                />
-                <span
-                  className="pointer-events-none absolute right-2.5 top-2.5 h-3 w-3 border-r border-t"
-                  style={{ borderColor: ink.gold }}
-                  aria-hidden
-                />
-                <span
-                  className="pointer-events-none absolute bottom-2.5 left-2.5 h-3 w-3 border-b border-l"
-                  style={{ borderColor: ink.gold }}
-                  aria-hidden
-                />
-                <span
-                  className="pointer-events-none absolute bottom-2.5 right-2.5 h-3 w-3 border-b border-r"
-                  style={{ borderColor: ink.gold }}
-                  aria-hidden
-                />
-                <div
-                  className="flex h-full w-full items-center justify-center overflow-hidden rounded-lg [&_canvas]:block [&_canvas]:h-full [&_canvas]:w-full [&_canvas]:max-h-full [&_canvas]:max-w-full"
-                  style={{ backgroundColor: QR_BG }}
-                >
-                  <QRCodeCanvas
-                    id="table-qr-visible"
-                    value={pageUrl}
-                    size={220}
-                    includeMargin={false}
-                    fgColor={QR_FG}
-                    bgColor={QR_BG}
-                    style={{ width: "100%", height: "100%" }}
-                  />
-                </div>
-              </div>
-              <p
-                className={`${cinzel.className} mt-2.5 text-center text-[0.55rem] font-semibold uppercase tracking-[0.18em] sm:mt-3 sm:text-[0.625rem]`}
-                style={{ color: ink.gold }}
-              >
-                Scan to find your table
-              </p>
-            </div>
-
-            <div className="order-1 text-center sm:order-2 sm:text-left">
-              <p
-                className={`${cinzel.className} text-[0.65rem] font-semibold uppercase tracking-[0.22em]`}
-                style={{ color: ink.gold }}
-              >
-                {groomName} & {brideName}
-              </p>
-              <h2
-                className={`${theSeasons.className} mt-1.5 text-[1.65rem] uppercase leading-none tracking-[0.1em] sm:text-3xl`}
-                style={{ color: ink.navy }}
-              >
-                Find Your Table
-              </h2>
-              <p
-                className={`font-goudy-italic mx-auto mt-3 max-w-sm sm:mx-0 ${sectionType.textRelaxed}`}
-                style={{ color: ink.navy }}
-              >
-                Place this code at the entrance. Guests scan it, search their name, and go straight
-                to their table.
-              </p>
-              <button
-                type="button"
-                onClick={downloadQRCode}
-                className={`${cinzel.className} mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] transition-transform duration-200 hover:-translate-y-0.5 sm:mt-5 sm:w-auto`}
-                style={{
-                  backgroundColor: ink.gold,
-                  borderColor: `color-mix(in srgb, ${ink.champagne} 70%, transparent)`,
-                  color: ink.deep,
-                  boxShadow: `0 8px 20px color-mix(in srgb, ${ink.gold} 28%, transparent)`,
-                }}
-              >
-                <Download className="h-3.5 w-3.5" />
-                Download QR
-              </button>
-              <p className={`font-goudy-italic mt-2 ${sectionType.label}`} style={{ color: ink.slate }}>
-                Saves a print-ready PNG for signs and table cards.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-10 sm:mt-12">
             <p
               className={`${cinzel.className} mb-2 text-center text-[0.65rem] font-semibold uppercase tracking-[0.2em] sm:text-[0.6875rem] sm:tracking-[0.22em]`}
               style={{ color: ink.gold }}
@@ -1010,19 +890,8 @@ export function TableFinder() {
                 </div>
               ))}
             </div>
-          </div>
         </div>
       </section>
-      <div className="h-px w-px overflow-hidden opacity-0" aria-hidden>
-        <QRCodeCanvas
-          id="table-qr-download"
-          value={pageUrl}
-          size={512}
-          includeMargin
-          fgColor={QR_FG}
-          bgColor={QR_BG}
-        />
-      </div>
     </main>
   )
 }
