@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import {
   AlertCircle,
   Armchair,
@@ -42,12 +41,6 @@ const aboveTheBeyond = localFont({
 
 const BG_VIDEO =
   "/background_music/No Copyright Video, Background, Blue Screen, Motion Graphics, Animated Background.mp4"
-
-const DECO = {
-  top: "/decoration/deco/top-center-decoration.png",
-  bl: "/decoration/deco/left-bottom-small.png",
-  br: "/decoration/deco/right-bottom-small.png",
-} as const
 
 const lsGold = {
   base: "#c5a059",
@@ -467,24 +460,7 @@ export function TableFinder() {
         aria-hidden="true"
       />
 
-      <div className="loading-screen__deco loading-screen__deco--top pointer-events-none" aria-hidden="true">
-        <Image
-          src={DECO.top}
-          alt=""
-          width={2078}
-          height={598}
-          priority
-          sizes="(max-width: 768px) 90vw, 480px"
-        />
-      </div>
-      <div className="loading-screen__deco loading-screen__deco--bl pointer-events-none" aria-hidden="true">
-        <Image src={DECO.bl} alt="" width={851} height={1472} sizes="200px" />
-      </div>
-      <div className="loading-screen__deco loading-screen__deco--br pointer-events-none" aria-hidden="true">
-        <Image src={DECO.br} alt="" width={851} height={1472} sizes="200px" />
-      </div>
-
-      <section className="relative z-20 mx-auto max-w-6xl px-4 pb-14 pt-6 sm:px-6 sm:pb-20 sm:pt-10 md:px-8">
+      <section className="relative z-20 mx-auto max-w-6xl px-4 pb-16 pt-[clamp(5.5rem,16vh,9rem)] sm:px-6 sm:pb-20 md:px-8">
         <div className="mx-auto max-w-xl text-center @container/table-hero">
           <div className="flex items-center justify-center gap-2 sm:gap-3.5">
             <span
@@ -548,13 +524,13 @@ export function TableFinder() {
             <span className="sr-only">Please be seated</span>
           </h1>
 
-          <div ref={searchRef} className="relative z-30 mx-auto mt-5 w-full sm:mt-7">
+          <div ref={searchRef} className="relative z-30 mx-auto mt-6 w-full sm:mt-8">
             <label htmlFor="table-search" className="sr-only">
               Search your name to find your table
             </label>
             <div className="relative">
               <Search
-                className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 sm:left-4 sm:h-5 sm:w-5"
+                className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 sm:h-5 sm:w-5"
                 style={{ color: ink.gold }}
               />
               <input
@@ -573,11 +549,12 @@ export function TableFinder() {
                   }
                 }}
                 placeholder="Search your name..."
-                className="w-full rounded-full border py-3 pl-11 pr-4 font-sans text-base shadow-sm outline-none transition-shadow duration-300 focus:shadow-md sm:py-3.5 sm:pl-12 sm:pr-5"
+                className="w-full rounded-full border py-3.5 pl-12 pr-5 font-sans text-base shadow-md outline-none transition-shadow duration-300 focus:shadow-lg sm:py-4 sm:pl-14"
                 style={{
                   borderColor: goldLine,
                   color: ink.navy,
-                  backgroundColor: `color-mix(in srgb, ${paper.cream} 88%, white)`,
+                  backgroundColor: "color-mix(in srgb, #faf7ef 92%, white)",
+                  boxShadow: `0 10px 28px color-mix(in srgb, ${ink.deep} 18%, transparent)`,
                 }}
                 autoComplete="off"
                 autoCorrect="off"
@@ -587,9 +564,9 @@ export function TableFinder() {
 
             {isSearching && (
               <div
-                className="absolute left-0 right-0 z-[9999] mt-2 overflow-hidden rounded-2xl border shadow-xl"
+                className="absolute left-0 right-0 z-[9999] mt-2 overflow-hidden rounded-2xl border shadow-2xl"
                 style={{
-                  backgroundColor: `color-mix(in srgb, ${paper.cream} 97%, white)`,
+                  backgroundColor: "color-mix(in srgb, #faf7ef 98%, white)",
                   borderColor: goldLine,
                 }}
               >
@@ -600,7 +577,7 @@ export function TableFinder() {
                       type="button"
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() => handleSelectSeat(seat)}
-                      className="flex w-full items-center gap-2.5 border-b px-3 py-3 text-left last:border-b-0 sm:gap-3 sm:px-4"
+                      className="flex w-full items-center gap-3 border-b px-3.5 py-3 text-left last:border-b-0 sm:px-4"
                       style={{ borderColor: goldLine }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.backgroundColor = `color-mix(in srgb, ${ink.gold} 14%, ${paper.cream})`
@@ -609,39 +586,34 @@ export function TableFinder() {
                         e.currentTarget.style.backgroundColor = "transparent"
                       }}
                     >
-                      <div className="rounded-full p-1.5" style={{ backgroundColor: ink.gold }}>
-                        <User className="h-3.5 w-3.5" style={{ color: ink.deep }} />
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: ink.gold }}>
+                        <User className="h-4 w-4" style={{ color: ink.deep }} />
                       </div>
                       <div className="min-w-0 flex-1">
                         <div
-                          className="truncate font-sans text-sm font-semibold normal-case sm:text-[0.9375rem]"
+                          className="truncate font-sans text-[0.9375rem] font-semibold normal-case"
                           style={{ color: ink.navy }}
                         >
                           <HighlightedText text={seat.name} query={searchQuery} />
                         </div>
-                        <div className={`${sectionType.label} mt-0.5 truncate normal-case`} style={{ color: ink.slate }}>
-                          {seat.isCompanion && seat.primaryName
-                            ? `Guest of ${seat.primaryName}`
-                            : "Invited guest"}
-                        </div>
+                        {seat.isCompanion && seat.primaryName ? (
+                          <div className={`${sectionType.label} mt-0.5 truncate normal-case`} style={{ color: ink.slate }}>
+                            Guest of {seat.primaryName}
+                          </div>
+                        ) : null}
                       </div>
-                      <div className="flex shrink-0 flex-col items-end gap-1">
-                        <span
-                          className={`${cinzel.className} rounded-full border px-2 py-0.5 text-[0.55rem] font-semibold tracking-[0.08em]`}
-                          style={{
-                            color: ink.navy,
-                            borderColor: goldLine,
-                            backgroundColor: `color-mix(in srgb, ${ink.champagne} 22%, ${paper.cream})`,
-                          }}
-                        >
-                          {seat.tableNumber ? (
-                            <TableLabel label={formatTableLabel(seat.tableNumber)} />
-                          ) : (
-                            "No table yet"
-                          )}
-                        </span>
-                        <RsvpBadge status={seat.status} compact />
-                      </div>
+                      <span
+                        className={`${theSeasons.className} shrink-0 text-base tracking-[0.02em]`}
+                        style={{ color: ink.navy }}
+                      >
+                        {seat.tableNumber ? (
+                          <TableLabel label={formatTableLabel(seat.tableNumber)} />
+                        ) : (
+                          <span className={`font-goudy-italic ${sectionType.label}`} style={{ color: ink.slate }}>
+                            No table yet
+                          </span>
+                        )}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -667,7 +639,7 @@ export function TableFinder() {
 
         {selectedSeat && (
           <div
-            className="mx-auto mt-4 max-w-xl rounded-2xl border px-4 py-5 text-center sm:mt-6 sm:px-6 sm:py-6"
+            className="mx-auto mt-5 max-w-xl rounded-2xl border px-5 py-6 text-center sm:mt-7 sm:px-8 sm:py-8"
             style={cardStyle}
           >
             <p className={`font-goudy-italic ${sectionType.text}`} style={{ color: ink.slate }}>
@@ -682,14 +654,18 @@ export function TableFinder() {
 
             {selectedSeat.tableNumber ? (
               <>
+                <div
+                  className="mx-auto my-4 h-px w-16"
+                  style={{ background: `linear-gradient(to right, transparent, ${ink.gold}, transparent)` }}
+                />
                 <p
-                  className={`${cinzel.className} mt-3 text-[0.65rem] font-semibold uppercase tracking-[0.22em]`}
+                  className={`${cinzel.className} text-[0.65rem] font-semibold uppercase tracking-[0.22em]`}
                   style={{ color: ink.gold }}
                 >
                   Your table
                 </p>
                 <p
-                  className={`${theSeasons.className} mt-1 text-[1.85rem] leading-none tracking-[0.04em] sm:text-4xl`}
+                  className={`${theSeasons.className} mt-2 text-[2.15rem] leading-none tracking-[0.04em] sm:text-5xl`}
                   style={{ color: ink.navy }}
                 >
                   <TableLabel label={formatTableLabel(selectedSeat.tableNumber)} />
@@ -697,7 +673,7 @@ export function TableFinder() {
               </>
             ) : (
               <p
-                className={`${theSeasons.className} mt-3 text-lg uppercase tracking-[0.1em] sm:text-xl`}
+                className={`${theSeasons.className} mt-4 text-lg tracking-[0.04em] sm:text-xl`}
                 style={{ color: ink.navy }}
               >
                 Your table will be posted soon
@@ -826,10 +802,20 @@ export function TableFinder() {
                     }}
                   >
                     <div
-                      className="mb-2.5 flex items-start justify-between gap-2 border-b pb-2.5 sm:mb-3 sm:pb-3"
+                      className="mb-3 flex items-center gap-3 border-b pb-3"
                       style={{ borderColor: goldLine }}
                     >
-                      <div>
+                      <div
+                        className={`${cinzel.className} flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-lg font-bold sm:h-12 sm:w-12 sm:text-xl`}
+                        style={{
+                          backgroundColor: ink.gold,
+                          color: ink.deep,
+                          fontWeight: 700,
+                        }}
+                      >
+                        {table.tableNumber.match(/(\d+)/)?.[1] ?? "—"}
+                      </div>
+                      <div className="min-w-0">
                         <p
                           className={`${theSeasons.className} text-lg tracking-[0.04em] sm:text-xl`}
                           style={{ color: ink.navy }}
@@ -842,7 +828,6 @@ export function TableFinder() {
                           {confirmedCount} confirmed
                         </p>
                       </div>
-                      <Armchair className="mt-0.5 h-4 w-4 shrink-0" style={{ color: ink.gold }} aria-hidden />
                     </div>
                     <ul className="space-y-1 sm:space-y-1.5">
                       {table.seats.map((seat) => {
@@ -997,7 +982,7 @@ export function TableFinder() {
             </p>
             <div className="grid grid-cols-3 gap-2 sm:gap-4">
               {howItWorks.map((item) => (
-                <div key={item.title} className="rounded-xl border px-1.5 py-3 text-center sm:px-4 sm:py-5" style={cardStyle}>
+                <div key={item.title} className="rounded-xl border px-2 py-4 text-center sm:px-4 sm:py-5" style={cardStyle}>
                   <p
                     className={`${cinzel.className} text-[0.5rem] font-semibold uppercase tracking-[0.16em] sm:text-[0.625rem] sm:tracking-[0.22em]`}
                     style={{ color: ink.gold }}
@@ -1005,19 +990,19 @@ export function TableFinder() {
                     {item.step}
                   </p>
                   <div
-                    className="mx-auto my-2 flex h-8 w-8 items-center justify-center rounded-full sm:my-3 sm:h-10 sm:w-10"
+                    className="mx-auto my-2.5 flex h-9 w-9 items-center justify-center rounded-full sm:my-3 sm:h-10 sm:w-10"
                     style={{ backgroundColor: ink.gold }}
                   >
-                    <item.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" style={{ color: ink.deep }} />
+                    <item.icon className="h-4 w-4" style={{ color: ink.deep }} />
                   </div>
                   <h3
-                    className={`${theSeasons.className} text-[0.8rem] uppercase tracking-[0.08em] sm:text-xl sm:tracking-[0.12em]`}
+                    className={`${theSeasons.className} text-[0.9rem] tracking-[0.06em] sm:text-xl sm:tracking-[0.08em]`}
                     style={{ color: ink.navy }}
                   >
                     {item.title}
                   </h3>
                   <p
-                    className={`font-goudy-italic mx-auto mt-1.5 hidden max-w-[16rem] sm:mt-2 sm:block ${sectionType.textSnug}`}
+                    className={`font-goudy-italic mx-auto mt-1.5 max-w-[16rem] text-[0.65rem] leading-snug sm:mt-2 sm:text-[inherit] ${sectionType.textSnug}`}
                     style={{ color: ink.slate }}
                   >
                     {item.body}

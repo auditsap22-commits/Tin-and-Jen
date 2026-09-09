@@ -868,7 +868,7 @@ export function GuestList() {
                     <div>
                       <label className={modalLabelClass} style={{ color: palette.heading }}>
                         <Sparkles className="h-3.5 w-3.5 flex-shrink-0 sm:h-4 sm:w-4" style={{ color: palette.accent }} />
-                        <span>Can you attend? *</span>
+                        <span>Will you be attending? *</span>
                       </label>
                       <div className="grid grid-cols-2 gap-1.5 sm:gap-2 md:gap-3">
                         <button
@@ -893,7 +893,7 @@ export function GuestList() {
                                 }
                           }
                         >
-                          <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+                          <div className="flex flex-col items-center justify-center gap-1 sm:flex-row sm:gap-2">
                             <CheckCircle
                               className="h-4 w-4 flex-shrink-0 sm:h-5 sm:w-5"
                               style={{
@@ -902,10 +902,10 @@ export function GuestList() {
                               }}
                             />
                             <span
-                              className="font-goudy-italic text-xs font-semibold sm:text-sm"
+                              className="font-goudy-italic text-center text-xs font-semibold leading-tight sm:text-sm"
                               style={{ color: palette.heading }}
                             >
-                              Yes!
+                              Yes, I&apos;ll be there.
                             </span>
                           </div>
                         </button>
@@ -926,7 +926,7 @@ export function GuestList() {
                                 }
                           }
                         >
-                          <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+                          <div className="flex flex-col items-center justify-center gap-1 sm:flex-row sm:gap-2">
                             <XCircle
                               className={`h-4 w-4 flex-shrink-0 sm:h-5 sm:w-5 ${
                                 formData.RSVP === "No" ? "text-red-600" : ""
@@ -934,12 +934,12 @@ export function GuestList() {
                               style={formData.RSVP === "No" ? undefined : { color: palette.label }}
                             />
                             <span
-                              className={`font-goudy-italic text-xs font-semibold sm:text-sm ${
+                              className={`font-goudy-italic text-center text-xs font-semibold leading-tight sm:text-sm ${
                                 formData.RSVP === "No" ? "text-red-600" : ""
                               }`}
                               style={formData.RSVP !== "No" ? { color: palette.heading } : undefined}
                             >
-                              Sorry, No
+                              Sorry, I can&apos;t make it.
                             </span>
                           </div>
                         </button>
