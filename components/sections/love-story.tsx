@@ -71,7 +71,19 @@ function FirstChapterTitle() {
         >
           &rsquo;
         </span>
-        s Perfect Time
+        <span
+          className="inline-block normal-case"
+          style={{
+            fontSize: "0.55em",
+            fontWeight: 400,
+            letterSpacing: "0.04em",
+            lineHeight: 1,
+            verticalAlign: "0.42em",
+          }}
+        >
+          s
+        </span>{" "}
+        Perfect Time
       </span>
       <span
         className={`${aboveTheBeyond.className} mt-2 block leading-[0.9] sm:mt-2.5 md:mt-3`}
