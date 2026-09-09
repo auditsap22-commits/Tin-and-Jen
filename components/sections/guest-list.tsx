@@ -121,6 +121,17 @@ interface Guest {
   Companions?: Array<{ name: string; relationship: string }>
 }
 
+function seatReservationCopy(seats: number) {
+  const count = Math.max(1, Number(seats) || 1)
+  if (count === 1) {
+    return { heading: "1 SEAT RESERVED", subtitle: "Especially for you." }
+  }
+  if (count === 2) {
+    return { heading: "2 SEATS RESERVED", subtitle: "For you + one guest." }
+  }
+  return { heading: `${count} SEATS RESERVED`, subtitle: "For you and your family." }
+}
+
 export function GuestList() {
   const siteConfig = useSiteConfig()
   const [guests, setGuests] = useState<Guest[]>([])
@@ -161,6 +172,9 @@ export function GuestList() {
 
   const searchRef = useRef<HTMLDivElement>(null)
   const [isMounted, setIsMounted] = useState(false)
+  const { heading: seatHeading, subtitle: seatSubtitle } = seatReservationCopy(
+    selectedGuest?.AllowedGuests || 1
+  )
 
   useEffect(() => {
     setIsMounted(true)
@@ -745,16 +759,20 @@ export function GuestList() {
                 Hello <span style={{ color: palette.heading }}>{selectedGuest?.Name}</span>, you are
                 invited to our wedding!
               </p>
-              <p
-                className={`font-goudy-italic mx-auto mt-2 ${sectionType.text}`}
-                style={{ color: palette.body }}
-              >
-                We&apos;ve reserved{" "}
-                <span className="font-semibold" style={{ color: palette.accent }}>
-                  {selectedGuest?.AllowedGuests || 1}
-                </span>{" "}
-                {selectedGuest?.AllowedGuests === 1 ? "seat" : "seats"} for you.
-              </p>
+              <div className="mx-auto mt-3">
+                <p
+                  className={`${cinzel.className} ${sectionType.text} font-semibold tracking-[0.14em]`}
+                  style={{ color: palette.accent }}
+                >
+                  {seatHeading}
+                </p>
+                <p
+                  className={`font-goudy-italic mx-auto mt-1 ${sectionType.text}`}
+                  style={{ color: palette.body }}
+                >
+                  {seatSubtitle}
+                </p>
+              </div>
             </div>
 
             {/* Modal Content */}
@@ -805,16 +823,16 @@ export function GuestList() {
                         <div className="rounded-lg border p-2.5 sm:p-3" style={innerSurfaceStyle}>
                           <div className="text-center">
                             <p
-                              className={`font-goudy-italic mb-1 ${sectionType.label} font-medium`}
-                              style={{ color: palette.label }}
-                            >
-                              Number of Guests
-                            </p>
-                            <p
-                              className={`${theSeasons.className} text-lg sm:text-xl md:text-2xl`}
+                              className={`${cinzel.className} ${sectionType.text} font-semibold tracking-[0.14em]`}
                               style={{ color: palette.heading }}
                             >
-                              {selectedGuest.AllowedGuests || 1}
+                              {seatHeading}
+                            </p>
+                            <p
+                              className={`font-goudy-italic mt-1 ${sectionType.label}`}
+                              style={{ color: palette.body }}
+                            >
+                              {seatSubtitle}
                             </p>
                           </div>
                         </div>
