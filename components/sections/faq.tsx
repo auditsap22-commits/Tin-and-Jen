@@ -213,19 +213,8 @@ function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
       answer: (
         <>
           <p>
-            Please RSVP using the{" "}
-            <a
-              href="#guest-list"
-              className={linkClass}
-              style={{ color: faqPalette.accent }}
-              onClick={(e) => {
-                e.preventDefault()
-                document.getElementById("guest-list")?.scrollIntoView({ behavior: "smooth" })
-              }}
-            >
-              guest list
-            </a>{" "}
-            on this invitation: search for your name and confirm your attendance.
+            Please RSVP using the guest list on this invitation: search for your name and confirm
+            your attendance.
           </p>
           <p>
             Please respond by <Note>{rsvpDeadline}</Note>.
@@ -311,20 +300,9 @@ function getFaqItems(siteConfig: SiteConfig): FAQItem[] {
       answer: (
         <>
           <p>
-            Kindly follow the attire guide in{" "}
-            <a
-              href="#details"
-              className={linkClass}
-              style={{ color: faqPalette.accent }}
-              onClick={(e) => {
-                e.preventDefault()
-                document.getElementById("details")?.scrollIntoView({ behavior: "smooth" })
-              }}
-            >
-              Event Details
-            </a>
-            . Our theme is <Note>Navy Blue</Note> and <GoldNote>Champagne Gold</GoldNote>, and
-            guests are asked to wear <Note>modest and elegant formal attire</Note>.
+            Kindly follow the attire guide in Event Details. Our theme is <Note>Navy Blue</Note>{" "}
+            and <GoldNote>Champagne Gold</GoldNote>, and guests are asked to wear{" "}
+            <Note>modest and elegant formal attire</Note>.
           </p>
           <p>
             For our lovely ladies, please{" "}
