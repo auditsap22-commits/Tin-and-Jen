@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react"
 import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
-import { Instagram, Facebook, Twitter, Share2, Copy, Download, Check, Phone, MessageSquare } from "lucide-react"
+import { Instagram, Facebook, Twitter, Share2, Copy, Download, Check, Phone } from "lucide-react"
 import { QRCodeCanvas } from "qrcode.react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
@@ -89,11 +89,13 @@ function ContactAction({
   label,
   children,
   variant = "ghost",
+  external = false,
 }: {
   href: string
   label: string
   children: ReactNode
   variant?: "primary" | "ghost"
+  external?: boolean
 }) {
   const isPrimary = variant === "primary"
 
@@ -101,6 +103,7 @@ function ContactAction({
     <a
       href={href}
       aria-label={label}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       className={`${cinzel.className} inline-flex min-h-8 flex-1 items-center justify-center gap-1 rounded-md border px-1.5 py-1.5 font-semibold uppercase tracking-[0.1em] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] sm:min-h-9 sm:px-2 sm:tracking-[0.12em] ${ct.label}`}
       style={
         isPrimary
@@ -122,12 +125,22 @@ function ContactAction({
   )
 }
 
+function MessengerMark({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <path d="M12 2C6.5 2 2 6.1 2 11.2c0 2.9 1.4 5.5 3.7 7.2V22l3.4-1.9c.9.3 1.9.4 2.9.4 5.5 0 10-4.1 10-9.3S17.5 2 12 2Zm1.1 12.5-2.5-2.7-4.9 2.7 5.4-5.8 2.6 2.7 4.8-2.7-5.4 5.8Z" />
+    </svg>
+  )
+}
+
 function ReachUsContact({
   name,
   phone,
+  messenger,
 }: {
   name: string
   phone: string
+  messenger: string
 }) {
   const e164 = toPhE164(phone)
 
@@ -164,9 +177,13 @@ function ReachUsContact({
           <Phone className="h-3 w-3 shrink-0" />
           Call
         </ContactAction>
-        <ContactAction href={`sms:${e164}`} label={`Message ${name} at ${phone}`}>
-          <MessageSquare className="h-3 w-3 shrink-0" />
-          Message
+        <ContactAction
+          href={messenger}
+          label={`Message ${name} on Messenger`}
+          external
+        >
+          <MessengerMark className="h-3 w-3 shrink-0" />
+          Messenger
         </ContactAction>
       </div>
     </div>
@@ -340,8 +357,16 @@ export function SnapShare() {
   const { groomNickname, brideNickname } = siteConfig.couple
   const coupleDisplayName = `${groomNickname} & ${brideNickname}`
   const contacts = [
-    { name: groomNickname.toUpperCase(), phone: siteConfig.contact.groomPhone },
-    { name: brideNickname.toUpperCase(), phone: siteConfig.contact.bridePhone },
+    {
+      name: groomNickname.toUpperCase(),
+      phone: siteConfig.contact.groomPhone,
+      messenger: "https://m.me/jl.esconili",
+    },
+    {
+      name: brideNickname.toUpperCase(),
+      phone: siteConfig.contact.bridePhone,
+      messenger: "https://m.me/crist2323",
+    },
   ].filter((contact) => contact.phone && !/to be announced/i.test(contact.phone))
   const websiteUrl = typeof window !== "undefined" ? window.location.href : "https://example.com"
   const uploadLink = siteConfig.snapShare.googleDriveLink
@@ -674,7 +699,7 @@ export function SnapShare() {
                   className={`font-goudy-italic ${ct.body} text-center`}
                   style={{ color: palette.body }}
                 >
-                  Questions about the day? <Note>Call</Note> or <Note>message</Note> Jen and Tin.
+                  Questions about the day? <Note>Call</Note> or message Jen and Tin on <Note>Messenger</Note>.
                 </p>
                 <div className="w-full min-w-0 space-y-2">
                   {contacts.map((contact) => (
@@ -682,6 +707,7 @@ export function SnapShare() {
                       key={contact.name}
                       name={contact.name}
                       phone={contact.phone}
+                      messenger={contact.messenger}
                     />
                   ))}
                 </div>
