@@ -283,7 +283,7 @@ export const Hero: React.FC<HeroProps> = ({
     await wait(650);
 
     setPhase('cta');
-    setLiveMessage('Invitation ready.');
+    setLiveMessage('Invitation ready. Click the button to view the invitation.');
   }, [reduceMotion]);
 
   const handleSealClick = useCallback(
@@ -356,6 +356,24 @@ export const Hero: React.FC<HeroProps> = ({
       y: 28,
       filter: 'blur(6px)',
       transition: { duration: 0.35, ease: [0.4, 0, 1, 1] },
+    },
+  };
+
+  const ctaGuideVariants: Variants = {
+    hidden: { opacity: 0, y: 18, x: '-50%', filter: 'blur(4px)' },
+    visible: {
+      opacity: 1,
+      y: 0,
+      x: '-50%',
+      filter: 'blur(0px)',
+      transition: { ...buttonEntryEase, delay: 0.18 },
+    },
+    exit: {
+      opacity: 0,
+      y: 22,
+      x: '-50%',
+      filter: 'blur(6px)',
+      transition: { duration: 0.3, ease: [0.4, 0, 1, 1] },
     },
   };
 
@@ -853,6 +871,33 @@ export const Hero: React.FC<HeroProps> = ({
             }}
           />
         </motion.span>
+      </motion.div>
+
+      <motion.div
+        className="env-invite-cta-guide"
+        variants={ctaGuideVariants}
+        initial="hidden"
+        animate={
+          isExiting
+            ? 'exit'
+            : phase === 'cta'
+              ? 'visible'
+              : 'hidden'
+        }
+        aria-hidden={phase !== 'cta' || isExiting}
+      >
+        <p className="env-invite-cta-hint">
+          <span className="env-invite-cta-hint-full">
+            Click the button to view the invitation
+          </span>
+          <span className="env-invite-cta-hint-short">Tap the button below</span>
+        </p>
+        <span className="env-invite-cta-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 28" fill="none">
+            <path d="M5 6.5 L12 13 L19 6.5" />
+            <path d="M5 14.5 L12 21 L19 14.5" />
+          </svg>
+        </span>
       </motion.div>
 
       <motion.button
